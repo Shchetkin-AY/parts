@@ -1,0 +1,14 @@
+dist
+dev-dist
+coverage
+node_modules
+
+.ssh
+.env
+.npmrc
+.venv
+.vscode
+.github
+.DS_Store
+.codex
+src/templates/*
