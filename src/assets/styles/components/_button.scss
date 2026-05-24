@@ -1,0 +1,66 @@
+@use "../colors";
+
+.button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 0;
+  max-width: 100%;
+  width: fit-content;
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  padding-inline: 2rem;
+  color: colors.$text-on-primary;
+  background: colors.$primary;
+  border: 0;
+  border-radius: var(--border-radius);
+  box-shadow:
+    0 10px 15px -3px colors.$primary-shadow,
+    0 4px 6px -4px colors.$primary-shadow;
+  cursor: pointer;
+  font-size: var(--font-size);
+  font-weight: 700;
+  line-height: var(--line-height);
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    transform 0.15s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: colors.$primary-hover;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:disabled,
+  &--disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+  }
+
+  &--light {
+    color: colors.$text-inverse;
+    background: colors.$action-light;
+    box-shadow: none;
+
+    &:hover,
+    &:focus-visible {
+      color: colors.$text-on-primary;
+      background: colors.$primary;
+    }
+  }
+
+  &__label {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

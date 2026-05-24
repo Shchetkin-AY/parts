@@ -1,0 +1,15 @@
+@use "colors";
+
+$_name: "layout";
+
+.#{$_name} {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: colors.$background;
+
+  &__content {
+    flex-grow: 1;
+    padding-top: 6rem;
+  }
+}

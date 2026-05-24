@@ -1,0 +1,94 @@
+@use "colors";
+
+$_name: "product-card";
+
+.#{$_name} {
+  display: grid;
+  gap: 0;
+  background: colors.$surface-container-low;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    border-color: rgba(189, 36, 38, 0.45);
+  }
+
+  &__media {
+    aspect-ratio: 1 / 1;
+    background: #1f2020;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+
+    .#{$_name}:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__body {
+    display: grid;
+    gap: 0.625rem;
+    padding: 1rem;
+  }
+
+  &__title {
+    color: colors.$text;
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__subtitle {
+    color: colors.$muted;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__meta {
+    color: #71717a;
+    font-size: 0.625rem;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  &__price {
+    color: colors.$text;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  &__icon {
+    color: #a1a1aa;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+
+    .#{$_name}:hover & {
+      color: colors.$primary;
+    }
+  }
+}
