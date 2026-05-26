@@ -1,4 +1,4 @@
-@use "colors";
+@use "./colors";
 
 $_name: "production-route";
 
@@ -7,9 +7,9 @@ $_name: "production-route";
   overflow: hidden;
 
   &__container {
-    position: relative;
     display: grid;
-    gap: 3rem;
+    gap: 1rem;
+    align-items: center;
   }
 
   &__blueprint {
@@ -34,16 +34,13 @@ $_name: "production-route";
   }
 
   &__title {
-    font-size: 2.25rem;
-    font-weight: 900;
+    color: colors.$text-primary;
+    font-size: 1.25rem;
+    letter-spacing: 1.2px;
+    font-weight: 600;
     line-height: 1;
-    letter-spacing: -0.05em;
-    text-align: center;
     text-transform: uppercase;
-
-    @media (min-width: 768px) {
-      font-size: 3rem;
-    }
+    text-align: center;
   }
 
   &__grid {
@@ -53,7 +50,6 @@ $_name: "production-route";
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 2rem;
     }
   }
 
@@ -65,18 +61,13 @@ $_name: "production-route";
     padding: 1.5rem;
     text-align: center;
     background: colors.$surface-container-low;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid colors.$border;
     border-radius: 0.75rem;
   }
 
   &__icon {
     color: #52525b;
     font-size: 1.875rem;
-  }
-
-  &__copy {
-    display: grid;
-    gap: 0.25rem;
   }
 
   &__card-title {
@@ -87,7 +78,7 @@ $_name: "production-route";
   }
 
   &__card-text {
-    color: #71717a;
+    color: colors.$text-secondary;
     font-size: 0.5625rem;
   }
 }
