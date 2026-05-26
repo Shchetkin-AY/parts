@@ -13,7 +13,6 @@ $_name: "home";
     [full-end];
   row-gap: var(--home-section-gap);
   width: 100%;
-  padding-block-start: 2rem;
 
   @media (min-width: 768px) {
     --home-inline: 2rem;
