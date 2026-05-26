@@ -1,4 +1,4 @@
-@use "colors";
+@use "./colors";
 
 $_name: "filter";
 
@@ -7,19 +7,73 @@ $_name: "filter";
   z-index: 20;
 
   &__panel {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
+    display: grid;
     gap: 2rem;
-    padding: 2rem;
-    background: rgba(31, 32, 32, 0.9);
-    border: 1px solid rgba(72, 72, 72, 0.2);
+    background: colors.$surface;
+    border: 1px solid colors.$border;
     border-radius: 0.75rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(64px);
+    padding: 2rem;
 
-    @media (min-width: 1024px) {
-      flex-wrap: nowrap;
+    &-header {
+      display: grid;
+      gap: 0.6rem;
+
+      &-title {
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: colors.$text-primary;
+      }
+
+      &-description {
+        font-size: 0.775rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: colors.$text-secondary;
+      }
+    }
+
+    &-footer {
+      display: grid;
+      gap: 0.4rem;
+      justify-content: end;
+      justify-items: end;
+
+      &-title {
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: 0.02rem;
+        color: colors.$text-secondary;
+      }
+
+      &-description {
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: colors.$primary;
+      }
+    }
+
+    &-fields {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+      align-items: end;
+
+      @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
     }
   }
 
@@ -38,26 +92,5 @@ $_name: "filter";
     .button {
       width: 100%;
     }
-  }
-
-  &--vertical {
-    width: 100%;
-  }
-
-  &--vertical &__panel {
-    display: grid;
-    gap: 1.25rem;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
-
-  &--vertical &__field,
-  &--vertical &__action {
-    min-width: 0;
-    flex: initial;
   }
 }

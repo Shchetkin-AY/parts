@@ -1,9 +1,8 @@
 import { PropType, computed, defineComponent, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import catalog, { type CatalogItem } from '@/data/catalog'
-import { CatalogFilterField, type CatalogFilterItem, type CatalogFilterParams, type CatalogFilterSubmitPayload, type SelectOption } from '@/utils'
-import { Button } from './main/button'
-import { Select } from './main/select'
+import { CatalogFilterField, CatalogFilterItem, CatalogFilterParams, CatalogFilterSubmitPayload, SelectOption } from '@/utils'
+import { GButton, GDivider, GSelect } from '@/components'
 
 type FilterOrientation = 'horizontal' | 'vertical'
 
@@ -244,13 +243,13 @@ export default defineComponent({
     const renderMarkSelect = () => {
       return (
         <div class="filter__field">
-          <Select
+          <GSelect
             v-model={params[CatalogFilterField.mark]}
             ariaLabel="Марка автомобиля"
             clearable
-            label=""
+            label="Марка"
             modelValue={params[CatalogFilterField.mark]}
-            placeholder="Марка"
+            placeholder="Выберите марку"
             options={markOptions.value}
           />
         </div>
@@ -259,13 +258,13 @@ export default defineComponent({
     const renderModelSelect = () => {
       return (
         <div class="filter__field">
-          <Select
+          <GSelect
             v-model={params[CatalogFilterField.model]}
             ariaLabel="Модель автомобиля"
             clearable
-            label=""
+            label="Модель"
             modelValue={params[CatalogFilterField.model]}
-            placeholder="Модель"
+            placeholder="Выберите модель"
             options={modelOptions.value}
           />
         </div>
@@ -274,28 +273,13 @@ export default defineComponent({
     const renderDiameterSelect = () => {
       return (
         <div class="filter__field">
-          <Select
+          <GSelect
             v-model={params[CatalogFilterField.diameter]}
-            ariaLabel="Диаметр тормозного диска, мм"
+            ariaLabel="Диаметр диска"
             clearable
-            label=""
+            label="Диаметр диска"
             modelValue={params[CatalogFilterField.diameter]}
-            placeholder="Диаметр тормозного диска, мм"
-            options={diameterOptions.value}
-          />
-        </div>
-      )
-    }
-    const renderWheelDiameterSelect = () => {
-      return (
-        <div class="filter__field">
-          <Select
-            v-model={params[CatalogFilterField.wheelDiameter]}
-            ariaLabel="Диаметр колеса, мм"
-            clearable
-            label=""
-            modelValue={params[CatalogFilterField.wheelDiameter]}
-            placeholder="Диаметр колеса, мм"
+            placeholder="Выберите диаметр диска"
             options={diameterOptions.value}
           />
         </div>
@@ -304,27 +288,61 @@ export default defineComponent({
     const renderAction = () => {
       return (
         <div class="filter__action">
-          <Button
-            color="light"
+          <GButton
+            color="primary"
             disabled={isSubmitDisabled.value}
-            label="Подобрать"
+            label="Найти комплекты"
             onClick={handleSubmit}
           />
         </div>
       )
     }
+    const renderTitle = () => {
+      return (
+        <span class="filter__panel-header-title">
+          Подбор по автомобилю
+        </span>
+      )
+    }
+    const renderDescription = () => {
+      return (
+        <span class="filter__panel-header-description">
+          Найдите совместимую тормозную систему дял вашего автомобиля
+        </span>
+      )
+    }
+    const renderHeader = () => {
+      return (
+        <div class="filter__panel-header">
+          {renderTitle()}
+          {renderDescription()}
+        </div>
+      )
+    }
+    const renderDivider = () => {
+      return <GDivider />
+    }
+    const renderFooter = () => {
+      return (
+        <div class="filter__panel-footer">
+          <span class="filter__panel-footer-title">Не нашли свой автомобиль?</span>
+          <span class="filter__panel-footer-description">Оставьте заявку</span>
+        </div>
+      )
+    }
 
     return () =>
-      <section class={{
-        filter: true,
-        'filter--vertical': props.orientation === 'vertical'
-      }}>
+      <section class="filter">
         <div class="filter__panel">
-          {renderMarkSelect()}
-          {renderModelSelect()}
-          {renderDiameterSelect()}
-          {/* {renderWheelDiameterSelect()} */}
-          {renderAction()}
+          {renderHeader()}
+          <div class="filter__panel-fields">
+            {renderMarkSelect()}
+            {renderModelSelect()}
+            {renderDiameterSelect()}
+            {renderAction()}
+          </div>
+          {renderDivider()}
+          {renderFooter()}
         </div>
       </section>
   }
