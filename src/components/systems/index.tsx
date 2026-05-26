@@ -7,7 +7,7 @@ const cards: SystemCard[] = [
     type: SystemsCardTypes.street,
     title: 'STREET',
     subtitle: 'Ежедневная езда',
-    image: '/base.png',
+    image: '/street.png',
     features: [
       'Комфорт и надёжность',
       'Оптимальны для города',
