@@ -1,19 +1,10 @@
 import { defineComponent } from 'vue'
+import { SystemCard, SystemsCardTypes } from '@/utils'
 import SystemsCard from '@/components/systems/card'
 
-type SystemCardType = 'street' | 'sport' | 'track'
-
-interface SystemCardValue {
-  type: SystemCardType
-  title: string
-  subtitle: string
-  image: string
-  features: string[]
-}
-
-const cards: SystemCardValue[] = [
+const cards: SystemCard[] = [
   {
-    type: 'street',
+    type: SystemsCardTypes.street,
     title: 'STREET',
     subtitle: 'Ежедневная езда',
     image: '/base.png',
@@ -24,7 +15,7 @@ const cards: SystemCardValue[] = [
     ]
   },
   {
-    type: 'sport',
+    type: SystemsCardTypes.sport,
     title: 'SPORT',
     subtitle: 'Активная езда',
     image: '/sport.png',
@@ -35,7 +26,7 @@ const cards: SystemCardValue[] = [
     ]
   },
   {
-    type: 'track',
+    type: SystemsCardTypes.track,
     title: 'TRACK',
     subtitle: 'Трек и автоспорт',
     image: '/track.png',
