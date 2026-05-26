@@ -1,28 +1,33 @@
 @use "../colors";
 
-.button {
+$_name: "g-button";
+
+.#{$_name} {
   display: inline-grid;
   place-items: center;
   min-width: 0;
   max-width: 100%;
-  width: fit-content;
   height: 40px;
   min-height: 40px;
   max-height: 40px;
   padding-inline: 2rem;
+
   color: colors.$text-on-primary;
   background: colors.$primary;
   border: 0;
   border-radius: var(--border-radius);
+
   box-shadow:
     0 10px 15px -3px colors.$primary-shadow,
     0 4px 6px -4px colors.$primary-shadow;
+
   cursor: pointer;
   font-size: var(--font-size);
   font-weight: 700;
   line-height: var(--line-height);
   text-align: center;
   text-transform: uppercase;
+
   transition:
     transform 0.15s ease,
     color 0.2s ease,
@@ -46,7 +51,7 @@
 
   &--light {
     color: colors.$text-inverse;
-    background: colors.$action-light;
+    background: colors.$primary-hover;
     box-shadow: none;
 
     &:hover,
