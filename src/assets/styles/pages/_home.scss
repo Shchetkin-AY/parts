@@ -2,21 +2,21 @@ $_name: "home";
 
 .#{$_name} {
   --home-inline: 1.5rem;
-  --home-section-gap: 3rem;
+  --home-section-gap: 2rem;
   --home-lead-gap: 1rem;
 
   display: grid;
   grid-template-columns:
     [full-start] minmax(var(--home-inline), 1fr)
-    [content-start] minmax(0, var(--container, 1280px))
+    [content-start] minmax(0, var(--container, 1440px))
     [content-end] minmax(var(--home-inline), 1fr)
     [full-end];
   row-gap: var(--home-section-gap);
   width: 100%;
-  padding-block-start: 3rem;
+  padding-block-start: 2rem;
 
   @media (min-width: 768px) {
-    --home-inline: 3rem;
+    --home-inline: 2rem;
   }
 
   &__group,
@@ -25,7 +25,7 @@ $_name: "home";
     display: grid;
     grid-template-columns:
       [full-start] minmax(var(--home-inline), 1fr)
-      [content-start] minmax(0, var(--container, 1280px))
+      [content-start] minmax(0, var(--container, 1440px))
       [content-end] minmax(var(--home-inline), 1fr)
       [full-end];
     min-width: 0;
@@ -39,18 +39,10 @@ $_name: "home";
     }
   }
 
-  &__group {
-    row-gap: var(--home-section-gap);
-  }
-
-  &__group--lead {
-    row-gap: var(--home-lead-gap);
-  }
-
   &__section > * {
     grid-column: content;
     min-width: 0;
     width: 100%;
-    max-width: var(--container, 1280px);
+    max-width: var(--container, 1440px);
   }
 }

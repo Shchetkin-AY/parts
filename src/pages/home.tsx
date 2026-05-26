@@ -2,8 +2,8 @@ import { defineComponent } from 'vue'
 import Hero from '@/components/hero'
 import Filter from '@/components/filter'
 import ProductionRoute from '@/components/production-route'
-import TechnicalExcellence from '@/components/technical-excellence'
-import ProductHighlight from '@/components/product-highlight'
+import Advantages from '@/components/advantages'
+import Systems from '@/components/systems'
 
 export default defineComponent({
   name: 'HomePage',
@@ -18,30 +18,30 @@ export default defineComponent({
       )
     }
 
+    const renderAdvantages = () => {
+      return (
+        <Advantages class="home__section home__section--advantages" />
+      )
+    }
+
+    const renderSystems = () => {
+      return (
+        <Systems class="home__section home__section--systems" />
+      )
+    }
+
     const renderProductionRoute = () => {
       return (
         <ProductionRoute class="home__section home__section--production-route" />
       )
     }
 
-    const renderTechnicalExcellence = () => {
-      return (
-        <TechnicalExcellence class="home__section home__section--technical-excellence" />
-      )
-    }
-
-    const renderProductHighlight = () => {
-      return (
-        <ProductHighlight class="home__section home__section--product-highlight" />
-      )
-    }
-
     return () =>
       <div class="home">
         {renderLead()}
+        {renderAdvantages()}
+        {renderSystems()}
         {renderProductionRoute()}
-        {renderTechnicalExcellence()}
-        {renderProductHighlight()}
       </div>
   }
 })
