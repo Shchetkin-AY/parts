@@ -1,4 +1,4 @@
-@use "colors";
+@use "./colors";
 
 $_name: "navigation";
 
@@ -12,8 +12,8 @@ $_name: "navigation";
   align-items: center;
   justify-items: center;
   padding-inline: 1.5rem;
-  background-color: rgba(14, 14, 14, 0.95);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: colors.$surface;
+  border-bottom: 1px solid colors.$border;
   backdrop-filter: blur(24px);
 
   @media (min-width: 768px) {
@@ -36,7 +36,7 @@ $_name: "navigation";
   &__brand {
     justify-self: start;
     min-width: 0;
-    color: #f4f4f5;
+    color: colors.$text-primary;
     font-size: 1.5rem;
     font-weight: 900;
     line-height: 1;
@@ -65,19 +65,23 @@ $_name: "navigation";
 
   &__link {
     display: grid;
-    align-items: center;
-    min-height: 2.5rem;
-    color: #a1a1aa;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
     transition: color 0.2s ease;
 
     &:hover {
-      color: #f4f4f5;
+      color: colors.$primary-hover;
     }
 
     &--active {
       color: colors.$primary;
       font-weight: 700;
-      box-shadow: inset 0 -1px 0 colors.$primary;
+      text-decoration: underline;
+      text-underline-offset: 10px;
+      text-decoration-color: colors.$primary;
+      text-decoration-thickness: 2px;
     }
   }
 
@@ -100,7 +104,7 @@ $_name: "navigation";
     width: 2.5rem;
     height: 2.5rem;
     padding: 0;
-    color: #f4f4f5;
+    color: colors.$text-primary;
     background: transparent;
     border: 0;
     border-radius: 0.5rem;
@@ -109,11 +113,6 @@ $_name: "navigation";
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .material-symbols-outlined {
-      font-size: 1.5rem;
-      line-height: 1;
     }
   }
 
