@@ -5,7 +5,7 @@ import SystemsCard from '@/components/systems/card'
 const cards: SystemCard[] = [
   {
     type: SystemsCardTypes.street,
-    title: 'STREET',
+    title: 'street',
     subtitle: 'Ежедневная езда',
     image: '/street.png',
     features: [
@@ -16,7 +16,7 @@ const cards: SystemCard[] = [
   },
   {
     type: SystemsCardTypes.sport,
-    title: 'SPORT',
+    title: 'sport',
     subtitle: 'Активная езда',
     image: '/sport.png',
     features: [
@@ -27,7 +27,7 @@ const cards: SystemCard[] = [
   },
   {
     type: SystemsCardTypes.track,
-    title: 'TRACK',
+    title: 'track',
     subtitle: 'Трек и автоспорт',
     image: '/track.png',
     features: [
