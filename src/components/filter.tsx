@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import catalog, { type CatalogItem } from '@/data/catalog'
-import { CatalogFilterField, CatalogFilterItem, CatalogFilterParams, CatalogFilterSubmitPayload, SelectOption } from '@/utils'
+import catalog from '@/data/catalog'
+import { CatalogFilterField, CatalogFilterItem, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Colors, SelectOption } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
 
 type FilterOrientation = 'horizontal' | 'vertical'
@@ -223,7 +223,7 @@ export default defineComponent({
       return query
     }
 
-    const handleSubmit = (): void => {
+    const submitHandler = (): void => {
       emit('submit', filterPayload.value)
 
       const query = getCatalogQueryParams()
@@ -238,6 +238,10 @@ export default defineComponent({
         name: 'catalog',
         query
       })
+    }
+
+    const callHandler = () => {
+      window.location.href = 'tel:+79138135522'
     }
 
     const renderMarkSelect = () => {
@@ -289,10 +293,10 @@ export default defineComponent({
       return (
         <div class="filter__action">
           <GButton
-            color="primary"
+            color={Colors.primary}
             disabled={isSubmitDisabled.value}
             label="Найти комплекты"
-            onClick={handleSubmit}
+            onClick={submitHandler}
           />
         </div>
       )
@@ -325,8 +329,10 @@ export default defineComponent({
     const renderFooter = () => {
       return (
         <div class="filter__panel-footer">
-          <span class="filter__panel-footer-title">Не нашли свой автомобиль?</span>
-          <span class="filter__panel-footer-description">Оставьте заявку</span>
+          <a class="filter__panel-footer__content" onClick={callHandler}>
+            <span class="filter__panel-footer__content-title">Не нашли свой автомобиль?</span>
+            <span class="filter__panel-footer__content-description">Оставьте заявку</span>
+          </a>
         </div>
       )
     }

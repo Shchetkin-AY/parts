@@ -13,7 +13,7 @@ $_name: "advantages";
     border: 1px solid colors.$border;
     border-radius: 0.75rem;
     backdrop-filter: blur(64px);
-    padding: 2rem;
+    padding: 1rem;
 
     @media (max-width: 720px) {
       padding: 1rem;
@@ -30,7 +30,7 @@ $_name: "advantages";
 
     span {
       display: block;
-      color: rgba(255, 255, 255, 0.28);
+      color: colors.$text;
     }
   }
 

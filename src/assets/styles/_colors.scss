@@ -1,10 +1,10 @@
 @use "sass:map";
+@use "sass:color";
 
 $primary: #d91f26;
-$primary-hover: #b91c1c;
+$primary-hover: #ef2e35;
+$primary-active: #b8181f;
 $primary-shadow: rgba(127, 29, 29, 0.2);
-
-$accent: #d91f26;
 
 $text: #e7e5e5;
 $text-primary: #f4f4f5;
@@ -30,8 +30,8 @@ $muted: #a69b9a;
 $colors: (
   "primary": $primary,
   "primary-hover": $primary-hover,
+  "primary-active": $primary-active,
   "primary-shadow": $primary-shadow,
-  "accent": $accent,
 
   "text": $text,
   "text-primary": $text-primary,
@@ -59,5 +59,18 @@ $color-names: map.keys($colors);
 :root {
   @each $name, $value in $colors {
     --color-#{$name}: #{$value};
+  }
+}
+
+@function hex-to-rgb($hex) {
+  @return color.channel($hex, "red", $space: rgb), color.channel($hex, "green", $space: rgb),
+    color.channel($hex, "blue", $space: rgb);
+}
+
+@function color($name, $opacity: false) {
+  @if $opacity {
+    @return rgba(var(--#{$name}-rgb), $opacity);
+  } @else {
+    @return var(--#{$name});
   }
 }

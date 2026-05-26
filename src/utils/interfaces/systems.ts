@@ -1,7 +1,7 @@
-import { SystemsCardTypes } from '../enums/systems'
+import { SystemsSeriesTypes } from '../enums/systems'
 
 export interface SystemCard {
-  type: SystemsCardTypes
+  type: SystemsSeriesTypes
   title: string
   subtitle: string
   image: string

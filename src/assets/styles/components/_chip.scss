@@ -1,0 +1,81 @@
+@use "../colors";
+@use "../variables" as *;
+
+$_name: "g-chip";
+
+@mixin _colors {
+  @each $name, $value in colors.$colors {
+    &--#{$name} {
+      background-color: $value;
+    }
+  }
+}
+
+.#{$_name} {
+  color: colors.$text;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+
+  background-color: colors.$border;
+  border-radius: var(--border-radius);
+
+  display: grid;
+  place-content: center;
+  place-items: center;
+
+  position: relative;
+
+  width: fit-content;
+  z-index: 20;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  &__content {
+    display: grid;
+    align-items: center;
+
+    user-select: none;
+  }
+
+  &__label {
+    color: colors.$text;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    display: inline-block;
+
+    overflow-x: hidden;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: var(--line-height);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &--outline {
+    border-color: colors.$border;
+
+    background-color: transparent;
+
+    & > .#{$_name}__icon,
+    & > .#{$_name}__content,
+    & > .#{$_name}__loading {
+      color: currentcolor;
+    }
+  }
+
+  &--round {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &--absolute {
+    position: absolute;
+  }
+
+  @include _colors;
+}

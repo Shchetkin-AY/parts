@@ -1,5 +1,6 @@
-export enum SystemsCardTypes {
-  street = 'street',
-  sport = 'sport',
-  track = 'track'
+export enum SystemsSeriesTypes {
+  s = 's',
+  r = 'r',
+  n = 'n',
+  sr = 'sr'
 }

@@ -1,71 +1,146 @@
 @use "../colors";
+@use "../variables" as *;
 
 $_name: "g-button";
 
+@mixin _colors {
+  @each $name in colors.$color-names {
+    &--color-#{$name} {
+      background-color: colors.color($name);
+
+      & > .#{$_name}__content {
+        & > .#{$_name}__icon,
+        & > .#{$_name}__label {
+          color: colors.color(text);
+        }
+      }
+
+      &:hover {
+        &::before {
+          background-color: colors.color(bg, 0.3);
+        }
+      }
+
+      &:active {
+        &::before {
+          background-color: colors.color(bg, 0.4);
+        }
+      }
+    }
+  }
+}
+
+@mixin _transition {
+  transition:
+    transform $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+}
+
 .#{$_name} {
-  display: inline-grid;
-  place-items: center;
-  min-width: 0;
-  max-width: 100%;
-  height: 40px;
-  min-height: 40px;
-  max-height: 40px;
-  padding-inline: 2rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 40px;
 
-  color: colors.$text-on-primary;
-  background: colors.$primary;
-  border: 0;
+  color: colors.color(text);
+  background-color: transparent;
+  vertical-align: middle;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
   border-radius: var(--border-radius);
+  outline: none;
 
-  box-shadow:
-    0 10px 15px -3px colors.$primary-shadow,
-    0 4px 6px -4px colors.$primary-shadow;
+  display: grid;
+  place-items: center stretch;
+
+  position: relative;
 
   cursor: pointer;
-  font-size: var(--font-size);
-  font-weight: 700;
-  line-height: var(--line-height);
-  text-align: center;
-  text-transform: uppercase;
+  user-select: none;
+  min-height: 40px;
 
-  transition:
-    transform 0.15s ease,
-    color 0.2s ease,
-    background-color 0.2s ease;
+  &__label {
+    padding-left: 12px;
+    padding-right: 12px;
+    color: colors.color(text-inverse);
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-  &:hover,
-  &:focus-visible {
-    background: colors.$primary-hover;
+    display: inline-block;
+
+    overflow: hidden;
+
+    font-size: var(--font-size);
+    font-weight: 600;
+    line-height: var(--line-height);
+    letter-spacing: var(--letter-spacing);
+    text-align: center;
+    text-transform: uppercase;
+
+    @include _transition;
   }
 
-  &:active {
-    transform: scale(0.96);
+  &__icon {
+    color: colors.color(text-inverse);
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    & i,
+    & svg {
+      @include _transition;
+    }
+
+    @include _transition;
   }
 
-  &:disabled,
-  &--disabled {
-    opacity: 0.5;
-    cursor: default;
-    transform: none;
+  &__content {
+    display: grid;
+    gap: 5px;
+    place-items: center;
   }
 
-  &--light {
-    color: colors.$text-inverse;
-    background: colors.$primary-hover;
-    box-shadow: none;
-
-    &:hover,
-    &:focus-visible {
-      color: colors.$text-on-primary;
-      background: colors.$primary;
+  &:hover {
+    &::before {
+      background-color: colors.color(text, 0.05);
     }
   }
 
-  &__label {
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  &:active {
+    &::before {
+      background-color: colors.color(text, 0.1);
+    }
   }
+
+  &::before {
+    border-radius: var(--border-radius);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    content: "";
+
+    height: 100%;
+    width: 100%;
+
+    @include _transition;
+  }
+
+  &--disabled {
+    background-color: colors.$muted;
+
+    cursor: default;
+    pointer-events: none;
+  }
+
+  @include _transition;
+  @include _colors;
 }

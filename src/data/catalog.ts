@@ -2159,5 +2159,4 @@ export const catalog = [
     description: 'Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью.'
   }
 ] as const
-export type CatalogItem = (typeof catalog)[number]
 export default catalog

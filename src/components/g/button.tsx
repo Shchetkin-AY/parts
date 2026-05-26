@@ -1,82 +1,168 @@
-import { PropType, computed, defineComponent } from 'vue'
+import { ButtonHTMLAttributes, PropType, computed, defineComponent } from 'vue'
 
-import type { ButtonColor, ButtonType } from '@/utils'
-import { getPrimitiveProp } from '../sharedProps'
+import { Colors, ComponentNames, Icons, numberToPxOrString } from '@/utils'
 
-export interface ButtonProps {
-  ariaLabel?: string
-  color?: ButtonColor
-  disabled?: boolean
-  label: string
-  type?: ButtonType
-}
+import { GIcon } from '@/components'
 
 export const buttonProps = {
-  ariaLabel: getPrimitiveProp(String),
-  color: {
-    type: String as PropType<ButtonColor>,
-    required: false,
-    default: 'primary'
+  label: {
+    type: [ String, Number ],
+    default: undefined
   },
-  disabled: getPrimitiveProp(Boolean, false, false),
-  label: getPrimitiveProp(String, true),
+
+  color: {
+    type: String as PropType<Colors>,
+    default: undefined,
+    validator: (value: Colors): boolean => {
+      return Object.values(Colors).includes(value)
+    }
+  },
+  icon: {
+    type: String as PropType<Icons>,
+    default: undefined,
+    validator: (value: Icons): boolean => {
+      return Object.values(Icons).includes(value)
+    }
+  },
+  iconColor: {
+    type: String as PropType<Colors>,
+    default: undefined,
+    validator: (value: Colors): boolean => {
+      return Object.values(Colors).includes(value)
+    }
+  },
+  iconSize: {
+    type: Number,
+    default: undefined
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+
   type: {
-    type: String as PropType<ButtonType>,
-    required: false,
+    type: String as PropType<ButtonHTMLAttributes['type']>,
     default: 'button'
+  },
+
+  tabindex: {
+    type: Number as PropType<ButtonHTMLAttributes['tabindex']>,
+    default: undefined
+  },
+
+  onClick: {
+    type: Function as PropType<(event: MouseEvent) => void>,
+    default: undefined
+  },
+  onMouseover: {
+    type: Function as PropType<(event: MouseEvent) => void>,
+    default: undefined
+  },
+  onMouseout: {
+    type: Function as PropType<(event: MouseEvent) => void>,
+    default: undefined
+  },
+
+  minWidth: {
+    type: [ String, Number ],
+    default: undefined
+  },
+  maxWidth: {
+    type: [ String, Number ],
+    default: undefined
+  },
+  width: {
+    type: [ String, Number ],
+    default: undefined
   }
 }
 
 export const GButton = defineComponent({
-  name: 'GButton',
+  name: ComponentNames.button,
 
   props: buttonProps,
 
-  emits: [ 'click' ],
+  setup(props) {
+    const hasIcon = computed<boolean>(() => !!props.icon)
+    const hasLabel = computed<boolean>(() => !!props.label)
+    const $class = computed<Record<string, boolean>>(() => {
+      const result = {
+        [ComponentNames.button]: true,
 
-  setup(props, { emit }) {
-    const className = 'g-button'
+        [`${ComponentNames.button}--labeled`]: hasLabel.value,
+        [`${ComponentNames.button}--disabled`]: props.disabled,
 
-    const classes = computed(() => {
-      return {
-        [className]: true,
-        [`${className}--${props.color}`]: true,
-        [`${className}--disabled`]: props.disabled
+        [`${ComponentNames.button}--color-${props.color}`]: !!props.color
       }
-    })
-    const resolvedAriaLabel = computed(() => {
-      return props.ariaLabel ?? props.label
-    })
 
-    const clickHandler = (event: MouseEvent) => {
-      emit('click', event)
-    }
+      return result
+    })
+    const $style = computed<Record<string, string>>(() => {
+      const result: Record<string, string> = {}
+      const items = [ 'minWidth', 'maxWidth', 'width' ]
 
-    const handleClick = (event: MouseEvent): void => {
-      if (props.disabled) {
-        return
+      for (const item of items) {
+        const key = item as keyof typeof buttonProps
+        if (typeof props[key] === 'string' || typeof props[key] === 'number') {
+          result[key] = numberToPxOrString(props[key])
+        }
       }
-      clickHandler(event)
-    }
+
+      return result
+    })
 
     const renderLabel = () => {
+      if (hasLabel.value) {
+        return (
+          <div class={`${ComponentNames.button}__label`}>
+            {props.label}
+          </div>
+        )
+      }
+    }
+    const renderIconContent = () => {
+      if (props.icon) {
+        return (
+          <GIcon
+            icon={props.icon}
+          />
+        )
+      }
+    }
+    const renderIcon = () => {
+      if (hasIcon.value) {
+        return (
+          <div class={`${ComponentNames.button}__icon`}>
+            {renderIconContent()}
+          </div>
+        )
+      }
+    }
+    const renderContent = () => {
       return (
-        <span class={`${className}__label`} >
-          {props.label}
-        </span>
+        <div
+          class={`${ComponentNames.button}__content`}
+          style={{ gridTemplateColumns: hasIcon.value && hasLabel.value ? 'auto 1fr' : '1fr' }}
+        >
+          {renderIcon()}
+          {renderLabel()}
+        </div>
       )
     }
 
     return () => {
       return (
         <button
-          aria-label={resolvedAriaLabel.value}
-          class={classes.value}
-          disabled={props.disabled}
+          class={$class.value}
+          style={$style.value}
           type={props.type}
-          onClick={handleClick}
+          tabindex={props.tabindex}
+          disabled={props.disabled}
+          onClick={props.onClick}
+          onMouseover={props.onMouseover}
+          onMouseout={props.onMouseout}
         >
-          {renderLabel()}
+          {renderContent()}
         </button>
       )
     }

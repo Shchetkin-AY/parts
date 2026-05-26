@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue'
-import { SystemCard, SystemsCardTypes } from '@/utils'
+import { SystemCard, SystemsSeriesTypes } from '@/utils'
 import SystemsCard from '@/components/systems/card'
 
 const cards: SystemCard[] = [
   {
-    type: SystemsCardTypes.street,
-    title: 'street',
+    type: SystemsSeriesTypes.s,
+    title: 'S-series',
     subtitle: 'Ежедневная езда',
     image: '/street.png',
     features: [
@@ -15,8 +15,8 @@ const cards: SystemCard[] = [
     ]
   },
   {
-    type: SystemsCardTypes.sport,
-    title: 'sport',
+    type: SystemsSeriesTypes.r,
+    title: 'R-series',
     subtitle: 'Активная езда',
     image: '/sport.png',
     features: [
@@ -26,8 +26,8 @@ const cards: SystemCard[] = [
     ]
   },
   {
-    type: SystemsCardTypes.track,
-    title: 'track',
+    type: SystemsSeriesTypes.n,
+    title: 'N-series',
     subtitle: 'Трек и автоспорт',
     image: '/track.png',
     features: [

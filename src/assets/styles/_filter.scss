@@ -38,25 +38,29 @@ $_name: "filter";
     }
 
     &-footer {
-      display: grid;
-      gap: 0.4rem;
       justify-content: end;
       justify-items: end;
 
-      &-title {
-        font-size: 0.8rem;
-        font-weight: 500;
-        line-height: 1.2;
-        letter-spacing: 0.02rem;
-        color: colors.$text-secondary;
-      }
+      &__content {
+        display: grid;
+        gap: 0.4rem;
+        cursor: pointer;
 
-      &-description {
-        font-size: 0.75rem;
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: 0;
-        color: colors.$primary;
+        &-title {
+          font-size: 0.8rem;
+          font-weight: 500;
+          line-height: 1.2;
+          letter-spacing: 0.02rem;
+          color: colors.$text-secondary;
+        }
+
+        &-description {
+          font-size: 0.75rem;
+          font-weight: 700;
+          line-height: 1.2;
+          letter-spacing: 0;
+          color: colors.$primary;
+        }
       }
     }
 

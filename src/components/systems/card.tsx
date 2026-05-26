@@ -44,7 +44,7 @@ export default defineComponent({
     const renderFeature = (feature: string) => {
       return (
         <div class="systems-card__feature">
-          <GIcon icon={Icons.check}/>
+          <GIcon icon={Icons.check} color="primary"/>
           <span>{feature}</span>
         </div>
       )

@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { GButton } from './g/button'
+import { Colors } from '@/utils'
 
 export default defineComponent({
   name: 'Hero',
@@ -79,7 +80,7 @@ export default defineComponent({
     const renderActions = () => {
       return (
         <div class="hero__actions">
-          <GButton label="Подобрать комплект" onClick={navigateToCatalog} />
+          <GButton label="Подобрать комплект" color={Colors.primary} onClick={navigateToCatalog} />
         </div>
       )
     }

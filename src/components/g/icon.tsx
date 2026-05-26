@@ -24,7 +24,7 @@ export const iconProps = {
 
   color: {
     type: String as PropType<string>,
-    default: 'primary'
+    default: 'text'
   }
 }
 

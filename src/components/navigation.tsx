@@ -1,5 +1,7 @@
 import { defineComponent } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { GIcon } from './g'
+import { Icons } from '@/utils'
 
 interface NavigationLink {
   href: string
@@ -31,8 +33,13 @@ export default defineComponent({
     const isRouteLink = (href: string): boolean => {
       return href.startsWith('/')
     }
+
     const isRouteLinkActive = (href: string): boolean => {
       return route.path === href
+    }
+
+    const callHandler = () => {
+      window.location.href = 'tel:+79138135522'
     }
 
     const renderBrand = () => {
@@ -77,27 +84,22 @@ export default defineComponent({
       )
     }
 
-    const renderSearchButton = () => {
+    const renderPhoneIcon = () => {
       return (
-        <button class="navigation__icon" aria-label="Поиск" type="button">
-          <span class="material-symbols-outlined">phone</span>
-        </button>
-      )
-    }
-
-    const renderMenuButton = () => {
-      return (
-        <button class="navigation__menu" aria-label="Открыть меню" type="button">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
+        <a class={'navigation__phone'} onClick={callHandler}>
+          <GIcon icon={Icons.phone} size={30} />
+          <div class={'navigation__phone-content'}>
+            <div class={'navigation__phone-content-title'}>+7 913 813 55 22</div>
+            <div class={'navigation__phone-content-subtitle'}>Консультация по телефону</div>
+          </div>
+        </a>
       )
     }
 
     const renderActions = () => {
       return (
         <div class="navigation__actions">
-          {renderSearchButton()}
-          {renderMenuButton()}
+          {renderPhoneIcon()}
         </div>
       )
     }

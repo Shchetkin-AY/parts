@@ -4,6 +4,7 @@ import Filter from '@/components/filter'
 import ProductionRoute from '@/components/production-route'
 import Advantages from '@/components/advantages'
 import Systems from '@/components/systems'
+import PopularSystems from '@/components/popular'
 
 export default defineComponent({
   name: 'HomePage',
@@ -36,12 +37,19 @@ export default defineComponent({
       )
     }
 
+    const renderPopular = () => {
+      return (
+        <PopularSystems class="home__section home__section--popular" />
+      )
+    }
+
     return () =>
       <div class="home">
         {renderLead()}
         {renderAdvantages()}
         {renderSystems()}
         {renderProductionRoute()}
+        {renderPopular()}
       </div>
   }
 })

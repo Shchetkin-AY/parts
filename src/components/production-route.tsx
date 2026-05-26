@@ -1,4 +1,6 @@
+import { Icons, ProductionRouteStep } from '@/utils'
 import { defineComponent } from 'vue'
+import { GIcon } from './g'
 
 export default defineComponent({
   name: 'ProductionRoute',
@@ -6,54 +8,77 @@ export default defineComponent({
   setup() {
     const steps = [
       {
-        icon: 'layers',
+        step: '01',
+        icon: Icons.layers,
         title: 'Алюминий',
         text: 'Сплав 6061-T6'
       },
       {
-        icon: 'thermostat',
-        title: 'Термическая обработка',
+        step: '02',
+        icon: Icons.temperature,
+        title: 'Обработка',
         text: '72 ч при 580 °C'
       },
       {
-        icon: 'precision_manufacturing',
+        step: '03',
+        icon: Icons.tools,
         title: 'Ковка 2000 т',
         text: 'Горячая ковка'
       },
       {
-        icon: 'settings_input_component',
+        step: '04',
+        icon: Icons.settings,
         title: '5-осевой ЧПУ',
         text: 'Точность 0,01 мм'
       },
       {
-        icon: 'opacity',
+        step: '05',
+        icon: Icons.drop,
         title: 'Анодирование',
         text: 'Твёрдое покрытие'
       }
     ]
 
-    return () =>
-      <section class="production-route">
-        <div class="content-container production-route__container">
-          <div class="production-route__blueprint" />
+    const renderTitle = () => {
+      return (
+        <div class="production-route__title">Цикл производства</div>
+      )
+    }
+    const renderStep = (step: ProductionRouteStep) => {
+      return (
+        <article class="production-route__card">
+          <span class={'production-route__step'}>{step.step}</span>
 
-          <div class="production-route__heading">
-            <h2 class="production-route__title">Цикл производства</h2>
+          <span class={'production-route__icon'}>
+            <GIcon icon={step.icon} size={30}/>
+          </span>
+          <div class="production-route__copy">
+            <div class="production-route__card-title">{step.title}</div>
+            <div class="production-route__card-text">{step.text}</div>
           </div>
+          <div class="production-route__separator">
+            <div class="production-route__separator-arrow">{'>'}</div>
+          </div>
+        </article>
+      )
+    }
+    const renderSteps = () => {
+      return steps.map(step => {
+        return renderStep(step)
+      })
+    }
 
-          <div class="production-route__grid">
-            {steps.map(step =>
-              <article class="production-route__card">
-                <span class={'material-symbols-outlined production-route__icon'}>
-                  {step.icon}
-                </span>
-                <div class="production-route__copy">
-                  <h4 class="production-route__card-title">{step.title}</h4>
-                  <p class="production-route__card-text">{step.text}</p>
-                </div>
-              </article>)}
+    return () => {
+      return (
+        <section class="production-route">
+          {renderTitle()}
+          <div class="production-route__panel">
+            <div class="production-route__grid">
+              {renderSteps()}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )
+    }
   }
 })
