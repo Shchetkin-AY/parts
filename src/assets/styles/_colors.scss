@@ -1,12 +1,63 @@
-$primary: #bd2426;
+@use "sass:map";
+
+$primary: #d91f26;
 $primary-hover: #b91c1c;
 $primary-shadow: rgba(127, 29, 29, 0.2);
+
+$accent: #d91f26;
+
 $text: #e7e5e5;
+$text-primary: #f4f4f5;
+$text-secondary: #a1a1aa;
+$text-muted: #6d6d6d;
+$text-soft: rgba(255, 255, 255, 0.62);
 $text-inverse: #000;
 $text-on-primary: #fff;
-$muted: #a69b9a;
-$background: #0e0e0e;
-$surface-container-lowest: #000;
+
+$bg: #050505;
+$surface: #0c0c0c;
+$surface-2: #111111;
+$surface-3: #131313;
 $surface-container-low: #131313;
-$action-light: #f4f4f5;
-$outline-variant: rgba(72, 72, 72, 0.2);
+$surface-container-lowest: #000;
+
+$border: rgba(255, 255, 255, 0.05);
+$border-soft: rgba(255, 255, 255, 0.03);
+$border-strong: rgba(255, 255, 255, 0.08);
+
+$muted: #a69b9a;
+
+$colors: (
+  "primary": $primary,
+  "primary-hover": $primary-hover,
+  "primary-shadow": $primary-shadow,
+  "accent": $accent,
+
+  "text": $text,
+  "text-primary": $text-primary,
+  "text-secondary": $text-secondary,
+  "text-muted": $text-muted,
+  "text-soft": $text-soft,
+  "text-inverse": $text-inverse,
+  "text-on-primary": $text-on-primary,
+
+  "bg": $bg,
+  "surface": $surface,
+  "surface-2": $surface-2,
+  "surface-3": $surface-3,
+  "surface-container-low": $surface-container-low,
+  "surface-container-lowest": $surface-container-lowest,
+
+  "border": $border,
+  "border-soft": $border-soft,
+  "border-strong": $border-strong,
+  "muted": $muted
+);
+
+$color-names: map.keys($colors);
+
+:root {
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
+}

@@ -5,6 +5,8 @@
 @use "navigation";
 @use "hero";
 @use "filter";
+@use "advantages";
+@use "systems";
 @use "product-card";
 @use "production-route";
 @use "technical-excellence";
@@ -18,7 +20,7 @@
   --line-height: 1.2;
   --min-height: 24px;
   --letter-spacing: 0.05em;
-  --container: 1280px;
+  --container: 1440px;
   --container-padding: 16px;
   --section-gap: 32px;
   --section-padding: 24px;
@@ -32,7 +34,7 @@
 
 body {
   margin: 0;
-  background-color: colors.$background;
+  background-color: colors.$bg;
   color: colors.$text;
   font-family: "Lexend", sans-serif;
   overflow-x: hidden;
