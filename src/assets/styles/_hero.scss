@@ -1,4 +1,4 @@
-@use "colors";
+@use "./colors";
 
 $_name: "hero";
 
@@ -14,10 +14,63 @@ $_name: "hero";
     grid-template-areas: "hero";
     align-items: center;
     overflow: hidden;
-    width: min(100%, var(--container, 1280px));
-    background: colors.$surface-container-low;
-    border: 1px solid rgba(72, 72, 72, 0.1);
-    border-radius: 1rem;
+    width: min(100%, var(--container, 1440px));
+  }
+
+  &__background {
+    display: grid;
+    gap: 0.2rem;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+
+    &-text {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 900;
+      line-height: 0.78;
+      letter-spacing: -0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-size: clamp(6rem, 14vw, 13rem);
+      color: transparent;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 18%,
+        rgba(255, 255, 255, 0) 42%,
+        rgba(255, 255, 255, 0.01) 100%,
+        rgba(255, 255, 255, 0.02) 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      &--top {
+        top: 23%;
+        left: -1%;
+      }
+
+      &--bottom {
+        top: 52%;
+        left: -2.5%;
+      }
+
+      @media (max-width: 1200px) {
+        font-size: clamp(5rem, 18vw, 10rem);
+
+        &--top {
+          top: 28%;
+        }
+        &--bottom {
+          top: 44%;
+        }
+      }
+    }
   }
 
   &__media {
@@ -49,9 +102,8 @@ $_name: "hero";
     width: 100%;
     height: 100%;
     object-fit: contain;
-    opacity: 0.8;
-    mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+    mask-image: radial-gradient(ellipse at center, black 50%, transparent 74%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 74%);
   }
 
   &__content {
@@ -64,17 +116,6 @@ $_name: "hero";
     min-width: 0;
     width: 100%;
     max-width: 100%;
-    padding-block: 2rem;
-    padding-inline: 2rem;
-
-    @media (min-width: 768px) {
-      padding-block: 0;
-      padding-inline: 4rem;
-    }
-
-    @media (max-width: 480px) {
-      padding-inline: 1.5rem;
-    }
   }
 
   &__stack {
@@ -96,7 +137,7 @@ $_name: "hero";
   &__eyebrow {
     max-width: 100%;
     color: colors.$primary;
-    font-size: 0.625rem;
+    font-size: 0.8rem;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0;
@@ -107,7 +148,7 @@ $_name: "hero";
   &__title {
     min-width: 0;
     max-width: min(100%, 42rem);
-    color: #e7e5e5;
+    color: colors.$text;
     font-size: 3rem;
     font-weight: 900;
     line-height: 1;
@@ -115,7 +156,7 @@ $_name: "hero";
     overflow-wrap: anywhere;
 
     @media (min-width: 768px) {
-      font-size: 4.5rem;
+      font-size: 6rem;
     }
 
     span {
@@ -126,7 +167,7 @@ $_name: "hero";
   &__text {
     min-width: 0;
     max-width: min(100%, 36rem);
-    color: #a1a1aa;
+    color: colors.$text-soft;
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.625;

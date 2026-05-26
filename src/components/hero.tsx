@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { Button } from './main/button'
+import { GButton } from './g/button'
 
 export default defineComponent({
   name: 'Hero',
@@ -10,6 +10,19 @@ export default defineComponent({
 
     const navigateToCatalog = (): void => {
       void router.push({ name: 'catalog' })
+    }
+
+    const renderBackground = () => {
+      return (
+        <div class="hero__background" aria-hidden="true">
+          <span class="hero__background-text hero__background-text--top">
+            savaniny
+          </span>
+          <span class="hero__background-text hero__background-text--bottom">
+            systems
+          </span>
+        </div>
+      )
     }
 
     const renderImage = () => {
@@ -66,7 +79,7 @@ export default defineComponent({
     const renderActions = () => {
       return (
         <div class="hero__actions">
-          <Button label="Каталог систем" onClick={navigateToCatalog} />
+          <GButton label="Подобрать комплект" onClick={navigateToCatalog} />
         </div>
       )
     }
@@ -85,6 +98,7 @@ export default defineComponent({
     return () =>
       <section class="hero">
         <div class="hero__container">
+          {renderBackground()}
           {renderMedia()}
           {renderContent()}
         </div>
