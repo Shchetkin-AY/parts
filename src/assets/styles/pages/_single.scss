@@ -179,7 +179,7 @@ $_name: "single";
 
   &__description {
     max-width: 30rem;
-    color: #b5b5b5;
+    color: colors.$text-secondary;
     font-size: 0.875rem;
     line-height: 1.45;
     letter-spacing: 0;
@@ -232,6 +232,7 @@ $_name: "single";
       padding: 1rem;
       border-radius: 1rem;
     }
+
     &-availability {
       display: flex;
       align-items: center;
@@ -647,7 +648,7 @@ $_name: "single";
 
     p {
       margin-bottom: 1rem;
-      color: #a1a1aa;
+      color: colors.$text-secondary;
       font-size: 0.875rem;
       line-height: 1.4;
       letter-spacing: 0;
