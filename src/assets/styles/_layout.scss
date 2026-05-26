@@ -1,4 +1,4 @@
-@use "colors";
+@use "./colors";
 
 $_name: "layout";
 
@@ -6,7 +6,6 @@ $_name: "layout";
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: colors.$background;
 
   &__content {
     flex-grow: 1;
