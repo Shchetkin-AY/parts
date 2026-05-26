@@ -1,0 +1,125 @@
+@use "./colors";
+
+$_name: "advantages";
+
+.#{$_name} {
+  position: relative;
+  z-index: 20;
+
+  &__panel {
+    display: grid;
+    gap: 2rem;
+    background: colors.$surface;
+    border: 1px solid colors.$border;
+    border-radius: 0.75rem;
+    backdrop-filter: blur(64px);
+    padding: 2rem;
+
+    @media (max-width: 720px) {
+      padding: 1rem;
+    }
+  }
+
+  &__title {
+    color: colors.$text;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.08em;
+    text-transform: uppercase;
+
+    span {
+      display: block;
+      color: rgba(255, 255, 255, 0.28);
+    }
+  }
+
+  &__description {
+    margin-top: 1.75rem;
+    max-width: 40rem;
+    color: colors.$text-soft;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 720px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  &__card {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    grid-template-columns: auto 1fr;
+    padding: 1rem;
+    overflow: hidden;
+
+    border-right: 1px solid colors.$border;
+
+    &:nth-child(4n) {
+      border-right: none;
+    }
+
+    @media (max-width: 1200px) {
+      border-right: 1px solid colors.$border;
+
+      &:nth-child(2n) {
+        border-right: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      border-right: none;
+      border-bottom: 1px solid colors.$border;
+      padding-bottom: 1.5rem;
+
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    display: grid;
+    align-content: center;
+    gap: 0.5rem;
+  }
+
+  &__card-title {
+    color: colors.$text-primary;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+  }
+
+  &__card-text {
+    color: colors.$text-secondary;
+    font-size: 0.775rem;
+    line-height: 1.2;
+    font-weight: 300;
+  }
+}
