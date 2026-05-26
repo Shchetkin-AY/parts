@@ -31,11 +31,13 @@ export const menuProps = {
 
 const viewportMargin = 8
 
-const baseClassName = 'menu'
+const baseClassName = 'g-menu'
 
-export const Menu = defineComponent({
-  name: 'Menu',
+export const GMenu = defineComponent({
+  name: 'GMenu',
+
   props: menuProps,
+
   emits: [ 'close', 'select' ],
 
   setup(props: MenuProps, { emit }) {

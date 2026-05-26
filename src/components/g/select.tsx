@@ -1,8 +1,8 @@
 import { PropType, computed, defineComponent, ref, watch } from 'vue'
 
 import type { MenuItem, MenuPosition, SelectOption } from '@/utils'
-import { Menu } from './menu'
-import { getPrimitiveProp } from '../sharedProps'
+import { GMenu } from '@/components'
+import { getPrimitiveProp } from '@/components/sharedProps'
 
 export interface SelectProps {
   ariaLabel: string
@@ -30,11 +30,13 @@ export const selectProps = {
   rounded: getPrimitiveProp(Boolean, false, true)
 }
 
-const baseClassName = 'select'
+const baseClassName = 'g-select'
 
-export const Select = defineComponent({
-  name: 'Select',
+export const GSelect = defineComponent({
+  name: 'GSelect',
+
   props: selectProps,
+
   emits: [ 'update:modelValue' ],
 
   setup(props, { emit }) {
@@ -259,7 +261,7 @@ export const Select = defineComponent({
     }
     const renderMenu = () => {
       return (
-        <Menu
+        <GMenu
           anchorElement={triggerReference.value}
           ariaLabel={resolvedAriaLabel.value}
           items={menuItems.value}
