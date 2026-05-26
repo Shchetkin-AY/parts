@@ -2,7 +2,7 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import catalog, { type CatalogItem } from '@/data/catalog'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload } from '@/utils'
-import { Button } from '@/components/main/button'
+import { GButton } from '@/components/g/button'
 import { CatalogProductCard } from '@/components/product-card'
 import Filter from '@/components/filter'
 
@@ -105,7 +105,7 @@ export default defineComponent({
           />
 
           <div class="catalog__sidebar-actions">
-            <Button color="light" label="Сбросить фильтры" onClick={handleFilterReset} />
+            <GButton color="light" label="Сбросить фильтры" onClick={handleFilterReset} />
           </div>
         </aside>
       )
