@@ -2158,5 +2158,5 @@ export const catalog = [
     dataStatus: 'Подтверждено PDF',
     description: 'Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью.'
   }
-] as const
+]
 export default catalog
