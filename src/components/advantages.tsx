@@ -11,7 +11,7 @@ interface ExcellenceItem {
 const items: ExcellenceItem[] = [
   {
     icon: Icons.verified,
-    title: 'Официальный дестрибьютор',
+    title: 'Официальный дистрибьютор',
     text: 'Прямые поставки.'
   },
   {
