@@ -15,6 +15,10 @@ $_name: "hero";
     align-items: center;
     overflow: hidden;
     width: min(100%, var(--container, 1440px));
+
+    @media (max-width: 768px) {
+      min-height: 30vh;
+    }
   }
 
   &__background {
