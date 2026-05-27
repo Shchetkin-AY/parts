@@ -1,7 +1,6 @@
 import { Fragment, PropType, computed, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import type { CatalogItem } from '@/data/catalog'
-import { formatPrice, getString } from '@/utils'
+import { CatalogItem, formatPrice, getString } from '@/utils'
 
 export interface CatalogProductCardProps {
   value: CatalogItem,
