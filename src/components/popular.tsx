@@ -55,19 +55,19 @@ function pickWeightedFromBucket(items: CatalogItem[]): CatalogItem | undefined {
 }
 
 function pickPopularSystems(items: CatalogItem[], count = 5) {
-  const sorted = uniqueById(items).sort((a, b) => a.priceUsd - b.priceUsd)
+  const uniqItems = uniqueById(items)
 
-  if (!sorted.length) {
+  if (!uniqItems.length) {
     return []
   }
 
-  const bucketSize = Math.ceil(sorted.length / count)
+  const bucketSize = Math.ceil(uniqItems.length / count)
 
   const selected: CatalogItem[] = []
   const usedIds = new Set<number>()
 
   for (let index = 0; index < count; index += 1) {
-    const bucket = sorted.slice(index * bucketSize, (index + 1) * bucketSize)
+    const bucket = uniqItems.slice(index * bucketSize, (index + 1) * bucketSize)
 
     const picked = pickWeightedFromBucket(bucket)
 
@@ -79,7 +79,7 @@ function pickPopularSystems(items: CatalogItem[], count = 5) {
   }
 
   if (selected.length < count) {
-    for (const item of sorted) {
+    for (const item of uniqItems) {
       if (selected.length >= count) {
         break
       }
@@ -107,7 +107,7 @@ export default defineComponent({
 
     const renderTitle = () => {
       return (
-        <div class="popular-systems__title">Популярные системы</div>
+        <div class="popular-systems__title">Популярные комплекты</div>
       )
     }
 
@@ -122,15 +122,21 @@ export default defineComponent({
         )
       })
     }
+    const renderContent = () => {
+      return (
+        <div class="popular-systems-content" >
+          {renderTitle()}
+          <div class="popular-systems__grid">
+            {renderCards()}
+          </div>
+        </div>
+      )
+    }
 
     return () => {
       return (
         <section class="popular-systems">
-          {renderTitle()}
-
-          <div class="popular-systems__grid">
-            {renderCards()}
-          </div>
+          {renderContent()}
         </section>
       )
     }

@@ -43,7 +43,7 @@ export default defineComponent({
 
   setup() {
     const renderTitle = () =>
-      <span class="systems__title">Комплекты по назначению</span>
+      <span class="systems__title">Серии комплектов</span>
 
     const renderCards = () => {
       return cards.map(card => {

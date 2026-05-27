@@ -68,15 +68,23 @@ export default defineComponent({
       })
     }
 
-    return () => {
+    const renderContent = () => {
       return (
-        <section class="production-route">
+        <div class="production-route-content" >
           {renderTitle()}
           <div class="production-route__panel">
             <div class="production-route__grid">
               {renderSteps()}
             </div>
           </div>
+        </div>
+      )
+    }
+
+    return () => {
+      return (
+        <section class="production-route">
+          {renderContent()}
         </section>
       )
     }

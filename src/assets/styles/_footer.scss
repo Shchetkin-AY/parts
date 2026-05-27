@@ -5,7 +5,7 @@ $_name: "footer";
 .#{$_name} {
   width: 100%;
   overflow: hidden;
-  background: #000;
+  background: colors.$surface-container-lowest;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   &__container {

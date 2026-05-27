@@ -364,7 +364,7 @@ export default defineComponent({
           </div>
 
           <div class={`${baseClass}__image`}>
-            <img src={placeholderImage} alt={productModel.value} />
+            <img src={`${resolvedItem.value.series.toLowerCase()}.png`} alt={productModel.value} />
           </div>
         </div>
       )

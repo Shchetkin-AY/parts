@@ -4,8 +4,13 @@ $_name: "production-route";
 
 .#{$_name} {
   display: grid;
-  gap: 1rem;
-  align-items: center;
+  justify-items: center;
+
+  &-content {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+  }
 
   &__title {
     color: colors.$text-primary;
@@ -133,7 +138,7 @@ $_name: "production-route";
   }
 
   &__card-title {
-    color: colors.$text-primary;
+    color: colors.$text-secondary;
     font-size: 0.775rem;
     font-weight: 700;
     line-height: 1.2;
@@ -142,7 +147,7 @@ $_name: "production-route";
   }
 
   &__card-text {
-    color: colors.$text-secondary;
+    color: colors.$text-soft;
     font-size: 0.675rem;
     line-height: 1.2;
     font-weight: 300;

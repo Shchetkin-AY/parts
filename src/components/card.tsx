@@ -20,7 +20,7 @@ export default defineComponent({
 
   setup(props) {
     const title = computed(() => {
-      return [ props.value.series, props.value.model ].join(' / ')
+      return [ props.value.series, props.value.model ].join('  ')
     })
 
     const subtitle = computed(() => {
@@ -28,7 +28,7 @@ export default defineComponent({
       const piston = getString(props.value.pistonCount)
       const parts = [ piston ? `${piston} порш.` : '', disc ? `${disc} мм` : '' ].filter(Boolean)
 
-      return parts.join(' / ')
+      return parts.join(' · ')
     })
 
     const classes = computed(() => {
@@ -58,10 +58,9 @@ export default defineComponent({
       return (
         <div class="popular-systems-card__media">
           {renderBadge()}
-
           <img
             class="popular-systems-card__image"
-            src={'product.png'}
+            src={`${props.value.series.toLowerCase()}.png`}
             alt={title.value}
             loading="lazy"
           />

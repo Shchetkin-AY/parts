@@ -1,12 +1,10 @@
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import catalog, { type CatalogItem } from '@/data/catalog'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload } from '@/utils'
+import catalog from '@/data/catalog'
+import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, CatalogItem } from '@/utils'
 import { GButton } from '@/components/g/button'
-import { CatalogProductCard } from '@/components/product-card'
 import Filter from '@/components/filter'
-
-const placeholderImage = '/public/kit.png'
+import Card from '@/components/card'
 
 const normalize = (value: number | string): string => {
   return String(value).trim()
@@ -105,7 +103,7 @@ export default defineComponent({
           />
 
           <div class="catalog__sidebar-actions">
-            <GButton color="light" label="Сбросить фильтры" onClick={handleFilterReset} />
+            <GButton label="Сбросить фильтры" onClick={handleFilterReset} />
           </div>
         </aside>
       )
@@ -125,9 +123,8 @@ export default defineComponent({
     }
     const renderCard = (item: CatalogItem) => {
       return (
-        <CatalogProductCard
+        <Card
           value={item}
-          image={placeholderImage}
           key={item.id}
         />
       )

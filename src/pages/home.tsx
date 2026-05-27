@@ -5,6 +5,7 @@ import ProductionRoute from '@/components/production-route'
 import Advantages from '@/components/advantages'
 import Systems from '@/components/systems'
 import PopularSystems from '@/components/popular'
+import Brands from '@/components/brands'
 
 export default defineComponent({
   name: 'HomePage',
@@ -43,6 +44,10 @@ export default defineComponent({
       )
     }
 
+    const renderBrands = () => {
+      return <Brands class="home__section home__section--brands"/>
+    }
+
     return () =>
       <div class="home">
         {renderLead()}
@@ -50,6 +55,7 @@ export default defineComponent({
         {renderSystems()}
         {renderProductionRoute()}
         {renderPopular()}
+        {renderBrands()}
       </div>
   }
 })

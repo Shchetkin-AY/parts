@@ -9,7 +9,7 @@ $_name: "systems";
 
   &-content {
     display: grid;
-    gap: 1rem;
+    gap: 20px;
     align-items: center;
   }
 
@@ -57,6 +57,7 @@ $_name: "systems";
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+    border-color: colors.$border-strong;
 
     .systems-card__image {
       transform: scale(1.01);
