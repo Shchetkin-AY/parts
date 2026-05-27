@@ -13,6 +13,8 @@ const server = {
 }
 
 export default defineConfig({
+  base: '/parts/',
+
   server,
 
   plugins: [
