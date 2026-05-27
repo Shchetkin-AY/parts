@@ -6,9 +6,10 @@ export enum Icons {
   menu = 'menu',
   phone = 'phone',
   precision = 'precision',
-  shieldCheck = 'shieldCheck',
+  warranty = 'warranty',
   speed = 'speed',
   settings = 'settings',
+  support = 'support',
   temperature = 'temperature',
   tools = 'tools',
   verified = 'verified'

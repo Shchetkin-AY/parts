@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue'
 import { GIcon } from '@/components'
+import { Icons } from '@/utils'
 
 interface ExcellenceItem {
   icon: string
@@ -9,24 +10,24 @@ interface ExcellenceItem {
 
 const items: ExcellenceItem[] = [
   {
-    icon: 'shieldCheck',
+    icon: Icons.verified,
     title: 'Официальный дестрибьютор',
     text: 'Прямые поставки.'
   },
   {
-    icon: 'settings',
-    title: 'CNC 5-осевая обработка',
-    text: 'Прецизионное качество.'
+    icon: Icons.settings,
+    title: 'Индивидуальные решения',
+    text: 'Под заказ любой конфигурации.'
   },
   {
-    icon: 'speed',
-    title: 'Тесты на треке',
-    text: 'Проверено в гонках.'
-  },
-  {
-    icon: 'delivery',
+    icon: Icons.delivery,
     title: 'Быстрая доставка',
     text: 'По всей России.'
+  },
+  {
+    icon: Icons.warranty,
+    title: 'Гарантия и поддержка',
+    text: '1 год.'
   }
 ]
 

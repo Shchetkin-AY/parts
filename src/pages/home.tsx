@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
+
 import Hero from '@/components/hero'
 import Filter from '@/components/filter'
-import ProductionRoute from '@/components/production-route'
 import Advantages from '@/components/advantages'
 import Systems from '@/components/systems'
 import PopularSystems from '@/components/popular'
@@ -32,12 +32,6 @@ export default defineComponent({
       )
     }
 
-    const renderProductionRoute = () => {
-      return (
-        <ProductionRoute class="home__section home__section--production-route" />
-      )
-    }
-
     const renderPopular = () => {
       return (
         <PopularSystems class="home__section home__section--popular" />
@@ -53,7 +47,7 @@ export default defineComponent({
         {renderLead()}
         {renderAdvantages()}
         {renderSystems()}
-        {renderProductionRoute()}
+        {/* {renderProductionRoute()} */}
         {renderPopular()}
         {renderBrands()}
       </div>

@@ -24,7 +24,7 @@ $_name: "filter";
         font-size: 0.875rem;
         font-weight: 700;
         line-height: 1.2;
-        letter-spacing: 0;
+        letter-spacing: 1px;
         color: colors.$text-primary;
       }
 
@@ -51,7 +51,7 @@ $_name: "filter";
           font-weight: 500;
           line-height: 1.2;
           letter-spacing: 0.02rem;
-          color: colors.$text-secondary;
+          color: colors.$text-muted;
         }
 
         &-description {
