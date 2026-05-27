@@ -8,20 +8,20 @@ $_name: "filter";
 
   &__panel {
     display: grid;
-    gap: 2rem;
+    gap: 32px;
     background: colors.$surface;
     border: 1px solid colors.$border;
-    border-radius: 0.75rem;
+    border-radius: 12px;
     backdrop-filter: blur(64px);
-    padding: 2rem;
+    padding: 32px;
 
     &-header {
       display: grid;
-      gap: 0.6rem;
+      gap: 9.6px;
 
       &-title {
         text-transform: uppercase;
-        font-size: 0.875rem;
+        font-size: 14px;
         font-weight: 700;
         line-height: 1.2;
         letter-spacing: 1px;
@@ -29,7 +29,7 @@ $_name: "filter";
       }
 
       &-description {
-        font-size: 0.775rem;
+        font-size: 12.4px;
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: 0;
@@ -43,19 +43,19 @@ $_name: "filter";
 
       &__content {
         display: grid;
-        gap: 0.4rem;
+        gap: 6.4px;
         cursor: pointer;
 
         &-title {
-          font-size: 0.8rem;
+          font-size: 12.8px;
           font-weight: 500;
           line-height: 1.2;
-          letter-spacing: 0.02rem;
+          letter-spacing: 0.32px;
           color: colors.$text-muted;
         }
 
         &-description {
-          font-size: 0.75rem;
+          font-size: 12px;
           font-weight: 700;
           line-height: 1.2;
           letter-spacing: 0;
@@ -67,7 +67,7 @@ $_name: "filter";
     &-fields {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 2rem;
+      gap: 32px;
       align-items: end;
 
       @media (max-width: 1200px) {
@@ -83,7 +83,7 @@ $_name: "filter";
 
   &__field {
     display: grid;
-    gap: 0.75rem;
+    gap: 12px;
     flex: 1 1 200px;
     min-width: 200px;
   }

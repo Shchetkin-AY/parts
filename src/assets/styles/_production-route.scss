@@ -15,7 +15,7 @@ $_name: "production-route";
   &__title {
     color: colors.$text-primary;
 
-    font-size: 1.25rem;
+    font-size: 20px;
     letter-spacing: 1.2px;
     font-weight: 600;
     line-height: 1;
@@ -25,18 +25,18 @@ $_name: "production-route";
 
   &__panel {
     display: grid;
-    gap: 2rem;
+    gap: 32px;
     background: colors.$surface;
     border: 1px solid colors.$border;
-    border-radius: 0.75rem;
+    border-radius: 12px;
     backdrop-filter: blur(64px);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-top: 16px;
 
     @media (max-width: 1100px) {
-      padding: 1rem;
+      padding: 16px;
       padding-bottom: 0;
       padding-top: 0;
     }
@@ -45,7 +45,7 @@ $_name: "production-route";
   &__grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 2rem;
+    gap: 32px;
 
     @media (max-width: 1100px) {
       grid-template-columns: 1fr;
@@ -59,17 +59,17 @@ $_name: "production-route";
     align-content: center;
     justify-content: center;
     text-align: center;
-    gap: 0.5rem;
+    gap: 8px;
     grid-template-rows: auto 1fr;
-    padding: 1rem;
-    padding-right: 2.5rem;
+    padding: 16px;
+    padding-right: 40px;
 
     &:last-child {
-      padding-right: 1rem;
+      padding-right: 16px;
     }
 
     @media (max-width: 1100px) {
-      padding-right: 1rem;
+      padding-right: 16px;
       border-bottom: 1px solid colors.$border;
 
       &:last-child {
@@ -82,7 +82,7 @@ $_name: "production-route";
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 1.25rem;
+    right: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,32 +123,32 @@ $_name: "production-route";
     color: colors.$primary;
 
     @media (max-width: 1100px) {
-      top: 1rem;
-      left: 1rem;
+      top: 16px;
+      left: 16px;
     }
   }
 
   &__copy {
     display: grid;
-    gap: 0.2rem;
+    gap: 3.2px;
   }
 
   &__icon {
-    font-size: 1.875rem;
+    font-size: 30px;
   }
 
   &__card-title {
     color: colors.$text-secondary;
-    font-size: 0.775rem;
+    font-size: 12.4px;
     font-weight: 700;
     line-height: 1.2;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.48px;
     text-transform: uppercase;
   }
 
   &__card-text {
     color: colors.$text-soft;
-    font-size: 0.675rem;
+    font-size: 10.8px;
     line-height: 1.2;
     font-weight: 300;
   }

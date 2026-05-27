@@ -3,19 +3,19 @@
 $_name: "technical-excellence";
 
 .#{$_name} {
-  padding-block: 3rem;
+  padding-block: 48px;
   background: colors.$surface-container-lowest;
 
   &__container {
     display: grid;
-    gap: 10rem;
+    gap: 160px;
   }
 
   &__row {
     display: grid;
     grid-template-columns: 1fr;
     align-items: center;
-    gap: 4rem;
+    gap: 64px;
 
     @media (min-width: 1024px) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -26,7 +26,7 @@ $_name: "technical-excellence";
     position: relative;
     overflow: hidden;
     aspect-ratio: 16 / 9;
-    border-radius: 1rem;
+    border-radius: 16px;
 
     @media (min-width: 1024px) {
       grid-column: span 7 / span 7;
@@ -70,30 +70,30 @@ $_name: "technical-excellence";
 
   &__stats {
     position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: 32px;
+    left: 32px;
     display: flex;
-    gap: 3rem;
+    gap: 48px;
   }
 
   &__stat-value {
     color: colors.$text;
-    font-size: 1.875rem;
+    font-size: 30px;
     font-weight: 900;
-    line-height: 2.25rem;
+    line-height: 36px;
   }
 
   &__stat-label {
     color: colors.$text-secondary;
-    font-size: 0.625rem;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
   }
 
   &__copy {
     display: grid;
-    gap: 2rem;
+    gap: 32px;
 
     @media (min-width: 1024px) {
       grid-column: span 5 / span 5;
@@ -102,48 +102,48 @@ $_name: "technical-excellence";
 
   &__eyebrow {
     color: colors.$primary;
-    font-size: 0.625rem;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.5em;
+    letter-spacing: 8px;
     text-transform: uppercase;
   }
 
   &__title {
-    font-size: 2.25rem;
+    font-size: 36px;
     font-weight: 900;
     line-height: 1.25;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.8px;
     text-transform: uppercase;
 
     @media (min-width: 768px) {
-      font-size: 3rem;
+      font-size: 48px;
       line-height: 1;
     }
   }
 
   &__text {
     color: colors.$text-secondary;
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: 300;
     line-height: 1.625;
   }
 
   &__list {
     display: grid;
-    gap: 1rem;
+    gap: 16px;
     list-style: none;
   }
 
   &__item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 12px;
     color: colors.$text-secondary;
-    font-size: 0.875rem;
+    font-size: 14px;
 
     span {
-      width: 0.25rem;
-      height: 0.25rem;
+      width: 4px;
+      height: 4px;
       flex: 0 0 auto;
       background: colors.$primary;
       border-radius: 999px;
@@ -153,16 +153,16 @@ $_name: "technical-excellence";
   &__pressure-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    padding-block: 1rem;
+    gap: 16px;
+    padding-block: 16px;
     border-block: 1px solid colors.$border;
   }
 
   &__pressure-value {
     color: colors.$text;
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 700;
-    line-height: 1.75rem;
+    line-height: 28px;
 
     &--accent {
       color: colors.$primary;
@@ -171,8 +171,8 @@ $_name: "technical-excellence";
 
   &__pressure-label {
     color: colors.$text-secondary;
-    font-size: 0.5625rem;
-    letter-spacing: -0.05em;
+    font-size: 9px;
+    letter-spacing: -0.8px;
     text-transform: uppercase;
   }
 

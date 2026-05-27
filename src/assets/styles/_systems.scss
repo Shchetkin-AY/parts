@@ -16,7 +16,7 @@ $_name: "systems";
   &__title {
     color: colors.$text-primary;
 
-    font-size: 1.25rem;
+    font-size: 20px;
     letter-spacing: 1.2px;
     font-weight: 600;
     line-height: 1;
@@ -29,11 +29,11 @@ $_name: "systems";
 
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 16px;
 
     @media (max-width: 1100px) {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
+      gap: 20px;
     }
   }
 }
@@ -42,7 +42,7 @@ $_name: "systems";
   position: relative;
   overflow: hidden;
 
-  min-height: 25rem;
+  min-height: 400px;
 
   border: 1px solid colors.$border;
   border-radius: $radius-md;
@@ -110,28 +110,28 @@ $_name: "systems";
 
     display: grid;
     grid-template-rows: auto 1fr;
-    gap: 1rem;
+    gap: 16px;
 
-    padding: 1rem;
+    padding: 16px;
   }
 
   &__header {
     display: grid;
-    gap: 0.15rem;
+    gap: 2.4px;
     align-self: start;
   }
 
   &__title {
     color: colors.$text-primary;
 
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
   }
 
   &__subtitle {
     color: colors.$text-secondary;
-    font-size: 0.75rem;
+    font-size: 12px;
     line-height: 1.2;
     font-weight: 300;
   }
@@ -140,27 +140,27 @@ $_name: "systems";
     align-self: end;
 
     display: grid;
-    gap: 0.25rem;
+    gap: 4px;
     align-items: center;
   }
 
   &__feature {
     display: grid;
-    grid-template-columns: 1rem minmax(0, 1fr);
-    gap: 0.45rem;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 7.2px;
     align-items: center;
     color: colors.$text-secondary;
 
-    font-size: 0.775rem;
+    font-size: 12.4px;
   }
 
   &__check {
     color: colors.$primary;
 
-    font-size: 0.9rem;
+    font-size: 14.4px;
     line-height: 1;
     font-weight: 700;
 
-    transform: translateY(0.05rem);
+    transform: translateY(0.8px);
   }
 }

@@ -1,9 +1,9 @@
 $_name: "home";
 
 .#{$_name} {
-  --home-inline: 1.5rem;
-  --home-section-gap: 2rem;
-  --home-lead-gap: 1rem;
+  --home-inline: 24px;
+  --home-section-gap: 32px;
+  --home-lead-gap: 16px;
 
   display: grid;
   grid-template-columns:
@@ -15,7 +15,7 @@ $_name: "home";
   width: 100%;
 
   @media (min-width: 768px) {
-    --home-inline: 2rem;
+    --home-inline: 32px;
   }
 
   &__group,
