@@ -9,7 +9,7 @@ export default defineComponent({
         <div class="content-container footer__container">
           <div class="footer__grid">
             <div class="footer__brand-column">
-              <div class="footer__brand">Steel Core</div>
+              <div class="footer__brand">ISKOR</div>
               <p class="footer__text">
                 Официальное подразделение Savanini Systems. Центр технологических компетенций в области тормозных систем.
               </p>
