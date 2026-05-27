@@ -13,7 +13,7 @@ const server = {
 }
 
 export default defineConfig({
-  base: '/parts/',
+  // base: '/parts/',
 
   server,
 
