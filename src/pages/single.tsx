@@ -1,7 +1,7 @@
 import { type VNode, computed, defineComponent, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import catalog, { type CatalogItem } from '@/data/catalog'
-import { formatPrice, getString } from '@/utils'
+import { CatalogItem, formatPrice, getString } from '@/utils'
+import catalog from './catalog'
 
 const placeholderImage = '/kit.png'
 
@@ -74,6 +74,9 @@ const formatCny = (value: string | number | undefined): string | undefined => {
   return `¥ ${numberValue.toLocaleString('en-US')}`
 }
 
+interface ScoredItem { item: CatalogItem;
+  score: number }
+
 export default defineComponent({
   name: 'SingleProductPage',
 
@@ -85,7 +88,7 @@ export default defineComponent({
     const resolvedItem = computed<CatalogItem | undefined>(() => {
       const id = String(route.params.id ?? '')
 
-      return catalog.find(item => {
+      return catalog.find((item: CatalogItem) => {
         return String(item.id) === id
       })
     })
@@ -101,9 +104,9 @@ export default defineComponent({
       return formatPrice(resolvedItem.value?.priceUsd ?? '')
     })
     const maxWheelDiameter = computed(() => {
-      const diameters = catalog.map(item => {
+      const diameters = catalog.map((item: CatalogItem) => {
         return getNumber(item.wheelDiameterInch)
-      }).filter((diameter): diameter is number => {
+      }).filter((diameter: number | undefined): diameter is number => {
         return diameter !== undefined
       })
 
@@ -298,18 +301,14 @@ export default defineComponent({
     })
     const recommendedItems = computed<CatalogItem[]>(() => {
       const item = resolvedItem.value
-
       if (!item) {
         return []
       }
 
       return catalog
-        .filter(candidate => {
-          return candidate.id !== item.id
-        })
-        .map(candidate => {
+        .filter((candidate: CatalogItem) => candidate.id !== item.id)
+        .map((candidate: CatalogItem): ScoredItem => {
           let score = 0
-
           if (candidate.series === item.series) {
             score += 70
           }
@@ -334,13 +333,9 @@ export default defineComponent({
             score
           }
         })
-        .sort((firstItem, secondItem) => {
-          return secondItem.score - firstItem.score
-        })
+        .sort((firstItem: ScoredItem, secondItem: ScoredItem) => secondItem.score - firstItem.score)
         .slice(0, 4)
-        .map(candidate => {
-          return candidate.item
-        })
+        .map((candidate: ScoredItem) => candidate.item)
     })
 
     const getRecommendedTitle = (item: CatalogItem): string => {
@@ -364,7 +359,7 @@ export default defineComponent({
           </div>
 
           <div class={`${baseClass}__image`}>
-            <img src={`${resolvedItem.value.series.toLowerCase()}.png`} alt={productModel.value} />
+            <img src={`${resolvedItem.value?.series.toLowerCase()}.png`} alt={productModel.value} />
           </div>
         </div>
       )
