@@ -47,7 +47,6 @@ export default defineComponent({
         {renderLead()}
         {renderAdvantages()}
         {renderSystems()}
-        {/* {renderProductionRoute()} */}
         {renderPopular()}
         {renderBrands()}
       </div>
