@@ -1,0 +1,166 @@
+@use "./colors";
+@use "./variables" as *;
+
+$_name: "systems";
+
+.#{$_name} {
+  display: grid;
+  justify-items: center;
+
+  &-content {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+  }
+
+  &__title {
+    color: colors.$text-primary;
+
+    font-size: 20px;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  &__cards {
+    width: min(100%, $container);
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+}
+
+.systems-card {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 400px;
+
+  border: 1px solid colors.$border;
+  border-radius: $radius-md;
+
+  background: colors.$surface;
+
+  transition:
+    transform $transition-base,
+    border-color $transition-base,
+    box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+    border-color: colors.$border-strong;
+
+    .systems-card__image {
+      transform: scale(1.01);
+    }
+
+    .systems-card__link {
+      color: colors.$primary-hover;
+    }
+  }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    display: grid;
+    place-items: center;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    opacity: 0.72;
+
+    transition:
+      transform $transition-slow,
+      opacity $transition-slow;
+
+    mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.5) 58%, rgba(0, 0, 0, 0.82) 100%),
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.03), transparent 45%);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+
+    height: 100%;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+
+    padding: 16px;
+  }
+
+  &__header {
+    display: grid;
+    gap: 2.4px;
+    align-self: start;
+  }
+
+  &__title {
+    color: colors.$text-primary;
+
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  &__subtitle {
+    color: colors.$text-secondary;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 300;
+  }
+
+  &__features {
+    align-self: end;
+
+    display: grid;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__feature {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 7.2px;
+    align-items: center;
+    color: colors.$text-secondary;
+
+    font-size: 12.4px;
+  }
+
+  &__check {
+    color: colors.$primary;
+
+    font-size: 14.4px;
+    line-height: 1;
+    font-weight: 700;
+
+    transform: translateY(0.8px);
+  }
+}

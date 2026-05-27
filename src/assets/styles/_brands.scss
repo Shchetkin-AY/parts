@@ -1,0 +1,49 @@
+@use "colors";
+@use "./variables" as *;
+
+$_name: "brands";
+
+.#{$_name} {
+  display: grid;
+  justify-items: center;
+
+  &-content {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+  }
+
+  &__title {
+    display: grid;
+    color: colors.$text-primary;
+    justify-content: start;
+    font-size: 20px;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__item {
+    width: 100px;
+    height: 120px;
+    object-fit: contain;
+  }
+}

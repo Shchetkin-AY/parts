@@ -1,3 +1,5 @@
+agents
+prompts
 dist
 dev-dist
 coverage
@@ -11,4 +13,5 @@ node_modules
 .github
 .DS_Store
 .codex
+.copilot-commit-message-instructions.md
 src/templates/*

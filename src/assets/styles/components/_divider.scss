@@ -1,0 +1,9 @@
+@use "../colors";
+
+$_name: "g-divider";
+
+.#{$_name} {
+  background-color: colors.$border;
+
+  display: block;
+}

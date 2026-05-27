@@ -1,0 +1,47 @@
+$_name: "home";
+
+.#{$_name} {
+  --home-inline: 24px;
+  --home-section-gap: 32px;
+  --home-lead-gap: 16px;
+
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--home-inline), 1fr)
+    [content-start] minmax(0, var(--container, 1440px))
+    [content-end] minmax(var(--home-inline), 1fr)
+    [full-end];
+  row-gap: var(--home-section-gap);
+  width: 100%;
+
+  @media (min-width: 768px) {
+    --home-inline: 32px;
+  }
+
+  &__group,
+  &__section {
+    grid-column: full;
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(var(--home-inline), 1fr)
+      [content-start] minmax(0, var(--container, 1440px))
+      [content-end] minmax(var(--home-inline), 1fr)
+      [full-end];
+    min-width: 0;
+    width: 100%;
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__group,
+    &__section {
+      grid-template-columns: subgrid;
+    }
+  }
+
+  &__section > * {
+    grid-column: content;
+    min-width: 0;
+    width: 100%;
+    max-width: var(--container, 1440px);
+  }
+}

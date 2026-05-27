@@ -1,0 +1,158 @@
+@use "../colors";
+
+$_name: "catalog";
+
+.#{$_name} {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  padding-block: 48px 48px;
+  padding-inline: 24px;
+
+  @media (min-width: 768px) {
+    padding-inline: 48px;
+  }
+
+  &__layout {
+    display: grid;
+    gap: 32px;
+    width: min(100%, var(--container, 1280px));
+  }
+
+  @media (min-width: 1024px) {
+    &__layout {
+      grid-template-columns: 288px minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+    }
+  }
+
+  &__sidebar {
+    position: sticky;
+    left: 0;
+    display: grid;
+    gap: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    &__sidebar {
+      position: sticky;
+      border-right: 1px solid colors.$border;
+      padding-right: 32px;
+    }
+  }
+
+  &__sidebar-header {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__sidebar-title {
+    color: colors.$primary;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__sidebar-text {
+    color: colors.$text-secondary;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__sidebar-actions {
+    display: grid;
+  }
+
+  &__sidebar-actions .button {
+    width: 100%;
+  }
+
+  &__content {
+    min-width: 0;
+    display: grid;
+    gap: 24px;
+  }
+
+  &__header {
+    display: grid;
+    gap: 12px;
+    border-bottom: 1px solid colors.$border;
+    padding-bottom: 16px;
+  }
+
+  @media (min-width: 768px) {
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
+  }
+
+  &__title-group {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__eyebrow {
+    color: colors.$primary;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    color: colors.$text;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__meta {
+    color: colors.$text-secondary;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    &__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  &__empty {
+    min-height: 160px;
+    display: grid;
+    place-items: center;
+    padding: 32px;
+    color: colors.$text-secondary;
+    background: colors.$surface-container-low;
+    border: 1px solid colors.$border;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+}
