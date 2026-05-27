@@ -204,7 +204,7 @@ $_name: "single";
     border-radius: 14px;
 
     &-label {
-      color: #8b8b8b;
+      color: colors.color(text-muted-light);
       font-size: 11px;
       line-height: 1.2;
       letter-spacing: 0;
@@ -237,7 +237,7 @@ $_name: "single";
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #53ff7d;
+      color: colors.color(success);
       font-size: 12px;
       font-weight: 600;
       line-height: 1;
@@ -264,7 +264,7 @@ $_name: "single";
   }
 
   &__muted {
-    color: #8b8b8b;
+    color: colors.color(text-muted-light);
     font-size: 12px;
     line-height: 1.4;
     letter-spacing: 0;
@@ -276,7 +276,7 @@ $_name: "single";
     gap: 8px;
 
     span {
-      color: #8b8b8b;
+      color: colors.color(text-muted-light);
       font-size: 11px;
       font-weight: 700;
       line-height: 1;
@@ -398,7 +398,7 @@ $_name: "single";
   &__tab {
     position: relative;
     padding: 0 0 14px;
-    color: #8b8b8b;
+    color: colors.color(text-muted-light);
     background: transparent;
     border: 0;
     cursor: pointer;
@@ -469,7 +469,7 @@ $_name: "single";
     }
 
     span:first-child {
-      color: #8b8b8b;
+      color: colors.color(text-muted-light);
       text-align: left;
     }
   }

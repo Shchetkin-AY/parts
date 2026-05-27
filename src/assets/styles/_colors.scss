@@ -27,6 +27,11 @@ $border-strong: rgba(255, 255, 255, 0.08);
 
 $muted: #a69b9a;
 
+$text-dim: #71717a;
+$text-subtle: #52525b;
+$text-meta: #3f3f46;
+$text-muted-light: #8b8b8b;
+$success: #53ff7d;
 $colors: (
   "primary": $primary,
   "primary-hover": $primary-hover,
@@ -51,7 +56,13 @@ $colors: (
   "border": $border,
   "border-soft": $border-soft,
   "border-strong": $border-strong,
-  "muted": $muted
+  "muted": $muted,
+
+  "text-dim": $text-dim,
+  "text-subtle": $text-subtle,
+  "text-meta": $text-meta,
+  "text-muted-light": $text-muted-light,
+  "success": $success
 );
 
 $color-names: map.keys($colors);

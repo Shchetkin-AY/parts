@@ -102,7 +102,7 @@ $_name: "about";
     text-transform: uppercase;
 
     span {
-      color: rgb(231 229 229 / 32%);
+      color: colors.$text;
       font-size: clamp(30px, 6vw, 76px);
       font-weight: 900;
       letter-spacing: 0;
