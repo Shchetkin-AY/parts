@@ -30,7 +30,7 @@ export default defineComponent({
       return (
         <img
           class="hero__image"
-          src={'/public/hero.png'}
+          src={'/hero.png'}
         />
       )
     }
