@@ -311,7 +311,7 @@ export default defineComponent({
     const renderDescription = () => {
       return (
         <span class="filter__panel-header-description">
-          Найдите совместимую тормозную систему дял вашего автомобиля
+          Найдите совместимую тормозную систему для вашего автомобиля
         </span>
       )
     }
