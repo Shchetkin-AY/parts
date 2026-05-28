@@ -7,7 +7,7 @@ const cards: SystemCard[] = [
     type: SystemsSeriesTypes.s,
     title: 'S-series',
     subtitle: 'Ежедневная езда',
-    image: '/street.png',
+    image: '/street.webp',
     features: [
       'Комфорт и надёжность',
       'Оптимальны для города',
@@ -18,7 +18,7 @@ const cards: SystemCard[] = [
     type: SystemsSeriesTypes.r,
     title: 'R-series',
     subtitle: 'Активная езда',
-    image: '/sport.png',
+    image: '/sport.webp',
     features: [
       'Высокая эффективность',
       'Устойчивость к перегреву',
@@ -29,7 +29,7 @@ const cards: SystemCard[] = [
     type: SystemsSeriesTypes.n,
     title: 'N-series',
     subtitle: 'Трек и автоспорт',
-    image: '/track.png',
+    image: '/track.webp',
     features: [
       'Максимальная мощность',
       'Работа при экстремальных нагрузках',

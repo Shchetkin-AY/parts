@@ -60,7 +60,7 @@ export default defineComponent({
           {renderBadge()}
           <img
             class="popular-systems-card__image"
-            src={`${props.value.series.toLowerCase()}.png`}
+            src={`${props.value.series.toLowerCase()}.webp`}
             alt={title.value}
             loading="lazy"
           />

@@ -3,7 +3,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import { CatalogItem, formatPrice, getString } from '@/utils'
 import catalog from './catalog'
 
-const placeholderImage = '/kit.png'
+const placeholderImage = '/kit.webp'
 
 interface InfoRow {
   label: string
@@ -359,7 +359,7 @@ export default defineComponent({
           </div>
 
           <div class={`${baseClass}__image`}>
-            <img src={`${resolvedItem.value?.series.toLowerCase()}.png`} alt={productModel.value} />
+            <img src={`${resolvedItem.value?.series.toLowerCase()}.webp`} alt={productModel.value} />
           </div>
         </div>
       )

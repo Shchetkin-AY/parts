@@ -13,8 +13,6 @@ const server = {
 }
 
 export default defineConfig({
-  // base: '/parts/',
-
   server,
 
   plugins: [
@@ -24,15 +22,64 @@ export default defineConfig({
       registerType: 'prompt',
       workbox: {
         navigateFallbackDenylist: [ /^\/api/ ],
-        sourcemap: true
+        sourcemap: true,
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 дней
+              }
+            }
+          },
+          {
+            urlPattern: /^\/svg\/.*\.svg$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'svg-cache',
+              expiration: {
+                maxEntries: 30,
+                maxAgeSeconds: 60 * 24 * 60 * 60
+              }
+            }
+          }
+        ]
       },
-      includeAssets: [], // добавить пути к иконкам ['favicon.ico', 'icons/icon-192.png']
+      includeAssets: [
+        'favicon.ico',
+        'favicon.svg',
+        'favicon-96x96.png',
+        'favicon-192x192.png',
+        'favicon-512x512.png',
+        'apple-touch-icon.png'
+      ],
       manifest: {
-        name: 'Cabinet',
-        short_name: 'Cabinet',
-        description: 'Cabinet',
+        name: 'ISKOR',
+        short_name: 'ISCOR',
+        theme_color: '#0c0c0c',
+        background_color: '#0c0c0c',
         display: 'standalone',
-        icons: [] // пример: [{ src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }]
+        start_url: '/',
+        icons: [
+          {
+            src: '/icons/favicon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/favicon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/favicon-96x96.png',
+            sizes: '96x96',
+            type: 'image/png'
+          }
+        ]
       },
       devOptions: {
         enabled: process.env.PWA_DEV === 'true',
