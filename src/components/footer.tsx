@@ -11,7 +11,7 @@ export default defineComponent({
             <div class="footer__brand-column">
               <div class="footer__brand">ISKOR</div>
               <p class="footer__text">
-                Официальное подразделение Savanini Systems. Центр технологических компетенций в области тормозных систем.
+                Официальное подразделение Savanini Systems. Центр технологических компетенций в области тормозных систем
               </p>
             </div>
 
@@ -35,7 +35,7 @@ export default defineComponent({
 
           <div class="footer__bottom">
             <div class="footer__copyright">
-              © 2024 Steel Core Engineering. All rights reserved. Precision forged in aircraft grade aluminum.
+              © 2024 Steel Core Engineering. All rights reserved. Precision forged in aircraft grade aluminum
             </div>
             <div class="footer__meta">
               <span>Privacy Policy</span>

@@ -12,22 +12,22 @@ const items: ExcellenceItem[] = [
   {
     icon: Icons.verified,
     title: 'Официальный дистрибьютор',
-    text: 'Прямые поставки.'
+    text: 'Прямые поставки'
   },
   {
     icon: Icons.settings,
     title: 'Индивидуальные решения',
-    text: 'Под заказ любой конфигурации.'
+    text: 'Под заказ любой конфигурации'
   },
   {
     icon: Icons.delivery,
     title: 'Быстрая доставка',
-    text: 'По всей России.'
+    text: 'По всей России'
   },
   {
     icon: Icons.warranty,
     title: 'Гарантия и поддержка',
-    text: '1 год.'
+    text: '1 год'
   }
 ]
 
