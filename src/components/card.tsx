@@ -60,9 +60,10 @@ export default defineComponent({
           {renderBadge()}
           <img
             class="popular-systems-card__image"
-            src={`${props.value.series.toLowerCase()}.webp`}
+            src={`/images/products/${props.value.series.toLowerCase()}.webp`}
             alt={title.value}
             loading="lazy"
+            decoding="async"
           />
         </div>
       )
@@ -109,7 +110,10 @@ export default defineComponent({
           class={classes.value}
           to={{
             name: 'catalog.single',
-            params: { id: props.value.id }
+            params: {
+              category: 'kits',
+              id: props.value.id
+            }
           }}
         >
           {renderImage()}
