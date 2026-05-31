@@ -4,9 +4,9 @@
   "description": "Cars parts site",
   "type": "module",
   "scripts": {
-    "prebuild": "npm run check-types && npm run lint",
+    "prebuild": "pnpm run sync:catalog && pnpm run check-types && pnpm run lint",
     "build": "vite build",
-    "build:sync": "pnpm run sync:catalog && pnpm run build",
+    "build:sync": "pnpm run build",
     "start": "vite --force",
     "sync:catalog": "pnpm exec tsx scripts/sync-catalog.ts",
     "sync:sheet": "pnpm run sync:catalog",
@@ -14,8 +14,7 @@
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix",
     "lint:inspect": "npx @eslint/config-inspector",
-    "predeploy": "npm run lint",
-    "deploy": "chmod u+x ./deploy.sh && ./deploy.sh",
+    "deploy": "pnpm run build",
     "r": "npm run release",
     "d": "npm run deploy"
   },

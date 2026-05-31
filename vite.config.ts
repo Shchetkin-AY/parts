@@ -22,7 +22,7 @@ export default defineConfig({
       registerType: 'prompt',
       workbox: {
         navigateFallbackDenylist: [ /^\/api/ ],
-        sourcemap: true,
+        sourcemap: false,
         runtimeCaching: [
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
@@ -49,12 +49,12 @@ export default defineConfig({
         ]
       },
       includeAssets: [
-        'favicon.ico',
-        'favicon.svg',
-        'favicon-96x96.png',
-        'favicon-192x192.png',
-        'favicon-512x512.png',
-        'apple-touch-icon.png'
+        'icons/favicon.ico',
+        'icons/favicon.svg',
+        'icons/favicon-96x96.png',
+        'icons/favicon-192x192.png',
+        'icons/favicon-512x512.png',
+        'icons/apple-touch-icon.png'
       ],
       manifest: {
         name: 'ISKOR',
@@ -95,6 +95,24 @@ export default defineConfig({
   },
 
   build: {
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('/src/data/catalog.ts')) {
+            return 'catalog-data'
+          }
+
+          if (
+            id.includes('/node_modules/vue/')
+            || id.includes('/node_modules/@vue/')
+            || id.includes('/node_modules/vue-router/')
+            || id.includes('/node_modules/pinia/')
+          ) {
+            return 'vue-vendor'
+          }
+        }
+      }
+    }
   }
 })
