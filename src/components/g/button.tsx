@@ -1,13 +1,18 @@
 import { ButtonHTMLAttributes, PropType, computed, defineComponent } from 'vue'
 
-import { Colors, ComponentNames, Icons, numberToPxOrString } from '@/utils'
+import { Colors, ComponentNames, Icons, Sizes, numberToPxOrString } from '@/utils'
 
-import { GIcon } from '@/components'
+import { GIcon } from './icon'
 
 export const buttonProps = {
   label: {
     type: [ String, Number ],
     default: undefined
+  },
+
+  size: {
+    type: String as PropType<Sizes>,
+    default: Sizes.medium
   },
 
   color: {
@@ -74,6 +79,11 @@ export const buttonProps = {
   width: {
     type: [ String, Number ],
     default: undefined
+  },
+
+  outline: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -89,7 +99,10 @@ export const GButton = defineComponent({
       const result = {
         [ComponentNames.button]: true,
 
+        [`${ComponentNames.button}--${props.size}`]: true,
         [`${ComponentNames.button}--labeled`]: hasLabel.value,
+        [`${ComponentNames.button}--icon`]: hasIcon.value,
+        [`${ComponentNames.button}--outline`]: props.outline,
         [`${ComponentNames.button}--disabled`]: props.disabled,
 
         [`${ComponentNames.button}--color-${props.color}`]: !!props.color

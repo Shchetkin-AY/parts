@@ -8,6 +8,12 @@ $_name: "g-button";
     &--color-#{$name} {
       background-color: colors.color($name);
 
+      &.#{$_name}--outline {
+        background-color: transparent;
+        color: colors.color($name);
+        border-color: colors.color($name);
+      }
+
       & > .#{$_name}__content {
         & > .#{$_name}__icon,
         & > .#{$_name}__label {
@@ -27,6 +33,21 @@ $_name: "g-button";
         }
       }
     }
+  }
+}
+
+@mixin _sizes {
+  &--large {
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        font-size: 16px;
+        line-height: 18px;
+      }
+    }
+
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
   }
 }
 
@@ -60,7 +81,9 @@ $_name: "g-button";
 
   cursor: pointer;
   user-select: none;
+  height: 40px;
   min-height: 40px;
+  max-height: 40px;
 
   &__label {
     padding-left: 12px;
@@ -134,13 +157,45 @@ $_name: "g-button";
     @include _transition;
   }
 
-  &--disabled {
-    background-color: colors.$muted;
-
-    cursor: default;
-    pointer-events: none;
-  }
-
   @include _transition;
   @include _colors;
+  @include _sizes;
+
+  &--outline {
+    & > .#{$_name}__content {
+      & > .#{$_name}__icon,
+      & > .#{$_name}__label {
+        color: currentcolor;
+      }
+    }
+
+    & > .#{$_name}__loading {
+      color: currentcolor;
+    }
+
+    &:hover {
+      &::before {
+        background-color: colors.color(border, 0.2);
+      }
+    }
+
+    &:active {
+      &::before {
+        background-color: colors.color(border, 0.3);
+      }
+    }
+  }
+
+  &--disabled {
+    cursor: default;
+    pointer-events: none;
+    background-color: colors.color(grey, 0.25);
+
+    & > .#{$_name}__content {
+      & > .#{$_name}__icon,
+      & > .#{$_name}__label {
+        color: colors.color(grey, 0.4);
+      }
+    }
+  }
 }

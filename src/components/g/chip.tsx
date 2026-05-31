@@ -1,6 +1,6 @@
 import { CSSProperties, PropType, computed, defineComponent, ref } from 'vue'
 
-import { Colors, ComponentNames, getString } from '@/utils'
+import { Colors, ComponentNames, Sizes, getString } from '@/utils'
 
 export const chipProps = {
   label: {
@@ -11,6 +11,11 @@ export const chipProps = {
   length: {
     type: Number as PropType<number>,
     default: 25
+  },
+
+  size: {
+    type: String as PropType<Sizes>,
+    default: Sizes.medium
   },
 
   cut: {
@@ -61,7 +66,7 @@ export const GChip = defineComponent({
 
         [`${ComponentNames.chip}--round`]: props.round,
         [`${ComponentNames.chip}--outline`]: props.outline,
-
+        [`${ComponentNames.chip}--${props.size}`]: !!props.size,
         [`${ComponentNames.chip}--${props.color}`]: !!props.color
       }
     })
