@@ -281,6 +281,27 @@ export const iconPaths: Record<string, IconObject[]> = {
     }
   ],
 
+  'check-circle': [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M21 12C21 7.02908 16.9709 3 12 3C7.02908 3 3 7.02908 3 12C3 16.9699 7.02908 21 12 21C16.9709 21 21 16.9699 21 12Z',
+        'stroke-width': '1.5',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M8.53516 12.0003L10.845 14.3091L15.4627 9.69141',
+        'stroke-width': '1.5',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+
   temperature: [
     {
       name: 'path',
@@ -509,6 +530,77 @@ export const iconPaths: Record<string, IconObject[]> = {
       attributes: {
         d: 'M19.3518 12.2042V10.3527C19.3518 6.2925 16.0603 3 11.9991 3C7.93801 3 4.64648 6.2925 4.64648 10.3527V12.2042',
         'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+
+  'wheel-diameter': [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M12.2692 8.5H15.5M15.5 8.5V11.7308M15.5 8.5L8.5 15.5M8.5 12.2692V15.5M8.5 15.5H11.7308',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M12 21C7.02908 21 3 16.9699 3 12C3 7.02908 7.02908 3 12 3C16.9709 3 21 7.02908 21 12C21 16.9699 16.9709 21 12 21Z',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+
+  'disk-diameter': [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M12 21C7.02908 21 3 16.9699 3 12C3 7.02908 7.02908 3 12 3C16.9709 3 21 7.02908 21 12C21 16.9699 16.9709 21 12 21Z',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'square',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M9.71582 9.33479L12.0003 7.05029M12.0003 7.05029L14.2848 9.33479M12.0003 7.05029V16.9498M9.71582 14.6653L12.0003 16.9498M12.0003 16.9498L14.2848 14.6653',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'square',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+  square: [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M3 2.25H18C18.9946 2.25 19.9484 2.64509 20.6516 3.34835C21.3549 4.05161 21.75 5.00544 21.75 6V18C21.75 18.9946 21.3549 19.9484 20.6516 20.6516C19.9484 21.3549 18.9946 21.75 18 21.75H6C5.00544 21.75 4.05161 21.3549 3.34835 20.6516C2.64509 19.9484 2.25 18.9946 2.25 18V3C2.25 2.58579 2.58579 2.25 3 2.25Z',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M21 9.75H16.5C16.3011 9.75 16.1103 9.82902 15.9697 9.96967C15.829 10.1103 15.75 10.3011 15.75 10.5V21',
+        'stroke-width': '1.3',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M3 14.25H7.5C7.69891 14.25 7.88968 14.171 8.03033 14.0303C8.17098 13.8897 8.25 13.6989 8.25 13.5V3',
+        'stroke-width': '1.3',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
       }

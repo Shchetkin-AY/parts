@@ -1,6 +1,8 @@
 export enum Icons {
   check = 'check',
+  'check-circle' = 'check-circle',
   delivery = 'delivery',
+  'disk-diameter' = 'disk-diameter',
   drop = 'drop',
   layers = 'layers',
   menu = 'menu',
@@ -9,8 +11,10 @@ export enum Icons {
   warranty = 'warranty',
   speed = 'speed',
   settings = 'settings',
+  square = 'square',
   support = 'support',
   temperature = 'temperature',
   tools = 'tools',
-  verified = 'verified'
+  verified = 'verified',
+  'wheel-diameter' = 'wheel-diameter'
 }
