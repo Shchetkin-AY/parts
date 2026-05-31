@@ -30,7 +30,11 @@ export default defineComponent({
       return (
         <img
           class="hero__image"
-          src={'/hero.webp'}
+          src={'/images/hero/hero-alt.webp'}
+          alt="Тормозная система Savanini"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
         />
       )
     }
