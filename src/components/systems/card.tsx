@@ -36,6 +36,8 @@ export default defineComponent({
             src={props.value.image}
             alt={props.value.title}
             class="systems-card__image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       )
