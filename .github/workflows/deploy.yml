@@ -5,13 +5,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-# Разрешаем деплой страниц GitHub
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Не запускать несколько деплоев одновременно
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -26,7 +24,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.33.0   # соответствует вашему packageManager
+          version: 10.33.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,15 +33,22 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Build project
         run: pnpm run build
+        env:
+          GOOGLE_SHEET_ID: ${{ vars.GOOGLE_SHEET_ID }}
+          GOOGLE_SHEET_RANGE: ${{ vars.GOOGLE_SHEET_RANGE }}
+          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'   # папка, которую создаёт Vite
+          path: './dist'
 
   deploy:
     environment:
