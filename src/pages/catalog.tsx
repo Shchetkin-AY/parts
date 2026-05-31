@@ -1,14 +1,10 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import catalog from '@/data/catalog'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, CatalogItem } from '@/utils'
+import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem } from '@/utils'
 import { GButton } from '@/components/g/button'
 import Filter from '@/components/filter'
 import Card from '@/components/card'
-
-const normalize = (value: number | string): string => {
-  return String(value).trim()
-}
+import { useCatalogStore } from '@/stores/catalog'
 
 const emptyFilterParams: CatalogFilterParams = {
   [CatalogFilterField.diameter]: '',
@@ -23,6 +19,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const catalogStore = useCatalogStore()
     const filterVersion = ref(0)
     const filteredItems = ref<CatalogItem[]>([])
     const filterParams = ref<CatalogFilterParams>({
@@ -30,14 +27,7 @@ export default defineComponent({
     })
 
     const sourceItems = computed<CatalogItem[]>(() => {
-      return catalog.filter(item => {
-        const hasVehicleBrand = Boolean(normalize(item.vehicleBrand))
-        const hasVehicleModel = Boolean(normalize(item.vehicleModel))
-        const hasDiscDiameter = Boolean(normalize(item.discDiameterMm))
-        const hasDiameter = Boolean(normalize(item.wheelDiameterInch))
-
-        return hasVehicleBrand && hasVehicleModel && hasDiscDiameter && hasDiameter
-      })
+      return catalogStore.compatibleItems
     })
     const resultTitle = computed(() => {
       const result = [ 'Тормозные системы' ]
@@ -70,6 +60,10 @@ export default defineComponent({
       },
       { immediate: true }
     )
+
+    onBeforeMount(() => {
+      catalogStore.load()
+    })
 
     const handleFilterPayload = (payload: CatalogFilterSubmitPayload<CatalogItem>): void => {
       filterParams.value = {
@@ -130,9 +124,11 @@ export default defineComponent({
       )
     }
     const renderEmptyState = () => {
+      const message = catalogStore.isLoading ? 'Загрузка каталога...' : 'По текущим параметрам ничего не найдено.'
+
       return (
         <div class="catalog__empty">
-          По текущим параметрам ничего не найдено.
+          {message}
         </div>
       )
     }
