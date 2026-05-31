@@ -1,11 +1,10 @@
 import { CatalogFilterField } from '../enums'
+import type { CatalogItem } from '../types'
 
-export interface CatalogFilterItem {
-  discDiameterMm: number | string
-  vehicleBrand: number | string
-  vehicleModel: number | string,
-  wheelDiameterInch: number | string
-}
+export type CatalogFilterItem = Pick<
+  CatalogItem,
+  'discDiameterMm' | 'vehicleBrand' | 'vehicleModel' | 'wheelDiameterInch'
+>
 
 export interface CatalogFilterParams {
   [CatalogFilterField.diameter]?: string
