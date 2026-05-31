@@ -1,8 +1,8 @@
 import { computed, defineComponent } from 'vue'
 
-import catalog from '@/data/catalog'
 import Card from '@/components/card'
 import { CatalogItem } from '@/utils'
+import { useCatalogStore } from '@/stores/catalog'
 
 function uniqueById(items: CatalogItem[]): CatalogItem[] {
   const map = new Map<number, CatalogItem>()
@@ -101,8 +101,11 @@ export default defineComponent({
   name: 'PopularSystems',
 
   setup() {
+    const catalogStore = useCatalogStore()
+    void catalogStore.load()
+
     const systems = computed(() => {
-      return pickPopularSystems(catalog, 5)
+      return pickPopularSystems(catalogStore.items, 5)
     })
 
     const renderTitle = () => {
