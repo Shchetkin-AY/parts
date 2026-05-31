@@ -1,12 +1,11 @@
-import { PropType, computed, defineComponent, reactive, watch } from 'vue'
+import { PropType, computed, defineComponent, onBeforeMount, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import catalog from '@/data/catalog'
-import { CatalogFilterField, CatalogFilterItem, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Colors, SelectOption } from '@/utils'
+import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
+import { useCatalogStore } from '@/stores/catalog'
 
 type FilterOrientation = 'horizontal' | 'vertical'
 
-const defaultFilterItems = [ ...catalog ] as CatalogItem[]
 const emptyFilterParams: CatalogFilterParams = {
   [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
@@ -17,45 +16,9 @@ const normalizeFilterValue = (value: number | string): string => {
   return String(value).trim()
 }
 
-const getItemFieldValue = (item: CatalogFilterItem, field: CatalogFilterField): string => {
-  if (field === CatalogFilterField.mark) {
-    return normalizeFilterValue(item.vehicleBrand)
-  }
-
-  if (field === CatalogFilterField.model) {
-    return normalizeFilterValue(item.vehicleModel)
-  }
-
-  return normalizeFilterValue(item.discDiameterMm)
-}
-
-const getOptionLabel = (field: CatalogFilterField, value: string): string => {
-  if (field === CatalogFilterField.diameter) {
-    return `${value} мм`
-  }
-
-  return value
-}
-
-const sortOptions = (field: CatalogFilterField, options: SelectOption[]): SelectOption[] => {
-  const sortedOptions = [ ...options ]
-
-  if (field === CatalogFilterField.diameter) {
-    return sortedOptions.sort((firstOption, secondOption) => {
-      return Number(firstOption.value) - Number(secondOption.value)
-    })
-  }
-
-  return sortedOptions.sort((firstOption, secondOption) => {
-    return firstOption.label.localeCompare(secondOption.label, 'ru', {
-      numeric: true,
-      sensitivity: 'base'
-    })
-  })
-}
-
 export default defineComponent({
   name: 'Filter',
+
   props: {
     initialParams: {
       type: Object as PropType<Partial<CatalogFilterParams>>,
@@ -65,7 +28,7 @@ export default defineComponent({
     items: {
       type: Array as PropType<CatalogItem[]>,
       required: false,
-      default: () => defaultFilterItems
+      default: () => []
     },
     orientation: {
       type: String as PropType<FilterOrientation>,
@@ -73,12 +36,18 @@ export default defineComponent({
       default: 'horizontal'
     }
   },
+
   emits: [ 'change', 'submit' ],
 
   setup(props, { emit }) {
     const router = useRouter()
+    const catalogStore = useCatalogStore()
     const params = reactive<CatalogFilterParams>({
       ...emptyFilterParams
+    })
+
+    const sourceItems = computed(() => {
+      return props.items.length > 0 ? props.items : catalogStore.compatibleItems
     })
 
     const resolveInitialParams = (): CatalogFilterParams => {
@@ -90,40 +59,11 @@ export default defineComponent({
     }
 
     const getFilteredItems = (excludedField?: CatalogFilterField): CatalogItem[] => {
-      return props.items.filter(item => {
-        const isMarkMatched = excludedField === CatalogFilterField.mark
-          || !params[CatalogFilterField.mark]
-          || getItemFieldValue(item, CatalogFilterField.mark) === params[CatalogFilterField.mark]
-
-        const isModelMatched = excludedField === CatalogFilterField.model
-          || !params[CatalogFilterField.model]
-          || getItemFieldValue(item, CatalogFilterField.model) === params[CatalogFilterField.model]
-
-        const isDiameterMatched = excludedField === CatalogFilterField.diameter
-          || !params[CatalogFilterField.diameter]
-          || getItemFieldValue(item, CatalogFilterField.diameter) === params[CatalogFilterField.diameter]
-
-        return isMarkMatched && isModelMatched && isDiameterMatched
-      })
+      return catalogStore.filterItems(params, sourceItems.value, excludedField)
     }
 
-    const getUniqueOptions = (field: CatalogFilterField): SelectOption[] => {
-      const optionsMap = new Map<string, SelectOption>()
-
-      getFilteredItems(field).forEach(item => {
-        const value = getItemFieldValue(item, field)
-
-        if (!value || optionsMap.has(value)) {
-          return
-        }
-
-        optionsMap.set(value, {
-          label: getOptionLabel(field, value),
-          value
-        })
-      })
-
-      return sortOptions(field, [ ...optionsMap.values() ])
+    const getUniqueOptions = (field: CatalogFilterField) => {
+      return catalogStore.getFilterOptions(field, params, sourceItems.value)
     }
 
     const markOptions = computed(() => {
@@ -206,6 +146,10 @@ export default defineComponent({
       },
       { immediate: true }
     )
+
+    onBeforeMount(() => {
+      catalogStore.load()
+    })
 
     const getCatalogQueryParams = (): Record<string, string> => {
       const query: Record<string, string> = {}
