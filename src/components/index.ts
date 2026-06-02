@@ -1,6 +1,6 @@
 export * from './g'
 
-export * from './advantages'
+export * from './benefits'
 export * from './filter'
 export * from './footer'
 export * from './hero'

@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { GIcon } from '@/components'
-import { Icons } from '@/utils'
+import { Colors, Icons } from '@/utils'
 
 interface ExcellenceItem {
   icon: string
@@ -31,28 +31,30 @@ const items: ExcellenceItem[] = [
   }
 ]
 
+const className = 'benefits'
+
 export default defineComponent({
-  name: 'TechnicalExcellence',
+  name: 'Benefits',
 
   setup() {
     const renderCard = ({ icon, title, text }: ExcellenceItem) => {
       return (
-        <article class="advantages__card">
-          <div class="advantages__icon">
-            <GIcon icon={icon} size={46} color="primary" />
+        <article class={`${className}__card`} >
+          <div class={`${className}__icon`}>
+            <GIcon icon={icon} size={46} color={Colors.primary} />
           </div>
-          <div class="advantages__content">
-            <div class="advantages__card-title">{title}</div>
-            <div class="advantages__card-text">{text}</div>
+          <div class={`${className}__content`}>
+            <div class={`${className}__card-title`}>{title}</div>
+            <div class={`${className}__card-text`}>{text}</div>
           </div>
         </article>
       )
     }
 
     return () =>
-      <section class="advantages">
-        <div class="advantages__panel">
-          <div class="advantages__grid">
+      <section class={className}>
+        <div class={`${className}__panel`}>
+          <div class={`${className}__grid`}>
             {items.map(renderCard)}
           </div>
         </div>

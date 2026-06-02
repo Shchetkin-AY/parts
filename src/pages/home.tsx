@@ -2,7 +2,7 @@ import { defineComponent } from 'vue'
 
 import Hero from '@/components/hero'
 import Filter from '@/components/filter'
-import Advantages from '@/components/advantages'
+import Benefits from '@/components/benefits'
 import Systems from '@/components/systems'
 import PopularSystems from '@/components/popular'
 import Brands from '@/components/brands'
@@ -22,7 +22,7 @@ export default defineComponent({
 
     const renderAdvantages = () => {
       return (
-        <Advantages class="home__section home__section--advantages" />
+        <Benefits class="home__section home__section--benefits" />
       )
     }
 
