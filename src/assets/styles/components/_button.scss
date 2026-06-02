@@ -23,13 +23,13 @@ $_name: "g-button";
 
       &:hover {
         &::before {
-          background-color: colors.color(bg, 0.3);
+          background-color: colors.color(bg, 0.2);
         }
       }
 
       &:active {
         &::before {
-          background-color: colors.color(bg, 0.4);
+          background-color: colors.color(bg, 0.3);
         }
       }
     }
