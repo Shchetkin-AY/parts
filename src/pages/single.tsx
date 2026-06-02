@@ -1,588 +1,647 @@
-import { type VNode, computed, defineComponent, ref } from 'vue'
+import { type CatalogItem, Colors, Icons, Sizes } from '@/utils'
+import { computed, defineComponent, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { CatalogItem, formatPrice, getString } from '@/utils'
-import catalog from './catalog'
+import ProductCard from '@/components/card'
+import { GButton } from '@/components/g/button'
+import { GChip } from '@/components/g/chip'
+import { GIcon } from '@/components/g/icon'
+import { useCatalogStore } from '@/stores/catalog'
+import { GDivider } from '@/components'
 
-const placeholderImage = '/kit.webp'
+type ProductTabKey =
+  | 'specs'
+  | 'compatibility'
+  | 'kit'
+  | 'delivery'
+  | 'faq'
 
-interface InfoRow {
-  label: string
-  value: string | number | undefined
-}
+const formatWheelDiameterRange = (value: number): string => {
+  const diameters = value.toString().match(/\d+(?:[.,]\d+)?/g) ?? []
+  const normalizedDiameters = diameters.map(diameter => diameter.replace(',', '.'))
 
-interface KitPart {
-  label: string
-}
-
-type ProductTab = 'catalog' | 'compatibility' | 'construction' | 'kit' | 'specs'
-
-interface ProductTabItem {
-  id: ProductTab
-  label: string
-}
-
-const kitParts: KitPart[] = [
-  { label: 'Суппорт' },
-  { label: 'Тормозной диск' },
-  { label: 'Колодки' },
-  { label: 'Адаптеры' },
-  { label: 'Шланги' }
-]
-
-const productTabs: ProductTabItem[] = [
-  {
-    id: 'specs',
-    label: 'Характеристики'
-  },
-  {
-    id: 'compatibility',
-    label: 'Совместимость'
-  },
-  {
-    id: 'construction',
-    label: 'Конструкция'
-  },
-  {
-    id: 'kit',
-    label: 'Комплектация'
-  },
-  {
-    id: 'catalog',
-    label: 'Каталог'
-  }
-]
-
-const hasValue = (value: string | number | undefined): value is string | number => {
-  return value !== undefined && value !== ''
-}
-const getNumber = (value: string | number | undefined): number | undefined => {
-  const numberValue = Number(value)
-
-  if (!Number.isFinite(numberValue)) {
-    return undefined
+  if (normalizedDiameters.length >= 2) {
+    return normalizedDiameters.map(diameter => `R${diameter}`).join('-')
   }
 
-  return numberValue
-}
-const formatCny = (value: string | number | undefined): string | undefined => {
-  const numberValue = getNumber(value)
+  const wheelDiameter = Number(normalizedDiameters[0] ?? value)
 
-  if (numberValue === undefined) {
-    return undefined
+  if (Number.isFinite(wheelDiameter)) {
+    return `R${wheelDiameter}-R${wheelDiameter + 3}`
   }
 
-  return `¥ ${numberValue.toLocaleString('en-US')}`
+  return `R${value}`
 }
-
-interface ScoredItem { item: CatalogItem;
-  score: number }
 
 export default defineComponent({
-  name: 'SingleProductPage',
+  name: 'ProductPage',
 
   setup() {
     const route = useRoute()
-    const baseClass = 'single'
-    const activeTab = ref<ProductTab>('specs')
+    const catalogStore = useCatalogStore()
+    const activeTab = ref<ProductTabKey>('specs')
+    void catalogStore.load()
 
-    const resolvedItem = computed<CatalogItem | undefined>(() => {
-      const id = String(route.params.id ?? '')
-
-      return catalog.find((item: CatalogItem) => {
-        return String(item.id) === id
-      })
-    })
-    const productSeries = computed(() => {
-      const item = resolvedItem.value
-
-      return [ getString(item?.brand), getString(item?.series) ].filter(Boolean).join(' ') || 'Тормозной комплект'
-    })
-    const productModel = computed(() => {
-      return getString(resolvedItem.value?.model) ?? ''
-    })
-    const productPrice = computed(() => {
-      return formatPrice(resolvedItem.value?.priceUsd ?? '')
-    })
-    const maxWheelDiameter = computed(() => {
-      const diameters = catalog.map((item: CatalogItem) => {
-        return getNumber(item.wheelDiameterInch)
-      }).filter((diameter: number | undefined): diameter is number => {
-        return diameter !== undefined
-      })
-
-      if (diameters.length === 0) {
-        return undefined
+    const tabs = [
+      {
+        key: 'specs',
+        label: 'Характеристики'
+      },
+      {
+        key: 'compatibility',
+        label: 'Совместимость'
+      },
+      {
+        key: 'kit',
+        label: 'Комплектация'
+      },
+      {
+        key: 'delivery',
+        label: 'Доставка и гарантия'
+      },
+      {
+        key: 'faq',
+        label: 'FAQ'
       }
+    ] as const
 
-      return Math.max(...diameters)
+    const routeId = computed(() => {
+      const rawId = route.params.id
+      const value = Array.isArray(rawId) ? rawId[0] : rawId
+
+      return Number(value)
     })
-    const wheelDiameterRange = computed(() => {
-      const diameter = getNumber(resolvedItem.value?.wheelDiameterInch)
 
-      if (!diameter) {
-        return undefined
-      }
+    const currentItem = computed<CatalogItem | null>(() => {
+      const item = catalogStore.getById(routeId.value)
 
-      if (!maxWheelDiameter.value || diameter >= maxWheelDiameter.value) {
-        return `R${diameter}`
-      }
-
-      return `R${diameter}-R${maxWheelDiameter.value}`
+      return item ?? null
     })
-    const statRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
 
-      return [
-        {
-          label: 'Количество поршней',
-          value: item?.pistonCount ? `${item.pistonCount} шт.` : undefined
-        },
-        {
-          label: 'Диаметр диска',
-          value: item?.discDiameterMm ? `${item.discDiameterMm} мм` : undefined
-        },
-        {
-          label: 'Применяемость',
-          value: item?.application
-        },
-        {
-          label: 'Совместимость',
-          value: wheelDiameterRange.value
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      })
-    })
-    const specRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
+    const relatedItems = computed(() => {
+      const item = currentItem.value
 
-      return [
-        {
-          label: 'Количество поршней',
-          value: item?.pistonCount ? `${item.pistonCount} шт.` : undefined
-        },
-        {
-          label: 'Диаметр колес',
-          value: wheelDiameterRange.value
-        },
-        {
-          label: 'Габариты суппорта',
-          value: item?.dimensionsMm
-        },
-        {
-          label: 'Диаметр диска',
-          value: item?.discDiameterMm ? `${item.discDiameterMm} мм` : undefined
-        },
-        {
-          label: 'Площадь колодок',
-          value: item?.padFrictionArea ? `${item.padFrictionArea} мм²` : undefined
-        },
-        {
-          label: 'Площадь поршней',
-          value: item?.pistonAreaCm2 ? `${item.pistonAreaCm2} см²` : undefined
-        },
-        {
-          label: 'Применяемость',
-          value: item?.application
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      })
-    })
-    const compatibilityRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
-      const vehicle = [ getString(item?.vehicleBrand), getString(item?.vehicleModel) ].filter(Boolean).join(' / ')
-
-      return [
-        {
-          label: 'Автомобиль',
-          value: vehicle || 'Совместимость уточняется'
-        },
-        {
-          label: 'Класс совместимости',
-          value: item?.compatibilityClass
-        },
-        {
-          label: 'Заводской диск',
-          value: item?.factoryDiscDiameterMm ? `${item.factoryDiscDiameterMm} мм` : undefined
-        },
-        {
-          label: 'Назначение',
-          value: item?.application
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      })
-    })
-    const constructionRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
-
-      return [
-        {
-          label: 'Тип конструкции',
-          value: item?.constructionType
-        },
-        {
-          label: 'Покрытие',
-          value: item?.coating
-        },
-        {
-          label: 'Особенности',
-          value: item?.features
-        },
-        {
-          label: 'Площадь поршней',
-          value: item?.pistonAreaCm2 ? `${item.pistonAreaCm2} см²` : undefined
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      })
-    })
-    const catalogRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
-
-      return [
-        {
-          label: 'Категория',
-          value: item?.category
-        },
-        {
-          label: 'ID комплекта',
-          value: item?.setId
-        },
-        {
-          label: 'Цена USD',
-          value: item?.priceUsd ? formatPrice(item.priceUsd) : undefined
-        },
-        {
-          label: 'Цена CNY',
-          value: formatCny(item?.priceCny)
-        },
-        {
-          label: 'Статус данных',
-          value: item?.dataStatus
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      })
-    })
-    const factRows = computed<InfoRow[]>(() => {
-      const item = resolvedItem.value
-
-      return [
-        {
-          label: 'Конструкция',
-          value: item?.constructionType
-        },
-        {
-          label: 'Покрытие',
-          value: item?.coating
-        },
-        {
-          label: 'Особенности',
-          value: item?.features
-        },
-        {
-          label: 'Статус данных',
-          value: item?.dataStatus
-        }
-      ].filter(row => {
-        return hasValue(row.value)
-      }).slice(0, 4)
-    })
-    const badgeRows = computed(() => {
-      const item = resolvedItem.value
-
-      return [
-        item?.pistonCount ? `${item.pistonCount} поршней` : undefined,
-        wheelDiameterRange.value,
-        item?.discDiameterMm ? `${item.discDiameterMm} мм` : undefined
-      ].filter(Boolean)
-    })
-    const recommendedItems = computed<CatalogItem[]>(() => {
-      const item = resolvedItem.value
       if (!item) {
         return []
       }
 
-      return catalog
-        .filter((candidate: CatalogItem) => candidate.id !== item.id)
-        .map((candidate: CatalogItem): ScoredItem => {
-          let score = 0
-          if (candidate.series === item.series) {
-            score += 70
-          }
-          if (candidate.model === item.model) {
-            score += 24
-          }
-          if (candidate.pistonCount === item.pistonCount) {
-            score += 18
-          }
-          if (candidate.compatibilityClass === item.compatibilityClass) {
-            score += 12
-          }
-          if (candidate.application === item.application) {
-            score += 10
-          }
-
-          score -= Math.abs(candidate.discDiameterMm - item.discDiameterMm) / 10
-          score -= Math.abs((getNumber(candidate.wheelDiameterInch) ?? 0) - (getNumber(item.wheelDiameterInch) ?? 0)) * 2
-
-          return {
-            item: candidate,
-            score
-          }
-        })
-        .sort((firstItem: ScoredItem, secondItem: ScoredItem) => secondItem.score - firstItem.score)
-        .slice(0, 4)
-        .map((candidate: ScoredItem) => candidate.item)
+      return catalogStore.getRelatedItems(item, 5)
     })
 
-    const getRecommendedTitle = (item: CatalogItem): string => {
-      return getString(item.model) ?? 'Комплект'
+    const formatUsd = (value: number): string => {
+      return `$ ${value.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`
     }
-    const getRecommendedSubtitle = (item: CatalogItem): string => {
-      const series = getString(item.series)
-      const piston = getString(item.pistonCount)
-      const disc = getString(item.discDiameterMm)
-      const parts = [ series, piston ? `${piston} порш.` : '', disc ? `${disc} мм` : '' ].filter(Boolean)
 
-      return parts.join(' / ')
-    }
-    const renderGallery = () => {
-      return (
-        <div class={`${baseClass}__gallery`}>
-          <div class={`${baseClass}__badges`}>
-            {badgeRows.value.map(badge => {
-              return <span class={`${baseClass}__badge`} key={badge}>{badge}</span>
-            })}
-          </div>
-
-          <div class={`${baseClass}__image`}>
-            <img src={`${resolvedItem.value?.series.toLowerCase()}.webp`} alt={productModel.value} />
-          </div>
-        </div>
-      )
-    }
-    const renderStats = () => {
-      return (
-        <div class={`${baseClass}__stats`}>
-          {statRows.value.map(row => {
-            return (
-              <div class={`${baseClass}__stat`} key={row.label}>
-                <span class={`${baseClass}__stat-label`}>{row.label}</span>
-                <strong class={`${baseClass}__stat-value`}>{row.value}</strong>
-              </div>
-            )
-          })}
-        </div>
-      )
-    }
-    const renderIncluded = () => {
-      return (
-        <div class={`${baseClass}__included`}>
-          {kitParts.map(part => {
-            return <span key={part.label}>{part.label}</span>
-          })}
-        </div>
-      )
-    }
-    const renderPurchase = () => {
-      const item = resolvedItem.value
+    const renderEmptyState = () => {
+      const message = catalogStore.isLoading ? 'Загрузка товара...' : 'Товар не найден'
 
       return (
-        <div class={`${baseClass}__purchase`}>
-          <div class={`${baseClass}__purchase-availability`}>● Под заказ</div>
+        <div class="product-page__empty">
+          {message}
+        </div>
+      )
+    }
 
-          <div class={`${baseClass}__price-block`}>
-            <div class={`${baseClass}__price`}>{productPrice.value}</div>
-            <div class={`${baseClass}__price-meta`}>
-              {formatCny(item?.priceCny) ? <span>{formatCny(item?.priceCny)}</span> : null}
-            </div>
-          </div>
-
-          <button class={`${baseClass}__cta`} type="button">Связаться для заказа</button>
-
-          <div class={`${baseClass}__purchase-kit`}>
-            <div class={`${baseClass}__muted`}>В комплект входит</div>
-            {renderIncluded()}
-          </div>
-        </div>
-      )
-    }
-    const renderInfo = () => {
-      return (
-        <div class={`${baseClass}__info`}>
-          <div class={`${baseClass}__heading`}>
-            <div class={`${baseClass}__series`}>{productSeries.value}</div>
-            <h1 class={`${baseClass}__title`}>{productModel.value}</h1>
-          </div>
-
-          <p class={`${baseClass}__description`}>{resolvedItem.value?.description}</p>
-          {renderStats()}
-          {renderPurchase()}
-        </div>
-      )
-    }
-    const renderHero = () => {
-      return (
-        <section class={`${baseClass}__hero`}>
-          {renderGallery()}
-          {renderInfo()}
-        </section>
-      )
-    }
-    const renderTrustItem = (row: InfoRow) => {
-      return (
-        <div class={`${baseClass}__trust-item`} key={row.label}>
-          <div class={`${baseClass}__trust-title`}>{row.label}</div>
-          <div class={`${baseClass}__muted`}>{row.value}</div>
-        </div>
-      )
-    }
-    const renderTrustStrip = () => {
-      return (
-        <section class={`${baseClass}__trust-strip`}>
-          {factRows.value.map(renderTrustItem)}
-        </section>
-      )
-    }
-    const renderTabs = () => {
-      return (
-        <div class={`${baseClass}__tabs`}>
-          {productTabs.map(tab => {
-            return (
-              <button
-                aria-selected={activeTab.value === tab.id}
-                class={{
-                  [`${baseClass}__tab`]: true,
-                  [`${baseClass}__tab--active`]: activeTab.value === tab.id
-                }}
-                key={tab.id}
-                type="button"
-                onClick={() => {
-                  activeTab.value = tab.id
-                }}
-              >
-                {tab.label}
-              </button>
-            )
-          })}
-        </div>
-      )
-    }
-    const renderSpecRow = (row: InfoRow) => {
-      return (
-        <div class={`${baseClass}__spec-row`} key={row.label}>
-          <span>{row.label}</span>
-          <span>{row.value}</span>
-        </div>
-      )
-    }
-    const renderCard = (title: string, rows: InfoRow[]) => {
-      return (
-        <div class={`${baseClass}__card`}>
-          <h3>{title}</h3>
-          <div class={`${baseClass}__spec-list`}>
-            {rows.map(renderSpecRow)}
-          </div>
-        </div>
-      )
-    }
-    const renderKitCard = () => {
-      return (
-        <div class={[ `${baseClass}__card`, `${baseClass}__kit-card` ]}>
-          <h3>Комплектация</h3>
-          <div class={`${baseClass}__kit-grid`}>
-            {kitParts.map(part => {
-              return (
-                <div class={`${baseClass}__kit-item`} key={part.label}>
-                  <div class={`${baseClass}__kit-image`} />
-                  <strong>{part.label}</strong>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )
-    }
-    const renderTabPanel = () => {
-      const tabContent: Record<ProductTab, () => VNode> = {
-        specs: () => renderCard('Технические характеристики', specRows.value),
-        compatibility: () => renderCard('Совместимость', compatibilityRows.value),
-        construction: () => renderCard('Конструкция', constructionRows.value),
-        kit: renderKitCard,
-        catalog: () => renderCard('Каталожные данные', catalogRows.value)
+    const renderBreadcrumbItem = (label: string, to?: string) => {
+      if (to) {
+        return (
+          <RouterLink class="product-page__breadcrumb-link" to={to}>
+            {label}
+          </RouterLink>
+        )
       }
 
       return (
-        <section class={`${baseClass}__tab-panel`}>
-          {tabContent[activeTab.value]()}
+        <span class="product-page__breadcrumb-current">
+          {label}
+        </span>
+      )
+    }
+
+    const renderBreadcrumbs = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__breadcrumbs">
+          {renderBreadcrumbItem('Главная', '/')}
+          <span class="product-page__breadcrumb-separator">›</span>
+          {renderBreadcrumbItem('Каталог', '/catalog')}
+          <span class="product-page__breadcrumb-separator">›</span>
+          {renderBreadcrumbItem(item.category)}
+          <span class="product-page__breadcrumb-separator">›</span>
+          {renderBreadcrumbItem(`${item.series} ${item.model}`)}
+        </div>
+      )
+    }
+
+    const renderHeroTags = () => {
+      const item = currentItem.value as CatalogItem | undefined
+      if (!item) {
+        return null
+      }
+      const wheelDiameterRange = formatWheelDiameterRange(item.wheelDiameterInch)
+
+      return (
+        <div class="product-page__hero-tags">
+          <GChip label={`Поршней: ${item.pistonCount} шт.`} color={Colors['surface-2']} size={Sizes.large} outline/>
+          <GChip label={wheelDiameterRange} color={Colors['surface-2']} size={Sizes.large} outline/>
+          <GChip label={`${item.discDiameterMm} мм`} color={Colors['surface-2']} size={Sizes.large} outline/>
+        </div>
+      )
+    }
+
+    const renderHeroImage = () => {
+      const item = currentItem.value as CatalogItem | undefined
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__hero-media">
+          {renderHeroTags()}
+
+          <div class="product-page__hero-image-frame">
+            <img
+              class="product-page__hero-image"
+              src={`/images/products/${item.series.toLowerCase()}.webp`}
+              alt={`${item.series} ${item.model}`}
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    const renderHeroSeries = () => {
+      const item = currentItem.value as CatalogItem | undefined
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__hero-series">
+          {item.brand} {item.series}
+        </div>
+      )
+    }
+
+    const renderHeroTitle = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <h1 class="product-page__hero-title">
+          {String(item.model)}
+        </h1>
+      )
+    }
+
+    const renderHeroDescription = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <p class="product-page__hero-description">
+          {item.description}
+        </p>
+      )
+    }
+
+    const renderHeroHeader = () => {
+      return (
+        <div class="product-page__hero-header">
+          {renderHeroTitle()}
+          {renderHeroSeries()}
+        </div>
+      )
+    }
+
+    const renderHeroStat = (label: string, icon: Icons, value: string) => {
+      return (
+        <div class="product-page__hero-stat">
+          <GIcon icon={icon} color={Colors.primary} size={30}/>
+          <div class="product-page__hero-stat-copy">
+            <span class="product-page__hero-stat-value">{value}</span>
+            <span class="product-page__hero-stat-label">{label}</span>
+          </div>
+        </div>
+      )
+    }
+
+    const renderHeroStats = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__hero-stats">
+          {renderHeroStat('Поршней', Icons['wheel-diameter'], `${item.pistonCount} шт.`)}
+          {renderHeroStat('Диаметр диска', Icons['disk-diameter'], `${item.discDiameterMm} мм`)}
+          {renderHeroStat('Диаметр колёс', Icons['wheel-diameter'], `R${item.wheelDiameterInch}`)}
+          {renderHeroStat('Площадь поршней', Icons.square, `${item.pistonAreaCm2} см²`)}
+          {renderHeroStat('Покрытие', Icons.drop, item.coating)}
+          {renderHeroStat('Применение', Icons['wheel-diameter'], item.application)}
+        </div>
+      )
+    }
+
+    const renderHeroContent = () => {
+      return (
+        <div class="product-page__hero-content">
+          {renderHeroHeader()}
+          {renderHeroDescription()}
+          {renderHeroStats()}
+        </div>
+      )
+    }
+
+    const renderOrderButton = () => {
+      return (
+        <GButton label={'Оформить'} color={Colors.primary} />
+      )
+    }
+
+    const renderPurchaseNote = () => {
+      return (
+        <p class="product-page__purchase-note">
+          Финальная стоимость зависит конфигурации.
+        </p>
+      )
+    }
+
+    const renderPurchaseAvailability = () => {
+      return (
+        <div class="product-page__purchase-availability">
+          <span class="product-page__purchase-dot" />
+          <span class="product-page__purchase-availability-text">Под заказ</span>
+        </div>
+      )
+    }
+
+    const renderPurchasePrice = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__purchase-price">
+          {formatUsd(item.priceUsd)}
+        </div>
+      )
+    }
+
+    const renderKitItem = (label: string) => {
+      return (
+        <div class="product-page__kit-item">
+          <GIcon icon={Icons['check-circle']} color={Colors.primary} size={20}/>
+          <span class="product-page__kit-item-label">{label}</span>
+        </div>
+      )
+    }
+
+    const renderKitList = () => {
+      return (
+        <div class="product-page__kit-list">
+          {renderKitItem('Суппорт: 2 шт')}
+          {renderKitItem('Тормозной диск: 2 шт')}
+          {renderKitItem('Колодки: комплект')}
+          {renderKitItem('Переходники: комплект')}
+          {renderKitItem('Тормозные шланги: комплект')}
+        </div>
+      )
+    }
+
+    const renderPurchaseKit = () => {
+      return (
+        <div class="product-page__purchase-kit">
+          <div class="product-page__purchase-kit-title">В комплект входит</div>
+          {renderKitList()}
+        </div>
+      )
+    }
+
+    const renderPurchase = () => {
+      return (
+        <aside class="product-page__purchase">
+          {renderPurchaseAvailability()}
+          {renderPurchasePrice()}
+          {renderPurchaseNote()}
+          {renderOrderButton()}
+
+          <div class="product-page__purchase-divider" />
+
+          {renderPurchaseKit()}
+        </aside>
+      )
+    }
+
+    const renderHero = () => {
+      return (
+        <section class="product-page__hero">
+          {renderHeroImage()}
+          {renderHeroContent()}
+          {renderPurchase()}
         </section>
       )
     }
-    const renderRecommendedCard = (item: CatalogItem) => {
+
+    // const renderBenefits = () => {
+    //   return (
+    //     <section class="product-page__benefits">
+    //       {renderBenefit('Официальный продукт', 'Savanini Systems')}
+    //       {renderBenefit('Подбор и проверка', 'По параметрам авто')}
+    //       {renderBenefit('Гарантия качества', 'Контроль производства')}
+    //       {renderBenefit('Техническая поддержка', 'Инженеры на связи')}
+    //     </section>
+    //   )
+    // }
+
+    const renderTabButton = (tab: { key: ProductTabKey;
+      label: string }) => {
+      const classes = {
+        'product-page__tab': true,
+        'product-page__tab--active': activeTab.value === tab.key
+      }
+
       return (
-        <RouterLink
-          class={`${baseClass}__product-card`}
-          key={item.id}
-          to={{
-            name: 'catalog.single',
-            params: { id: item.id }
+        <button
+          class={classes}
+          type="button"
+          onClick={() => {
+            activeTab.value = tab.key
           }}
         >
-          <div class={`${baseClass}__product-card-image`}>
-            <img src={placeholderImage} alt={getRecommendedTitle(item)} />
-          </div>
-          <div class={`${baseClass}__product-card-content`}>
-            <h4>{getRecommendedTitle(item)}</h4>
-            <div class={`${baseClass}__muted`}>{getRecommendedSubtitle(item)}</div>
-            <div class={`${baseClass}__price-small`}>{formatPrice(item.priceUsd)}</div>
-          </div>
-        </RouterLink>
+          {tab.label}
+        </button>
       )
     }
-    const renderProducts = () => {
+
+    const renderTabs = () => {
       return (
-        <section class={`${baseClass}__products`}>
-          <div class={`${baseClass}__products-header`}>
-            <h3>Часто покупают вместе</h3>
-            <RouterLink class={`${baseClass}__products-link`} to="/catalog">Весь каталог</RouterLink>
-          </div>
-          <div class={`${baseClass}__products-row`}>
-            {recommendedItems.value.map(renderRecommendedCard)}
-          </div>
-        </section>
+        <div class="product-page__tabs">
+          {tabs.map(tab => renderTabButton(tab))}
+        </div>
       )
     }
-    const renderNotFound = () => {
+
+    const renderSpecificationRow = (label: string, value: string) => {
       return (
-        <div class={baseClass}>
-          <div class={[ 'container', `${baseClass}__container` ]}>
-            <div class={`${baseClass}__not-found`}>
-              <h1 class={`${baseClass}__not-found-title`}>Товар не найден</h1>
-              <p>Позиция могла быть удалена или перемещена в каталоге.</p>
-              <RouterLink class="button button--light" to="/catalog">Вернуться в каталог</RouterLink>
+        <div class="product-page__spec-row">
+          <span class="product-page__spec-label">{label}</span>
+          <span class="product-page__spec-value">{value}</span>
+        </div>
+      )
+    }
+
+    const renderBlueprint = () => {
+      return (
+        <div class="product-page__blueprint">
+          <img
+            class="product-page__blueprint-image"
+            src="/images/products/draw.png"
+            alt="Комплект тормозной системы"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )
+    }
+
+    const renderSpecificationsPanel = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__panel product-page__panel--specs">
+          <div class="product-page__specs">
+            <div class="product-page__section-title">Основные параметры</div>
+
+            {renderSpecificationRow('Количество поршней', `${item.pistonCount} шт.`)}
+            {renderSpecificationRow('Диаметр колёс', `R${item.wheelDiameterInch}`)}
+            {renderSpecificationRow('Диаметр диска, мм', `${item.discDiameterMm}`)}
+            {renderSpecificationRow('Габариты суппорта, мм', item.dimensionsMm)}
+            {renderSpecificationRow('Площадь колодок', item.padFrictionArea)}
+            {renderSpecificationRow('Площадь поршней', `${item.pistonAreaCm2} см²`)}
+            {renderSpecificationRow('Применимость', item.application)}
+          </div>
+
+          <GDivider type={'vertical'} />
+
+          {renderBlueprint()}
+        </div>
+      )
+    }
+
+    const renderCompatibilityPanel = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__panel">
+          <div class="product-page__section-title">Совместимость</div>
+
+          <div class="product-page__specs">
+            <div class="product-page__spec-row">
+              <span class="product-page__spec-label">Марка автомобиля</span>
+              <span class="product-page__spec-value">{item.vehicleBrand}</span>
+            </div>
+
+            <div class="product-page__spec-row">
+              <span class="product-page__spec-label">Модель</span>
+              <span class="product-page__spec-value">{item.vehicleModel}</span>
+            </div>
+
+            <div class="product-page__spec-row">
+              <span class="product-page__spec-label">Класс совместимости</span>
+              <span class="product-page__spec-value">{item.compatibilityClass}</span>
+            </div>
+
+            <div class="product-page__spec-row">
+              <span class="product-page__spec-label">Заводской диск</span>
+              <span class="product-page__spec-value">{item.factoryDiscDiameterMm} мм</span>
+            </div>
+
+            <div class="product-page__spec-row">
+              <span class="product-page__spec-label">Статус данных</span>
+              <span class="product-page__spec-value">{item.dataStatus}</span>
             </div>
           </div>
         </div>
+      )
+    }
+
+    const renderKitPanel = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__panel">
+          <div class="product-page__section-title">Комплектация</div>
+
+          <div class="product-page__kit-panel">
+            <div class="product-page__kit-panel-item">Суппорт {item.series} {item.model}</div>
+            <div class="product-page__kit-panel-item">Тормозной диск {item.discDiameterMm} мм</div>
+            <div class="product-page__kit-panel-item">Колодки Performance</div>
+            <div class="product-page__kit-panel-item">Переходники</div>
+            <div class="product-page__kit-panel-item">Тормозные шланги</div>
+          </div>
+        </div>
+      )
+    }
+
+    const renderDeliveryPanel = () => {
+      return (
+        <div class="product-page__panel">
+          <div class="product-page__section-title">Доставка и гарантия</div>
+
+          <div class="product-page__delivery">
+            <div class="product-page__delivery-item">Отправка по России и СНГ</div>
+            <div class="product-page__delivery-item">Проверка и фото перед отправкой</div>
+            <div class="product-page__delivery-item">Гарантийная поддержка по комплекту</div>
+          </div>
+        </div>
+      )
+    }
+
+    const renderFaqPanel = () => {
+      return (
+        <div class="product-page__panel">
+          <div class="product-page__section-title">FAQ</div>
+
+          <div class="product-page__faq">
+            <div class="product-page__faq-item">
+              <div class="product-page__faq-question">Можно ли заказать под мой автомобиль?</div>
+              <div class="product-page__faq-answer">Да, после подтверждения параметров диска и крепления.</div>
+            </div>
+
+            <div class="product-page__faq-item">
+              <div class="product-page__faq-question">Есть ли готовые комплекты?</div>
+              <div class="product-page__faq-answer">Да, в каталоге доступны готовые конфигурации по сериям.</div>
+            </div>
+
+            <div class="product-page__faq-item">
+              <div class="product-page__faq-question">Сколько занимает доставка?</div>
+              <div class="product-page__faq-answer">Срок зависит от региона и наличия на складе.</div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    const renderTabContent = () => {
+      if (activeTab.value === 'specs') {
+        return renderSpecificationsPanel()
+      }
+      if (activeTab.value === 'compatibility') {
+        return renderCompatibilityPanel()
+      }
+      if (activeTab.value === 'kit') {
+        return renderKitPanel()
+      }
+      if (activeTab.value === 'delivery') {
+        return renderDeliveryPanel()
+      }
+
+      return renderFaqPanel()
+    }
+
+    const renderTabsSection = () => {
+      return (
+        <section class="product-page__tabs-section">
+          {renderTabs()}
+          {renderTabContent()}
+        </section>
+      )
+    }
+
+    const renderRelatedNavButton = (symbol: string) => {
+      return (
+        <button class="product-page__related-nav-button" type="button">
+          {symbol}
+        </button>
+      )
+    }
+
+    const renderRelatedHeader = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <div class="product-page__related-header">
+          <div class="product-page__related-title">
+            Другие комплекты {item.series}
+          </div>
+
+          <div class="product-page__related-nav">
+            {renderRelatedNavButton('‹')}
+            {renderRelatedNavButton('›')}
+          </div>
+        </div>
+      )
+    }
+
+    const renderRelatedCard = (item: CatalogItem) => {
+      return (
+        <div class="product-page__related-item">
+          <ProductCard
+            value={item}
+            badge={item.id === currentItem.value?.id}
+          />
+        </div>
+      )
+    }
+
+    const renderRelatedGrid = () => {
+      return (
+        <div class="product-page__related-grid">
+          {relatedItems.value.map(item => renderRelatedCard(item))}
+        </div>
+      )
+    }
+
+    const renderRelated = () => {
+      return (
+        <section class="product-page__related">
+          {renderRelatedHeader()}
+          {renderRelatedGrid()}
+        </section>
       )
     }
 
     return () => {
-      if (!resolvedItem.value) {
-        return renderNotFound()
+      if (!currentItem.value) {
+        return renderEmptyState()
       }
 
       return (
-        <div class={baseClass}>
-          <main class={[ 'container', `${baseClass}__container` ]}>
+        <div class="product-page">
+          <div class="product-page__container">
+            {renderBreadcrumbs()}
             {renderHero()}
-            {renderTrustStrip()}
-            {renderTabs()}
-            {renderTabPanel()}
-            {renderProducts()}
-          </main>
+            {renderTabsSection()}
+            {renderRelated()}
+          </div>
         </div>
       )
     }

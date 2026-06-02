@@ -73,15 +73,6 @@ $_name: "popular-systems";
     background:
       radial-gradient(circle at top, rgba(189, 36, 38, 0.04), transparent 42%),
       radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
-
-    &:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.18) 45%, rgba(0, 0, 0, 0.42) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
   }
 
   &__image {
