@@ -5,7 +5,7 @@ export interface CatalogItem {
   series: string
   model: string
   pistonCount: number
-  wheelDiameterInch: string
+  wheelDiameterInch: number
   pistonAreaCm2: number
   discDiameterMm: number
   padFrictionArea: string
