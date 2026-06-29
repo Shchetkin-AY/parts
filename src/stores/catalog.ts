@@ -62,8 +62,8 @@ const getUniqueNumbers = (
   return sortNumbers([ ...values ])
 }
 
-const getWheelDiameterValues = (value: string): number[] => {
-  const diameterValues = value.match(/\d+(?:[.,]\d+)?/g) ?? []
+const getWheelDiameterValues = (value: number | string): number[] => {
+  const diameterValues = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
 
   return diameterValues
     .map(diameterValue => Number(diameterValue.replace(',', '.')))

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { CatalogItem } from '../src/utils/types/catalog'
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, '..')
@@ -66,25 +67,27 @@ const NUMERIC_HEADERS = new Set<CatalogHeader>([
 ])
 
 interface SheetValuesResponse {
-  values?: string[][]
+  values?: SheetCell[][]
   error?: {
     code?: number
     message?: string
   }
 }
 
+type SheetCell = boolean | number | string
+
 function isCatalogHeader(value: string): value is CatalogHeader {
   return (CATALOG_HEADERS as readonly string[]).includes(value)
 }
 
 function getHeaderKeys(headers: string[]): CatalogHeader[] {
-  const keys = headers.map(header => header.trim())
+  const keys = [ ...headers ]
   const unknownKeys = keys.filter(key => !isCatalogHeader(key))
   const missingKeys = CATALOG_HEADERS.filter(key => !keys.includes(key))
   const duplicatedKeys = keys.filter((key, index) => keys.indexOf(key) !== index)
 
   if (unknownKeys.length > 0) {
-    throw new Error(`Unknown sheet headers: ${unknownKeys.join(', ')}`)
+    throw new Error(`Unknown sheet headers: ${unknownKeys.map(key => JSON.stringify(key)).join(', ')}`)
   }
 
   if (missingKeys.length > 0) {
@@ -98,8 +101,8 @@ function getHeaderKeys(headers: string[]): CatalogHeader[] {
   return keys as CatalogHeader[]
 }
 
-function convertValue(key: CatalogHeader, value: string, rowIndex: number): number | string {
-  const normalized = value.trim()
+function convertValue(key: CatalogHeader, value: SheetCell | undefined, rowIndex: number): CatalogItem[CatalogHeader] {
+  const normalized = String(value ?? '').trim()
 
   if (!normalized) {
     if (NUMERIC_HEADERS.has(key)) {
@@ -123,26 +126,26 @@ function convertValue(key: CatalogHeader, value: string, rowIndex: number): numb
   return numberValue
 }
 
-function toJson(rows: string[][]) {
+function toJson(rows: SheetCell[][]): CatalogItem[] {
   const [ headers, ...data ] = rows
 
   if (!headers?.length) {
     throw new Error('Sheet header row is empty')
   }
 
-  const keys = getHeaderKeys(headers)
+  const keys = getHeaderKeys(headers.map(String))
 
   return data
-    .filter(row => row.some(cell => cell?.trim()))
     .map((row, rowIndex) => {
-      const obj: Record<string, number | string> = {}
+      const obj: Partial<CatalogItem> = {}
+      const writableObj = obj as Record<CatalogHeader, CatalogItem[CatalogHeader]>
       const sheetRowIndex = rowIndex + 2
 
       keys.forEach((key, index) => {
-        obj[key] = convertValue(key, row[index] ?? '', sheetRowIndex)
+        writableObj[key] = convertValue(key, row[index], sheetRowIndex)
       })
 
-      return obj
+      return obj as CatalogItem
     })
 }
 
@@ -180,6 +183,8 @@ async function main() {
 
   await fs.writeFile(TS_OUTPUT_PATH, tsModule, 'utf-8')
 
+  // eslint-disable-next-line
+  console.log('✅ Catalog items loaded:', json.length)
   // eslint-disable-next-line
   console.log('✅ Catalog JSON updated:', OUTPUT_PATH)
   // eslint-disable-next-line
