@@ -1,4 +1,4 @@
-import { CatalogItem, Colors, getString } from '@/utils'
+import { type CatalogItem, Colors, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
 import { GChip } from './g'
 import { RouterLink } from 'vue-router'
