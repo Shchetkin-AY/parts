@@ -1,10 +1,11 @@
 import { CatalogItem, Colors, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
-import { GChip } from '@/components'
+import { GChip } from './g'
 import { RouterLink } from 'vue-router'
 
 export default defineComponent({
-  name: 'PopularSystemsCard',
+
+  name: 'ProductCard',
 
   props: {
     value: {
@@ -33,8 +34,9 @@ export default defineComponent({
 
     const classes = computed(() => {
       return {
-        'popular-systems-card': true,
-        'popular-systems-card--hit': props.badge
+
+        'product-card': true,
+        'product-card--hit': props.badge
       }
     })
 
@@ -56,10 +58,12 @@ export default defineComponent({
 
     const renderImage = () => {
       return (
-        <div class="popular-systems-card__media">
+
+        <div class="product-card__media">
           {renderBadge()}
           <img
-            class="popular-systems-card__image"
+
+            class="product-card__image"
             src={`/images/products/${props.value.series.toLowerCase()}.webp`}
             alt={title.value}
             loading="lazy"
@@ -71,11 +75,13 @@ export default defineComponent({
 
     const renderHeader = () => {
       return (
-        <div class="popular-systems-card__header">
-          <div class="popular-systems-card__title">
+
+        <div class="product-card__header">
+          <div class="product-card__title">
             {title.value}
           </div>
-          <div class="popular-systems-card__subtitle">
+
+          <div class="product-card__subtitle">
             {subtitle.value}
           </div>
         </div>
@@ -84,8 +90,9 @@ export default defineComponent({
 
     const renderFooter = () => {
       return (
-        <div class="popular-systems-card__footer">
-          <div class="popular-systems-card__price">
+
+        <div class="product-card__footer">
+          <div class="product-card__price">
             {props.value.priceUsd.toLocaleString('ru-RU', {
               style: 'currency',
               currency: 'USD'
@@ -97,7 +104,8 @@ export default defineComponent({
 
     const renderContent = () => {
       return (
-        <div class="popular-systems-card__content">
+
+        <div class="product-card__content">
           {renderHeader()}
           {renderFooter()}
         </div>

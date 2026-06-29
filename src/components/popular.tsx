@@ -1,8 +1,8 @@
 import { computed, defineComponent } from 'vue'
 
-import Card from '@/components/card'
 import { CatalogItem } from '@/utils'
 import { useCatalogStore } from '@/stores/catalog'
+import ProductCard from './product-card'
 
 function uniqueById(items: CatalogItem[]): CatalogItem[] {
   const map = new Map<number, CatalogItem>()
@@ -117,14 +117,14 @@ export default defineComponent({
     const renderCards = () => {
       return systems.value.map((system, index) => {
         return (
-          <Card
-            key={system.id}
+          <ProductCard
             value={system}
             badge={index === 0}
           />
         )
       })
     }
+
     const renderContent = () => {
       return (
         <div class="popular-systems-content" >

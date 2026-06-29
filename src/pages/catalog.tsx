@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem } from '@/utils'
 import { GButton } from '@/components/g/button'
 import Filter from '@/components/filter'
-import Card from '@/components/card'
+import ProductCard from '@/components/product-card'
 import { useCatalogStore } from '@/stores/catalog'
 
 const emptyFilterParams: CatalogFilterParams = {
@@ -27,7 +27,7 @@ export default defineComponent({
     })
 
     const sourceItems = computed<CatalogItem[]>(() => {
-      return catalogStore.compatibleItems
+      return catalogStore.items
     })
     const resultTitle = computed(() => {
       const result = [ 'Тормозные системы' ]
@@ -115,9 +115,9 @@ export default defineComponent({
         </div>
       )
     }
-    const renderCard = (item: CatalogItem) => {
+    const renderProductCard = (item: CatalogItem) => {
       return (
-        <Card
+        <ProductCard
           value={item}
           key={item.id}
         />
@@ -139,7 +139,7 @@ export default defineComponent({
 
       return (
         <div class="catalog__grid">
-          {filteredItems.value.map(renderCard)}
+          {filteredItems.value.map(renderProductCard)}
         </div>
       )
     }
