@@ -1,5 +1,6 @@
 export * from './g'
 
+export * from './accessories'
 export * from './benefits'
 export * from './filter'
 export * from './footer'
