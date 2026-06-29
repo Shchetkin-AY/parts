@@ -1,6 +1,6 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onBeforeMount } from 'vue'
 
-import { CatalogItem } from '@/utils'
+import type { CatalogItem } from '@/utils'
 import { useCatalogStore } from '@/stores/catalog'
 import ProductCard from './product-card'
 
@@ -102,7 +102,10 @@ export default defineComponent({
 
   setup() {
     const catalogStore = useCatalogStore()
-    void catalogStore.load()
+
+    onBeforeMount(() => {
+      void catalogStore.load()
+    })
 
     const systems = computed(() => {
       return pickPopularSystems(catalogStore.items, 5)
@@ -118,6 +121,7 @@ export default defineComponent({
       return systems.value.map((system, index) => {
         return (
           <ProductCard
+            key={system.id}
             value={system}
             badge={index === 0}
           />
