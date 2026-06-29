@@ -1,3 +1,4 @@
+export * from './accessories'
 export * from './icon'
 export * from './filter'
 export * from './production-route'
