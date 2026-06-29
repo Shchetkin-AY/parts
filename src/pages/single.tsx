@@ -228,7 +228,7 @@ export default defineComponent({
     const renderHeroStat = (label: string, icon: Icons, value: string) => {
       return (
         <div class="product-page__hero-stat">
-          <GIcon icon={icon} color={Colors.primary} size={30}/>
+          <GIcon icon={icon} color={Colors.primary} size={40}/>
           <div class="product-page__hero-stat-copy">
             <span class="product-page__hero-stat-value">{value}</span>
             <span class="product-page__hero-stat-label">{label}</span>

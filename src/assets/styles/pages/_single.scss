@@ -162,13 +162,22 @@ $_name: "product-page";
   &__hero-stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px;
+    gap: 10px;
   }
 
   &__hero-stat {
-    display: flex;
+    align-items: center;
+    min-height: 80px;
+    height: 80px;
+    align-content: start;
+    display: grid;
+    grid-template-columns: auto 1fr;
     gap: 10px;
-    align-items: flex-start;
+    background: colors.$surface;
+    border: 1px solid colors.$border;
+    border-radius: $radius-xs;
+    backdrop-filter: blur(64px);
+    padding: 10px;
   }
 
   &__hero-stat-copy {
