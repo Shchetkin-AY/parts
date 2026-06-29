@@ -25,6 +25,7 @@ const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', 'AIzaSyD7LWKP0roTMELxgJxttiLm2N
 const RANGE = readEnv('GOOGLE_SHEET_RANGE', 'goods!A:X')
 const OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_OUTPUT', 'src/data/data.json'))
 const TS_OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_TS_OUTPUT', 'src/data/catalog.ts'))
+const VALUE_RENDER_OPTION = 'FORMATTED_VALUE'
 
 const CATALOG_HEADERS = [
   'id',
@@ -150,7 +151,11 @@ function toJson(rows: SheetCell[][]): CatalogItem[] {
 }
 
 async function main() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}?key=${API_KEY}`
+  const params = new URLSearchParams({
+    key: API_KEY,
+    valueRenderOption: VALUE_RENDER_OPTION
+  })
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}?${params.toString()}`
 
   const res = await fetch(url)
   const data = await res.json() as SheetValuesResponse
