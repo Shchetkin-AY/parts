@@ -607,12 +607,19 @@ $_name: "product-page";
 
   &__related-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
   }
 
   &__related-item {
     min-width: 0;
+  }
+
+  &__catalog {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 20px;
+    align-items: stretch;
   }
 
   @media (max-width: 1280px) {
