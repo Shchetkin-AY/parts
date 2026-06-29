@@ -577,12 +577,41 @@ export const iconPaths: Record<string, IconObject[]> = {
       }
     }
   ],
+  ui: [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M16 9.3999V14.9999',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M8 9.3999V12.9499C8 14.1925 9.00736 15.1999 10.25 15.1999C11.4926 15.1999 12.5 14.1925 12.5 12.9499V9.3999',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
   square: [
     {
       name: 'path',
       attributes: {
-        d: 'M3 2.25H18C18.9946 2.25 19.9484 2.64509 20.6516 3.34835C21.3549 4.05161 21.75 5.00544 21.75 6V18C21.75 18.9946 21.3549 19.9484 20.6516 20.6516C19.9484 21.3549 18.9946 21.75 18 21.75H6C5.00544 21.75 4.05161 21.3549 3.34835 20.6516C2.64509 19.9484 2.25 18.9946 2.25 18V3C2.25 2.58579 2.58579 2.25 3 2.25Z',
-        'stroke-width': '1.3',
+        d: 'M9 3.8A8.2 8.2 0 0 1 15 3.8',
+        'stroke-width': '1',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
       }
@@ -590,8 +619,8 @@ export const iconPaths: Record<string, IconObject[]> = {
     {
       name: 'path',
       attributes: {
-        d: 'M21 9.75H16.5C16.3011 9.75 16.1103 9.82902 15.9697 9.96967C15.829 10.1103 15.75 10.3011 15.75 10.5V21',
-        'stroke-width': '1.3',
+        d: 'M20.2 9A8.2 8.2 0 0 1 20.2 15',
+        'stroke-width': '1',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
       }
@@ -599,8 +628,165 @@ export const iconPaths: Record<string, IconObject[]> = {
     {
       name: 'path',
       attributes: {
-        d: 'M3 14.25H7.5C7.69891 14.25 7.88968 14.171 8.03033 14.0303C8.17098 13.8897 8.25 13.6989 8.25 13.5V3',
-        'stroke-width': '1.3',
+        d: 'M15 20.2A8.2 8.2 0 0 1 9 20.2',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M3.8 15A8.2 8.2 0 0 1 3.8 9',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M15.5 12A3.5 3.5 0 1 1 8.5 12A3.5 3.5 0 1 1 15.5 12Z',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M12 6.5V8.5M12 15.5V17.5M6.5 12H8.5M15.5 12H17.5',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+  piston: [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M17 5.5C15.65 4.25 13.85 3.5 12 3.5C7.31 3.5 3.5 7.31 3.5 12C3.5 16.69 7.31 20.5 12 20.5C16.69 20.5 20.5 16.69 20.5 12',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'circle',
+      attributes: {
+        cx: '12',
+        cy: '12',
+        r: '4.5',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'circle',
+      attributes: {
+        cx: '12',
+        cy: '12',
+        r: '1.8',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    }
+  ],
+
+  wheel: [
+    {
+      name: 'circle',
+      attributes: {
+        cx: '12',
+        cy: '12',
+        r: '10',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'circle',
+      attributes: {
+        cx: '12',
+        cy: '12',
+        r: '4',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M2.44 9.44L7.9 10.9',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M13.1 7.9L14.56 2.44',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M16.1 13.1L21.56 14.56',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M10.9 16.1L9.44 21.56',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M5 5L9 9',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M15 9L19 5',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M15 15L19 19',
+        'stroke-width': '1',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M9 15L5 19',
+        'stroke-width': '1',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
       }

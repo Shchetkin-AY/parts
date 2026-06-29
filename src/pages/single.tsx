@@ -1,22 +1,18 @@
 import { type CatalogItem, Colors, Icons, Sizes } from '@/utils'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import ProductCard from '@/components/card'
+import ProductCard from '@/components/product-card'
 import { GButton } from '@/components/g/button'
 import { GChip } from '@/components/g/chip'
 import { GIcon } from '@/components/g/icon'
 import { useCatalogStore } from '@/stores/catalog'
 import { GDivider } from '@/components'
+import Benefits from '@/components/benefits'
 
-type ProductTabKey =
-  | 'specs'
-  | 'compatibility'
-  | 'kit'
-  | 'delivery'
-  | 'faq'
+type ProductTabKey = 'specs' | 'compatibility' | 'kit' | 'delivery' | 'faq'
 
-const formatWheelDiameterRange = (value: number): string => {
-  const diameters = value.toString().match(/\d+(?:[.,]\d+)?/g) ?? []
+const formatWheelDiameterRange = (value: number | string): string => {
+  const diameters = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
   const normalizedDiameters = diameters.map(diameter => diameter.replace(',', '.'))
 
   if (normalizedDiameters.length >= 2) {
@@ -34,12 +30,14 @@ const formatWheelDiameterRange = (value: number): string => {
 
 export default defineComponent({
   name: 'ProductPage',
-
   setup() {
     const route = useRoute()
     const catalogStore = useCatalogStore()
     const activeTab = ref<ProductTabKey>('specs')
-    void catalogStore.load()
+
+    onBeforeMount(() => {
+      void catalogStore.load()
+    })
 
     const tabs = [
       {
@@ -221,8 +219,8 @@ export default defineComponent({
     const renderHeroHeader = () => {
       return (
         <div class="product-page__hero-header">
-          {renderHeroTitle()}
           {renderHeroSeries()}
+          {renderHeroTitle()}
         </div>
       )
     }
@@ -247,12 +245,12 @@ export default defineComponent({
 
       return (
         <div class="product-page__hero-stats">
-          {renderHeroStat('Поршней', Icons['wheel-diameter'], `${item.pistonCount} шт.`)}
-          {renderHeroStat('Диаметр диска', Icons['disk-diameter'], `${item.discDiameterMm} мм`)}
-          {renderHeroStat('Диаметр колёс', Icons['wheel-diameter'], `R${item.wheelDiameterInch}`)}
+          {renderHeroStat('Количество поршней', Icons.piston, `${item.pistonCount} шт`)}
+          {renderHeroStat('Диаметр диска', Icons['wheel-diameter'], `${item.discDiameterMm} мм`)}
+          {renderHeroStat('Диаметр колес', Icons.wheel, item.wheelDiameterInch)}
           {renderHeroStat('Площадь поршней', Icons.square, `${item.pistonAreaCm2} см²`)}
           {renderHeroStat('Покрытие', Icons.drop, item.coating)}
-          {renderHeroStat('Применение', Icons['wheel-diameter'], item.application)}
+          {renderHeroStat('Применение', Icons.ui, item.application)}
         </div>
       )
     }
@@ -269,7 +267,7 @@ export default defineComponent({
 
     const renderOrderButton = () => {
       return (
-        <GButton label={'Оформить'} color={Colors.primary} />
+        <GButton label={'Заказать комплект'} color={Colors.primary} size={Sizes.large}/>
       )
     }
 
@@ -338,8 +336,8 @@ export default defineComponent({
         <aside class="product-page__purchase">
           {renderPurchaseAvailability()}
           {renderPurchasePrice()}
-          {renderPurchaseNote()}
           {renderOrderButton()}
+          {renderPurchaseNote()}
 
           <div class="product-page__purchase-divider" />
 
@@ -358,16 +356,11 @@ export default defineComponent({
       )
     }
 
-    // const renderBenefits = () => {
-    //   return (
-    //     <section class="product-page__benefits">
-    //       {renderBenefit('Официальный продукт', 'Savanini Systems')}
-    //       {renderBenefit('Подбор и проверка', 'По параметрам авто')}
-    //       {renderBenefit('Гарантия качества', 'Контроль производства')}
-    //       {renderBenefit('Техническая поддержка', 'Инженеры на связи')}
-    //     </section>
-    //   )
-    // }
+    const renderBenefits = () => {
+      return (
+        <Benefits />
+      )
+    }
 
     const renderTabButton = (tab: { key: ProductTabKey;
       label: string }) => {
@@ -431,12 +424,12 @@ export default defineComponent({
           <div class="product-page__specs">
             <div class="product-page__section-title">Основные параметры</div>
 
-            {renderSpecificationRow('Количество поршней', `${item.pistonCount} шт.`)}
-            {renderSpecificationRow('Диаметр колёс', `R${item.wheelDiameterInch}`)}
+            {renderSpecificationRow('Количество поршней, шт.', `${item.pistonCount}`)}
+            {renderSpecificationRow('Диаметр колёс, in', formatWheelDiameterRange(item.wheelDiameterInch))}
             {renderSpecificationRow('Диаметр диска, мм', `${item.discDiameterMm}`)}
             {renderSpecificationRow('Габариты суппорта, мм', item.dimensionsMm)}
-            {renderSpecificationRow('Площадь колодок', item.padFrictionArea)}
-            {renderSpecificationRow('Площадь поршней', `${item.pistonAreaCm2} см²`)}
+            {renderSpecificationRow('Площадь колодок, см', item.padFrictionArea)}
+            {renderSpecificationRow('Площадь поршней, см²', `${item.pistonAreaCm2}`)}
             {renderSpecificationRow('Применимость', item.application)}
           </div>
 
@@ -474,13 +467,8 @@ export default defineComponent({
             </div>
 
             <div class="product-page__spec-row">
-              <span class="product-page__spec-label">Заводской диск</span>
+              <span class="product-page__spec-label">Заводской диск, мм</span>
               <span class="product-page__spec-value">{item.factoryDiscDiameterMm} мм</span>
-            </div>
-
-            <div class="product-page__spec-row">
-              <span class="product-page__spec-label">Статус данных</span>
-              <span class="product-page__spec-value">{item.dataStatus}</span>
             </div>
           </div>
         </div>
@@ -573,14 +561,6 @@ export default defineComponent({
       )
     }
 
-    const renderRelatedNavButton = (symbol: string) => {
-      return (
-        <button class="product-page__related-nav-button" type="button">
-          {symbol}
-        </button>
-      )
-    }
-
     const renderRelatedHeader = () => {
       const item = currentItem.value
       if (!item) {
@@ -591,11 +571,6 @@ export default defineComponent({
         <div class="product-page__related-header">
           <div class="product-page__related-title">
             Другие комплекты {item.series}
-          </div>
-
-          <div class="product-page__related-nav">
-            {renderRelatedNavButton('‹')}
-            {renderRelatedNavButton('›')}
           </div>
         </div>
       )
@@ -639,6 +614,7 @@ export default defineComponent({
           <div class="product-page__container">
             {renderBreadcrumbs()}
             {renderHero()}
+            {renderBenefits()}
             {renderTabsSection()}
             {renderRelated()}
           </div>

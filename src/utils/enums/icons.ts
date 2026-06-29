@@ -16,5 +16,8 @@ export enum Icons {
   temperature = 'temperature',
   tools = 'tools',
   verified = 'verified',
-  'wheel-diameter' = 'wheel-diameter'
+  'wheel-diameter' = 'wheel-diameter',
+  ui = 'ui',
+  piston = 'piston',
+  wheel = 'wheel'
 }
