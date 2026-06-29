@@ -6,6 +6,10 @@ const normalize = (value: number | string): string => {
   return String(value).trim()
 }
 
+const getFilterParam = (params: CatalogFilterParams, field: CatalogFilterField): string => {
+  return normalize(params[field] ?? '')
+}
+
 const isCompatibleItem = (item: CatalogItem): boolean => {
   return Boolean(
     normalize(item.vehicleBrand)
@@ -132,6 +136,7 @@ export const useCatalogStore = defineStore('catalog', () => {
   let pendingLoad: Promise<CatalogItem[]> | null = null
 
   const isLoaded = computed(() => items.value.length > 0)
+  const itemsById = computed(() => new Map(items.value.map(item => [ item.id, item ])))
   const compatibleItems = computed(() => items.value.filter(isCompatibleItem))
   const categories = computed(() => getUniqueStrings(items.value, item => item.category))
   const series = computed(() => getUniqueStrings(items.value, item => item.series))
@@ -186,7 +191,7 @@ export const useCatalogStore = defineStore('catalog', () => {
   }
 
   const getById = (id: number): CatalogItem | undefined => {
-    return items.value.find(item => item.id === id)
+    return itemsById.value.get(id)
   }
 
   const getRelatedItems = (item: CatalogItem, count = 5): CatalogItem[] => {
@@ -201,23 +206,28 @@ export const useCatalogStore = defineStore('catalog', () => {
     sourceItems: readonly CatalogItem[] = compatibleItems.value,
     excludedField?: CatalogFilterField
   ): CatalogItem[] => {
+    const markParam = getFilterParam(params, CatalogFilterField.mark)
+    const modelParam = getFilterParam(params, CatalogFilterField.model)
+    const diameterParam = getFilterParam(params, CatalogFilterField.diameter)
+    const wheelDiameterParam = getFilterParam(params, CatalogFilterField.wheelDiameter)
+    const wheelDiameterValue = Number(wheelDiameterParam)
+
     return sourceItems.filter(item => {
       const isMarkMatched = excludedField === CatalogFilterField.mark
-        || !params[CatalogFilterField.mark]
-        || getItemFieldValue(item, CatalogFilterField.mark) === params[CatalogFilterField.mark]
+        || !markParam
+        || getItemFieldValue(item, CatalogFilterField.mark) === markParam
 
       const isModelMatched = excludedField === CatalogFilterField.model
-        || !params[CatalogFilterField.model]
-        || getItemFieldValue(item, CatalogFilterField.model) === params[CatalogFilterField.model]
+        || !modelParam
+        || getItemFieldValue(item, CatalogFilterField.model) === modelParam
 
       const isDiameterMatched = excludedField === CatalogFilterField.diameter
-        || !params[CatalogFilterField.diameter]
-        || getItemFieldValue(item, CatalogFilterField.diameter) === params[CatalogFilterField.diameter]
+        || !diameterParam
+        || getItemFieldValue(item, CatalogFilterField.diameter) === diameterParam
 
-      const wheelDiameterParam = Number(params[CatalogFilterField.wheelDiameter])
       const isWheelDiameterMatched = excludedField === CatalogFilterField.wheelDiameter
-        || !params[CatalogFilterField.wheelDiameter]
-        || getWheelDiameterValues(item.wheelDiameterInch).includes(wheelDiameterParam)
+        || !wheelDiameterParam
+        || getWheelDiameterValues(item.wheelDiameterInch).includes(wheelDiameterValue)
 
       return isMarkMatched && isModelMatched && isDiameterMatched && isWheelDiameterMatched
     })
