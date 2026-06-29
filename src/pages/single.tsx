@@ -1,4 +1,4 @@
-import { type CatalogItem, Colors, Icons, Sizes } from '@/utils'
+import { type CatalogItem, Colors, Icons, Sizes, formatUsd } from '@/utils'
 import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import ProductCard from '@/components/product-card'
@@ -8,6 +8,7 @@ import { GIcon } from '@/components/g/icon'
 import { useCatalogStore } from '@/stores/catalog'
 import { GDivider } from '@/components'
 import Benefits from '@/components/benefits'
+import Accessories from '@/components/accessories'
 
 type ProductTabKey = 'specs' | 'compatibility' | 'kit' | 'delivery' | 'faq'
 
@@ -30,6 +31,7 @@ const formatWheelDiameterRange = (value: number | string): string => {
 
 export default defineComponent({
   name: 'ProductPage',
+
   setup() {
     const route = useRoute()
     const catalogStore = useCatalogStore()
@@ -82,15 +84,8 @@ export default defineComponent({
         return []
       }
 
-      return catalogStore.getRelatedItems(item, 5)
+      return catalogStore.getRelatedItems(item, 4)
     })
-
-    const formatUsd = (value: number): string => {
-      return `$ ${value.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}`
-    }
 
     const renderEmptyState = () => {
       const message = catalogStore.isLoading ? 'Загрузка товара...' : 'Товар не найден'
@@ -247,7 +242,7 @@ export default defineComponent({
         <div class="product-page__hero-stats">
           {renderHeroStat('Количество поршней', Icons.piston, `${item.pistonCount} шт`)}
           {renderHeroStat('Диаметр диска', Icons['wheel-diameter'], `${item.discDiameterMm} мм`)}
-          {renderHeroStat('Диаметр колес', Icons.wheel, item.wheelDiameterInch)}
+          {renderHeroStat('Диаметр колес', Icons.wheel, formatWheelDiameterRange(item.wheelDiameterInch))}
           {renderHeroStat('Площадь поршней', Icons.square, `${item.pistonAreaCm2} см²`)}
           {renderHeroStat('Покрытие', Icons.drop, item.coating)}
           {renderHeroStat('Применение', Icons.ui, item.application)}
@@ -604,6 +599,20 @@ export default defineComponent({
       )
     }
 
+    const renderCatalog = () => {
+      return (
+        <section class="product-page__catalog">
+          <div class="product-page__catalog-products">
+            {renderRelated()}
+          </div>
+
+          <aside class="product-page__catalog-accessories">
+            <Accessories />
+          </aside>
+        </section>
+      )
+    }
+
     return () => {
       if (!currentItem.value) {
         return renderEmptyState()
@@ -616,7 +625,8 @@ export default defineComponent({
             {renderHero()}
             {renderBenefits()}
             {renderTabsSection()}
-            {renderRelated()}
+
+            {renderCatalog()}
           </div>
         </div>
       )
