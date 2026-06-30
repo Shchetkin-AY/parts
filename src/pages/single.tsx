@@ -1,33 +1,16 @@
-import { type CatalogItem, Colors, Icons, Sizes, formatUsd } from '@/utils'
+import { type CatalogItem, Colors, Icons, Sizes, formatUsd, formatWheelDiameterRange } from '@/utils'
 import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import ProductCard from '@/components/product-card'
 import { GButton } from '@/components/g/button'
-import { GChip } from '@/components/g/chip'
 import { GIcon } from '@/components/g/icon'
 import { useCatalogStore } from '@/stores/catalog'
 import { GDivider } from '@/components'
 import Benefits from '@/components/benefits'
 import Accessories from '@/components/accessories'
+import ProductGallery from '@/components/product-gallery'
 
 type ProductTabKey = 'specs' | 'compatibility' | 'kit' | 'delivery' | 'faq'
-
-const formatWheelDiameterRange = (value: number | string): string => {
-  const diameters = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
-  const normalizedDiameters = diameters.map(diameter => diameter.replace(',', '.'))
-
-  if (normalizedDiameters.length >= 2) {
-    return normalizedDiameters.map(diameter => `R${diameter}`).join('-')
-  }
-
-  const wheelDiameter = Number(normalizedDiameters[0] ?? value)
-
-  if (Number.isFinite(wheelDiameter)) {
-    return `R${wheelDiameter}-R${wheelDiameter + 3}`
-  }
-
-  return `R${value}`
-}
 
 export default defineComponent({
   name: 'ProductPage',
@@ -132,44 +115,13 @@ export default defineComponent({
       )
     }
 
-    const renderHeroTags = () => {
-      const item = currentItem.value as CatalogItem | undefined
-      if (!item) {
-        return null
-      }
-      const wheelDiameterRange = formatWheelDiameterRange(item.wheelDiameterInch)
-
-      return (
-        <div class="product-page__hero-tags">
-          <GChip label={`Поршней: ${item.pistonCount} шт.`} color={Colors['surface-2']} size={Sizes.large} outline/>
-          <GChip label={wheelDiameterRange} color={Colors['surface-2']} size={Sizes.large} outline/>
-          <GChip label={`${item.discDiameterMm} мм`} color={Colors['surface-2']} size={Sizes.large} outline/>
-        </div>
-      )
-    }
-
     const renderHeroImage = () => {
       const item = currentItem.value as CatalogItem | undefined
       if (!item) {
         return null
       }
 
-      return (
-        <div class="product-page__hero-media">
-          {renderHeroTags()}
-
-          <div class="product-page__hero-image-frame">
-            <img
-              class="product-page__hero-image"
-              src={`/images/products/${item.series.toLowerCase()}.webp`}
-              alt={`${item.series} ${item.model}`}
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </div>
-        </div>
-      )
+      return <ProductGallery value={item.series} />
     }
 
     const renderHeroSeries = () => {

@@ -64,64 +64,6 @@ $_name: "product-page";
     min-height: 500px;
   }
 
-  &__hero-media {
-    position: relative;
-    overflow: hidden;
-    min-height: 500px;
-    max-height: 500px;
-    height: 500px;
-    padding: 16px;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 16px;
-    border: 1px solid colors.$border;
-    border-radius: 18px;
-    align-content: center;
-
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at top, rgba(196, 196, 196, 0.1), transparent 55%),
-      radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
-  }
-
-  &__hero-tags {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  &__hero-tag {
-    min-height: 24px;
-    padding: 0 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: colors.$surface-3;
-    border: 1px solid colors.$border;
-    border-radius: $radius-xs;
-    color: colors.$text-soft;
-    font-size: 12px;
-    line-height: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  &__hero-image-frame {
-    display: grid;
-    place-items: center;
-    min-height: 0;
-  }
-
-  &__hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
   &__hero-content {
     display: grid;
     gap: 40px;
