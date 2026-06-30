@@ -9,7 +9,8 @@ type FilterOrientation = 'horizontal' | 'vertical'
 const emptyFilterParams: CatalogFilterParams = {
   [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
-  [CatalogFilterField.model]: ''
+  [CatalogFilterField.model]: '',
+  [CatalogFilterField.series]: ''
 }
 
 const normalizeFilterValue = (value: number | string): string => {
@@ -54,7 +55,8 @@ export default defineComponent({
       return {
         [CatalogFilterField.diameter]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.diameter] ?? ''),
         [CatalogFilterField.mark]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.mark] ?? ''),
-        [CatalogFilterField.model]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.model] ?? '')
+        [CatalogFilterField.model]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.model] ?? ''),
+        [CatalogFilterField.series]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.series] ?? '')
       }
     }
 
@@ -75,11 +77,17 @@ export default defineComponent({
     const diameterOptions = computed(() => {
       return getUniqueOptions(CatalogFilterField.diameter)
     })
+    const seriesOptions = computed(() => {
+      return getUniqueOptions(CatalogFilterField.series)
+    })
     const filteredItems = computed(() => {
       return getFilteredItems()
     })
     const isSubmitDisabled = computed(() => {
       return filteredItems.value.length === 0
+    })
+    const hasActiveFilters = computed(() => {
+      return Object.values(params).some(value => Boolean(value))
     })
 
     const hasOption = (options: SelectOption[], value: string): boolean => {
@@ -104,6 +112,7 @@ export default defineComponent({
       params[CatalogFilterField.diameter] = resolvedParams[CatalogFilterField.diameter]
       params[CatalogFilterField.mark] = resolvedParams[CatalogFilterField.mark]
       params[CatalogFilterField.model] = resolvedParams[CatalogFilterField.model]
+      params[CatalogFilterField.series] = resolvedParams[CatalogFilterField.series]
     }
 
     watch(
@@ -127,6 +136,11 @@ export default defineComponent({
     watch(
       () => diameterOptions.value,
       options => syncParamByOptions(CatalogFilterField.diameter, options),
+      { immediate: true }
+    )
+    watch(
+      () => seriesOptions.value,
+      options => syncParamByOptions(CatalogFilterField.series, options),
       { immediate: true }
     )
 
@@ -163,8 +177,18 @@ export default defineComponent({
       if (params[CatalogFilterField.diameter]) {
         query[CatalogFilterField.diameter] = params[CatalogFilterField.diameter]
       }
+      if (params[CatalogFilterField.series]) {
+        query[CatalogFilterField.series] = params[CatalogFilterField.series]
+      }
 
       return query
+    }
+
+    const resetHandler = (): void => {
+      params[CatalogFilterField.diameter] = ''
+      params[CatalogFilterField.mark] = ''
+      params[CatalogFilterField.model] = ''
+      params[CatalogFilterField.series] = ''
     }
 
     const submitHandler = (): void => {
@@ -218,6 +242,25 @@ export default defineComponent({
         </div>
       )
     }
+    const renderSeriesSelect = () => {
+      if (props.orientation !== 'vertical') {
+        return null
+      }
+
+      return (
+        <div class="filter__field">
+          <GSelect
+            v-model={params[CatalogFilterField.series]}
+            ariaLabel="Серия"
+            clearable
+            label="Серия"
+            modelValue={params[CatalogFilterField.series]}
+            placeholder="Выберите серию"
+            options={seriesOptions.value}
+          />
+        </div>
+      )
+    }
     const renderDiameterSelect = () => {
       return (
         <div class="filter__field">
@@ -235,12 +278,29 @@ export default defineComponent({
     }
     const renderAction = () => {
       return (
-        <div class="filter__action">
+        <div class="filter__action filter__action--horizontal">
           <GButton
             color={Colors.primary}
             disabled={isSubmitDisabled.value}
             label="Найти комплекты"
             onClick={submitHandler}
+          />
+        </div>
+      )
+    }
+    const renderResetAction = () => {
+      if (props.orientation !== 'vertical') {
+        return null
+      }
+
+      return (
+        <div class="filter__action filter__action--reset">
+          <GButton
+            color={Colors.text}
+            disabled={!hasActiveFilters.value}
+            label="Сбросить"
+            outline
+            onClick={resetHandler}
           />
         </div>
       )
@@ -282,14 +342,21 @@ export default defineComponent({
     }
 
     return () =>
-      <section class="filter">
+      <section
+        class={{
+          filter: true,
+          'filter--vertical': props.orientation === 'vertical'
+        }}
+      >
         <div class="filter__panel">
           {renderHeader()}
           <div class="filter__panel-fields">
             {renderMarkSelect()}
             {renderModelSelect()}
+            {renderSeriesSelect()}
             {renderDiameterSelect()}
             {renderAction()}
+            {renderResetAction()}
           </div>
           {renderDivider()}
           {renderFooter()}
