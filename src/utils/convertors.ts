@@ -12,3 +12,20 @@ export const formatUsd = (value: number): string => {
     maximumFractionDigits: 2
   })}`
 }
+
+export const formatWheelDiameterRange = (value: number | string): string => {
+  const diameters = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
+  const normalizedDiameters = diameters.map(diameter => diameter.replace(',', '.'))
+
+  if (normalizedDiameters.length >= 2) {
+    return normalizedDiameters.map(diameter => `R${diameter}`).join('-')
+  }
+
+  const wheelDiameter = Number(normalizedDiameters[0] ?? value)
+
+  if (Number.isFinite(wheelDiameter)) {
+    return `R${wheelDiameter}-R${wheelDiameter + 3}`
+  }
+
+  return `R${value}`
+}
