@@ -56,7 +56,9 @@ $_name: "product-gallery";
       radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
 
     &:hover {
-      border-color: colors.$primary-hover;
+      cursor: pointer;
+      transform: translateY(-2px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
     }
 
     &--active {
