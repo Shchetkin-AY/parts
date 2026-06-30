@@ -2,6 +2,7 @@ export * from './g'
 
 export * from './accessories'
 export * from './benefits'
+export * from './catalog-pagination'
 export * from './filter'
 export * from './footer'
 export * from './hero'
@@ -9,4 +10,3 @@ export * from './navigation'
 export * from './product-highlight'
 export * from './production-route'
 export * from './technical-excellence'
-
