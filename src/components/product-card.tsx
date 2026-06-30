@@ -62,9 +62,8 @@ export default defineComponent({
         <div class="product-card__media">
           {renderBadge()}
           <img
-
             class="product-card__image"
-            src={`/images/products/${props.value.series.toLowerCase()}.webp`}
+            src={`/images/products/${props.value.series.toLowerCase()}/1.webp`}
             alt={title.value}
             loading="lazy"
             decoding="async"
