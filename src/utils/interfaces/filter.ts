@@ -3,13 +3,14 @@ import type { CatalogItem } from '../types'
 
 export type CatalogFilterItem = Pick<
   CatalogItem,
-  'discDiameterMm' | 'vehicleBrand' | 'vehicleModel' | 'wheelDiameterInch'
+  'discDiameterMm' | 'series' | 'vehicleBrand' | 'vehicleModel' | 'wheelDiameterInch'
 >
 
 export interface CatalogFilterParams {
   [CatalogFilterField.diameter]?: string
   [CatalogFilterField.mark]?: string
-  [CatalogFilterField.model]?: string,
+  [CatalogFilterField.model]?: string
+  [CatalogFilterField.series]?: string
   [CatalogFilterField.wheelDiameter]?: string
 }
 
