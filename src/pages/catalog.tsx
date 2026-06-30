@@ -2,15 +2,42 @@ import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem } from '@/utils'
 import { GButton } from '@/components/g/button'
+import { CatalogPagination } from '@/components/catalog-pagination'
 import Filter from '@/components/filter'
 import ProductCard from '@/components/product-card'
 import { useCatalogStore } from '@/stores/catalog'
 
+const catalogItemsPerPage = 12
 const emptyFilterParams: CatalogFilterParams = {
   [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
   [CatalogFilterField.model]: '',
+  [CatalogFilterField.series]: '',
   [CatalogFilterField.wheelDiameter]: ''
+}
+
+const normalizeFilterParams = (params: Partial<CatalogFilterParams> = {}): CatalogFilterParams => {
+  return {
+    [CatalogFilterField.diameter]: params[CatalogFilterField.diameter] ?? '',
+    [CatalogFilterField.mark]: params[CatalogFilterField.mark] ?? '',
+    [CatalogFilterField.model]: params[CatalogFilterField.model] ?? '',
+    [CatalogFilterField.series]: params[CatalogFilterField.series] ?? '',
+    [CatalogFilterField.wheelDiameter]: params[CatalogFilterField.wheelDiameter] ?? ''
+  }
+}
+
+const getRouteQueryValue = (routeQuery: Record<string, unknown>, field: CatalogFilterField): string => {
+  const value = routeQuery[field]
+
+  if (Array.isArray(value)) {
+    return value[0] ?? ''
+  }
+
+  if (typeof value === 'string') {
+    return value.trim()
+  }
+
+  return ''
 }
 
 export default defineComponent({
@@ -22,6 +49,7 @@ export default defineComponent({
     const catalogStore = useCatalogStore()
     const filterVersion = ref(0)
     const filteredItems = ref<CatalogItem[]>([])
+    const currentPage = ref(1)
     const filterParams = ref<CatalogFilterParams>({
       ...emptyFilterParams
     })
@@ -36,29 +64,80 @@ export default defineComponent({
       return result.join('  ')
     })
     const routeFilterParams = computed<CatalogFilterParams>(() => {
-      const getRouteQueryValue = (field: CatalogFilterField): string => {
-        const value = route.query[field]
+      return normalizeFilterParams({
+        [CatalogFilterField.diameter]: getRouteQueryValue(route.query, CatalogFilterField.diameter),
+        [CatalogFilterField.mark]: getRouteQueryValue(route.query, CatalogFilterField.mark),
+        [CatalogFilterField.model]: getRouteQueryValue(route.query, CatalogFilterField.model),
+        [CatalogFilterField.series]: getRouteQueryValue(route.query, CatalogFilterField.series),
+        [CatalogFilterField.wheelDiameter]: getRouteQueryValue(route.query, CatalogFilterField.wheelDiameter)
+      })
+    })
+    const paginatedItems = computed<CatalogItem[]>(() => {
+      const start = (currentPage.value - 1) * catalogItemsPerPage
 
-        if (Array.isArray(value)) {
-          return value[0] ?? ''
+      return filteredItems.value.slice(start, start + catalogItemsPerPage)
+    })
+
+    const applyFilterParams = (params: CatalogFilterParams): void => {
+      filterParams.value = normalizeFilterParams(params)
+      filteredItems.value = [ ...catalogStore.filterItems(filterParams.value, sourceItems.value) ]
+      currentPage.value = 1
+    }
+
+    const syncRouteFromFilterParams = (params: CatalogFilterParams): void => {
+      const query = Object.entries(params).reduce<Record<string, string>>((result, [ field, value ]) => {
+        if (value) {
+          result[field] = value
         }
 
-        return value ? String(value).trim() : ''
+        return result
+      }, {})
+
+      const currentQuery = Object.entries(route.query).reduce<Record<string, string>>((result, [ field, value ]) => {
+        if (Array.isArray(value)) {
+          result[field] = value[0] ?? ''
+        } else if (typeof value === 'string') {
+          result[field] = value
+        }
+
+        return result
+      }, {})
+
+      const hasSameQuery = Object.keys(query).length === Object.keys(currentQuery).length
+        && Object.entries(query).every(([ field, value ]) => currentQuery[field] === value)
+
+      if (hasSameQuery) {
+        return
       }
 
-      return {
-        [CatalogFilterField.diameter]: getRouteQueryValue(CatalogFilterField.diameter),
-        [CatalogFilterField.mark]: getRouteQueryValue(CatalogFilterField.mark),
-        [CatalogFilterField.model]: getRouteQueryValue(CatalogFilterField.model)
-      }
-    })
+      void router.replace({
+        name: 'catalog',
+        query
+      })
+    }
 
     watch(
       () => sourceItems.value,
       items => {
-        filteredItems.value = [ ...items ]
+        filteredItems.value = [ ...catalogStore.filterItems(filterParams.value, items) ]
       },
       { immediate: true }
+    )
+    watch(
+      () => routeFilterParams.value,
+      params => {
+        applyFilterParams(params)
+      },
+      {
+        immediate: true,
+        deep: true
+      }
+    )
+    watch(
+      () => filteredItems.value.length,
+      () => {
+        currentPage.value = 1
+      }
     )
 
     onBeforeMount(() => {
@@ -66,18 +145,16 @@ export default defineComponent({
     })
 
     const handleFilterPayload = (payload: CatalogFilterSubmitPayload<CatalogItem>): void => {
-      filterParams.value = {
-        ...payload.params
-      }
-      filteredItems.value = [ ...payload.items ]
+      applyFilterParams(payload.params)
+      syncRouteFromFilterParams(payload.params)
     }
     const handleFilterReset = (): void => {
       filterVersion.value += 1
-      filterParams.value = {
-        ...emptyFilterParams
-      }
-      filteredItems.value = [ ...sourceItems.value ]
-      router.push({ name: 'catalog' })
+      applyFilterParams(emptyFilterParams)
+      void router.replace({ name: 'catalog' })
+    }
+    const handlePageChange = (page: number): void => {
+      currentPage.value = page
     }
 
     const renderFilter = () => {
@@ -139,8 +216,18 @@ export default defineComponent({
 
       return (
         <div class="catalog__grid">
-          {filteredItems.value.map(renderProductCard)}
+          {paginatedItems.value.map(renderProductCard)}
         </div>
+      )
+    }
+    const renderPagination = () => {
+      return (
+        <CatalogPagination
+          page={currentPage.value}
+          total={filteredItems.value.length}
+          perPage={catalogItemsPerPage}
+          onChange={handlePageChange}
+        />
       )
     }
     const renderContent = () => {
@@ -148,6 +235,7 @@ export default defineComponent({
         <section class="catalog__content">
           {renderGridHeader()}
           {renderProducts()}
+          {renderPagination()}
         </section>
       )
     }
