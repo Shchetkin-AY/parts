@@ -6,6 +6,29 @@ $_name: "filter";
   position: relative;
   z-index: 20;
 
+  &--vertical {
+    .filter__panel {
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .filter__panel-fields {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .filter__field {
+      min-width: 0;
+    }
+
+    .filter__action {
+      min-width: 0;
+      width: 100%;
+      justify-self: stretch;
+    }
+  }
+
   &__panel {
     display: grid;
     gap: 32px;
