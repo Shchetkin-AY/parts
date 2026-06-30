@@ -93,6 +93,10 @@ const getItemFieldValue = (item: CatalogItem, field: CatalogFilterField): string
     return normalize(item.vehicleModel)
   }
 
+  if (field === CatalogFilterField.series) {
+    return normalize(item.series)
+  }
+
   if (field === CatalogFilterField.wheelDiameter) {
     return normalize(item.wheelDiameterInch)
   }
@@ -208,6 +212,7 @@ export const useCatalogStore = defineStore('catalog', () => {
   ): CatalogItem[] => {
     const markParam = getFilterParam(params, CatalogFilterField.mark)
     const modelParam = getFilterParam(params, CatalogFilterField.model)
+    const seriesParam = getFilterParam(params, CatalogFilterField.series)
     const diameterParam = getFilterParam(params, CatalogFilterField.diameter)
     const wheelDiameterParam = getFilterParam(params, CatalogFilterField.wheelDiameter)
     const wheelDiameterValue = Number(wheelDiameterParam)
@@ -221,6 +226,10 @@ export const useCatalogStore = defineStore('catalog', () => {
         || !modelParam
         || getItemFieldValue(item, CatalogFilterField.model) === modelParam
 
+      const isSeriesMatched = excludedField === CatalogFilterField.series
+        || !seriesParam
+        || getItemFieldValue(item, CatalogFilterField.series) === seriesParam
+
       const isDiameterMatched = excludedField === CatalogFilterField.diameter
         || !diameterParam
         || getItemFieldValue(item, CatalogFilterField.diameter) === diameterParam
@@ -229,7 +238,7 @@ export const useCatalogStore = defineStore('catalog', () => {
         || !wheelDiameterParam
         || getWheelDiameterValues(item.wheelDiameterInch).includes(wheelDiameterValue)
 
-      return isMarkMatched && isModelMatched && isDiameterMatched && isWheelDiameterMatched
+      return isMarkMatched && isModelMatched && isSeriesMatched && isDiameterMatched && isWheelDiameterMatched
     })
   }
 
