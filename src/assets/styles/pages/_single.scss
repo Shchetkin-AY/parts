@@ -66,7 +66,7 @@ $_name: "product-page";
 
   &__hero-content {
     display: grid;
-    gap: 40px;
+    gap: 20px;
   }
 
   &__hero-header {
@@ -116,9 +116,11 @@ $_name: "product-page";
     grid-template-columns: auto 1fr;
     gap: 10px;
     background: colors.$surface;
-    border: 1px solid colors.$border;
     border-radius: $radius-xs;
-    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   &__hero-stat-copy {
