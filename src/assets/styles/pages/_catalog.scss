@@ -3,15 +3,15 @@
 $_name: "catalog";
 
 .#{$_name} {
-  display: grid;
-  justify-items: center;
-  width: 100%;
-  padding-block: 48px 48px;
-  padding-inline: 24px;
+  // display: grid;
+  // justify-items: center;
+  // width: 100%;
+  // padding-block: 48px 48px;
+  // padding-inline: 24px;
 
-  @media (min-width: 768px) {
-    padding-inline: 48px;
-  }
+  // @media (min-width: 768px) {
+  //   padding-inline: 48px;
+  // }
 
   &__layout {
     display: grid;
@@ -154,5 +154,56 @@ $_name: "catalog";
     border-radius: 8px;
     font-size: 14px;
     text-align: center;
+  }
+}
+
+.catalog-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 8px;
+
+  &__pages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &__item {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+
+    .g-chip {
+      min-width: 40px;
+      min-height: 40px;
+      pointer-events: none;
+    }
+
+    .g-chip__label {
+      font-size: 12px;
+    }
+
+    &--active {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &--ellipsis {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  .g-button {
+    min-width: 96px;
   }
 }
