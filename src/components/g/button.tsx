@@ -95,13 +95,17 @@ export const GButton = defineComponent({
   setup(props) {
     const hasIcon = computed<boolean>(() => !!props.icon)
     const hasLabel = computed<boolean>(() => !!props.label)
+    const hasIconOnly = computed<boolean>(() => hasIcon.value && !hasLabel.value)
     const $class = computed<Record<string, boolean>>(() => {
       const result = {
         [ComponentNames.button]: true,
 
-        [`${ComponentNames.button}--${props.size}`]: true,
+        [`${ComponentNames.button}--small`]: props.size === Sizes.small,
+        [`${ComponentNames.button}--medium`]: props.size === Sizes.medium,
+        [`${ComponentNames.button}--large`]: props.size === Sizes.large,
         [`${ComponentNames.button}--labeled`]: hasLabel.value,
-        [`${ComponentNames.button}--icon`]: hasIcon.value,
+        [`${ComponentNames.button}--has-icon`]: hasIcon.value,
+        [`${ComponentNames.button}--icon-only`]: hasIconOnly.value,
         [`${ComponentNames.button}--outline`]: props.outline,
         [`${ComponentNames.button}--disabled`]: props.disabled,
 
@@ -138,6 +142,8 @@ export const GButton = defineComponent({
         return (
           <GIcon
             icon={props.icon}
+            color={props.iconColor ?? 'inherit'}
+            size={props.iconSize ?? 18}
           />
         )
       }
@@ -170,6 +176,7 @@ export const GButton = defineComponent({
           style={$style.value}
           type={props.type}
           tabindex={props.tabindex}
+          aria-label={hasIconOnly.value ? String(props.icon) : undefined}
           disabled={props.disabled}
           onClick={props.onClick}
           onMouseover={props.onMouseover}

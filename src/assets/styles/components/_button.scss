@@ -37,6 +37,32 @@ $_name: "g-button";
 }
 
 @mixin _sizes {
+  &--small {
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        font-size: 12px;
+        line-height: 14px;
+      }
+    }
+
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  }
+
+  &--medium {
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        font-size: 14px;
+        line-height: 16px;
+      }
+    }
+
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+  }
+
   &--large {
     & > .#{$_name}__content {
       & > .#{$_name}__label {
@@ -162,6 +188,10 @@ $_name: "g-button";
   @include _sizes;
 
   &--outline {
+    background-color: transparent;
+    border-color: colors.$border;
+    color: currentcolor;
+
     & > .#{$_name}__content {
       & > .#{$_name}__icon,
       & > .#{$_name}__label {
@@ -183,6 +213,18 @@ $_name: "g-button";
       &::before {
         background-color: colors.color(border, 0.3);
       }
+    }
+  }
+
+  &--icon-only {
+    padding-left: 0;
+    padding-right: 0;
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+
+    & > .#{$_name}__content {
+      gap: 0;
     }
   }
 
