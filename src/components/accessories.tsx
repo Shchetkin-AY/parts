@@ -6,19 +6,19 @@ const accessories: AccessoryItem[] = [
     id: 1,
     title: 'Тормозные колодки',
     description: 'Performance',
-    image: '/public/images/accessories/pads.webp'
+    image: '/images/accessories/pads.webp'
   },
   {
     id: 2,
     title: 'Тормозные диски',
     description: 'Steel Core',
-    image: '/public/images/accessories/discs.webp'
+    image: '/images/accessories/discs.webp'
   },
   {
     id: 3,
     title: 'Тормозные шланги',
     description: 'Армированные',
-    image: '/public/images/accessories/hoses.webp'
+    image: '/images/accessories/hoses.webp'
   }
 ]
 
