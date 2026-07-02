@@ -25,7 +25,7 @@ export default defineComponent({
     })
 
     const subtitle = computed(() => {
-      const disc = getString(props.value.discDiameterMm)
+      const disc = getString(props.value.discDiameter)
       const piston = getString(props.value.pistonCount)
       const parts = [ piston ? `${piston} порш.` : '', disc ? `${disc} мм` : '' ].filter(Boolean)
 
