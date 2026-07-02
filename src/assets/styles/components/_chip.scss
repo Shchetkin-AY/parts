@@ -28,6 +28,11 @@ $_name: "g-chip";
     & > .#{$_name}__content {
       & > .#{$_name}__label {
         font-size: 10px;
+        font-weight: 500;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-right: 8px;
+        padding-left: 8px;
       }
     }
 
