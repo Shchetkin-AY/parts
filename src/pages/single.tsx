@@ -70,6 +70,28 @@ export default defineComponent({
       return catalogStore.getRelatedItems(item, 4)
     })
 
+    const dimensions = computed(() => {
+      const item = currentItem.value
+
+      return [
+        {
+          value: `${item?.width} см`,
+          top: 40,
+          left: 315
+        },
+        {
+          value: `${item?.height} см`,
+          top: 130,
+          right: 70
+        },
+        {
+          value: `${item?.depth} см`,
+          top: 280,
+          right: 62
+        }
+      ]
+    })
+
     const renderEmptyState = () => {
       const message = catalogStore.isLoading ? 'Загрузка товара...' : 'Товар не найден'
 
@@ -346,6 +368,24 @@ export default defineComponent({
       )
     }
 
+    const renderDimensions = () => {
+      return dimensions.value.map(dimension =>
+        <span
+          class="product-page__dimension"
+          style={{
+            top: `${dimension.top}px`,
+            left: dimension.left !== undefined
+              ? `${dimension.left}px`
+              : undefined,
+            right: dimension.right !== undefined
+              ? `${dimension.right}px`
+              : undefined
+          }}
+        >
+          {dimension.value}
+        </span>)
+    }
+
     const renderBlueprint = () => {
       return (
         <div class="product-page__blueprint">
@@ -356,6 +396,7 @@ export default defineComponent({
             loading="lazy"
             decoding="async"
           />
+          {renderDimensions()}
         </div>
       )
     }
