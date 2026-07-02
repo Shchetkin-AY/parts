@@ -8,7 +8,7 @@ $_name: "catalog";
   justify-items: center;
 
   --catalog-inline: 24px;
-  --catalog-section-gap: 40px;
+  --catalog-section-gap: 32px;
   grid-template-columns:
     [full-start] minmax(var(--catalog-inline), 1fr)
     [content-start] minmax(0, var(--container, 1440px))
@@ -46,8 +46,6 @@ $_name: "catalog";
   }
 
   &__layout {
-    width: min(100%, 1400px);
-    margin-inline: auto;
     display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
