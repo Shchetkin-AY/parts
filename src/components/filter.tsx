@@ -86,9 +86,6 @@ export default defineComponent({
     const isSubmitDisabled = computed(() => {
       return filteredItems.value.length === 0
     })
-    const hasActiveFilters = computed(() => {
-      return Object.values(params).some(value => Boolean(value))
-    })
 
     const hasOption = (options: SelectOption[], value: string): boolean => {
       return options.some(option => {
@@ -296,8 +293,6 @@ export default defineComponent({
       return (
         <div class="filter__action filter__action--reset">
           <GButton
-            color={Colors.text}
-            disabled={!hasActiveFilters.value}
             label="Сбросить"
             outline
             onClick={resetHandler}
