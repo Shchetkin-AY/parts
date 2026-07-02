@@ -193,9 +193,9 @@ export default defineComponent({
       return (
         <div class="product-page__hero-stats">
           {renderHeroStat('Количество поршней', Icons.piston, `${item.pistonCount} шт`)}
-          {renderHeroStat('Диаметр диска', Icons['wheel-diameter'], `${item.discDiameterMm} мм`)}
-          {renderHeroStat('Диаметр колес', Icons.wheel, formatWheelDiameterRange(item.wheelDiameterInch))}
-          {renderHeroStat('Площадь поршней', Icons.square, `${item.pistonAreaCm2} см²`)}
+          {renderHeroStat('Диаметр диска', Icons['wheel-diameter'], `${item.discDiameter} мм`)}
+          {renderHeroStat('Диаметр колес', Icons.wheel, formatWheelDiameterRange(item.wheelDiameter))}
+          {renderHeroStat('Площадь поршней', Icons.square, `${item.pistonArea} см²`)}
           {renderHeroStat('Покрытие', Icons.drop, item.coating)}
           {renderHeroStat('Применение', Icons.ui, item.application)}
         </div>
@@ -372,11 +372,11 @@ export default defineComponent({
             <div class="product-page__section-title">Основные параметры</div>
 
             {renderSpecificationRow('Количество поршней, шт.', `${item.pistonCount}`)}
-            {renderSpecificationRow('Диаметр колёс, in', formatWheelDiameterRange(item.wheelDiameterInch))}
-            {renderSpecificationRow('Диаметр диска, мм', `${item.discDiameterMm}`)}
-            {renderSpecificationRow('Габариты суппорта, мм', item.dimensionsMm)}
+            {renderSpecificationRow('Диаметр колёс, in', formatWheelDiameterRange(item.wheelDiameter))}
+            {renderSpecificationRow('Диаметр диска, мм', `${item.discDiameter}`)}
+            {renderSpecificationRow('Габариты суппорта, мм', item.dimensions)}
             {renderSpecificationRow('Площадь колодок, см', item.padFrictionArea)}
-            {renderSpecificationRow('Площадь поршней, см²', `${item.pistonAreaCm2}`)}
+            {renderSpecificationRow('Площадь поршней, см²', `${item.pistonArea}`)}
             {renderSpecificationRow('Применимость', item.application)}
           </div>
 
@@ -415,7 +415,7 @@ export default defineComponent({
 
             <div class="product-page__spec-row">
               <span class="product-page__spec-label">Заводской диск, мм</span>
-              <span class="product-page__spec-value">{item.factoryDiscDiameterMm} мм</span>
+              <span class="product-page__spec-value">{item.factoryDiscDiameter} мм</span>
             </div>
           </div>
         </div>
@@ -434,7 +434,7 @@ export default defineComponent({
 
           <div class="product-page__kit-panel">
             <div class="product-page__kit-panel-item">Суппорт {item.series} {item.model}</div>
-            <div class="product-page__kit-panel-item">Тормозной диск {item.discDiameterMm} мм</div>
+            <div class="product-page__kit-panel-item">Тормозной диск {item.discDiameter} мм</div>
             <div class="product-page__kit-panel-item">Колодки Performance</div>
             <div class="product-page__kit-panel-item">Переходники</div>
             <div class="product-page__kit-panel-item">Тормозные шланги</div>
