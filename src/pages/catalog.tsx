@@ -1,7 +1,6 @@
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem } from '@/utils'
-import { GButton } from '@/components/g/button'
 import { CatalogPagination } from '@/components/catalog-pagination'
 import Filter from '@/components/filter'
 import ProductCard from '@/components/product-card'
@@ -152,11 +151,6 @@ export default defineComponent({
       applyFilterParams(payload.params)
       syncRouteFromFilterParams(payload.params)
     }
-    const handleFilterReset = (): void => {
-      filterVersion.value += 1
-      applyFilterParams(emptyFilterParams)
-      void router.replace({ name: 'catalog' })
-    }
     const handlePageChange = (page: number): void => {
       currentPage.value = page
     }
@@ -164,7 +158,6 @@ export default defineComponent({
     const renderFilter = () => {
       return (
         <aside class="catalog__sidebar">
-          {/* <div class="catalog__filter-card"> */}
           <Filter
             key={filterVersion.value}
             initialParams={routeFilterParams.value}
@@ -173,11 +166,6 @@ export default defineComponent({
             onChange={handleFilterPayload}
             onSubmit={handleFilterPayload}
           />
-          {/* </div> */}
-
-          <div class="catalog__sidebar-actions">
-            <GButton label="Сбросить фильтры" onClick={handleFilterReset} />
-          </div>
         </aside>
       )
     }

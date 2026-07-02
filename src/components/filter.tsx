@@ -293,7 +293,7 @@ export default defineComponent({
       return (
         <div class="filter__action filter__action--reset">
           <GButton
-            label="Сбросить"
+            label="Сбросить фильтры"
             outline
             onClick={resetHandler}
           />
