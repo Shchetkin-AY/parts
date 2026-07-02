@@ -194,9 +194,9 @@ async function main() {
   // eslint-disable-next-line
   console.log('✅ Catalog items loaded:', json.length)
   // eslint-disable-next-line
-  console.log('✅ Catalog JSON updated:', OUTPUT_PATH)
+  console.log('✅ Catalog JSON updated:')
   // eslint-disable-next-line
-  console.log('✅ Catalog TS module updated:', TS_OUTPUT_PATH)
+  console.log('✅ Catalog TS module updated:')
 }
 
 // eslint-disable-next-line
