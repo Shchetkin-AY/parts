@@ -20,9 +20,9 @@ function resolveProjectPath(value: string): string {
   return path.resolve(PROJECT_ROOT, value)
 }
 
-const SHEET_ID = readEnv('GOOGLE_SHEET_ID', '10XC-Ab6XCYZdWfRCblSXygXX6A3Dk9R6W85tgQBbqy0')
-const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', 'AIzaSyD7LWKP0roTMELxgJxttiLm2NQdyKL7hqo')
-const RANGE = readEnv('GOOGLE_SHEET_RANGE', 'goods!A:X')
+const SHEET_ID = readEnv('GOOGLE_SHEET_ID', '1TwtaO56Hk7SRlFU27Ahpc6aMuFcJ-gqMjriW1FMK_JE')
+const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', 'AIzaSyDTJB_VoqtrpXBQcY-9G7keK4x33OZ3FKc')
+const RANGE = readEnv('GOOGLE_SHEET_RANGE', 'goods!A:AA')
 const OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_OUTPUT', 'src/data/data.json'))
 const TS_OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_TS_OUTPUT', 'src/data/catalog.ts'))
 const VALUE_RENDER_OPTION = 'FORMATTED_VALUE'
@@ -34,11 +34,14 @@ const CATALOG_HEADERS = [
   'series',
   'model',
   'pistonCount',
-  'wheelDiameterInch',
-  'pistonAreaCm2',
-  'discDiameterMm',
+  'wheelDiameter',
+  'pistonArea',
+  'discDiameter',
   'padFrictionArea',
-  'dimensionsMm',
+  'dimensions',
+  'depth',
+  'height',
+  'width',
   'constructionType',
   'coating',
   'features',
@@ -49,7 +52,7 @@ const CATALOG_HEADERS = [
   'compatibilityClass',
   'vehicleBrand',
   'vehicleModel',
-  'factoryDiscDiameterMm',
+  'factoryDiscDiameter',
   'dataStatus',
   'description'
 ] as const
@@ -59,12 +62,12 @@ type CatalogHeader = typeof CATALOG_HEADERS[number]
 const NUMERIC_HEADERS = new Set<CatalogHeader>([
   'id',
   'pistonCount',
-  'pistonAreaCm2',
-  'discDiameterMm',
+  'pistonArea',
+  'discDiameter',
   'setId',
   'priceUsd',
   'priceCny',
-  'factoryDiscDiameterMm'
+  'factoryDiscDiameter'
 ])
 
 interface SheetValuesResponse {

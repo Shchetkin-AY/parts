@@ -5,11 +5,14 @@ export interface CatalogItem {
   series: string
   model: string
   pistonCount: number
-  wheelDiameterInch: string
-  pistonAreaCm2: number
-  discDiameterMm: number
+  wheelDiameter: string
+  pistonArea: number
+  discDiameter: number
   padFrictionArea: string
-  dimensionsMm: string
+  dimensions: string
+  depth: string
+  height: string
+  width: string
   constructionType: string
   coating: string
   features: string
@@ -20,7 +23,7 @@ export interface CatalogItem {
   compatibilityClass: string
   vehicleBrand: string
   vehicleModel: string
-  factoryDiscDiameterMm: number
+  factoryDiscDiameter: number
   dataStatus: string
   description: string
 }
