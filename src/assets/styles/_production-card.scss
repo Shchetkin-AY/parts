@@ -4,8 +4,8 @@
 $_name: "product-card";
 
 .#{$_name} {
-  max-width: 260px;
-  max-height: 360px;
+  min-width: 240px;
+  min-height: 390px;
   position: relative;
   overflow: hidden;
   display: grid;
@@ -20,13 +20,13 @@ $_name: "product-card";
     box-shadow $transition-base;
 
   &:hover {
-    cursor: pointer;
     transform: translateY(-4px);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
     border-color: colors.$border-strong;
   }
 
   &__media {
+    display: flex;
     align-content: center;
     justify-content: center;
     position: relative;
@@ -43,30 +43,37 @@ $_name: "product-card";
     object-fit: contain;
   }
 
+  &__chips {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+  }
+
   &__content {
     display: grid;
-    gap: 20px;
-    padding: 19.2px 19.2px 20.8px;
+    gap: 10px;
+    padding: 20px;
   }
 
   &__header {
     display: grid;
-    gap: 15px;
+    gap: 10px;
   }
 
   &__subtitle {
     color: colors.$text-muted;
     font-size: 10px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 1px;
+    font-weight: 500;
     text-transform: uppercase;
   }
 
   &__title {
     color: colors.$text-primary;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.2;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -75,15 +82,15 @@ $_name: "product-card";
   &__footer {
     display: grid;
     grid-template-rows: 1fr auto;
+    gap: 15px;
     align-items: center;
   }
 
   &__price {
     font-variant-numeric: tabular-nums;
     color: colors.$primary;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-size: 19px;
+    font-weight: 500;
     text-transform: uppercase;
   }
 

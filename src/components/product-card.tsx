@@ -1,4 +1,4 @@
-import { type CatalogItem, Colors, getString } from '@/utils'
+import { type CatalogItem, Colors, Sizes, formatWheelDiameterRange, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
 import { GButton, GChip } from './g'
 import { useRouter } from 'vue-router'
@@ -27,9 +27,8 @@ export default defineComponent({
     })
 
     const subtitle = computed(() => {
-      const disc = getString(props.value.discDiameter)
       const piston = getString(props.value.pistonCount)
-      const parts = [ piston ? `${piston} порш.` : '', disc ? `${disc} мм` : '' ].filter(Boolean)
+      const parts = [ props.value.wheelDiameter ? formatWheelDiameterRange(props.value.wheelDiameter) : '', piston ? `${piston} порш.` : '' ].filter(Boolean)
 
       return parts.join(' · ')
     })
@@ -52,27 +51,34 @@ export default defineComponent({
       })
     }
 
-    const renderBadge = () => {
+    const renderHitChip = () => {
       if (props.badge) {
         return (
           <GChip
             label={'ХИТ'}
             color={Colors.primary}
-            position={'absolute'}
-            coordinates={{
-              top: 15,
-              left: 15
-            }}
           />
         )
       }
+    }
+
+    const renderChips = () => {
+      return (
+        <div class="product-card__chips">
+          <GChip
+            label={`${props.value.pistonCount} поршней`}
+            // color={Colors['text-secondary']}
+          />
+          {renderHitChip()}
+        </div>
+      )
     }
 
     const renderImage = () => {
       return (
 
         <div class="product-card__media">
-          {renderBadge()}
+          {renderChips()}
           <img
             class="product-card__image"
             src={`/images/products/${props.value.series.toLowerCase()}/1.webp`}
@@ -89,7 +95,7 @@ export default defineComponent({
 
         <div class="product-card__header">
           <div class="product-card__title">
-            {title.value}
+            {props.value.model}
           </div>
 
           <div class="product-card__subtitle">
@@ -111,6 +117,7 @@ export default defineComponent({
           </div>
           <GButton
             label={'Подробнее'}
+            size={Sizes.small}
             outline
             onClick={clickHandler}
           />
