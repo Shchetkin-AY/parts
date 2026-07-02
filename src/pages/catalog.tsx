@@ -59,7 +59,11 @@ export default defineComponent({
     })
     const resultTitle = computed(() => {
       const result = [ 'Тормозные системы' ]
-      result.push([ filterParams.value.mark, filterParams.value.model ].filter(Boolean).join(' / '))
+      const subtitle = [ filterParams.value.mark, filterParams.value.model ].filter(Boolean).join(' / ')
+
+      if (subtitle) {
+        result.push(subtitle)
+      }
 
       return result.join('  ')
     })
@@ -160,10 +164,7 @@ export default defineComponent({
     const renderFilter = () => {
       return (
         <aside class="catalog__sidebar">
-          <div class="catalog__sidebar-header">
-            <h2 class="catalog__sidebar-title">Фильтр по параметрам</h2>
-          </div>
-
+          {/* <div class="catalog__filter-card"> */}
           <Filter
             key={filterVersion.value}
             initialParams={routeFilterParams.value}
@@ -172,6 +173,7 @@ export default defineComponent({
             onChange={handleFilterPayload}
             onSubmit={handleFilterPayload}
           />
+          {/* </div> */}
 
           <div class="catalog__sidebar-actions">
             <GButton label="Сбросить фильтры" onClick={handleFilterReset} />
@@ -183,11 +185,18 @@ export default defineComponent({
       return (
         <div class="catalog__header">
           <div class="catalog__title-group">
-            <p class="catalog__title">{resultTitle.value}</p>
+            <h1 class="catalog__title">
+              {resultTitle.value}
+            </h1>
+
+            <div class="catalog__description">
+              Комплекты Savanini для гражданских автомобилей,
+              трековых автомобилей и спортивного использования.
+            </div>
           </div>
 
           <div class="catalog__meta">
-            <span class="catalog__meta-label">Позиций: {filteredItems.value.length}</span>
+            {filteredItems.value.length} товаров
           </div>
         </div>
       )
@@ -242,10 +251,12 @@ export default defineComponent({
 
     return () =>
       <div class="catalog">
-        <div class="catalog__layout">
-          {renderFilter()}
-          {renderContent()}
-        </div>
+        <section class="catalog__section catalog__section--main">
+          <div class="catalog__layout">
+            {renderFilter()}
+            {renderContent()}
+          </div>
+        </section>
       </div>
   }
 })

@@ -3,64 +3,85 @@
 $_name: "catalog";
 
 .#{$_name} {
-  // display: grid;
-  // justify-items: center;
-  // width: 100%;
-  // padding-block: 48px 48px;
-  // padding-inline: 24px;
+  width: 100%;
+  display: grid;
+  justify-items: center;
 
-  // @media (min-width: 768px) {
-  //   padding-inline: 48px;
-  // }
+  --catalog-inline: 24px;
+  --catalog-section-gap: 40px;
+  grid-template-columns:
+    [full-start] minmax(var(--catalog-inline), 1fr)
+    [content-start] minmax(0, var(--container, 1440px))
+    [content-end] minmax(var(--catalog-inline), 1fr)
+    [full-end];
+  row-gap: var(--catalog-section-gap);
+
+  @media (min-width: 768px) {
+    --catalog-inline: 32px;
+  }
+
+  &__section {
+    grid-column: full;
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(var(--catalog-inline), 1fr)
+      [content-start] minmax(0, var(--container, 1440px))
+      [content-end] minmax(var(--catalog-inline), 1fr)
+      [full-end];
+    min-width: 0;
+    width: 100%;
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
+    }
+  }
+
+  &__section > * {
+    grid-column: content;
+    min-width: 0;
+    width: 100%;
+    max-width: var(--container, 1440px);
+  }
 
   &__layout {
+    width: min(100%, 1400px);
+    margin-inline: auto;
     display: grid;
-    gap: 32px;
-    width: min(100%, var(--container, 1280px));
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
   }
 
   @media (min-width: 1024px) {
     &__layout {
-      grid-template-columns: 288px minmax(0, 1fr);
+      grid-template-columns: 280px minmax(0, 1fr);
       gap: 48px;
       align-items: start;
     }
   }
 
   &__sidebar {
-    position: sticky;
-    left: 0;
+    position: static;
     display: grid;
-    gap: 20px;
+    gap: 16px;
+    align-self: start;
+    height: fit-content;
   }
 
   @media (min-width: 1024px) {
     &__sidebar {
       position: sticky;
-      border-right: 1px solid colors.$border;
-      padding-right: 32px;
+      top: 128px;
     }
   }
 
-  &__sidebar-header {
-    display: grid;
-    gap: 6px;
-  }
-
-  &__sidebar-title {
+  &__sidebar-label {
     color: colors.$primary;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
-  &__sidebar-text {
-    color: colors.$text-secondary;
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: 0;
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
 
@@ -75,14 +96,17 @@ $_name: "catalog";
   &__content {
     min-width: 0;
     display: grid;
-    gap: 24px;
+    gap: 32px;
   }
 
   &__header {
-    display: grid;
-    gap: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
     border-bottom: 1px solid colors.$border;
-    padding-bottom: 16px;
+    gap: 20px;
+    flex-wrap: wrap;
   }
 
   @media (min-width: 768px) {
@@ -95,51 +119,52 @@ $_name: "catalog";
 
   &__title-group {
     display: grid;
-    gap: 6px;
-  }
-
-  &__eyebrow {
-    color: colors.$primary;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: uppercase;
+    gap: 10px;
   }
 
   &__title {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
     color: colors.$text;
-    font-size: 24px;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0;
     text-transform: uppercase;
+  }
+
+  &__description {
+    max-width: 650px;
+    color: colors.$text-secondary;
+    font-size: 14px;
+    line-height: 16px;
   }
 
   &__meta {
     color: colors.$text-secondary;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0;
+    font-size: 12px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
   }
 
-  @media (min-width: 640px) {
+  @media (max-width: 1280px) {
+    &__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1024px) {
     &__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (min-width: 1280px) {
+  @media (max-width: 720px) {
     &__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: 1fr;
     }
   }
 
@@ -163,7 +188,8 @@ $_name: "catalog";
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding-top: 8px;
+  padding-top: 20px;
+  margin-top: 20px;
 
   &__pages {
     display: flex;
