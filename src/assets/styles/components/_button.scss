@@ -40,25 +40,18 @@ $_name: "g-button";
   &--small {
     & > .#{$_name}__content {
       & > .#{$_name}__label {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 12px;
       }
     }
 
-    height: 36px;
-    min-height: 36px;
-    max-height: 36px;
+    height: 34px;
+    min-height: 34px;
+    max-height: 34px;
   }
 
   &--medium {
-    & > .#{$_name}__content {
-      & > .#{$_name}__label {
-        font-size: 14px;
-        line-height: 16px;
-      }
-    }
-
     height: 40px;
     min-height: 40px;
     max-height: 40px;
@@ -113,23 +106,24 @@ $_name: "g-button";
   max-height: 40px;
 
   &__label {
-    padding-left: 12px;
-    padding-right: 12px;
-    color: colors.color(text-inverse);
-    text-decoration: none;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    display: inline-block;
-
-    overflow: hidden;
-
     font-size: var(--font-size);
     font-weight: 600;
     line-height: var(--line-height);
     letter-spacing: var(--letter-spacing);
     text-align: center;
     text-transform: uppercase;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-decoration: none;
+    transition:
+      transform 0.2s,
+      background-color 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s;
+    display: inline-block;
+    overflow: hidden;
 
     @include _transition;
   }
