@@ -66,8 +66,7 @@ export default defineComponent({
       return (
         <div class="product-card__chips">
           <GChip
-            label={`${props.value.pistonCount} поршней`}
-            // color={Colors['text-secondary']}
+            label={`${props.value.pistonCount} ${props.value.pistonCount === 4 ? 'поршня' : 'поршней'}`}
           />
           {renderHitChip()}
         </div>
