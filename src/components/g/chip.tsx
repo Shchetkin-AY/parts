@@ -33,20 +33,26 @@ export const chipProps = {
 
   color: {
     type: String as PropType<Colors>,
-    default: undefined
+    default: undefined,
+    validator: (value: Colors): boolean => {
+      return Object.values(Colors).includes(value)
+    }
   },
   position: {
-    type: String as PropType<CSSProperties['position']>,
-    default: 'relative'
+    type: String as PropType<'relative' | 'absolute'>,
+    default: 'relative',
+    validator: (value: 'relative' | 'absolute'): boolean => {
+      return value === 'relative' || value === 'absolute'
+    }
   },
   coordinates: {
     type: Object as PropType<Record<string, CSSProperties['top'] | CSSProperties['right'] | CSSProperties['bottom'] | CSSProperties['left']>>,
-    default: {
+    default: () => ({
       top: 0,
       right: 0,
       bottom: 0,
       left: 0
-    }
+    })
   }
 }
 
@@ -62,7 +68,7 @@ export const GChip = defineComponent({
     const classes = computed<Record<string, boolean>>(() => {
       return {
         [ComponentNames.chip]: true,
-        [`${ComponentNames.chip}--${props.position}`]: true,
+        [`${ComponentNames.chip}--absolute`]: props.position === 'absolute',
 
         [`${ComponentNames.chip}--round`]: props.round,
         [`${ComponentNames.chip}--outline`]: props.outline,
@@ -72,13 +78,24 @@ export const GChip = defineComponent({
     })
 
     const contentStyle = computed<CSSProperties>(() => {
-      return {
-        position: props.position,
-        top: `${props.coordinates.top}px`,
-        right: `${props.coordinates.right}px`,
-        bottom: `${props.coordinates.bottom}px`,
-        left: `${props.coordinates.left}px`
+      const style: CSSProperties = {
+        position: props.position
       }
+
+      if (props.coordinates.top !== undefined) {
+        style.top = `${props.coordinates.top}px`
+      }
+      if (props.coordinates.right !== undefined) {
+        style.right = `${props.coordinates.right}px`
+      }
+      if (props.coordinates.bottom !== undefined) {
+        style.bottom = `${props.coordinates.bottom}px`
+      }
+      if (props.coordinates.left !== undefined) {
+        style.left = `${props.coordinates.left}px`
+      }
+
+      return style
     })
 
     const label = computed<string | undefined>(() => {
