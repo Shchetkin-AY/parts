@@ -24,7 +24,7 @@ export const iconProps = {
 
   color: {
     type: String as PropType<string>,
-    default: 'text'
+    default: undefined
   }
 }
 
@@ -34,11 +34,17 @@ export const GIcon = defineComponent({
   props: iconProps,
 
   setup(props) {
-    const $class = computed(() => ({
-      ['g-icon']: true,
-      [`g-icon--${props.color}`]: !!props.color,
-      [`g-icon--stroke-${props.color}`]: false
-    }))
+    const $class = computed(() => {
+      const result: Record<string, boolean> = {
+        ['g-icon']: true
+      }
+
+      if (props.color && props.color !== 'inherit') {
+        result[`g-icon--${props.color}`] = true
+      }
+
+      return result
+    })
 
     const renderPath = () => {
       if (props.icon) {
