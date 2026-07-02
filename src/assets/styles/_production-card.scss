@@ -4,6 +4,8 @@
 $_name: "product-card";
 
 .#{$_name} {
+  max-width: 260px;
+  max-height: 360px;
   position: relative;
   overflow: hidden;
   display: grid;
@@ -71,9 +73,9 @@ $_name: "product-card";
   }
 
   &__footer {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr auto;
     align-items: center;
-    justify-content: space-between;
   }
 
   &__price {

@@ -1,7 +1,7 @@
 import { type CatalogItem, Colors, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
-import { GChip } from './g'
-import { RouterLink } from 'vue-router'
+import { GButton, GChip } from './g'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
 
@@ -20,6 +20,8 @@ export default defineComponent({
   },
 
   setup(props) {
+    const router = useRouter()
+
     const title = computed(() => {
       return [ props.value.series, props.value.model ].join('  ')
     })
@@ -39,6 +41,16 @@ export default defineComponent({
         'product-card--hit': props.badge
       }
     })
+
+    const clickHandler = () => {
+      router.push({
+        name: 'catalog.single',
+        params: {
+          category: 'kits',
+          id: props.value.id
+        }
+      })
+    }
 
     const renderBadge = () => {
       if (props.badge) {
@@ -97,6 +109,11 @@ export default defineComponent({
               currency: 'USD'
             })}
           </div>
+          <GButton
+            label={'Подробнее'}
+            outline
+            onClick={clickHandler}
+          />
         </div>
       )
     }
@@ -113,19 +130,12 @@ export default defineComponent({
 
     return () => {
       return (
-        <RouterLink
+        <div
           class={classes.value}
-          to={{
-            name: 'catalog.single',
-            params: {
-              category: 'kits',
-              id: props.value.id
-            }
-          }}
         >
           {renderImage()}
           {renderContent()}
-        </RouterLink>
+        </div>
       )
     }
   }
