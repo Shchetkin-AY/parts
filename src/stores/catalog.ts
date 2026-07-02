@@ -14,8 +14,8 @@ const isCompatibleItem = (item: CatalogItem): boolean => {
   return Boolean(
     normalize(item.vehicleBrand)
     && normalize(item.vehicleModel)
-    && normalize(item.discDiameterMm)
-    && normalize(item.wheelDiameterInch)
+    && normalize(item.discDiameter)
+    && normalize(item.wheelDiameter)
   )
 }
 
@@ -78,7 +78,7 @@ const getUniqueWheelDiameters = (items: readonly CatalogItem[]): number[] => {
   const values = new Set<number>()
 
   items.forEach(item => {
-    getWheelDiameterValues(item.wheelDiameterInch).forEach(value => values.add(value))
+    getWheelDiameterValues(item.wheelDiameter).forEach(value => values.add(value))
   })
 
   return sortNumbers([ ...values ])
@@ -98,10 +98,10 @@ const getItemFieldValue = (item: CatalogItem, field: CatalogFilterField): string
   }
 
   if (field === CatalogFilterField.wheelDiameter) {
-    return normalize(item.wheelDiameterInch)
+    return normalize(item.wheelDiameter)
   }
 
-  return normalize(item.discDiameterMm)
+  return normalize(item.discDiameter)
 }
 
 const getOptionLabel = (field: CatalogFilterField, value: string): string => {
@@ -145,7 +145,7 @@ export const useCatalogStore = defineStore('catalog', () => {
   const categories = computed(() => getUniqueStrings(items.value, item => item.category))
   const series = computed(() => getUniqueStrings(items.value, item => item.series))
   const vehicleBrands = computed(() => getUniqueStrings(compatibleItems.value, item => item.vehicleBrand))
-  const discDiameters = computed(() => getUniqueNumbers(compatibleItems.value, item => item.discDiameterMm))
+  const discDiameters = computed(() => getUniqueNumbers(compatibleItems.value, item => item.discDiameter))
   const wheelDiameters = computed(() => getUniqueWheelDiameters(compatibleItems.value))
   const errorMessage = computed(() => {
     if (!loadError.value) {
@@ -236,7 +236,7 @@ export const useCatalogStore = defineStore('catalog', () => {
 
       const isWheelDiameterMatched = excludedField === CatalogFilterField.wheelDiameter
         || !wheelDiameterParam
-        || getWheelDiameterValues(item.wheelDiameterInch).includes(wheelDiameterValue)
+        || getWheelDiameterValues(item.wheelDiameter).includes(wheelDiameterValue)
 
       return isMarkMatched && isModelMatched && isSeriesMatched && isDiameterMatched && isWheelDiameterMatched
     })
@@ -251,7 +251,7 @@ export const useCatalogStore = defineStore('catalog', () => {
 
     filterItems(params, sourceItems, field).forEach(item => {
       const values = field === CatalogFilterField.wheelDiameter
-        ? getWheelDiameterValues(item.wheelDiameterInch).map(String)
+        ? getWheelDiameterValues(item.wheelDiameter).map(String)
         : [ getItemFieldValue(item, field) ]
 
       values.forEach(value => {
