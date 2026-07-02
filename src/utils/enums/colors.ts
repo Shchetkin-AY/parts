@@ -22,5 +22,9 @@ export enum Colors {
   border = 'border',
   'border-soft' = 'border-soft',
   'border-strong' = 'border-strong',
-  muted = 'muted'
+  muted = 'muted',
+
+  white = 'white',
+  black = 'black',
+  grey = 'grey'
 }
