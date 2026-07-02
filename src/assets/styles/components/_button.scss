@@ -40,14 +40,15 @@ $_name: "g-button";
   &--small {
     & > .#{$_name}__content {
       & > .#{$_name}__label {
+        font-weight: 500;
         font-size: 12px;
         line-height: 14px;
       }
     }
 
-    height: 32px;
-    min-height: 32px;
-    max-height: 32px;
+    height: 36px;
+    min-height: 36px;
+    max-height: 36px;
   }
 
   &--medium {
@@ -156,7 +157,7 @@ $_name: "g-button";
 
   &:hover {
     &::before {
-      background-color: colors.color(text, 0.05);
+      background-color: colors.color(text, 0.08);
     }
   }
 
@@ -205,13 +206,13 @@ $_name: "g-button";
 
     &:hover {
       &::before {
-        background-color: colors.color(border, 0.2);
+        background-color: colors.color(border, 0.05);
       }
     }
 
     &:active {
       &::before {
-        background-color: colors.color(border, 0.3);
+        background-color: colors.color(border, 0.08);
       }
     }
   }
