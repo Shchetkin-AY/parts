@@ -4,16 +4,47 @@
 $_name: "product-page";
 
 .#{$_name} {
+  --product-inline: 24px;
+  --product-section-gap: 32px;
+
   width: 100%;
   display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--product-inline), 1fr)
+    [content-start] minmax(0, var(--container, 1440px))
+    [content-end] minmax(var(--product-inline), 1fr)
+    [full-end];
+  row-gap: var(--product-section-gap);
   color: colors.$text-primary;
   background: colors.$bg;
 
-  &__container {
-    width: min(100%, $container);
-    margin: 0 auto;
+  @media (min-width: 768px) {
+    --product-inline: 32px;
+  }
+
+  &__section {
+    grid-column: full;
     display: grid;
-    gap: 40px;
+    grid-template-columns:
+      [full-start] minmax(var(--product-inline), 1fr)
+      [content-start] minmax(0, var(--container, 1440px))
+      [content-end] minmax(var(--product-inline), 1fr)
+      [full-end];
+    min-width: 0;
+    width: 100%;
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
+    }
+  }
+
+  &__section > * {
+    grid-column: content;
+    min-width: 0;
+    width: 100%;
+    max-width: var(--container, 1440px);
   }
 
   &__empty {

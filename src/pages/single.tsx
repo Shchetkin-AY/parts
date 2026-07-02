@@ -6,7 +6,6 @@ import { GButton } from '@/components/g/button'
 import { GIcon } from '@/components/g/icon'
 import { useCatalogStore } from '@/stores/catalog'
 import { GDivider } from '@/components'
-import Benefits from '@/components/benefits'
 import Accessories from '@/components/accessories'
 import ProductGallery from '@/components/product-gallery'
 
@@ -317,17 +316,13 @@ export default defineComponent({
 
     const renderHero = () => {
       return (
-        <section class="product-page__hero">
-          {renderHeroImage()}
-          {renderHeroContent()}
-          {renderPurchase()}
+        <section class="product-page__section product-page__section--hero">
+          <div class="product-page__hero">
+            {renderHeroImage()}
+            {renderHeroContent()}
+            {renderPurchase()}
+          </div>
         </section>
-      )
-    }
-
-    const renderBenefits = () => {
-      return (
-        <Benefits />
       )
     }
 
@@ -542,9 +537,11 @@ export default defineComponent({
 
     const renderTabsSection = () => {
       return (
-        <section class="product-page__tabs-section">
-          {renderTabs()}
-          {renderTabContent()}
+        <section class="product-page__section product-page__section--tabs">
+          <div class="product-page__tabs-section">
+            {renderTabs()}
+            {renderTabContent()}
+          </div>
         </section>
       )
     }
@@ -594,14 +591,29 @@ export default defineComponent({
 
     const renderCatalog = () => {
       return (
-        <section class="product-page__catalog">
-          <div class="product-page__catalog-products">
-            {renderRelated()}
-          </div>
+        <section class="product-page__section product-page__section--catalog">
+          <div class="product-page__catalog">
+            <div class="product-page__catalog-products">
+              {renderRelated()}
+            </div>
 
-          <aside class="product-page__catalog-accessories">
-            <Accessories />
-          </aside>
+            <aside class="product-page__catalog-accessories">
+              <Accessories />
+            </aside>
+          </div>
+        </section>
+      )
+    }
+
+    const renderBreadcrumbsSection = () => {
+      const breadcrumbs = renderBreadcrumbs()
+      if (!breadcrumbs) {
+        return null
+      }
+
+      return (
+        <section class="product-page__section product-page__section--breadcrumbs">
+          {breadcrumbs}
         </section>
       )
     }
@@ -613,14 +625,10 @@ export default defineComponent({
 
       return (
         <div class="product-page">
-          <div class="product-page__container">
-            {renderBreadcrumbs()}
-            {renderHero()}
-            {renderBenefits()}
-            {renderTabsSection()}
-
-            {renderCatalog()}
-          </div>
+          {renderBreadcrumbsSection()}
+          {renderHero()}
+          {renderTabsSection()}
+          {renderCatalog()}
         </div>
       )
     }
