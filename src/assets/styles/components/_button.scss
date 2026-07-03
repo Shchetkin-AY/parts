@@ -8,16 +8,19 @@ $_name: "g-button";
     &--color-#{$name} {
       background-color: colors.color($name);
 
-      &.#{$_name}--outline {
-        background-color: transparent;
-        color: colors.color($name);
-        border-color: colors.color($name);
-      }
-
       & > .#{$_name}__content {
         & > .#{$_name}__icon,
         & > .#{$_name}__label {
           color: colors.color(text);
+        }
+      }
+
+      &.#{$_name}--outline,
+      &.#{$_name}--flat {
+        & > .#{$_name}__content {
+          & > .#{$_name}__label {
+            color: colors.color($name);
+          }
         }
       }
 
@@ -31,6 +34,13 @@ $_name: "g-button";
         &::before {
           background-color: colors.color(bg, 0.3);
         }
+      }
+
+      &.#{$_name}--flat {
+        background-color: colors.color($name, 0.1);
+      }
+      &.#{$_name}--outline {
+        border-color: colors.color($name, 0.5);
       }
     }
   }
