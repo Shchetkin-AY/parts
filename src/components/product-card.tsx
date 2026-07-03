@@ -68,7 +68,6 @@ export default defineComponent({
           <GChip
             label={`${props.value.pistonCount} ${props.value.pistonCount < 5 ? 'поршня' : 'поршней'}`}
             color={Colors.muted}
-
           />
           {renderHitChip()}
         </div>
