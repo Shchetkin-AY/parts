@@ -6,11 +6,13 @@ export const numberToPxOrString = (value: string | number): string => {
   return value + 'px'
 }
 
+const usdFormatter = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})
+
 export const formatUsd = (value: number): string => {
-  return `$ ${value.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })}`
+  return `$ ${usdFormatter.format(value).replace(/,/g, ' ')}`
 }
 
 export const formatWheelDiameterRange = (value: number | string): string => {
