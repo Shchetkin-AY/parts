@@ -1,4 +1,4 @@
-import { type CatalogItem, Colors, Sizes, formatUsd, formatWheelDiameterRange, getString } from '@/utils'
+import { ButtonModes, type CatalogItem, Colors, Sizes, formatUsd, formatWheelDiameterRange, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
 import { GButton, GChip } from './g'
 import { useRouter } from 'vue-router'
@@ -67,7 +67,8 @@ export default defineComponent({
         <div class="product-card__chips">
           <GChip
             label={`${props.value.pistonCount} ${props.value.pistonCount < 5 ? 'поршня' : 'поршней'}`}
-            color={Colors['primary-soft']}
+            color={Colors.muted}
+
           />
           {renderHitChip()}
         </div>
@@ -115,7 +116,8 @@ export default defineComponent({
           <GButton
             label={'Подробнее'}
             size={Sizes.medium}
-            color={Colors['border-strong']}
+            color={Colors['text-secondary']}
+            mode={ButtonModes.flat}
             onClick={clickHandler}
           />
         </div>
