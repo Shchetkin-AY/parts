@@ -26,9 +26,9 @@ $_name: "product-card";
   }
 
   &__media {
-    display: flex;
-    align-content: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
+    padding: 20px;
     position: relative;
     overflow: hidden;
     background:
@@ -37,9 +37,9 @@ $_name: "product-card";
   }
 
   &__image {
-    width: 93%;
-    height: auto;
-    display: block;
+    width: auto;
+    height: clamp(140px, 15vw, 180px);
+    max-width: 90%;
     object-fit: contain;
   }
 
