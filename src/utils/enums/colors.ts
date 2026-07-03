@@ -2,7 +2,7 @@ export enum Colors {
   primary = 'primary',
   'primary-hover' = 'primary-hover',
   'primary-shadow' = 'primary-shadow',
-  accent = 'accent',
+  'primary-soft' = 'primary-soft',
 
   text = 'text',
   'text-primary' = 'text-primary',
