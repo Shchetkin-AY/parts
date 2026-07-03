@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, PropType, computed, defineComponent } from 'vue'
 
-import { Colors, ComponentNames, Icons, Sizes, numberToPxOrString } from '@/utils'
+import { ButtonModes, Colors, ComponentNames, Icons, Sizes, numberToPxOrString } from '@/utils'
 
 import { GIcon } from './icon'
 
@@ -81,9 +81,9 @@ export const buttonProps = {
     default: undefined
   },
 
-  outline: {
-    type: Boolean,
-    default: false
+  mode: {
+    type: String as PropType<ButtonModes>,
+    default: undefined
   }
 }
 
@@ -106,7 +106,7 @@ export const GButton = defineComponent({
         [`${ComponentNames.button}--labeled`]: hasLabel.value,
         [`${ComponentNames.button}--has-icon`]: hasIcon.value,
         [`${ComponentNames.button}--icon-only`]: hasIconOnly.value,
-        [`${ComponentNames.button}--outline`]: props.outline,
+        [`${ComponentNames.button}--${props.mode}`]: !!props.mode,
         [`${ComponentNames.button}--disabled`]: props.disabled,
 
         [`${ComponentNames.button}--color-${props.color}`]: !!props.color
