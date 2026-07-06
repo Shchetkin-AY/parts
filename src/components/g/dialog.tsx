@@ -72,6 +72,10 @@ export const GDialog = defineComponent({
       return result
     })
 
+    const close = () => {
+      proxy.value = false
+    }
+
     watchEffect(onCleanup => {
       if (!proxy.value) {
         return
