@@ -4,8 +4,6 @@ $_name: "benefits";
 
 .#{$_name} {
   position: relative;
-  z-index: 20;
-
   &__panel {
     display: grid;
     gap: 32px;
