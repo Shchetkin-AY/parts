@@ -1,3 +1,5 @@
+@use "./colors";
+
 @mixin section-inline-padding {
   padding: 0 10px;
 }
@@ -96,4 +98,36 @@
   height: 1px;
   width: 1px;
   clip-path: inset(50%);
+}
+
+@mixin scrollbar($size: 8px) {
+  scrollbar-color: colors.color(grey, 0.5) colors.color(black, 0.1);
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    border-radius: $size;
+
+    height: $size;
+    width: $size;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: $size;
+
+    background-color: colors.color(grey, 0.5);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $size;
+
+    background-color: colors.color(black, 0.2);
+
+    &:hover {
+      background-color: colors.color(black, 0.3);
+    }
+
+    &:active {
+      background-color: colors.color(black, 0.4);
+    }
+  }
 }
