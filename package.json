@@ -11,9 +11,9 @@
     "sync:catalog": "pnpm exec tsx scripts/sync-catalog.ts",
     "sync:sheet": "pnpm run sync:catalog",
     "check-types": "tsc --pretty --noEmit",
-    "lint": "npx eslint src",
-    "lint:fix": "npx eslint src --fix",
-    "lint:inspect": "npx @eslint/config-inspector",
+    "lint": "pnpm exec eslint src",
+    "lint:fix": "pnpm exec eslint src --fix",
+    "lint:inspect": "pnpm exec @eslint/config-inspector",
     "deploy": "pnpm run build",
     "r": "npm run release",
     "d": "npm run deploy"
