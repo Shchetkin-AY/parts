@@ -77,7 +77,6 @@ export default defineComponent({
 
       return (
         <GDialog
-          class={'feedback__dialog'}
           v-slots={dialogSlots}
           v-model={proxy.value}
           title={'Получить консультацию'}
