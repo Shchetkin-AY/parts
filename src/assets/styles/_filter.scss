@@ -4,7 +4,6 @@ $_name: "filter";
 
 .#{$_name} {
   position: relative;
-  z-index: 20;
 
   &--vertical {
     .filter__panel {
