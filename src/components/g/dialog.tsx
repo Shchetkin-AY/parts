@@ -102,6 +102,7 @@ export const GDialog = defineComponent({
           class={`${ComponentNames.dialog}__close`}
           icon={Icons.close}
           iconColor={Colors.grey}
+          color={Colors.text}
           mode={ButtonModes.flat}
           onClick={() => {
             return proxy.value = false
@@ -127,7 +128,6 @@ export const GDialog = defineComponent({
         return (
           <div class={`${ComponentNames.dialog}__header`} >
             {headerContent}
-            {renderCloseButton()}
           </div>
         )
       }
@@ -163,6 +163,7 @@ export const GDialog = defineComponent({
           class={`${ComponentNames.dialog}__holder`}
           style={holderStyle.value}
         >
+          {renderCloseButton()}
           {renderHeader()}
           {renderBody()}
           {renderFooter()}
