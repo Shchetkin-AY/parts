@@ -1,6 +1,7 @@
 export enum Icons {
   check = 'check',
   'check-circle' = 'check-circle',
+  close = 'close',
   delivery = 'delivery',
   'disk-diameter' = 'disk-diameter',
   drop = 'drop',

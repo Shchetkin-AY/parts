@@ -791,5 +791,24 @@ export const iconPaths: Record<string, IconObject[]> = {
         'stroke-linejoin': 'round'
       }
     }
+  ],
+
+  close: [
+    {
+      name: 'path',
+      attributes: {
+        d: 'M6 6L18 18',
+        'stroke-width': '1.5',
+        'stroke-linecap': 'round'
+      }
+    },
+    {
+      name: 'path',
+      attributes: {
+        d: 'M18 6L6 18',
+        'stroke-width': '1.5',
+        'stroke-linecap': 'round'
+      }
+    }
   ]
 }
