@@ -43,7 +43,7 @@ export const DialogProps = {
 
 export const GDialog = defineComponent({
 
-  name: ComponentNames.overlay,
+  name: ComponentNames.dialog,
 
   props: DialogProps,
 
