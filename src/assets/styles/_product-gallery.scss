@@ -26,13 +26,12 @@ $_name: "product-gallery";
     background:
       radial-gradient(circle at top, rgba(196, 196, 196, 0.1), transparent 55%),
       radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
-  }
 
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
+    &-image {
+      width: auto;
+      height: clamp(250px, 15vw, 180px);
+      object-fit: contain;
+    }
   }
 
   &__thumbs {
