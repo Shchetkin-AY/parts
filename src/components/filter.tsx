@@ -1,8 +1,9 @@
-import { PropType, computed, defineComponent, onBeforeMount, reactive, watch } from 'vue'
+import { PropType, computed, defineComponent, onBeforeMount, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
 import { useCatalogStore } from '@/stores/catalog'
+import Feedback from './feedback'
 
 type FilterOrientation = 'horizontal' | 'vertical'
 
@@ -23,17 +24,14 @@ export default defineComponent({
   props: {
     initialParams: {
       type: Object as PropType<Partial<CatalogFilterParams>>,
-      required: false,
       default: () => ({})
     },
     items: {
       type: Array as PropType<CatalogItem[]>,
-      required: false,
       default: () => []
     },
     orientation: {
       type: String as PropType<FilterOrientation>,
-      required: false,
       default: 'horizontal'
     }
   },
@@ -42,7 +40,11 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const router = useRouter()
+
     const catalogStore = useCatalogStore()
+
+    const showFeedback = ref(false)
+
     const params = reactive<CatalogFilterParams>({
       ...emptyFilterParams
     })
@@ -206,7 +208,7 @@ export default defineComponent({
     }
 
     const callHandler = () => {
-      window.location.href = 'tel:+79138135522'
+      showFeedback.value = true
     }
 
     const renderMarkSelect = () => {
@@ -325,12 +327,18 @@ export default defineComponent({
     const renderDivider = () => {
       return <GDivider />
     }
+
+    const renderFeedback = () => {
+      return (
+        <Feedback v-model={showFeedback.value}/>
+      )
+    }
     const renderFooter = () => {
       return (
         <div class="filter__panel-footer">
           <a class="filter__panel-footer__content" onClick={callHandler}>
             <span class="filter__panel-footer__content-title">Не нашли свой автомобиль?</span>
-            <span class="filter__panel-footer__content-description">Оставьте заявку</span>
+            <span class="filter__panel-footer__content-description">Получить консультацию</span>
           </a>
         </div>
       )
@@ -356,6 +364,7 @@ export default defineComponent({
           {renderDivider()}
           {renderFooter()}
         </div>
+        {renderFeedback()}
       </section>
   }
 })
