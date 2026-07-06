@@ -74,7 +74,7 @@ export default defineComponent({
 
     const renderForm = () => {
       return <Form
-        v-model={payload}
+        modelValue={payload}
         onUpdate:modelValue={updatePayload}
         onValidation={event => validation.value = event }
       />
