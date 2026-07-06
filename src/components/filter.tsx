@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent, onBeforeMount, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption } from '@/utils'
+import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
 import { useCatalogStore } from '@/stores/catalog'
 
@@ -294,7 +294,7 @@ export default defineComponent({
         <div class="filter__action filter__action--reset">
           <GButton
             label="Сбросить фильтры"
-            outline
+            mode={ButtonModes.outline}
             onClick={resetHandler}
           />
         </div>

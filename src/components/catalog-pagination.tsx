@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent } from 'vue'
 
 import { GButton, GChip } from '@/components/g'
-import { Colors, Sizes } from '@/utils'
+import { ButtonModes, Colors, Sizes } from '@/utils'
 
 type PageItem = number | 'ellipsis'
 
@@ -106,7 +106,6 @@ export const CatalogPagination = defineComponent({
             label={item}
             size={Sizes.large}
             color={isActive ? Colors.primary : undefined}
-            outline={!isActive}
           />
         </button>
       )
@@ -122,7 +121,7 @@ export const CatalogPagination = defineComponent({
           <GButton
             label="Назад"
             disabled={currentPage.value === 1}
-            outline
+            mode={ButtonModes.outline}
             onClick={() => setPage(currentPage.value - 1)}
           />
 
