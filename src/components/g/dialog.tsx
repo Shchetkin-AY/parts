@@ -1,5 +1,5 @@
-import { CSSProperties, PropType, Transition, computed, defineComponent, onBeforeUnmount, watchEffect } from 'vue'
-import { ButtonModes, Colors, ComponentNames, Icons, numberToPxOrString } from '@/utils'
+import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, watchEffect } from 'vue'
+import { Colors, ComponentNames, Icons, numberToPxOrString } from '@/utils'
 import { GOverlay } from './overlay'
 import { GButton } from './button'
 
@@ -102,8 +102,6 @@ export const GDialog = defineComponent({
           class={`${ComponentNames.dialog}__close`}
           icon={Icons.close}
           iconColor={Colors.grey}
-          color={Colors.text}
-          mode={ButtonModes.flat}
           onClick={() => {
             return proxy.value = false
           }}
@@ -190,9 +188,11 @@ export const GDialog = defineComponent({
 
     return () => {
       return (
-        <Transition name={'show-dialog'} >
-          {renderGroup()}
-        </Transition>
+        <Teleport to={'body'} >
+          <Transition name={'show-dialog'} >
+            {renderGroup()}
+          </Transition>
+        </Teleport>
       )
     }
   }
