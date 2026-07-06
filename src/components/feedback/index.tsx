@@ -32,6 +32,10 @@ export default defineComponent({
       comment: ''
     })
 
+    const updatePayload = (value: FeedbackPayload) => {
+      Object.assign(payload, value)
+    }
+
     onBeforeUnmount(() => {
       payload.name = ''
       payload.phone = ''
@@ -71,6 +75,7 @@ export default defineComponent({
     const renderForm = () => {
       return <Form
         v-model={payload}
+        onUpdate:modelValue={updatePayload}
         onValidation={event => validation.value = event }
       />
     }
