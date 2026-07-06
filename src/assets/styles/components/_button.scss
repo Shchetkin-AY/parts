@@ -236,12 +236,12 @@ $_name: "g-button";
   &--disabled {
     cursor: default;
     pointer-events: none;
-    background-color: colors.color(grey, 0.25);
+    background-color: colors.color(grey, 0.05);
 
     & > .#{$_name}__content {
       & > .#{$_name}__icon,
       & > .#{$_name}__label {
-        color: colors.color(grey, 0.4);
+        color: colors.color(grey, 0.15);
       }
     }
   }
