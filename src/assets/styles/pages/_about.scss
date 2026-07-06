@@ -245,13 +245,6 @@ $_name: "about";
     padding-block: clamp(40px, 7vw, 88px);
   }
 
-  /* ... остальные секции (forging, precision, materials) */
-  &__forging,
-  &__precision,
-  &__materials {
-    /* оставляем как есть, только цвета обновлены ниже */
-  }
-
   &__precision-icon {
     color: colors.$primary;
     font-size: 32px;
