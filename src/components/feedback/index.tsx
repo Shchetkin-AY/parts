@@ -24,6 +24,7 @@ export default defineComponent({
     })
 
     const validation = ref<boolean>(false)
+    const loading = ref(false)
 
     const payload = reactive<FeedbackPayload>({
       name: '',
@@ -37,8 +38,34 @@ export default defineComponent({
       payload.comment = ''
     })
 
-    const submitHandler = (event: MouseEvent) => {
+    const submitHandler = async (event: MouseEvent) => {
       event.stopPropagation()
+
+      if (loading.value) {
+        return
+      }
+
+      try {
+        loading.value = true
+
+        const response = await fetch(import.meta.env.VITE_FEEDBACK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        })
+
+        if (!response.ok) {
+          throw new Error('Ошибка отправки формы')
+        }
+
+        proxy.value = false
+      } catch (error) {
+        console.error(error)
+      } finally {
+        loading.value = false
+      }
     }
 
     const renderForm = () => {
@@ -55,6 +82,7 @@ export default defineComponent({
             label={'Закрыть'}
             mode={ButtonModes.flat}
             color={Colors.muted}
+            disabled={loading.value}
             onClick={() => {
               proxy.value = false
             }}
@@ -62,7 +90,7 @@ export default defineComponent({
           <GButton
             label={'Отправить'}
             color={Colors.primary}
-            disabled={!validation.value}
+            disabled={!validation.value || loading.value}
             onClick={submitHandler}
           />
         </div>
