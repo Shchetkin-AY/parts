@@ -1,5 +1,6 @@
 export * from './accessories'
 export * from './icon'
+export * from './feedback'
 export * from './filter'
 export * from './production-route'
 export * from './select'
