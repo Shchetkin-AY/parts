@@ -1,0 +1,143 @@
+@use "../colors";
+@use "../variables" as *;
+
+$_name: "g-dialog";
+
+.#{$_name} {
+  padding: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+
+  &__title {
+    margin: 0;
+    padding: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: 500;
+    color: colors.$text-primary;
+    line-height: 22px;
+    text-align: start;
+    text-decoration: none;
+    letter-spacing: -0.6px;
+
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+      padding: 15px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+
+    @media screen and (max-width: 420px) {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+  }
+
+  &__holder {
+    border-radius: $radius-sm;
+
+    background-color: colors.$surface;
+
+    display: grid;
+
+    position: relative;
+
+    z-index: 1;
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    width: 100%;
+  }
+
+  &__body {
+    flex: 1;
+
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &__close {
+    border-radius: $radius-xs;
+    min-width: 40px;
+    max-width: 40px;
+    width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+
+    background-color: colors.$surface;
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    position: absolute;
+    top: 0;
+    right: -50px;
+
+    transition-property: background-color, transform;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: colors.color(text, 0.2);
+    }
+
+    &:active {
+      background-color: colors.color(text, 0.3);
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 15px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
+}
+
+.show-dialog {
+  &-enter-active,
+  &-leave-active {
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+
+    & .#{$_name}__holder {
+      transition-property: opacity, transform;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in-out;
+    }
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+
+    & .#{$_name}__holder {
+      opacity: 0;
+
+      transform: scale(0, 0);
+    }
+  }
+}
