@@ -1,7 +1,7 @@
 import { Teleport, defineComponent, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { GIcon } from './g'
-import { Icons } from '@/utils'
+import { GButton, GIcon } from './g'
+import { Colors, Icons } from '@/utils'
 
 interface NavigationLink {
   href: string
@@ -139,9 +139,13 @@ export default defineComponent({
     const renderActions = () =>
       <div class="navigation__actions">
         {renderPhoneIcon()}
-        <button class="navigation__menu" aria-label="Открыть меню" onClick={openMenu}>
-          <GIcon icon={Icons.menu} size={26} />
-        </button>
+        <div class="navigation__menu" >
+          <GButton
+            icon={Icons.menu}
+            iconColor={Colors['text-primary']}
+            onClick={openMenu}
+          />
+        </div>
       </div>
 
     const renderMenuDrawer = () => {
@@ -155,12 +159,11 @@ export default defineComponent({
 
           <aside class={'navigation__drawer ' + (isMenuOpen.value ? 'open' : '')} role="dialog" aria-modal={true} aria-label="Меню навигации">
             <div class="navigation__drawer-header">
-              <button class="navigation__drawer-close" aria-label="Закрыть меню" onClick={closeMenu}>
-                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                  <path d="M6 18L18 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
-              </button>
+              <GButton
+                icon={Icons.close}
+                iconColor={Colors['text-primary']}
+                onClick={closeMenu}
+              />
             </div>
 
             <div class="navigation__drawer-content">
