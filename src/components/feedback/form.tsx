@@ -1,5 +1,5 @@
 import { FeedbackPayload, isEmpty } from '@/utils'
-import { PropType, computed, defineComponent, onMounted, watch } from 'vue'
+import { PropType, computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import { GTextArea, GTextField } from '@/components/g'
 
 const className = 'feedback__form'
@@ -17,6 +17,13 @@ export default defineComponent({
   emits: [ 'update:modelValue', 'validation' ],
 
   setup(props, { emit }) {
+    const errors = reactive<Record<string, string>>({
+      phone: '',
+      name: ''
+    })
+    const isNameTouched = ref(false)
+    const isPhoneTouched = ref(false)
+
     const proxy = computed({
       get: () => props.modelValue,
       set: value => {
@@ -24,7 +31,7 @@ export default defineComponent({
       }
     })
     const isValidPhone = computed(() => {
-      const digits = proxy.value.phone.replace(/\D/g, '')
+      const digits = (proxy.value.phone ?? '').replace(/\D/g, '')
 
       return /^(7|8)\d{10}$/.test(digits)
     })
@@ -34,6 +41,46 @@ export default defineComponent({
     const validation = computed<boolean>(() => {
       return isValidName.value && isValidPhone.value
     })
+    const nameHint = computed(() => {
+      return isNameTouched.value ? errors.name : ''
+    })
+    const nameError = computed(() => {
+      return isNameTouched.value && !isValidName.value
+    })
+    const phoneHint = computed(() => {
+      return isPhoneTouched.value ? errors.phone : ''
+    })
+    const phoneError = computed(() => {
+      return isPhoneTouched.value && !isValidPhone.value
+    })
+
+    const nameFocusHandler = () => {
+      isNameTouched.value = false
+      errors.name = ''
+    }
+    const phoneFocusHandler = () => {
+      isPhoneTouched.value = false
+      errors.phone = ''
+    }
+
+    const nameBlurHandler = () => {
+      isNameTouched.value = true
+
+      if (isEmpty(proxy.value.name)) {
+        errors.name = 'Имя обязательно для заполнения'
+      } else {
+        errors.name = ''
+      }
+    }
+    const phoneBlurHandler = () => {
+      isPhoneTouched.value = true
+
+      if (!isValidPhone.value) {
+        errors.phone = 'Введен неверный формат телефона'
+      } else {
+        errors.phone = ''
+      }
+    }
 
     watch(
       () => {
@@ -59,7 +106,11 @@ export default defineComponent({
           ariaLabel="name"
           label="Имя"
           placeholder="Ваше имя"
-          clearable
+          hint={nameHint.value}
+          error={nameError.value}
+          required
+          onFocus={nameFocusHandler}
+          onBlur={nameBlurHandler}
         />
       )
     }
@@ -70,7 +121,11 @@ export default defineComponent({
           ariaLabel="phone"
           label="Телефон"
           placeholder="+7 (000) 000 00 00"
-          clearable
+          hint={phoneHint.value}
+          error={phoneError.value}
+          required
+          onFocus={phoneFocusHandler}
+          onBlur={phoneBlurHandler}
         />
       )
     }
