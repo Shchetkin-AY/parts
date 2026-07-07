@@ -1,4 +1,4 @@
-import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, watchEffect } from 'vue'
+import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { Colors, ComponentNames, Icons, numberToPxOrString } from '@/utils'
 import { GOverlay } from './overlay'
 import { GButton } from './button'
@@ -50,6 +50,8 @@ export const GDialog = defineComponent({
   emits: [ 'update:modelValue', 'close' ],
 
   setup(props, { emit, slots }) {
+    const windowWidth = ref(window.innerWidth)
+
     const proxy = computed({
       get: () => props.modelValue,
       set: value => {
@@ -57,17 +59,29 @@ export const GDialog = defineComponent({
       }
     })
 
+    const isMobile = computed(() => windowWidth.value < 768)
+
+    const transitionClass = computed<string>(() => {
+      const result = [ 'show-dialog' ]
+      if (isMobile.value) {
+        result.push('mobile')
+      }
+
+      return result.join('--')
+    })
+
     const holderStyle = computed<CSSProperties>(() => {
       const result = {}
-
-      Object.assign(result, {
-        minHeight: numberToPxOrString(props.minHeight),
-        maxHeight: numberToPxOrString(props.maxHeight),
-        height: numberToPxOrString(props.height),
-        minWidth: numberToPxOrString(props.minWidth),
-        maxWidth: numberToPxOrString(props.maxWidth),
-        width: numberToPxOrString(props.width)
-      })
+      if (!isMobile.value) {
+        Object.assign(result, {
+          minHeight: numberToPxOrString(props.minHeight),
+          maxHeight: numberToPxOrString(props.maxHeight),
+          height: numberToPxOrString(props.height),
+          minWidth: numberToPxOrString(props.minWidth),
+          maxWidth: numberToPxOrString(props.maxWidth),
+          width: numberToPxOrString(props.width)
+        })
+      }
 
       return result
     })
@@ -96,21 +110,32 @@ export const GDialog = defineComponent({
       })
     })
 
+    const handleResize = () => {
+      windowWidth.value = window.innerWidth
+    }
+
+    onMounted(() => {
+      window.addEventListener('resize', handleResize)
+    })
+
     onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize)
       proxy.value = false
     })
 
     const renderCloseButton = () => {
-      return (
-        <GButton
-          class={`${ComponentNames.dialog}__close`}
-          icon={Icons.close}
-          iconColor={Colors.grey}
-          onClick={() => {
-            return proxy.value = false
-          }}
-        />
-      )
+      if (!isMobile.value) {
+        return (
+          <GButton
+            class={`${ComponentNames.dialog}__close`}
+            icon={Icons.close}
+            iconColor={Colors.grey}
+            onClick={() => {
+              return proxy.value = false
+            }}
+          />
+        )
+      }
     }
 
     const renderTitle = () => {
@@ -182,7 +207,11 @@ export const GDialog = defineComponent({
     const renderGroup = () => {
       if (proxy.value) {
         return (
-          <div class={ComponentNames.dialog} >
+          <div class={{
+            [ComponentNames.dialog]: true,
+            [`${ComponentNames.dialog}--mobile`]: isMobile.value
+          }}
+          >
             {renderHolder()}
             {renderOverlay()}
           </div>
@@ -193,7 +222,7 @@ export const GDialog = defineComponent({
     return () => {
       return (
         <Teleport to={'body'} >
-          <Transition name={'show-dialog'} >
+          <Transition name={transitionClass.value} >
             {renderGroup()}
           </Transition>
         </Teleport>
