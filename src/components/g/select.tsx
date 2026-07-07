@@ -13,6 +13,7 @@ export interface SelectProps {
   options: SelectOption[]
   placeholder?: string
   rounded?: boolean
+  required?: boolean
 }
 
 export const selectProps = {
@@ -27,7 +28,8 @@ export const selectProps = {
     default: () => []
   },
   placeholder: getPrimitiveProp(String),
-  rounded: getPrimitiveProp(Boolean, false, true)
+  rounded: getPrimitiveProp(Boolean, false, true),
+  required: getPrimitiveProp(Boolean, false, false)
 }
 
 const baseClassName = 'g-select'
@@ -84,6 +86,13 @@ export const GSelect = defineComponent({
     })
     const resolvedAriaLabel = computed<string>(() => {
       return props.ariaLabel ?? props.label ?? ''
+    })
+    const label = computed(() => {
+      if (props.required) {
+        return `${props.label} *`
+      }
+
+      return props.label
     })
 
     const closeMenu = (): void => {
@@ -154,7 +163,7 @@ export const GSelect = defineComponent({
 
       return (
         <div class={`${baseClassName}__label`}>
-          {props.label}
+          {label.value}
         </div>
       )
     }
