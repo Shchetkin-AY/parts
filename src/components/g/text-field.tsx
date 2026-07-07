@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent } from 'vue'
 
 import { getPrimitiveProp } from '../sharedProps'
-import { ComponentNames, InputType } from '@/utils'
+import { ComponentNames, InputType, isEmpty } from '@/utils'
 
 export interface TextFieldProps {
   ariaLabel: string
@@ -14,8 +14,11 @@ export interface TextFieldProps {
   placeholder?: string
   readonly?: boolean
   rounded?: boolean
+  required?: boolean
   suffix?: string
-  type: InputType
+  type: InputType,
+  hint?: string,
+  error?: boolean
 }
 
 export const textFieldProps = {
@@ -29,7 +32,10 @@ export const textFieldProps = {
   placeholder: getPrimitiveProp(String),
   readonly: getPrimitiveProp(Boolean, false, false),
   rounded: getPrimitiveProp(Boolean, false, true),
+  required: getPrimitiveProp(Boolean, false, true),
   suffix: getPrimitiveProp(String),
+  hint: getPrimitiveProp(String),
+  error: getPrimitiveProp(Boolean, false, true),
   type: {
     type: String as PropType<InputType>,
     default: undefined
@@ -44,10 +50,13 @@ export const GTextField = defineComponent({
 
   props: textFieldProps,
 
-  emits: [ 'click', 'update:modelValue' ],
+  emits: [ 'click', 'update:modelValue', 'blur', 'focus' ],
 
   setup(props, { emit }) {
     const hasSuffix = computed(() => Boolean(props.suffix))
+
+    const hasHint = computed(() => !isEmpty(props.hint))
+
     const fieldClassName = computed(() => {
       const result = [ `${baseClassName}__field` ]
       if (props.disabled) {
@@ -59,16 +68,32 @@ export const GTextField = defineComponent({
       if (props.rounded) {
         result.push(`${baseClassName}__field--rounded`)
       }
+      if (props.error) {
+        result.push(`${baseClassName}__field--error`)
+      }
 
       return result.join(' ')
     })
+    const label = computed(() => {
+      if (props.required) {
+        return `${props.label} *`
+      }
 
-    const handleClick = (event: MouseEvent): void => {
+      return props.label
+    })
+
+    const clickHandler = (event: MouseEvent): void => {
       emit('click', event)
     }
-    const handleInput = (event: Event): void => {
+    const inputHandler = (event: Event): void => {
       const inputElement = event.target as HTMLInputElement
       emit('update:modelValue', inputElement.value)
+    }
+    const blurHandler = (event: FocusEvent): void => {
+      emit('blur', event)
+    }
+    const focusHandler = (event: FocusEvent): void => {
+      emit('focus', event)
     }
 
     const isClearVisible = computed(() => {
@@ -92,7 +117,7 @@ export const GTextField = defineComponent({
 
       return (
         <div class={`${baseClassName}__label`}>
-          {props.label}
+          {label.value}
         </div>
       )
     }
@@ -108,8 +133,10 @@ export const GTextField = defineComponent({
           readonly={props.readonly}
           type={props.type}
           value={props.modelValue}
-          onClick={handleClick}
-          onInput={handleInput}
+          onClick={clickHandler}
+          onInput={inputHandler}
+          onBlur={blurHandler}
+          onFocus={focusHandler}
         />
       )
     }
@@ -164,12 +191,31 @@ export const GTextField = defineComponent({
         </label>
       )
     }
+    const renderHint = () => {
+      return (
+        <span
+          aria-hidden={!hasHint.value}
+          class={{
+            [`${baseClassName}__hint`]: true,
+            [`${baseClassName}__hint--visible`]: hasHint.value
+          }}
+        >
+          {hasHint.value ? props.hint : ''}
+        </span>
+      )
+    }
 
     return () => {
       return (
-        <div class={baseClassName}>
+        <div class={{
+          [baseClassName]: true,
+          [`${baseClassName}--error`]: props.error,
+          [`${baseClassName}--hint`]: true
+        }}
+        >
           {renderLabel()}
           {renderField()}
+          {renderHint()}
         </div>
       )
     }
