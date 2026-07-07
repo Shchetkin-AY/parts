@@ -12,6 +12,10 @@ $_name: "feedback";
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
+
+      @media (max-width: 420px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 
