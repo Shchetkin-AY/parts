@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent, onBeforeUnmount, reactive, ref } from 'vue'
 import { GButton, GDialog } from '@/components/g'
 import Form from '@/components/feedback/form'
-import { ButtonModes, Colors, FeedbackPayload } from '@/utils'
+import { ButtonModes, Colors, FeedbackPayload, FeedbackTypes } from '@/utils'
 
 export default defineComponent({
   name: 'Feedback',
@@ -10,6 +10,11 @@ export default defineComponent({
     modelValue: {
       type: Boolean as PropType<boolean>,
       default: false
+    },
+
+    type: {
+      type: String as PropType<FeedbackTypes>,
+      default: FeedbackTypes.question
     }
   },
 
@@ -75,6 +80,7 @@ export default defineComponent({
     const renderForm = () => {
       return <Form
         modelValue={payload}
+        type={props.type}
         onUpdate:modelValue={updatePayload}
         onValidation={event => validation.value = event }
       />

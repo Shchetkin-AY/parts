@@ -1,4 +1,4 @@
-import { FeedbackPayload, isEmpty } from '@/utils'
+import { FeedbackPayload, FeedbackTypes, isEmpty } from '@/utils'
 import { PropType, computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import { GTextArea, GTextField } from '@/components/g'
 
@@ -11,6 +11,11 @@ export default defineComponent({
     modelValue: {
       type: Object as PropType<FeedbackPayload>,
       default: () => ({})
+    },
+
+    type: {
+      type: String as PropType<FeedbackTypes>,
+      default: FeedbackTypes.question
     }
   },
 
@@ -28,6 +33,12 @@ export default defineComponent({
       get: () => props.modelValue,
       set: value => {
         emit('update:modelValue', value)
+      }
+    })
+    const subtitle = computed<string>(() => {
+      switch (props.type) {
+        case FeedbackTypes.question: return 'Оставьте контакты, и специалист поможет подобрать тормозную систему под ваш автомобиль.'
+        case FeedbackTypes.order: return 'Заполните форму — мы свяжемся с вами и подготовим подходящую конфигурацию.'
       }
     })
     const isValidPhone = computed(() => {
@@ -93,9 +104,7 @@ export default defineComponent({
 
     const renderSubtitle = () => {
       return (
-        <div class={`${className}-subtitle`}>
-          Оставьте контакты, и специалист поможет подобрать тормозную систему под ваш автомобиль.
-        </div>
+        <div class={`${className}-subtitle`}>{subtitle.value}</div>
       )
     }
 
