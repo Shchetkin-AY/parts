@@ -13,7 +13,8 @@ $_name: "feedback";
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
 
-      @media (max-width: 420px) {
+      @media (max-width: 425px) {
+        padding-top: 30px;
         grid-template-columns: 1fr;
       }
     }
