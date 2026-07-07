@@ -105,6 +105,11 @@ $_name: "g-dialog";
     &:active {
       background-color: colors.color(text, 0.3);
     }
+
+    @media screen and (max-width: 768px) {
+      top: -50px;
+      right: 5px;
+    }
   }
 
   @media screen and (max-width: 1024px) {
