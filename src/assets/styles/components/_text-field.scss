@@ -4,74 +4,89 @@
 $_name: "g-text-field";
 
 .#{$_name} {
+  padding-bottom: 14px;
+
   display: grid;
   gap: 6px;
+
   position: relative;
-  padding-bottom: 14px;
 
   &__label {
     padding-left: 10px;
+
     font-size: 10px;
     font-weight: 500;
+    color: colors.$text-primary;
     line-height: 10px;
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing);
-    color: colors.$text-primary;
   }
 
   &__field {
-    display: grid;
-    border-width: 0.5px;
-    border-style: solid;
-    border-color: transparent;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px;
-    align-items: center;
     padding: 0 10px;
-    cursor: pointer;
-    min-height: 40px;
-    max-height: 40px;
-    height: 40px;
+
     font-family: var(--font-family);
     font-size: var(--font-size);
     color: colors.$text-primary;
     line-height: var(--line-height);
-    background: rgba(255, 255, 255, 0.07);
-    width: 100%;
+
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: transparent;
+
+    background: rgb(255 255 255 / 7%);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+
     transition:
       background-color 133ms ease,
       border-color 133ms ease,
       color 133ms ease;
+
+    cursor: pointer;
+
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+    width: 100%;
 
     &--rounded {
       border-radius: var(--border-radius);
     }
 
     &:focus-visible {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgb(255 255 255 / 12%);
     }
   }
 
   &__hint {
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: -4px;
-    min-height: 14px;
     font-size: 12px;
+    color: colors.$text-muted;
     line-height: 14px;
     text-align: start;
-    color: colors.$text-muted;
-    overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
+    white-space: nowrap;
+
+    position: absolute;
+    bottom: -4px;
+    left: 10px;
+    right: 10px;
+
+    overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
+
     transition:
       opacity 180ms ease,
       visibility 180ms ease,
       color 180ms ease;
+
+    pointer-events: none;
+
+    min-height: 14px;
 
     &--visible {
       opacity: 1;
@@ -80,18 +95,23 @@ $_name: "g-text-field";
   }
 
   &__input {
-    width: 100%;
-    background: transparent;
-    border: 0;
     padding: 0;
+
     font-family: var(--font-family);
     font-size: var(--font-size);
     color: colors.$text-primary;
     line-height: var(--line-height);
+    text-align: left;
+
+    border: 0;
+
+    background: transparent;
+
+    display: block;
+
     min-height: 40px;
     height: 100%;
-    display: block;
-    text-align: left;
+    width: 100%;
 
     &::placeholder {
       color: colors.$text-muted;
@@ -104,19 +124,23 @@ $_name: "g-text-field";
 
   &__suffix {
     color: colors.$text-secondary;
-    height: 22px;
-    width: 22px;
+
     display: grid;
     place-items: center;
+
+    height: 22px;
+    width: 22px;
   }
 
   &__value,
   &__placeholder {
+    text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
+
     overflow: hidden;
+
     min-width: 0;
-    text-align: left;
   }
 
   &__placeholder {
@@ -125,10 +149,12 @@ $_name: "g-text-field";
 
   &__clear {
     color: colors.$text-secondary;
-    height: 22px;
-    width: 22px;
+
     display: grid;
     place-items: center;
+
+    height: 22px;
+    width: 22px;
   }
 
   &--error {

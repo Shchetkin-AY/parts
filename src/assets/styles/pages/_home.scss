@@ -12,23 +12,33 @@ $_name: "home";
     [content-end] minmax(var(--home-inline), 1fr)
     [full-end];
   row-gap: var(--home-section-gap);
-  width: 100%;
 
-  @media (min-width: 768px) {
-    --home-inline: 32px;
-  }
+  width: 100%;
 
   &__group,
   &__section {
-    grid-column: full;
     display: grid;
     grid-template-columns:
       [full-start] minmax(var(--home-inline), 1fr)
       [content-start] minmax(0, var(--container, 1440px))
       [content-end] minmax(var(--home-inline), 1fr)
       [full-end];
+    grid-column: full;
+
     min-width: 0;
     width: 100%;
+  }
+
+  &__section > * {
+    grid-column: content;
+
+    min-width: 0;
+    max-width: var(--container, 1440px);
+    width: 100%;
+  }
+
+  @media (width >= 768px) {
+    --home-inline: 32px;
   }
 
   @supports (grid-template-columns: subgrid) {
@@ -36,12 +46,5 @@ $_name: "home";
     &__section {
       grid-template-columns: subgrid;
     }
-  }
-
-  &__section > * {
-    grid-column: content;
-    min-width: 0;
-    width: 100%;
-    max-width: var(--container, 1440px);
   }
 }

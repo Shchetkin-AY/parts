@@ -4,6 +4,7 @@ $_name: "product-highlight";
 
 .#{$_name} {
   padding-block: 128px;
+
   background: colors.$surface-container-low;
 
   & > .content-container {
@@ -13,82 +14,89 @@ $_name: "product-highlight";
 
   &__heading {
     display: grid;
-    justify-items: center;
     gap: 16px;
+    justify-items: center;
   }
 
   &__eyebrow {
-    color: colors.$primary;
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 8px;
+    color: colors.$primary;
     text-transform: uppercase;
+    letter-spacing: 8px;
   }
 
   &__title {
     font-size: 48px;
     font-weight: 900;
     line-height: 1;
-    letter-spacing: -0.8px;
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       font-size: 60px;
     }
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: 1fr;
     grid-auto-rows: 400px;
+    grid-template-columns: 1fr;
     gap: 32px;
 
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    @media (width >= 768px) {
       grid-auto-rows: 450px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
   &__card {
-    position: relative;
-    overflow: hidden;
-    background: #1f2020;
     border-radius: 12px;
+
+    background: #1f2020;
+
+    position: relative;
+
+    overflow: hidden;
 
     &:hover .#{$_name}__image {
       transform: scale(1.05);
     }
 
     &--wide {
-      @media (min-width: 768px) {
+      @media (width >= 768px) {
         grid-column: span 2 / span 2;
       }
     }
 
     &--engineering {
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgb(255 255 255 / 5%);
     }
   }
 
   &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     transition: transform 1s ease;
+
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
   &__overlay {
+    padding: 32px;
+
+    background: linear-gradient(to top, rgb(0 0 0 / 90%), rgb(0 0 0 / 20%), transparent);
+
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-direction: column;
+
     position: absolute;
     inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 32px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2), transparent);
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       padding: 48px;
     }
   }
@@ -97,8 +105,8 @@ $_name: "product-highlight";
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
-    letter-spacing: -0.8px;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
 
     &--small {
       font-size: 24px;
@@ -107,72 +115,83 @@ $_name: "product-highlight";
   }
 
   &__card-text {
-    max-width: 448px;
-    color: colors.$text-secondary;
     font-size: 14px;
+    color: colors.$text-secondary;
     line-height: 20px;
+
+    max-width: 448px;
   }
 
   &__engineering-overlay {
+    background: rgb(189 36 38 / 5%);
+
     position: absolute;
     inset: 0;
-    background: rgba(189, 36, 38, 0.05);
     mix-blend-mode: overlay;
   }
 
   &__engineering-content {
-    position: absolute;
-    inset: 0;
+    padding: 32px;
+
+    text-align: center;
+
     display: grid;
+    gap: 24px;
     align-content: center;
     align-items: center;
     justify-content: center;
     justify-items: center;
-    gap: 24px;
-    padding: 32px;
-    text-align: center;
 
-    @media (min-width: 768px) {
+    position: absolute;
+    inset: 0;
+
+    @media (width >= 768px) {
       padding: 48px;
     }
   }
 
   &__engineering-icon {
-    color: colors.$primary;
     font-size: 48px;
+    color: colors.$primary;
   }
 
   &__engineering-title {
     font-size: 20px;
     font-weight: 700;
     line-height: 28px;
-    letter-spacing: -0.8px;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
   }
 
   &__engineering-text {
-    color: colors.$text-secondary;
     font-size: 12px;
+    color: colors.$text-secondary;
     line-height: 2;
   }
 
   &__engineering-button {
     padding: 12px 32px;
-    color: colors.$primary;
-    background: transparent;
-    border: 1px solid colors.$primary;
-    border-radius: 8px;
-    cursor: pointer;
+
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1.6px;
+    color: colors.$primary;
     text-transform: uppercase;
+    letter-spacing: 1.6px;
+
+    border: 1px solid colors.$primary;
+    border-radius: 8px;
+
+    background: transparent;
+
     transition:
       color 0.2s ease,
       background-color 0.2s ease;
 
+    cursor: pointer;
+
     &:hover {
       color: colors.$text;
+
       background: colors.$primary;
     }
   }

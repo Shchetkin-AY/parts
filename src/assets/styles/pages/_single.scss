@@ -7,71 +7,71 @@ $_name: "product-page";
   --product-inline: 24px;
   --product-section-gap: 32px;
 
-  width: 100%;
+  color: colors.$text-primary;
+
+  background: colors.$bg;
+
   display: grid;
   grid-template-columns:
     [full-start] minmax(var(--product-inline), 1fr)
     [content-start] minmax(0, var(--container, 1440px))
     [content-end] minmax(var(--product-inline), 1fr)
     [full-end];
-  row-gap: var(--product-section-gap);
-  color: colors.$text-primary;
-  background: colors.$bg;
 
-  @media (min-width: 768px) {
-    --product-inline: 32px;
-  }
+  width: 100%;
+  row-gap: var(--product-section-gap);
 
   &__section {
-    grid-column: full;
     display: grid;
     grid-template-columns:
       [full-start] minmax(var(--product-inline), 1fr)
       [content-start] minmax(0, var(--container, 1440px))
       [content-end] minmax(var(--product-inline), 1fr)
       [full-end];
+    grid-column: full;
+
     min-width: 0;
     width: 100%;
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    &__section {
-      grid-template-columns: subgrid;
-    }
   }
 
   &__section > * {
     grid-column: content;
+
     min-width: 0;
-    width: 100%;
     max-width: var(--container, 1440px);
+    width: 100%;
   }
 
   &__empty {
-    width: min(100%, $container);
     margin: 0 auto;
     padding: 120px 24px;
-    color: colors.$text-secondary;
+
     font-size: 24px;
+    color: colors.$text-secondary;
     line-height: 28px;
     text-transform: uppercase;
+
+    width: min(100%, $container);
   }
 
   &__breadcrumbs {
+    font-size: 14px;
+    color: colors.$text-muted-light;
+    line-height: 16px;
+
     display: flex;
+    gap: 8px;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+
     min-height: 24px;
     height: 24px;
-    color: colors.$text-muted-light;
-    font-size: 14px;
-    line-height: 16px;
   }
 
   &__breadcrumb-link {
     color: colors.$text-muted-light;
     text-decoration: none;
+
     transition: color $transition-fast;
 
     &:hover {
@@ -89,9 +89,10 @@ $_name: "product-page";
 
   &__hero {
     display: grid;
-    grid-template-columns: 540px 1fr minmax(0px, 400px);
+    grid-template-columns: 540px 1fr minmax(0, 400px);
     gap: 20px;
     align-items: start;
+
     min-height: 500px;
   }
 
@@ -106,29 +107,30 @@ $_name: "product-page";
   }
 
   &__hero-title {
-    color: colors.$text-primary;
     font-family: $font-main;
     font-size: 60px;
-    line-height: 62px;
     font-weight: 800;
+    color: colors.$text-primary;
+    line-height: 62px;
     text-transform: uppercase;
   }
 
   &__hero-series {
-    color: colors.$primary;
     font-size: 16px;
-    line-height: 18px;
     font-weight: 500;
-    letter-spacing: 1px;
+    color: colors.$primary;
+    line-height: 18px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__hero-description {
-    max-width: 540px;
-    color: colors.$text-secondary;
     font-size: 14px;
-    line-height: 22px;
     font-weight: 500;
+    color: colors.$text-secondary;
+    line-height: 22px;
+
+    max-width: 540px;
   }
 
   &__hero-stats {
@@ -138,111 +140,130 @@ $_name: "product-page";
   }
 
   &__hero-stat {
-    align-items: center;
-    align-content: center;
-    min-height: 80px;
-    max-height: 80px;
-    height: 80px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    background: colors.$surface;
-    border-radius: $radius-xs;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+
+    border-radius: $radius-xs;
+
+    background: colors.$surface;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-content: center;
+    align-items: center;
+
+    min-height: 80px;
+    max-height: 80px;
+    height: 80px;
   }
 
   &__hero-stat-copy {
     display: grid;
     gap: 4px;
+
     min-width: 0;
   }
 
   &__hero-stat-label {
-    color: colors.$text-muted;
     font-size: 12px;
+    color: colors.$text-muted;
     line-height: 14px;
   }
 
   &__hero-stat-value {
-    color: colors.$text-primary;
     font-size: 14px;
-    line-height: 16px;
     font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 16px;
   }
 
   &__purchase {
+    padding: 20px;
+
+    border: 1px solid colors.$border;
+    border-radius: 18px;
+
+    background: colors.$surface;
+
     display: grid;
     gap: 20px;
-    padding: 20px;
+    align-self: start;
+
     min-height: 500px;
     max-height: 500px;
     height: 500px;
-    background: colors.$surface;
-    border: 1px solid colors.$border;
-    border-radius: 18px;
-    align-self: start;
   }
 
   &__purchase-availability {
     display: flex;
-    align-items: center;
     gap: 10px;
+    align-items: center;
   }
 
   &__purchase-dot {
-    width: 8px;
-    height: 8px;
     border-radius: 999px;
+
     background: colors.$success;
-    box-shadow: 0 0 0 4px rgba(83, 255, 125, 0.12);
+
+    box-shadow: 0 0 0 4px rgb(83 255 125 / 12%);
+
+    height: 8px;
+    width: 8px;
   }
 
   &__purchase-availability-text {
-    color: colors.$text-primary;
     font-size: 14px;
+    color: colors.$text-primary;
     line-height: 14px;
-    letter-spacing: 1px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__purchase-price {
-    color: colors.$text-primary;
     font-family: $font-main;
     font-size: 40px;
-    line-height: 44px;
     font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 44px;
     letter-spacing: 1px;
   }
 
   &__purchase-note {
-    max-width: 540px;
-    color: colors.$text-muted;
     font-size: 11px;
-    line-height: 13px;
     font-weight: 500;
+    color: colors.$text-muted;
+    line-height: 13px;
+
+    max-width: 540px;
   }
 
   &__order-button {
-    height: 58px;
     padding: 0 24px;
-    background: colors.$primary;
+
+    font-size: 16px;
+    font-weight: 700;
+    color: colors.$text-on-primary;
+    line-height: 18px;
+    text-transform: uppercase;
+
     border: none;
     border-radius: 12px;
-    color: colors.$text-on-primary;
-    font-size: 16px;
-    line-height: 18px;
-    font-weight: 700;
-    text-transform: uppercase;
+
+    background: colors.$primary;
+
     transition:
       background $transition-base,
       transform $transition-fast;
 
+    height: 58px;
+
     &:hover {
-      cursor: pointer;
       background: colors.$primary-hover;
+
+      cursor: pointer;
     }
 
     &:active {
@@ -251,8 +272,9 @@ $_name: "product-page";
   }
 
   &__purchase-divider {
-    height: 1px;
     background: colors.$border;
+
+    height: 1px;
   }
 
   &__purchase-kit {
@@ -261,12 +283,12 @@ $_name: "product-page";
   }
 
   &__purchase-kit-title {
-    color: colors.$text-primary;
     font-size: 12px;
-    line-height: 14px;
     font-weight: 500;
-    letter-spacing: 1px;
+    color: colors.$text-primary;
+    line-height: 14px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__kit-list {
@@ -282,16 +304,19 @@ $_name: "product-page";
   }
 
   &__kit-item-dot {
-    width: 8px;
-    height: 8px;
     margin-top: 7px;
+
     border-radius: 999px;
+
     background: colors.$primary;
+
+    height: 8px;
+    width: 8px;
   }
 
   &__kit-item-label {
-    color: colors.$text-secondary;
     font-size: 14px;
+    color: colors.$text-secondary;
     line-height: 22px;
   }
 
@@ -301,54 +326,69 @@ $_name: "product-page";
   }
 
   &__tabs {
+    padding-bottom: 2px;
+
+    border-bottom: 1px solid colors.$border;
+
     display: flex;
     gap: 20px;
-    border-bottom: 1px solid colors.$border;
+
     overflow-x: auto;
-    padding-bottom: 2px;
   }
 
   &__tab {
-    position: relative;
     padding: 0 0 14px;
-    background: transparent;
-    border: none;
-    color: colors.$text-muted;
+
     font-size: 14px;
-    line-height: 16px;
     font-weight: 600;
-    letter-spacing: 1px;
+    color: colors.$text-muted;
+    line-height: 16px;
     text-transform: uppercase;
+    letter-spacing: 1px;
     white-space: nowrap;
+
+    border: none;
+
+    background: transparent;
+
+    position: relative;
+
     transition: color $transition-base;
 
     &:hover {
-      cursor: pointer;
       color: colors.$text-primary;
+
+      cursor: pointer;
     }
 
     &--active {
       color: colors.$text-primary;
 
       &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -1px;
-        width: 100%;
-        height: 2px;
         background: colors.$primary;
+
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+
+        content: "";
+
+        height: 2px;
+        width: 100%;
       }
     }
   }
 
   &__panel {
-    display: grid;
-    gap: 20px;
     padding: 20px;
-    background: colors.$surface;
+
     border: 1px solid colors.$border;
     border-radius: 18px;
+
+    background: colors.$surface;
+
+    display: grid;
+    gap: 20px;
   }
 
   &__panel--specs {
@@ -357,12 +397,12 @@ $_name: "product-page";
   }
 
   &__section-title {
-    color: colors.$text-primary;
     font-size: 16px;
-    line-height: 19px;
     font-weight: 600;
-    letter-spacing: 1px;
+    color: colors.$text-primary;
+    line-height: 19px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__specs {
@@ -371,11 +411,13 @@ $_name: "product-page";
   }
 
   &__spec-row {
+    padding: 12px 0;
+
+    border-bottom: 1px solid colors.$border-soft;
+
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 20px;
-    padding: 12px 0;
-    border-bottom: 1px solid colors.$border-soft;
 
     &:last-of-type {
       border-bottom: none;
@@ -383,73 +425,82 @@ $_name: "product-page";
   }
 
   &__spec-label {
-    color: colors.$text-muted;
     font-size: 14px;
+    color: colors.$text-muted;
     line-height: 20px;
   }
 
   &__spec-value {
-    color: colors.$text-primary;
     font-size: 14px;
-    line-height: 16px;
     font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 16px;
     letter-spacing: 1px;
   }
 
   &__blueprint {
-    position: relative;
-    overflow: hidden;
     border: 1px solid colors.$border;
     border-radius: 12px;
+
     background: colors.$surface-container-lowest;
+
+    position: relative;
+
+    overflow: hidden;
   }
 
   &__dimension {
-    position: absolute;
     font-size: 12px;
-    line-height: 12px;
     font-weight: 600;
     color: colors.$text-soft;
+    line-height: 12px;
     white-space: nowrap;
+
+    position: absolute;
   }
 
   &__blueprint-image {
-    width: 100%;
     display: block;
+
+    width: 100%;
   }
 
   &__compatibility {
     display: grid;
     gap: 16px;
+
     max-width: 720px;
   }
 
   &__compatibility-row {
+    padding: 16px 0;
+
+    border-bottom: 1px solid colors.$border-soft;
+
     display: grid;
     grid-template-columns: 240px 1fr;
     gap: 24px;
-    padding: 16px 0;
-    border-bottom: 1px solid colors.$border-soft;
   }
 
   &__compatibility-label {
-    color: colors.$text-muted;
     font-size: 14px;
+    color: colors.$text-muted;
     line-height: 20px;
   }
 
   &__compatibility-value {
-    color: colors.$text-primary;
     font-size: 15px;
-    line-height: 20px;
     font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 20px;
   }
 
   &__compatibility-note {
-    color: colors.$text-secondary;
-    font-size: 14px;
-    line-height: 22px;
     padding-top: 8px;
+
+    font-size: 14px;
+    color: colors.$text-secondary;
+    line-height: 22px;
   }
 
   &__kit-panel {
@@ -460,12 +511,15 @@ $_name: "product-page";
 
   &__kit-panel-item {
     padding: 16px;
-    background: colors.$surface-container-low;
+
+    font-size: 15px;
+    color: colors.$text-primary;
+    line-height: 22px;
+
     border: 1px solid colors.$border;
     border-radius: 12px;
-    color: colors.$text-primary;
-    font-size: 15px;
-    line-height: 22px;
+
+    background: colors.$surface-container-low;
   }
 
   &__steps {
@@ -474,11 +528,13 @@ $_name: "product-page";
   }
 
   &__step {
+    padding: 16px 0;
+
+    border-bottom: 1px solid colors.$border-soft;
+
     display: flex;
     gap: 16px;
     align-items: flex-start;
-    padding: 16px 0;
-    border-bottom: 1px solid colors.$border-soft;
 
     &:last-child {
       border-bottom: none;
@@ -486,18 +542,20 @@ $_name: "product-page";
   }
 
   &__step-number {
-    width: 56px;
-    flex: 0 0 56px;
-    color: colors.$primary;
     font-size: 16px;
-    line-height: 16px;
     font-weight: 700;
+    color: colors.$primary;
+    line-height: 16px;
     letter-spacing: 2px;
+
+    flex: 0 0 56px;
+
+    width: 56px;
   }
 
   &__step-text {
-    color: colors.$text-secondary;
     font-size: 15px;
+    color: colors.$text-secondary;
     line-height: 22px;
   }
 
@@ -508,12 +566,15 @@ $_name: "product-page";
 
   &__delivery-item {
     padding: 16px;
-    background: colors.$surface-container-low;
+
+    font-size: 15px;
+    color: colors.$text-primary;
+    line-height: 22px;
+
     border: 1px solid colors.$border;
     border-radius: 12px;
-    color: colors.$text-primary;
-    font-size: 15px;
-    line-height: 22px;
+
+    background: colors.$surface-container-low;
   }
 
   &__faq {
@@ -523,22 +584,25 @@ $_name: "product-page";
 
   &__faq-item {
     padding: 16px;
-    background: colors.$surface-container-low;
+
     border: 1px solid colors.$border;
     border-radius: 12px;
+
+    background: colors.$surface-container-low;
   }
 
   &__faq-question {
-    color: colors.$text-primary;
     font-size: 15px;
-    line-height: 22px;
     font-weight: 700;
+    color: colors.$text-primary;
+    line-height: 22px;
   }
 
   &__faq-answer {
     margin-top: 8px;
-    color: colors.$text-secondary;
+
     font-size: 14px;
+    color: colors.$text-secondary;
     line-height: 22px;
   }
 
@@ -549,44 +613,50 @@ $_name: "product-page";
 
   &__related-header {
     display: flex;
+    gap: 24px;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
   }
 
   &__related-title {
-    color: colors.$text-primary;
     font-size: 20px;
-    letter-spacing: 1.2px;
     font-weight: 600;
+    color: colors.$text-primary;
     line-height: 1;
-    text-transform: uppercase;
     text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
   }
 
   &__related-nav {
     display: flex;
-    align-items: center;
     gap: 12px;
+    align-items: center;
   }
 
   &__related-nav-button {
-    width: 40px;
-    height: 40px;
+    font-size: 20px;
+    color: colors.$text-primary;
+    line-height: 20px;
+
     border: 1px solid colors.$border-strong;
     border-radius: 999px;
+
     background: colors.$surface;
-    color: colors.$text-primary;
-    font-size: 20px;
-    line-height: 20px;
+
     transition:
       background $transition-fast,
       border-color $transition-fast;
 
+    height: 40px;
+    width: 40px;
+
     &:hover {
-      cursor: pointer;
-      background: colors.$surface-2;
       border-color: colors.$primary;
+
+      background: colors.$surface-2;
+
+      cursor: pointer;
     }
   }
 
@@ -607,7 +677,11 @@ $_name: "product-page";
     align-items: stretch;
   }
 
-  @media (max-width: 1280px) {
+  @media (width >= 768px) {
+    --product-inline: 32px;
+  }
+
+  @media (width <= 1280px) {
     &__hero {
       grid-template-columns: 1fr;
     }
@@ -625,9 +699,10 @@ $_name: "product-page";
     }
   }
 
-  @media (max-width: 820px) {
+  @media (width <= 820px) {
     &__container {
       padding: 0 16px 32px;
+
       gap: 24px;
     }
 
@@ -664,8 +739,14 @@ $_name: "product-page";
     }
 
     &__related-header {
-      flex-direction: column;
       align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
     }
   }
 }

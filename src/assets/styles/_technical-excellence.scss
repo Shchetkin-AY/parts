@@ -4,6 +4,7 @@ $_name: "technical-excellence";
 
 .#{$_name} {
   padding-block: 48px;
+
   background: colors.$surface-container-lowest;
 
   &__container {
@@ -14,40 +15,43 @@ $_name: "technical-excellence";
   &__row {
     display: grid;
     grid-template-columns: 1fr;
-    align-items: center;
     gap: 64px;
+    align-items: center;
 
-    @media (min-width: 1024px) {
+    @media (width >= 1024px) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
     }
   }
 
   &__media {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 16 / 9;
     border-radius: 16px;
 
-    @media (min-width: 1024px) {
-      grid-column: span 7 / span 7;
-    }
+    position: relative;
+
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
 
     &--cnc {
-      box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.05);
+      box-shadow: 0 25px 50px -12px rgb(59 130 246 / 5%);
 
-      @media (min-width: 1024px) {
+      @media (width >= 1024px) {
         order: 2;
       }
+    }
+
+    @media (width >= 1024px) {
+      grid-column: span 7 / span 7;
     }
   }
 
   &__image {
-    width: 100%;
     height: 100%;
+    width: 100%;
     object-fit: cover;
 
     &--grayscale {
       filter: grayscale(1);
+
       transition: filter 1s ease;
 
       .#{$_name}__media:hover & {
@@ -57,96 +61,104 @@ $_name: "technical-excellence";
   }
 
   &__factory-overlay {
+    background: linear-gradient(to right, #000000, rgb(0 0 0 / 20%), transparent);
+
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, #000, rgba(0, 0, 0, 0.2), transparent);
   }
 
   &__cnc-overlay {
+    background: linear-gradient(to top, rgb(0 0 0 / 60%), transparent);
+
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
   }
 
   &__stats {
+    display: flex;
+    gap: 48px;
+
     position: absolute;
     bottom: 32px;
     left: 32px;
-    display: flex;
-    gap: 48px;
   }
 
   &__stat-value {
-    color: colors.$text;
     font-size: 30px;
     font-weight: 900;
+    color: colors.$text;
     line-height: 36px;
   }
 
   &__stat-label {
-    color: colors.$text-secondary;
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1.6px;
+    color: colors.$text-secondary;
     text-transform: uppercase;
+    letter-spacing: 1.6px;
   }
 
   &__copy {
     display: grid;
     gap: 32px;
 
-    @media (min-width: 1024px) {
+    @media (width >= 1024px) {
       grid-column: span 5 / span 5;
     }
   }
 
   &__eyebrow {
-    color: colors.$primary;
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 8px;
+    color: colors.$primary;
     text-transform: uppercase;
+    letter-spacing: 8px;
   }
 
   &__title {
     font-size: 36px;
     font-weight: 900;
     line-height: 1.25;
-    letter-spacing: -0.8px;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       font-size: 48px;
       line-height: 1;
     }
   }
 
   &__text {
-    color: colors.$text-secondary;
     font-size: 18px;
     font-weight: 300;
+    color: colors.$text-secondary;
     line-height: 1.625;
   }
 
   &__list {
+    list-style: none;
+
     display: grid;
     gap: 16px;
-    list-style: none;
   }
 
   &__item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: colors.$text-secondary;
     font-size: 14px;
+    color: colors.$text-secondary;
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
 
     span {
-      width: 4px;
-      height: 4px;
-      flex: 0 0 auto;
-      background: colors.$primary;
       border-radius: 999px;
+
+      background: colors.$primary;
+
+      flex: 0 0 auto;
+
+      height: 4px;
+      width: 4px;
     }
   }
 
@@ -159,9 +171,9 @@ $_name: "technical-excellence";
   }
 
   &__pressure-value {
-    color: colors.$text;
     font-size: 20px;
     font-weight: 700;
+    color: colors.$text;
     line-height: 28px;
 
     &--accent {
@@ -170,15 +182,17 @@ $_name: "technical-excellence";
   }
 
   &__pressure-label {
-    color: colors.$text-secondary;
     font-size: 9px;
-    letter-spacing: -0.8px;
+    color: colors.$text-secondary;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
   }
 
   &__status {
     color: colors.$primary;
-    background: rgba(0, 0, 0, 0.8);
+
     border: 1px solid colors.$border;
+
+    background: rgb(0 0 0 / 80%);
   }
 }

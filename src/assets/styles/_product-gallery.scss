@@ -6,58 +6,68 @@ $_name: "product-gallery";
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 16px;
+
   min-height: 500px;
   max-height: 500px;
   height: 500px;
 
   &__main {
-    position: relative;
-    overflow: hidden;
-
     padding: 16px;
-    display: grid;
+
     border: 1px solid colors.$border;
     border-radius: 18px;
+
+    background:
+      radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), #070707;
+
+    display: grid;
     align-content: center;
 
     justify-content: center;
+
     position: relative;
+
     overflow: hidden;
-    background:
-      radial-gradient(circle at top, rgba(196, 196, 196, 0.1), transparent 55%),
-      radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
 
     &-image {
-      width: auto;
       height: clamp(250px, 15vw, 180px);
+      width: auto;
       object-fit: contain;
     }
   }
 
   &__thumbs {
     display: flex;
-    flex-direction: column;
-    align-items: start;
     gap: 12px;
+    align-items: start;
+    flex-direction: column;
   }
 
   &__thumb {
-    width: 84px;
-    height: 84px;
     padding: 6px;
-    cursor: pointer;
-    border-radius: 12px;
+
     border: 1px solid colors.$border;
+    border-radius: 12px;
+
     background: colors.$surface;
-    transition: 0.2s;
     background:
-      radial-gradient(circle at top, rgba(196, 196, 196, 0.1), transparent 55%),
-      radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 55%), #070707;
+      radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), #070707;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+
+    height: 84px;
+    width: 84px;
 
     &:hover {
-      cursor: pointer;
+      box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+
       transform: translateY(-2px);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+
+      cursor: pointer;
     }
 
     &--active {
@@ -66,9 +76,10 @@ $_name: "product-gallery";
   }
 
   &__thumb-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
     display: block;
+
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
 }

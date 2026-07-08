@@ -15,31 +15,34 @@ $_name: "g-dialog";
   bottom: 0;
   left: 0;
   right: 0;
+
   z-index: 50;
 
   &__title {
     margin: 0;
     padding: 20px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
     font-size: 20px;
     font-weight: 500;
     color: colors.$text-primary;
     line-height: 22px;
     text-align: start;
     text-decoration: none;
+    text-overflow: ellipsis;
     letter-spacing: -0.6px;
+    white-space: nowrap;
 
     overflow: hidden;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (width <= 768px) {
       padding: 15px;
+
       font-size: 18px;
       font-weight: 500;
       line-height: 20px;
     }
 
-    @media screen and (max-width: 420px) {
+    @media screen and (width <= 420px) {
       font-size: 14px;
       font-weight: 500;
       line-height: 16px;
@@ -75,14 +78,8 @@ $_name: "g-dialog";
 
   &__close {
     border-radius: $radius-xs;
-    min-width: 40px;
-    max-width: 40px;
-    width: 40px;
-    min-height: 40px;
-    max-height: 40px;
-    height: 40px;
 
-    background-color: rgba(255, 255, 255, 0.07);
+    background-color: rgb(255 255 255 / 7%);
 
     display: grid;
     place-content: center;
@@ -97,6 +94,13 @@ $_name: "g-dialog";
     transition-timing-function: ease-in-out;
 
     cursor: pointer;
+
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    width: 40px;
 
     &:hover {
       background-color: colors.color(text, 0.2);
@@ -115,18 +119,18 @@ $_name: "g-dialog";
       border-bottom-left-radius: 0;
 
       max-height: 90%;
+      min-width: 100%;
 
       max-width: 100%;
-      min-width: 100%;
       width: 100%;
     }
   }
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (width <= 1024px) {
     padding: 15px;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (width <= 768px) {
     padding: 0;
   }
 }

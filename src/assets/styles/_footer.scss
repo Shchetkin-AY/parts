@@ -3,26 +3,30 @@
 $_name: "footer";
 
 .#{$_name} {
-  width: 100%;
-  overflow: hidden;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+
   background: colors.$surface-container-lowest;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  overflow: hidden;
+
+  width: 100%;
 
   &__container {
-    padding: 48px 24px 48px;
+    padding: 48px 24px;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       padding-inline: 48px;
     }
   }
 
   &__grid {
+    margin-bottom: 48px;
+
     display: grid;
     grid-template-columns: 1fr;
     gap: 64px;
-    margin-bottom: 48px;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
@@ -30,8 +34,8 @@ $_name: "footer";
   &__brand-column,
   &__column {
     display: grid;
-    align-content: start;
     gap: 24px;
+    align-content: start;
   }
 
   &__brand-column {
@@ -39,37 +43,39 @@ $_name: "footer";
   }
 
   &__brand {
-    color: colors.$text;
     font-size: 30px;
     font-weight: 900;
+    color: colors.$text;
     line-height: 36px;
-    letter-spacing: -0.8px;
     text-transform: uppercase;
+    letter-spacing: -0.8px;
   }
 
   &__text {
-    color: colors.color(text-dim);
     font-size: 14px;
     font-weight: 300;
+    color: colors.color(text-dim);
     line-height: 1.625;
   }
 
   &__title {
-    color: colors.$text;
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 4.8px;
+    color: colors.$text;
     text-transform: uppercase;
+    letter-spacing: 4.8px;
   }
 
   &__links {
+    font-size: 12px;
+    color: colors.color(text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+
+    list-style: none;
+
     display: grid;
     gap: 16px;
-    color: colors.color(text-dim);
-    font-size: 12px;
-    letter-spacing: 1.6px;
-    list-style: none;
-    text-transform: uppercase;
   }
 
   &__link {
@@ -81,13 +87,14 @@ $_name: "footer";
   }
 
   &__contacts {
+    font-size: 12px;
+    color: colors.color(text-dim);
+    line-height: 2;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+
     display: grid;
     gap: 16px;
-    color: colors.color(text-dim);
-    font-size: 12px;
-    line-height: 2;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
 
     span {
       color: colors.$text;
@@ -95,38 +102,41 @@ $_name: "footer";
   }
 
   &__bottom {
+    padding-top: 48px;
+
+    border-top: 1px solid rgb(255 255 255 / 5%);
+
     display: flex;
-    flex-direction: column;
+    gap: 32px;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
-    padding-top: 48px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    flex-direction: column;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       flex-direction: row;
     }
   }
 
   &__copyright {
-    color: colors.color(text-subtle);
     font-size: 9px;
-    letter-spacing: 1.6px;
+    color: colors.color(text-subtle);
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 1.6px;
 
-    @media (min-width: 768px) {
+    @media (width >= 768px) {
       text-align: left;
     }
   }
 
   &__meta {
-    display: flex;
-    gap: 32px;
-    color: colors.color(text-meta);
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: 1.6px;
+    color: colors.color(text-meta);
     text-transform: uppercase;
+    letter-spacing: 1.6px;
+
+    display: flex;
+    gap: 32px;
   }
 }

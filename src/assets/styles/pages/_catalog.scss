@@ -3,46 +3,39 @@
 $_name: "catalog";
 
 .#{$_name} {
-  width: 100%;
-  display: grid;
-  justify-items: center;
-
   --catalog-inline: 24px;
   --catalog-section-gap: 32px;
+
+  display: grid;
   grid-template-columns:
     [full-start] minmax(var(--catalog-inline), 1fr)
     [content-start] minmax(0, var(--container, 1440px))
     [content-end] minmax(var(--catalog-inline), 1fr)
     [full-end];
+  justify-items: center;
+
+  width: 100%;
   row-gap: var(--catalog-section-gap);
 
-  @media (min-width: 768px) {
-    --catalog-inline: 32px;
-  }
-
   &__section {
-    grid-column: full;
     display: grid;
     grid-template-columns:
       [full-start] minmax(var(--catalog-inline), 1fr)
       [content-start] minmax(0, var(--container, 1440px))
       [content-end] minmax(var(--catalog-inline), 1fr)
       [full-end];
+    grid-column: full;
+
     min-width: 0;
     width: 100%;
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    &__section {
-      grid-template-columns: subgrid;
-    }
   }
 
   &__section > * {
     grid-column: content;
+
     min-width: 0;
-    width: 100%;
     max-width: var(--container, 1440px);
+    width: 100%;
   }
 
   &__layout {
@@ -52,35 +45,22 @@ $_name: "catalog";
     align-items: start;
   }
 
-  @media (min-width: 1024px) {
-    &__layout {
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 48px;
-      align-items: start;
-    }
-  }
-
   &__sidebar {
-    position: static;
     display: grid;
     gap: 16px;
     align-self: start;
+
+    position: static;
+
     height: fit-content;
   }
 
-  @media (min-width: 1024px) {
-    &__sidebar {
-      position: sticky;
-      top: 128px;
-    }
-  }
-
   &__sidebar-label {
-    color: colors.$primary;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1px;
+    color: colors.$primary;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__sidebar-actions {
@@ -92,27 +72,22 @@ $_name: "catalog";
   }
 
   &__content {
-    min-width: 0;
     display: grid;
     gap: 32px;
+
+    min-width: 0;
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     padding-bottom: 20px;
-    border-bottom: 1px solid colors.$border;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
 
-  @media (min-width: 768px) {
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-    }
+    border-bottom: 1px solid colors.$border;
+
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   &__title-group {
@@ -122,22 +97,23 @@ $_name: "catalog";
 
   &__title {
     font-size: 30px;
-    line-height: 30px;
     font-weight: 700;
     color: colors.$text;
+    line-height: 30px;
     text-transform: uppercase;
   }
 
   &__description {
-    max-width: 650px;
-    color: colors.$text-secondary;
     font-size: 14px;
+    color: colors.$text-secondary;
     line-height: 16px;
+
+    max-width: 650px;
   }
 
   &__meta {
-    color: colors.$text-secondary;
     font-size: 12px;
+    color: colors.$text-secondary;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -148,68 +124,113 @@ $_name: "catalog";
     gap: 22px;
   }
 
-  @media (max-width: 1280px) {
+  &__empty {
+    padding: 32px;
+
+    font-size: 14px;
+    color: colors.$text-secondary;
+    text-align: center;
+
+    border: 1px solid colors.$border;
+    border-radius: 8px;
+
+    background: colors.$surface-container-low;
+
+    display: grid;
+    place-items: center;
+
+    min-height: 160px;
+  }
+
+  @media (width >= 768px) {
+    --catalog-inline: 32px;
+  }
+
+  @media (width >= 1024px) {
+    &__layout {
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+    }
+  }
+
+  @media (width >= 1024px) {
+    &__sidebar {
+      position: sticky;
+      top: 128px;
+    }
+  }
+
+  @media (width >= 768px) {
+    &__header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+    }
+  }
+
+  @media (width <= 1280px) {
     &__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 1024px) {
+  @media (width <= 1024px) {
     &__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 720px) {
+  @media (width <= 720px) {
     &__grid {
       grid-template-columns: 1fr;
     }
   }
 
-  &__empty {
-    min-height: 160px;
-    display: grid;
-    place-items: center;
-    padding: 32px;
-    color: colors.$text-secondary;
-    background: colors.$surface-container-low;
-    border: 1px solid colors.$border;
-    border-radius: 8px;
-    font-size: 14px;
-    text-align: center;
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
+    }
   }
 }
 
 .catalog-pagination {
+  margin-top: 20px;
+  padding-top: 20px;
+
   display: flex;
-  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding-top: 20px;
-  margin-top: 20px;
+  flex-wrap: wrap;
 
   &__pages {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   &__item {
-    width: 40px;
-    height: 40px;
     padding: 0;
+
     border: 0;
+
     background: transparent;
+
     display: grid;
     place-items: center;
+
     cursor: pointer;
 
+    height: 40px;
+    width: 40px;
+
     .g-chip {
-      min-width: 40px;
-      min-height: 40px;
       pointer-events: none;
+
+      min-height: 40px;
+      min-width: 40px;
     }
 
     .g-chip__label {

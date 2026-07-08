@@ -7,8 +7,9 @@ $_name: "filter";
 
   &--vertical {
     .filter__panel {
-      gap: 24px;
       padding: 24px;
+
+      gap: 24px;
     }
 
     .filter__panel-fields {
@@ -29,33 +30,36 @@ $_name: "filter";
   }
 
   &__panel {
-    display: grid;
-    gap: 32px;
-    background: colors.$surface;
+    padding: 32px;
+
     border: 1px solid colors.$border;
     border-radius: 12px;
+
+    background: colors.$surface;
+
+    display: grid;
+    gap: 32px;
     backdrop-filter: blur(64px);
-    padding: 32px;
 
     &-header {
       display: grid;
       gap: 9.6px;
 
       &-title {
-        text-transform: uppercase;
         font-size: 14px;
         font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: 1px;
         color: colors.$text-primary;
+        line-height: 1.2;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       &-description {
         font-size: 12.4px;
         font-weight: 600;
+        color: colors.$text-secondary;
         line-height: 1.2;
         letter-spacing: 0;
-        color: colors.$text-secondary;
       }
     }
 
@@ -66,22 +70,23 @@ $_name: "filter";
       &__content {
         display: grid;
         gap: 6.4px;
+
         cursor: pointer;
 
         &-title {
           font-size: 12.8px;
           font-weight: 500;
+          color: colors.$text-muted;
           line-height: 1.2;
           letter-spacing: 0.32px;
-          color: colors.$text-muted;
         }
 
         &-description {
           font-size: 12px;
           font-weight: 700;
+          color: colors.$primary;
           line-height: 1.2;
           letter-spacing: 0;
-          color: colors.$primary;
         }
       }
     }
@@ -92,11 +97,11 @@ $_name: "filter";
       gap: 32px;
       align-items: end;
 
-      @media (max-width: 1200px) {
+      @media (width <= 1200px) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      @media (max-width: 720px) {
+      @media (width <= 720px) {
         grid-template-columns: 1fr;
         gap: 20px;
       }
@@ -107,12 +112,14 @@ $_name: "filter";
     display: grid;
     gap: 12px;
     flex: 1 1 200px;
+
     min-width: 200px;
   }
 
   &__action {
     display: grid;
     flex: 1 1 200px;
+
     min-width: 200px;
 
     .button {

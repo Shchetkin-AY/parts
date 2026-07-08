@@ -12,30 +12,23 @@ $_name: "about";
     [content-start] minmax(0, var(--container, 1280px))
     [content-end] minmax(var(--about-inline), 1fr)
     [full-end];
-  row-gap: var(--about-section-gap);
-  width: 100%;
+
   overflow: clip;
 
-  @media (min-width: 768px) {
-    --about-inline: 48px;
-  }
+  width: 100%;
+  row-gap: var(--about-section-gap);
 
   &__section {
-    grid-column: full;
     display: grid;
     grid-template-columns:
       [full-start] minmax(var(--about-inline), 1fr)
       [content-start] minmax(0, var(--container, 1280px))
       [content-end] minmax(var(--about-inline), 1fr)
       [full-end];
+    grid-column: full;
+
     min-width: 0;
     width: 100%;
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    &__section {
-      grid-template-columns: subgrid;
-    }
   }
 
   &__hero-media,
@@ -45,87 +38,98 @@ $_name: "about";
   &__precision,
   &__materials {
     grid-column: content;
+
     min-width: 0;
     width: 100%;
   }
 
   &__section--hero {
-    position: relative;
-    min-height: calc(100vh - 800px);
     align-items: end;
+
+    position: relative;
+
+    min-height: calc(100vh - 800px);
   }
 
   &__hero-media {
     grid-column: full;
+
     position: absolute;
     inset: 0;
+
     overflow: hidden;
   }
 
   &__hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     opacity: 0.38;
+
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
   &__hero-overlay {
+    background: linear-gradient(to top, rgb(14 14 14 / 98%) 10%, rgb(14 14 14 / 72%) 42%, rgb(14 14 14 / 0%) 100%);
+
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgb(14 14 14 / 98%) 10%, rgb(14 14 14 / 72%) 42%, rgb(14 14 14 / 0%) 100%);
   }
 
   &__hero-content {
-    position: relative;
-    z-index: 1;
     display: grid;
     gap: 24px;
-    padding-block: clamp(48px, 8vw, 96px);
+
+    position: relative;
+
     max-width: 832px;
+
+    z-index: 1;
+    padding-block: clamp(48px, 8vw, 96px);
   }
 
   &__eyebrow {
-    color: colors.$primary;
     font-size: 12px;
     font-weight: 700;
+    color: colors.$primary;
     line-height: 1;
-    letter-spacing: 4.8px;
     text-transform: uppercase;
+    letter-spacing: 4.8px;
   }
 
   &__hero-title {
-    color: colors.$text;
     font-size: clamp(36px, 8vw, 92px);
     font-weight: 900;
+    color: colors.$text;
     line-height: 0.9;
-    letter-spacing: 0;
     text-transform: uppercase;
+    letter-spacing: 0;
 
     span {
-      color: colors.$text;
       font-size: clamp(30px, 6vw, 76px);
       font-weight: 900;
-      letter-spacing: 0;
+      color: colors.$text;
       text-transform: uppercase;
+      letter-spacing: 0;
     }
   }
 
   &__hero-text {
-    color: colors.$text-soft;
     font-size: clamp(16px, 2vw, 20px);
     font-weight: 300;
+    color: colors.$text-soft;
     line-height: 1.55;
     letter-spacing: 0;
+
     max-width: 704px;
   }
 
   &__title {
-    color: colors.$text;
     font-size: clamp(28px, 4vw, 48px);
     font-weight: 900;
+    color: colors.$text;
     line-height: 1;
-    letter-spacing: 0;
     text-transform: uppercase;
+    letter-spacing: 0;
 
     span {
       color: colors.$primary;
@@ -136,12 +140,6 @@ $_name: "about";
     display: grid;
     gap: clamp(24px, 4vw, 64px);
     align-items: start;
-  }
-
-  @media (min-width: 1024px) {
-    &__history {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-    }
   }
 
   &__history-main {
@@ -162,9 +160,10 @@ $_name: "about";
   }
 
   &__history-line {
-    width: 2px;
-    height: 100%;
     background: rgb(255 255 255 / 20%);
+
+    height: 100%;
+    width: 2px;
 
     &--accent {
       background: colors.$primary;
@@ -177,66 +176,76 @@ $_name: "about";
   }
 
   &__history-title {
-    color: colors.$text;
     font-size: 20px;
     font-weight: 700;
+    color: colors.$text;
     line-height: 1;
-    letter-spacing: 0;
     text-transform: uppercase;
+    letter-spacing: 0;
   }
 
   &__history-text {
-    color: colors.$muted;
     font-size: 15px;
+    color: colors.$muted;
     line-height: 1.6;
     letter-spacing: 0;
   }
 
   &__history-media {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
     border: 1px solid colors.$border;
+    border-radius: 8px;
+
+    position: relative;
+
+    overflow: hidden;
+
     min-height: 352px;
   }
 
   &__history-image {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
     opacity: 0.65;
+
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    object-fit: cover;
     filter: grayscale(1);
   }
 
   &__history-stat {
-    position: absolute;
-    inset-inline-start: clamp(16px, 3vw, 24px);
-    inset-block-end: clamp(16px, 3vw, 24px);
+    padding: 16px 20px;
+
+    border: 1px solid colors.$border;
+
+    background: rgb(14 14 14 / 72%);
+
     display: grid;
     gap: 8px;
+
+    position: absolute;
+
     width: min(100%, 272px);
-    padding: 16px 20px;
-    border: 1px solid colors.$border;
-    background: rgb(14 14 14 / 72%);
+    inset-inline-start: clamp(16px, 3vw, 24px);
+    inset-block-end: clamp(16px, 3vw, 24px);
     backdrop-filter: blur(12px);
 
     strong {
-      color: colors.$primary;
       font-size: 36px;
       font-weight: 900;
+      color: colors.$primary;
       line-height: 1;
       letter-spacing: 0;
     }
 
     span {
-      color: colors.$text;
       font-size: 10px;
       font-weight: 700;
+      color: colors.$text;
       line-height: 1.35;
-      letter-spacing: 1.92px;
       text-transform: uppercase;
+      letter-spacing: 1.92px;
     }
   }
 
@@ -246,8 +255,8 @@ $_name: "about";
   }
 
   &__precision-icon {
-    color: colors.$primary;
     font-size: 32px;
+    color: colors.$primary;
     line-height: 1;
   }
 
@@ -256,11 +265,28 @@ $_name: "about";
   }
 
   &__forging-tag {
-    background: colors.$primary;
     color: colors.$text-on-primary;
+
+    background: colors.$primary;
   }
 
   &__materials-media {
     border: 1px solid colors.$border;
+  }
+
+  @media (width >= 768px) {
+    --about-inline: 48px;
+  }
+
+  @media (width >= 1024px) {
+    &__history {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    }
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
+    }
   }
 }

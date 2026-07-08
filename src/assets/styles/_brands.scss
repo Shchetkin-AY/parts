@@ -14,15 +14,16 @@ $_name: "brands";
   }
 
   &__title {
-    display: grid;
-    color: colors.$text-primary;
-    justify-content: start;
     font-size: 20px;
-    letter-spacing: 1.2px;
     font-weight: 600;
+    color: colors.$text-primary;
     line-height: 1;
-    text-transform: uppercase;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+
+    display: grid;
+    justify-content: start;
   }
 
   &__grid {
@@ -32,18 +33,18 @@ $_name: "brands";
     align-items: center;
     justify-items: center;
 
-    @media (max-width: 1100px) {
+    @media (width <= 1100px) {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @media (max-width: 768px) {
+    @media (width <= 768px) {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   &__item {
-    width: 100px;
     height: 120px;
+    width: 100px;
     object-fit: contain;
   }
 }

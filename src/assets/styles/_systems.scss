@@ -14,24 +14,23 @@ $_name: "systems";
   }
 
   &__title {
-    color: colors.$text-primary;
-
     font-size: 20px;
-    letter-spacing: 1.2px;
     font-weight: 600;
+    color: colors.$text-primary;
     line-height: 1;
-    text-transform: uppercase;
     text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
   }
 
   &__cards {
-    width: min(100%, $container);
-
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 
-    @media (max-width: 1100px) {
+    width: min(100%, $container);
+
+    @media (width <= 1100px) {
       grid-template-columns: 1fr;
       gap: 20px;
     }
@@ -39,25 +38,28 @@ $_name: "systems";
 }
 
 .systems-card {
-  position: relative;
-  overflow: hidden;
-
-  min-height: 400px;
-
   border: 1px solid colors.$border;
   border-radius: $radius-md;
 
   background: colors.$surface;
+
+  position: relative;
+
+  overflow: hidden;
 
   transition:
     transform $transition-base,
     border-color $transition-base,
     box-shadow $transition-base;
 
+  min-height: 400px;
+
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
     border-color: colors.$border-strong;
+
+    box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+
+    transform: translateY(-4px);
 
     .systems-card__image {
       transform: scale(1.01);
@@ -69,50 +71,52 @@ $_name: "systems";
   }
 
   &__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-
     display: grid;
     place-items: center;
+
+    position: absolute;
+
+    z-index: 0;
+    inset: 0;
   }
 
   &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
     opacity: 0.72;
 
     transition:
       transform $transition-slow,
       opacity $transition-slow;
 
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
     mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
   }
 
   &__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.5) 58%, rgba(0, 0, 0, 0.82) 100%),
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.03), transparent 45%);
+      linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 50%) 58%, rgb(0 0 0 / 82%) 100%),
+      radial-gradient(circle at top, rgb(255 255 255 / 3%), transparent 45%);
+
+    position: absolute;
+
+    z-index: 1;
+    inset: 0;
   }
 
   &__content {
-    position: relative;
-    z-index: 2;
-
-    height: 100%;
+    padding: 16px;
 
     display: grid;
     grid-template-rows: auto 1fr;
     gap: 16px;
 
-    padding: 16px;
+    position: relative;
+
+    height: 100%;
+
+    z-index: 2;
   }
 
   &__header {
@@ -122,44 +126,41 @@ $_name: "systems";
   }
 
   &__title {
-    color: colors.$text-primary;
-
     font-size: 16px;
     font-weight: 500;
+    color: colors.$text-primary;
     text-transform: uppercase;
   }
 
   &__subtitle {
-    color: colors.$text-secondary;
     font-size: 12px;
-    line-height: 1.2;
     font-weight: 300;
+    color: colors.$text-secondary;
+    line-height: 1.2;
   }
 
   &__features {
-    align-self: end;
-
     display: grid;
     gap: 4px;
     align-items: center;
+    align-self: end;
   }
 
   &__feature {
+    font-size: 12.4px;
+    color: colors.$text-secondary;
+
     display: grid;
     grid-template-columns: 16px minmax(0, 1fr);
     gap: 7.2px;
     align-items: center;
-    color: colors.$text-secondary;
-
-    font-size: 12.4px;
   }
 
   &__check {
-    color: colors.$primary;
-
     font-size: 14.4px;
-    line-height: 1;
     font-weight: 700;
+    color: colors.$primary;
+    line-height: 1;
 
     transform: translateY(0.8px);
   }

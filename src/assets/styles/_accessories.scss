@@ -5,74 +5,84 @@ $_name: "accessories";
 .#{$_name} {
   display: grid;
   gap: 24px;
-  width: 100%;
+
   min-width: 100%;
+  width: 100%;
 
   &__header {
     display: flex;
+    gap: 24px;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
   }
 
   &__title {
-    color: colors.$text-primary;
     font-size: 20px;
-    letter-spacing: 1.2px;
     font-weight: 600;
+    color: colors.$text-primary;
     line-height: 1;
-    text-transform: uppercase;
     text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
   }
 
   &__list {
-    height: 100%;
-    min-height: 100%;
-
     display: flex;
     gap: 10px;
     flex-direction: column;
+
+    min-height: 100%;
+    height: 100%;
     width: 100%;
   }
 
   &__item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    border-radius: 12px;
     padding: 10px;
+
     border: 1px solid colors.$border;
+    border-radius: 12px;
+
     background: colors.$surface-2;
+
+    display: flex;
+    gap: 14px;
+    align-items: center;
   }
 
   &__image {
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #161616;
     border: 1px solid colors.$border;
+    border-radius: 8px;
+
+    background: #161616;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    height: 64px;
+    width: 64px;
   }
 
   &__image-item {
-    width: 100%;
-    height: 100%;
     display: block;
+
+    height: 100%;
+    width: 100%;
     object-fit: contain;
   }
 
   &__placeholder {
-    width: 56px;
-    height: 56px;
-
     border-radius: 10px;
 
     background: linear-gradient(135deg, #202020, #2d2d2d);
+
+    height: 56px;
+    width: 56px;
   }
 
   &__content {
     flex: 1;
+
     min-width: 0;
   }
 

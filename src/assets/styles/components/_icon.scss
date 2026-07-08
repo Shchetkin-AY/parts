@@ -11,22 +11,23 @@ $_name: "g-icon";
 }
 
 .#{$_name} {
+  color: inherit;
+
+  box-sizing: content-box;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
   flex: 0 0 auto;
 
-  color: inherit;
-
-  box-sizing: content-box;
-
   svg {
     display: block;
-    width: 100%;
+
     height: 100%;
+    width: 100%;
     fill: none;
-    stroke: currentColor;
+    stroke: currentcolor;
   }
 
   @include _colors;

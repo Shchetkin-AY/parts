@@ -19,55 +19,59 @@ $_name: "g-chip";
 
 @mixin _sizes {
   &--small {
+    padding-left: 5px;
+    padding-right: 5px;
+
+    min-height: 14px;
     & > .#{$_name}__content {
       & > .#{$_name}__label {
         font-size: 8px;
       }
     }
-
-    padding-left: 5px;
-    padding-right: 5px;
-    min-height: 14px;
   }
 
   &--medium {
-    & > .#{$_name}__content {
-      & > .#{$_name}__label {
-        font-size: 10px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-right: 8px;
-        padding-left: 8px;
-      }
-    }
-
     padding-left: 10px;
     padding-right: 10px;
+
     min-height: 18px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        font-size: 10px;
+      }
+    }
   }
 
   &--large {
+    padding-left: 14px;
+    padding-right: 14px;
+
+    min-height: 32px;
     & > .#{$_name}__content {
       & > .#{$_name}__label {
         font-size: 12px;
       }
     }
-
-    padding-left: 14px;
-    padding-right: 14px;
-    min-height: 32px;
   }
 }
 
 .#{$_name} {
+  padding-left: 10px;
+  padding-right: 10px;
+
   color: colors.$text;
 
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
+  border-radius: var(--border-radius);
 
   background-color: colors.$border;
-  border-radius: var(--border-radius);
 
   display: grid;
   place-content: center;
@@ -76,10 +80,8 @@ $_name: "g-chip";
   position: relative;
 
   width: fit-content;
-  z-index: 1;
 
-  padding-left: 10px;
-  padding-right: 10px;
+  z-index: 1;
 
   &__content {
     display: grid;
@@ -89,19 +91,19 @@ $_name: "g-chip";
   }
 
   &__label {
-    color: currentColor;
+    font-size: 10px;
+    font-weight: 600;
+    color: currentcolor;
+    line-height: var(--line-height);
+    text-align: center;
     text-decoration: none;
+    text-transform: uppercase;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     display: inline-block;
 
     overflow-x: hidden;
-    font-size: 10px;
-    font-weight: 600;
-    line-height: var(--line-height);
-    text-align: center;
-    text-transform: uppercase;
   }
 
   &--outline {

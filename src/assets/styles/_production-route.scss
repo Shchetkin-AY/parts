@@ -13,32 +13,35 @@ $_name: "production-route";
   }
 
   &__title {
-    color: colors.$text-primary;
-
     font-size: 20px;
-    letter-spacing: 1.2px;
     font-weight: 600;
+    color: colors.$text-primary;
     line-height: 1;
-    text-transform: uppercase;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
   }
 
   &__panel {
-    display: grid;
-    gap: 32px;
-    background: colors.$surface;
-    border: 1px solid colors.$border;
-    border-radius: 12px;
-    backdrop-filter: blur(64px);
+    padding-top: 16px;
+    padding-bottom: 16px;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: 16px;
-    padding-top: 16px;
 
-    @media (max-width: 1100px) {
+    border: 1px solid colors.$border;
+    border-radius: 12px;
+
+    background: colors.$surface;
+
+    display: grid;
+    gap: 32px;
+    backdrop-filter: blur(64px);
+
+    @media (width <= 1100px) {
       padding: 16px;
-      padding-bottom: 0;
+
       padding-top: 0;
+      padding-bottom: 0;
     }
   }
 
@@ -47,29 +50,34 @@ $_name: "production-route";
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 32px;
 
-    @media (max-width: 1100px) {
+    @media (width <= 1100px) {
       grid-template-columns: 1fr;
       gap: 0;
     }
   }
 
   &__card {
-    position: relative;
+    padding: 16px;
+
+    padding-right: 40px;
+
+    text-align: center;
+
     display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 8px;
     align-content: center;
     justify-content: center;
-    text-align: center;
-    gap: 8px;
-    grid-template-rows: auto 1fr;
-    padding: 16px;
-    padding-right: 40px;
+
+    position: relative;
 
     &:last-child {
       padding-right: 16px;
     }
 
-    @media (max-width: 1100px) {
+    @media (width <= 1100px) {
       padding-right: 16px;
+
       border-bottom: 1px solid colors.$border;
 
       &:last-child {
@@ -79,30 +87,38 @@ $_name: "production-route";
   }
 
   &__separator {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
     position: absolute;
     top: 0;
     bottom: 0;
     right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
     width: 1px;
 
     &::before,
     &::after {
-      content: "";
-      width: 100%;
-      flex: 1;
-      min-height: 0;
       background-color: colors.$border;
+
+      flex: 1;
+
+      content: "";
+
+      min-height: 0;
+      width: 100%;
     }
 
     &-arrow {
+      margin: 4px 0;
+
+      font-size: 20px;
       color: colors.$border;
+
       display: block;
       align-items: center;
-      font-size: 20px;
-      margin: 4px 0;
+
       transform: translateY(-1px);
     }
 
@@ -110,19 +126,20 @@ $_name: "production-route";
       display: none;
     }
 
-    @media (max-width: 1100px) {
+    @media (width <= 1100px) {
       display: none;
     }
   }
 
   &__step {
-    position: absolute;
-    top: 0;
-    left: 0;
     font-weight: 600;
     color: colors.$primary;
 
-    @media (max-width: 1100px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @media (width <= 1100px) {
       top: 16px;
       left: 16px;
     }
@@ -138,18 +155,18 @@ $_name: "production-route";
   }
 
   &__card-title {
-    color: colors.$text-secondary;
     font-size: 12.4px;
     font-weight: 700;
+    color: colors.$text-secondary;
     line-height: 1.2;
-    letter-spacing: 0.48px;
     text-transform: uppercase;
+    letter-spacing: 0.48px;
   }
 
   &__card-text {
-    color: colors.$text-soft;
     font-size: 10.8px;
-    line-height: 1.2;
     font-weight: 300;
+    color: colors.$text-soft;
+    line-height: 1.2;
   }
 }
