@@ -1,5 +1,5 @@
 import { PropType, SVGAttributes, computed, defineComponent, h } from 'vue'
-import { iconPaths } from '@/utils'
+import { Colors, iconPaths } from '@/utils'
 
 export const iconProps = {
   size: {
@@ -24,7 +24,7 @@ export const iconProps = {
 
   color: {
     type: String as PropType<string>,
-    default: undefined
+    default: Colors.white
   }
 }
 
