@@ -6,41 +6,43 @@ $_name: "g-button";
 @mixin _colors {
   @each $name in colors.$color-names {
     &--color-#{$name} {
-      background-color: colors.color($name);
+      &:not(.#{$_name}--disabled) {
+        background-color: colors.color($name);
 
-      & > .#{$_name}__content {
-        & > .#{$_name}__icon,
-        & > .#{$_name}__label {
-          color: colors.color(text);
-        }
-      }
-
-      &.#{$_name}--outline,
-      &.#{$_name}--flat {
         & > .#{$_name}__content {
+          & > .#{$_name}__icon,
           & > .#{$_name}__label {
-            color: colors.color($name);
+            color: colors.color(text);
           }
         }
-      }
 
-      &:hover {
-        &::before {
-          background-color: colors.color(bg, 0.2);
+        &.#{$_name}--outline,
+        &.#{$_name}--flat {
+          & > .#{$_name}__content {
+            & > .#{$_name}__label {
+              color: colors.color($name);
+            }
+          }
         }
-      }
 
-      &:active {
-        &::before {
-          background-color: colors.color(bg, 0.3);
+        &:hover {
+          &::before {
+            background-color: colors.color(bg, 0.2);
+          }
         }
-      }
 
-      &.#{$_name}--flat {
-        background-color: colors.color($name, 0.1);
-      }
-      &.#{$_name}--outline {
-        border-color: colors.color($name, 0.5);
+        &:active {
+          &::before {
+            background-color: colors.color(bg, 0.3);
+          }
+        }
+
+        &.#{$_name}--flat {
+          background-color: colors.color($name, 0.1);
+        }
+        &.#{$_name}--outline {
+          border-color: colors.color($name, 0.5);
+        }
       }
     }
   }
