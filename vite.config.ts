@@ -1,4 +1,3 @@
-import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'vite'
 import { VitePWA as pwa } from 'vite-plugin-pwa'
@@ -9,17 +8,19 @@ const defaultPort = 5173
 const port = process.env.PORT ? parseInt(process.env.PORT) : defaultPort
 const server = {
   host: process.env.HOST ?? '0.0.0.0',
-  port
+  port,
+  warmup: {
+    clientFiles: [ './src/main.ts' ]
+  }
 }
 
 export default defineConfig({
   server,
 
   plugins: [
-    vue(),
     jsx(),
     pwa({
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       workbox: {
         navigateFallbackDenylist: [ /^\/api/ ],
         sourcemap: false,
@@ -94,8 +95,26 @@ export default defineConfig({
     }
   },
 
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    } as any
+  },
+
+  optimizeDeps: {
+    include: [
+      'vue',
+      'vue-router',
+      'pinia'
+    ]
+  },
+
   build: {
     emptyOutDir: true,
+    sourcemap: false,
+    reportCompressedSize: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -111,7 +130,17 @@ export default defineConfig({
           ) {
             return 'vue-vendor'
           }
-        }
+
+          if (id.includes('/src/components/g/')) {
+            return 'g-components'
+          }
+
+          if (id.includes('/src/utils/')) {
+            return 'utils'
+          }
+        },
+        chunkFileNames: 'js/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]'
       }
     }
   }
