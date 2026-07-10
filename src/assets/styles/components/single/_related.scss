@@ -1,0 +1,36 @@
+@use "../../colors";
+@use "../../variables" as *;
+
+.#{"product-page"} {
+  &__related {
+    display: grid;
+    gap: 24px;
+  }
+
+  &__related-header {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__related-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 1;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+
+  &__related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  &__related-item {
+    min-width: 0;
+  }
+}

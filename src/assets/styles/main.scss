@@ -1,22 +1,20 @@
 @use "variables";
 @use "colors";
 @use "accessories";
-@use "components";
 @use "feedback";
 @use "layout";
 @use "navigation";
-@use "hero";
 @use "filter";
-@use "benefits";
 @use "systems";
-@use "popular";
-@use "brands";
 @use "production-card";
 @use "product-gallery";
 @use "production-route";
 @use "technical-excellence";
 @use "product-highlight";
 @use "footer";
+@use "components/g";
+@use "components/home";
+@use "components/single";
 @use "pages";
 
 :root {

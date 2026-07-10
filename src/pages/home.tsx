@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue'
 
-import Hero from '@/components/hero'
 import Filter from '@/components/filter'
-import Benefits from '@/components/benefits'
 import Systems from '@/components/systems'
-import PopularSystems from '@/components/popular'
-import Brands from '@/components/brands'
+import Benefits from '@/components/home/benefits'
+import Hero from '@/components/home/hero'
+import Popular from '@/components/home/popular'
+import Brands from '@/components/home/brands'
 
 export default defineComponent({
   name: 'HomePage',
@@ -34,7 +34,7 @@ export default defineComponent({
 
     const renderPopular = () => {
       return (
-        <PopularSystems class="home__section home__section--popular" />
+        <Popular class="home__section home__section--popular" />
       )
     }
 

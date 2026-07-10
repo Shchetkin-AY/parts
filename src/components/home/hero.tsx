@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { GButton } from './g/button'
+import { GButton } from '../g/button'
 import { Colors } from '@/utils'
 
 export default defineComponent({

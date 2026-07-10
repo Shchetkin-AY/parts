@@ -1,0 +1,94 @@
+@use "../../colors";
+@use "../../variables" as *;
+
+.#{"product-page"} {
+  &__hero {
+    display: grid;
+    grid-template-columns: 540px 1fr minmax(0, 400px);
+    gap: 20px;
+    align-items: start;
+
+    min-height: 500px;
+  }
+
+  &__hero-content {
+    display: grid;
+    gap: 20px;
+  }
+
+  &__hero-header {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__hero-title {
+    font-family: $font-main;
+    font-size: 60px;
+    font-weight: 800;
+    color: colors.$text-primary;
+    line-height: 62px;
+    text-transform: uppercase;
+  }
+
+  &__hero-series {
+    font-size: 16px;
+    font-weight: 500;
+    color: colors.$primary;
+    line-height: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__hero-description {
+    font-size: 14px;
+    font-weight: 500;
+    color: colors.$text-secondary;
+    line-height: 22px;
+
+    max-width: 540px;
+  }
+
+  &__hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  &__hero-stat {
+    padding: 5px 10px;
+
+    border-radius: $radius-xs;
+
+    background: colors.$surface;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-content: center;
+    align-items: center;
+
+    min-height: 80px;
+    max-height: 80px;
+    height: 80px;
+  }
+
+  &__hero-stat-copy {
+    display: grid;
+    gap: 4px;
+
+    min-width: 0;
+  }
+
+  &__hero-stat-label {
+    font-size: 12px;
+    color: colors.$text-muted;
+    line-height: 14px;
+  }
+
+  &__hero-stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 16px;
+  }
+}

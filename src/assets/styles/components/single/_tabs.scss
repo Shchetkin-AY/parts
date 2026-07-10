@@ -1,0 +1,215 @@
+@use "../../colors";
+@use "../../variables" as *;
+
+.#{"product-page"} {
+  &__tabs-section {
+    display: grid;
+    gap: 24px;
+  }
+
+  &__tabs {
+    padding-bottom: 2px;
+
+    border-bottom: 1px solid colors.$border;
+
+    display: flex;
+    gap: 20px;
+
+    overflow-x: auto;
+  }
+
+  &__tab {
+    padding: 0 0 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: colors.$text-muted;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+
+    border: none;
+
+    background: transparent;
+
+    position: relative;
+
+    transition: color $transition-base;
+
+    &:hover {
+      color: colors.$text-primary;
+
+      cursor: pointer;
+    }
+
+    &--active {
+      color: colors.$text-primary;
+
+      &::after {
+        background: colors.$primary;
+
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+
+        content: "";
+
+        height: 2px;
+        width: 100%;
+      }
+    }
+  }
+
+  &__panel {
+    padding: 20px;
+
+    border: 1px solid colors.$border;
+    border-radius: 18px;
+
+    background: colors.$surface;
+
+    display: grid;
+    gap: 20px;
+  }
+
+  &__panel--specs {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+  }
+
+  &__section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 19px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__specs {
+    display: grid;
+    gap: 0;
+  }
+
+  &__spec-row {
+    padding: 12px 0;
+
+    border-bottom: 1px solid colors.$border-soft;
+
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  &__spec-label {
+    font-size: 14px;
+    color: colors.$text-muted;
+    line-height: 20px;
+  }
+
+  &__spec-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: colors.$text-primary;
+    line-height: 16px;
+    letter-spacing: 1px;
+  }
+
+  &__blueprint {
+    border: 1px solid colors.$border;
+    border-radius: 12px;
+
+    background: colors.$surface-container-lowest;
+
+    position: relative;
+
+    overflow: hidden;
+  }
+
+  &__dimension {
+    font-size: 12px;
+    font-weight: 600;
+    color: colors.$text-soft;
+    line-height: 12px;
+    white-space: nowrap;
+
+    position: absolute;
+  }
+
+  &__blueprint-image {
+    display: block;
+
+    width: 100%;
+  }
+
+  &__kit-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  &__kit-panel-item {
+    padding: 16px;
+
+    font-size: 15px;
+    color: colors.$text-primary;
+    line-height: 22px;
+
+    border: 1px solid colors.$border;
+    border-radius: 12px;
+
+    background: colors.$surface-container-low;
+  }
+
+  &__delivery {
+    display: grid;
+    gap: 16px;
+  }
+
+  &__delivery-item {
+    padding: 16px;
+
+    font-size: 15px;
+    color: colors.$text-primary;
+    line-height: 22px;
+
+    border: 1px solid colors.$border;
+    border-radius: 12px;
+
+    background: colors.$surface-container-low;
+  }
+
+  &__faq {
+    display: grid;
+    gap: 16px;
+  }
+
+  &__faq-item {
+    padding: 16px;
+
+    border: 1px solid colors.$border;
+    border-radius: 12px;
+
+    background: colors.$surface-container-low;
+  }
+
+  &__faq-question {
+    font-size: 15px;
+    font-weight: 700;
+    color: colors.$text-primary;
+    line-height: 22px;
+  }
+
+  &__faq-answer {
+    margin-top: 8px;
+
+    font-size: 14px;
+    color: colors.$text-secondary;
+    line-height: 22px;
+  }
+}

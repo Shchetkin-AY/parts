@@ -1,11 +1,15 @@
-@use "../colors";
-@use "../mixins" as mixins;
+@use "../../colors";
+@use "../../mixins" as mixins;
 
-$_name: "g-text-area";
+$_name: "g-text-field";
 
 .#{$_name} {
+  padding-bottom: 14px;
+
   display: grid;
   gap: 6px;
+
+  position: relative;
 
   &__label {
     padding-left: 10px;
@@ -19,16 +23,16 @@ $_name: "g-text-area";
   }
 
   &__field {
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 10px;
 
     font-family: var(--font-family);
     font-size: var(--font-size);
     color: colors.$text-primary;
     line-height: var(--line-height);
 
-    border: 0;
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: transparent;
 
     background: rgb(255 255 255 / 7%);
 
@@ -37,9 +41,16 @@ $_name: "g-text-area";
     gap: 8px;
     align-items: center;
 
+    transition:
+      background-color 133ms ease,
+      border-color 133ms ease,
+      color 133ms ease;
+
     cursor: pointer;
 
-    min-height: 50px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
     width: 100%;
 
     &--rounded {
@@ -51,8 +62,40 @@ $_name: "g-text-area";
     }
   }
 
+  &__hint {
+    font-size: 12px;
+    color: colors.$text-muted;
+    line-height: 14px;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    position: absolute;
+    bottom: -4px;
+    left: 10px;
+    right: 10px;
+
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease,
+      color 180ms ease;
+
+    pointer-events: none;
+
+    min-height: 14px;
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   &__input {
-    padding: 10px 0;
+    padding: 0;
 
     font-family: var(--font-family);
     font-size: var(--font-size);
@@ -64,15 +107,10 @@ $_name: "g-text-area";
 
     background: transparent;
 
-    box-sizing: border-box;
-
     display: block;
 
-    overflow: auto;
-
-    resize: vertical;
-
-    min-height: 50px;
+    min-height: 40px;
+    height: 100%;
     width: 100%;
 
     &::placeholder {
@@ -117,5 +155,15 @@ $_name: "g-text-area";
 
     height: 22px;
     width: 22px;
+  }
+
+  &--error {
+    & > .#{$_name}__label {
+      color: colors.$primary-soft;
+    }
+
+    & > .#{$_name}__hint {
+      color: colors.$primary-soft;
+    }
   }
 }
