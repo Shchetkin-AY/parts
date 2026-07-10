@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import { defineStore } from 'pinia'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogItem, type SelectOption } from '@/utils'
 
 const normalize = (value: number | string): string => {
