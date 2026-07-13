@@ -98,9 +98,13 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler'
-      }
-    } as any
+        api: 'modern-compiler',
+        additionalData: `
+        @use "@/assets/styles/colors" as colors;
+        @use "@/assets/styles/variables" as *;
+      `
+      } as any
+    }
   },
 
   optimizeDeps: {
