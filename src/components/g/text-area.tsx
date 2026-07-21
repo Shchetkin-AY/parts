@@ -1,7 +1,7 @@
 import { computed, defineComponent } from 'vue'
 
-import { getPrimitiveProp } from '../sharedProps'
-import { ComponentNames } from '@/utils'
+import { getPrimitiveProp } from '@/components/sharedProps'
+import { ComponentNames, numberToPxOrString } from '@/utils'
 
 export interface TextAreaProps {
   ariaLabel: string
@@ -39,6 +39,7 @@ export const GTextArea = defineComponent({
 
   setup(props, { emit }) {
     const hasSuffix = computed(() => Boolean(props.suffix))
+
     const fieldClassName = computed(() => {
       const result = [ `${baseClassName}__field` ]
       if (props.disabled) {
@@ -59,6 +60,10 @@ export const GTextArea = defineComponent({
     }
     const handleInput = (event: Event): void => {
       const inputElement = event.target as HTMLTextAreaElement
+      if (inputElement) {
+        inputElement.style.height = 'auto'
+        inputElement.style.height = numberToPxOrString(inputElement.scrollHeight)
+      }
       emit('update:modelValue', inputElement.value)
     }
 

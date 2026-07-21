@@ -16,12 +16,15 @@ export const menuProps = {
     required: false,
     default: null
   },
+
   ariaLabel: getPrimitiveProp(String, true),
+
   items: {
     type: Array as PropType<MenuItem[]>,
     required: true,
     default: undefined
   },
+
   menuPosition: {
     type: Object as PropType<MenuPosition | null>,
     required: false,

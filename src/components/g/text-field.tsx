@@ -193,7 +193,7 @@ export const GTextField = defineComponent({
     }
     const renderHint = () => {
       return (
-        <span
+        <div
           aria-hidden={!hasHint.value}
           class={{
             [`${baseClassName}__hint`]: true,
@@ -201,7 +201,7 @@ export const GTextField = defineComponent({
           }}
         >
           {hasHint.value ? props.hint : ''}
-        </span>
+        </div>
       )
     }
 

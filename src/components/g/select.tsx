@@ -1,15 +1,15 @@
 import { PropType, computed, defineComponent, ref, watch } from 'vue'
 
-import type { MenuItem, MenuPosition, SelectOption } from '@/utils'
+import { ComponentNames, type MenuItem, type MenuPosition, type SelectOption } from '@/utils'
 import { GMenu } from '@/components'
 import { getPrimitiveProp } from '@/components/sharedProps'
 
 export interface SelectProps {
+  modelValue: string
   ariaLabel: string
   clearable?: boolean
   disabled?: boolean
   label: string
-  modelValue: string
   options: SelectOption[]
   placeholder?: string
   rounded?: boolean
@@ -35,7 +35,7 @@ export const selectProps = {
 const baseClassName = 'g-select'
 
 export const GSelect = defineComponent({
-  name: 'GSelect',
+  name: ComponentNames.select,
 
   props: selectProps,
 

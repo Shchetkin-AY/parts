@@ -1,3 +1,4 @@
+import { ComponentNames } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 
 export const dividerProps = {
@@ -15,7 +16,7 @@ export const dividerProps = {
 }
 
 export const GDivider = defineComponent({
-  name: 'GDivider',
+  name: ComponentNames.divider,
 
   props: dividerProps,
 

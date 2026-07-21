@@ -114,8 +114,18 @@ export const GButton = defineComponent({
 
       return result
     })
+    const gridTemplateColumns = computed(() => {
+      const result = [ '1fr' ]
+      if (hasIcon.value && hasLabel.value) {
+        result.unshift('auto')
+      }
+
+      return result.join(' ')
+    })
     const $style = computed<Record<string, string>>(() => {
-      const result: Record<string, string> = {}
+      const result: Record<string, string> = {
+        gridTemplateColumns: gridTemplateColumns.value
+      }
       const items = [ 'minWidth', 'maxWidth', 'width' ]
 
       for (const item of items) {
@@ -159,10 +169,7 @@ export const GButton = defineComponent({
     }
     const renderContent = () => {
       return (
-        <div
-          class={`${ComponentNames.button}__content`}
-          style={{ gridTemplateColumns: hasIcon.value && hasLabel.value ? 'auto 1fr' : '1fr' }}
-        >
+        <div class={`${ComponentNames.button}__content`} >
           {renderIcon()}
           {renderLabel()}
         </div>
