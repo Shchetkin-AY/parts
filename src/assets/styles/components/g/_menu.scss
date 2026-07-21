@@ -1,4 +1,5 @@
-@use "../../colors";
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "g-menu";
 
@@ -6,11 +7,14 @@ $_name: "g-menu";
   padding: 4px;
 
   border: 1px solid colors.$border;
-  border-radius: calc(var(--border-radius) + 3px);
+  border-radius: var(--radius-xs);
 
-  background: rgb(30 30 30 / 94%);
+  background-color: var(--color-surface-3);
 
-  box-shadow: 0 12px 32px rgb(0 0 0 / 34%);
+  box-shadow:
+    0 8px 16px -8px colors.color(color-bg),
+    -8px 8px 16px -8px colors.color(color-bg),
+    8px 8px 16px -8px colors.color(color-bg);
 
   display: grid;
   gap: 2px;
@@ -22,7 +26,7 @@ $_name: "g-menu";
   pointer-events: auto;
 
   max-height: 240px;
-  max-width: calc(100vw - 16px);
+
   width: max-content;
 
   z-index: 1000;
@@ -38,21 +42,23 @@ $_name: "g-menu";
   }
 
   &__item {
-    padding: 0 8px;
+    padding-left: 8px;
+    padding-right: 8px;
 
-    font-size: var(--font-size);
-    color: colors.$text-primary;
-    line-height: var(--line-height);
+    color: var(--color-text-primary);
+
     text-align: left;
 
-    border: 0;
-    border-radius: var(--border-radius);
+    border: unset;
+    border-radius: var(--radius-xs);
 
-    background: transparent;
+    background-color: transparent;
 
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: center;
+
+    cursor: pointer;
 
     pointer-events: auto;
 
@@ -61,12 +67,12 @@ $_name: "g-menu";
 
     &:hover,
     &:focus-visible {
-      background: rgb(255 255 255 / 10%);
+      background: colors.color(color-grey, 0.1);
     }
 
     &:active,
     &--active {
-      background: rgb(255 255 255 / 16%);
+      background: colors.color(color-grey, 0.2);
     }
 
     &:disabled {
@@ -74,18 +80,16 @@ $_name: "g-menu";
 
       cursor: default;
     }
+
+    &__label {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      min-width: 0;
+    }
   }
 
-  &__label {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    min-width: 0;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  @include mixins.scrollbar(4px);
 }

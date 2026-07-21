@@ -1,10 +1,9 @@
-@use "../../colors";
-@use "../../variables" as *;
+@use "colors";
 
 $_name: "g-overlay";
 
 .#{$_name} {
-  background-color: colors.color(bg, 0.9);
+  background-color: colors.color(color-bg, 0.9);
 
   display: grid;
   place-items: center;

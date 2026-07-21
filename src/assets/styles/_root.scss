@@ -1,0 +1,29 @@
+@use "colors";
+@use "variables";
+
+:root {
+  @each $name, $value in variables.$layout {
+    --#{$name}: #{$value};
+  }
+
+  @each $name, $value in variables.$typography {
+    --#{$name}: #{$value};
+  }
+
+  @each $name, $value in variables.$spacing {
+    --space-#{$name}: #{$value};
+  }
+
+  @each $name, $value in variables.$radius {
+    --radius-#{$name}: #{$value};
+  }
+
+  @each $name, $value in variables.$transition {
+    --transition-#{$name}: #{$value};
+  }
+
+  @each $name, $value in colors.$colors {
+    --color-#{$name}: #{$value};
+    --color-#{$name}-rgb: #{colors.hex-to-rgb($value)};
+  }
+}

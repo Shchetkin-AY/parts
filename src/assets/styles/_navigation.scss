@@ -1,12 +1,12 @@
-@use "./colors";
-@use "./variables" as *;
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "navigation";
 
 .#{$_name} {
-  border-bottom: 1px solid colors.$border;
+  border-bottom: 1px solid var(--color-border);
 
-  background-color: colors.$surface-container-lowest;
+  background-color: var(--color-surface-container-lowest);
 
   display: grid;
   align-items: center;
@@ -19,88 +19,86 @@ $_name: "navigation";
   width: 100%;
 
   z-index: 20;
-  padding-inline: 24px;
+  padding-inline: var(--space-md);
+
   backdrop-filter: blur(24px);
 
   &__container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 16px;
+    gap: var(--space-sm);
     align-items: center;
 
-    width: min(100%, var(--container, 1280px));
+    width: min(100%, var(--layout-width));
 
     @media (width >= 768px) {
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      gap: 32px;
+      gap: var(--space-lg);
     }
   }
 
   &__brand {
-    font-size: 24px;
-    font-weight: 900;
-    color: colors.$text-primary;
-    line-height: 1;
+    color: var(--color-text-primary);
     text-transform: uppercase;
-    letter-spacing: 0;
     white-space: nowrap;
 
     min-width: 0;
     justify-self: start;
+
+    @include mixins.font(36px, 900);
   }
 
   &__links {
     display: none;
 
     @media (width >= 768px) {
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 16px;
       text-transform: uppercase;
-      letter-spacing: 0;
 
       display: grid;
       grid-auto-flow: column;
-      gap: 48px;
+      gap: var(--space-xxl);
       align-items: center;
       justify-content: center;
       justify-self: center;
+
+      @include mixins.font(12px, 400, 16px);
     }
   }
 
   &__link {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 0;
-
     display: grid;
 
     transition: color 0.2s ease;
 
-    &:hover {
-      color: colors.$primary-hover;
-    }
-
     &--active {
       font-weight: 700;
-      color: colors.$primary;
+      color: var(--color-primary);
       text-decoration: underline;
       text-underline-offset: 10px;
-      text-decoration-color: colors.$primary;
+      text-decoration-color: var(--color-primary);
       text-decoration-thickness: 2px;
     }
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+
+    &:active {
+      color: var(--color-primary-active);
+    }
+
+    @include mixins.font(14px, 700, 16px);
   }
 
   &__actions {
     display: grid;
     grid-auto-flow: column;
-    gap: 12px;
+    gap: var(--space-sm);
     align-items: center;
     justify-self: end;
 
     @media (width >= 768px) {
-      gap: 16px;
+      gap: var(--space-sm);
     }
   }
 
@@ -113,41 +111,40 @@ $_name: "navigation";
     display: grid;
 
     grid-template-columns: auto 1fr;
-    gap: 12px;
+    gap: var(--space-sm);
     align-items: center;
 
     transition:
-      transform $transition-fast,
-      background-color $transition-fast;
+      transform var(--transition-fast),
+      background-color var(--transition-fast);
 
     cursor: pointer;
 
-    max-height: 40px;
-    height: 40px;
     max-width: fit-content;
 
     &-content {
       display: grid;
       grid-template-rows: repeat(2, auto);
+      gap: 4px;
 
       &-title {
-        font-size: 14px;
-        font-weight: 500;
-        color: colors.$text-primary;
-        line-height: 1.1;
-        letter-spacing: 0.48px;
+        color: var(--color-text-primary);
+
+        @include mixins.font(14px, 500);
       }
 
       &-subtitle {
-        font-size: 12.4px;
-        font-weight: 300;
-        color: colors.$text-secondary;
+        color: var(--color-text-secondary);
+
+        @include mixins.font(12px);
       }
 
       @media (width <= 950px) {
         display: none;
       }
     }
+
+    @include mixins.absolute-height(40px);
 
     @media (width <= 768px) {
       grid-template-columns: 1fr;
@@ -157,7 +154,7 @@ $_name: "navigation";
   &__menu {
     padding: 8px;
 
-    color: colors.$text-primary;
+    color: var(--color-text-primary);
 
     border: 0;
 
@@ -176,7 +173,7 @@ $_name: "navigation";
 
   /* Mobile drawer and overlay */
   &__overlay {
-    background: colors.color(bg, 0.8);
+    background: colors.color(color-bg, 0.8);
 
     position: fixed;
 
@@ -199,9 +196,7 @@ $_name: "navigation";
   &__drawer {
     padding: 18px;
 
-    background: colors.$surface;
-
-    box-shadow: -12px 0 32px rgb(0 0 0 / 16%);
+    background: var(--color-surface);
 
     display: grid;
     grid-template-rows: auto 1fr;
@@ -212,15 +207,14 @@ $_name: "navigation";
     right: 0;
 
     transition:
-      transform $transition-base,
-      border-color $transition-base,
-      box-shadow $transition-base;
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
     transform: translateX(100%);
 
     pointer-events: none;
 
-    height: 100vh;
-    width: min(92vw, 350px);
+    width: min(300px, 350px);
 
     z-index: 9999;
     will-change: transform;
@@ -231,33 +225,15 @@ $_name: "navigation";
       justify-content: flex-end;
     }
 
-    &-close {
-      color: colors.$text-primary;
-
-      border: 0;
-
-      background: transparent;
-
-      display: inline-grid;
-      place-items: center;
-
-      cursor: pointer;
-
-      height: 40px;
-      width: 40px;
-    }
-
     &-content {
       padding-top: 8px;
 
       display: grid;
-      gap: 40px;
+      gap: var(--space-xl);
 
       .navigation__drawer-item {
         > .navigation__link {
-          font-size: 18px;
-          font-weight: 700;
-          text-transform: none;
+          @include mixins.font(18px, 700);
         }
       }
     }
@@ -267,6 +243,8 @@ $_name: "navigation";
 
       pointer-events: auto;
     }
+
+    @include mixins.absolute-height(100%);
   }
 
   @media (width >= 768px) {

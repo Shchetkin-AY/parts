@@ -1,4 +1,5 @@
-@use "../../colors";
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "g-select";
 
@@ -9,25 +10,22 @@ $_name: "g-select";
   &__label {
     padding-left: 10px;
 
-    font-size: 10px;
-    font-weight: 500;
-    color: colors.$text-primary;
-    line-height: 10px;
+    color: var(--color-text-primary);
+
     text-transform: uppercase;
-    letter-spacing: var(--letter-spacing);
+
+    @include mixins.font(10px, 500);
   }
 
   &__field {
-    padding: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 
-    font-family: var(--font-family);
-    font-size: var(--font-size);
-    color: colors.$text-primary;
-    line-height: var(--line-height);
+    color: var(--color-text-primary);
 
-    border: 0;
+    border: unset;
 
-    background: rgb(255 255 255 / 7%);
+    background-color: var(--color-surface-3);
 
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -36,22 +34,23 @@ $_name: "g-select";
 
     cursor: pointer;
 
-    min-height: 40px;
-    max-height: 40px;
-    height: 40px;
     width: 100%;
 
     &--rounded {
-      border-radius: var(--border-radius);
+      border-radius: var(--radius-xs);
     }
 
     &::placeholder {
-      color: colors.$text-muted;
+      color: var(--color-text-muted);
     }
 
+    &:hover,
     &:focus-visible {
-      background: rgb(255 255 255 / 12%);
+      background: colors.color(color-grey, 0.13);
     }
+
+    @include mixins.absolute-height(40px);
+    @include mixins.font(12px);
   }
 
   &__value,
@@ -66,12 +65,12 @@ $_name: "g-select";
   }
 
   &__placeholder {
-    color: colors.$text-secondary;
+    color: var(--color-text-secondary);
   }
 
   &__arrow,
   &__clear {
-    color: colors.$text-secondary;
+    color: var(--color-text-secondary);
 
     display: grid;
     place-items: center;

@@ -1,11 +1,9 @@
-@use "../../colors";
-@use "../../mixins" as mixins;
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "g-text-field";
 
 .#{$_name} {
-  padding-bottom: 14px;
-
   display: grid;
   gap: 6px;
 
@@ -14,75 +12,73 @@ $_name: "g-text-field";
   &__label {
     padding-left: 10px;
 
-    font-size: 10px;
-    font-weight: 500;
-    color: colors.$text-primary;
-    line-height: 10px;
+    color: var(--color-text-primary);
+
     text-transform: uppercase;
-    letter-spacing: var(--letter-spacing);
+
+    @include mixins.font(10px, 500);
   }
 
   &__field {
-    padding: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 
-    font-family: var(--font-family);
-    font-size: var(--font-size);
-    color: colors.$text-primary;
-    line-height: var(--line-height);
+    color: var(--color-text-primary);
 
-    border-width: 0.5px;
-    border-style: solid;
-    border-color: transparent;
+    border: unset;
 
-    background: rgb(255 255 255 / 7%);
+    background-color: var(--color-surface-3);
 
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
     align-items: center;
 
-    transition:
-      background-color 133ms ease,
-      border-color 133ms ease,
-      color 133ms ease;
-
     cursor: pointer;
 
-    min-height: 40px;
-    max-height: 40px;
-    height: 40px;
     width: 100%;
 
     &--rounded {
-      border-radius: var(--border-radius);
+      border-radius: var(--radius-xs);
     }
 
-    &:focus-visible {
-      background: rgb(255 255 255 / 12%);
+    &::placeholder {
+      color: var(--color-text-muted);
     }
+
+    &:hover,
+    &:focus-visible {
+      background: colors.color(color-grey, 0.13);
+    }
+
+    @include mixins.absolute-height(40px);
+    @include mixins.font(12px);
   }
 
   &__hint {
-    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+
     color: colors.$text-muted;
-    line-height: 14px;
+
     text-align: start;
     text-overflow: ellipsis;
     white-space: nowrap;
 
+    display: grid;
+    align-content: center;
+
     position: absolute;
-    bottom: -4px;
-    left: 10px;
-    right: 10px;
+    bottom: -2px;
 
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
 
     transition:
-      opacity 180ms ease,
-      visibility 180ms ease,
-      color 180ms ease;
+      opacity var(--transition-fast) ease,
+      visibility var(--transition-fast) ease,
+      color var(--transition-fast) ease;
 
     pointer-events: none;
 
@@ -92,15 +88,17 @@ $_name: "g-text-field";
       opacity: 1;
       visibility: visible;
     }
+
+    @include mixins.absolute-height(16px);
+    @include mixins.absolute-width(100%);
+    @include mixins.font(12px, 400, 12px);
   }
 
   &__input {
     padding: 0;
 
-    font-family: var(--font-family);
-    font-size: var(--font-size);
-    color: colors.$text-primary;
-    line-height: var(--line-height);
+    color: var(--color-text-primary);
+
     text-align: left;
 
     border: 0;
@@ -109,27 +107,18 @@ $_name: "g-text-field";
 
     display: block;
 
-    min-height: 40px;
-    height: 100%;
     width: 100%;
 
     &::placeholder {
-      color: colors.$text-muted;
+      color: var(--color-text-muted);
     }
 
     &:focus {
       outline: none;
     }
-  }
 
-  &__suffix {
-    color: colors.$text-secondary;
-
-    display: grid;
-    place-items: center;
-
-    height: 22px;
-    width: 22px;
+    @include mixins.font(12px);
+    @include mixins.absolute-height(40px);
   }
 
   &__value,
@@ -144,26 +133,31 @@ $_name: "g-text-field";
   }
 
   &__placeholder {
-    color: colors.$text-secondary;
+    color: var(--color-text-secondary);
   }
 
+  &__suffix,
   &__clear {
-    color: colors.$text-secondary;
+    color: var(--color-text-secondary);
 
     display: grid;
     place-items: center;
 
-    height: 22px;
-    width: 22px;
+    @include mixins.absolute-width(22px);
+    @include mixins.absolute-height(22px);
+  }
+
+  &--hint {
+    padding-bottom: 16px;
   }
 
   &--error {
     & > .#{$_name}__label {
-      color: colors.$primary-soft;
+      color: var(--color-primary-soft);
     }
 
     & > .#{$_name}__hint {
-      color: colors.$primary-soft;
+      color: var(--color-primary-soft);
     }
   }
 }

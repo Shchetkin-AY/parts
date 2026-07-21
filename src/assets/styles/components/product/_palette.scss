@@ -1,0 +1,165 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "palette";
+
+.#{$_name} {
+  display: grid;
+  grid-template-columns: 60% 1fr;
+  gap: var(--space-md);
+
+  align-items: start;
+
+  user-select: none;
+
+  &__sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "standard cerakote"
+      "custom   cerakote";
+    gap: var(--space-md);
+    align-items: start;
+
+    min-width: 0;
+
+    @media (width <= 900px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width <= 425px) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "standard"
+        "custom"
+        "cerakote";
+    }
+  }
+
+  &__group {
+    display: grid;
+    gap: var(--space-sm);
+
+    min-width: 0;
+
+    &--standard {
+      grid-area: standard;
+    }
+
+    &--custom {
+      grid-area: custom;
+    }
+
+    &--cerakote {
+      grid-area: cerakote;
+    }
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.truncate-text;
+      @include mixins.font(13px, 600);
+    }
+  }
+
+  &__item {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+
+    cursor: pointer;
+
+    min-width: 0;
+
+    width: 100%;
+
+    &-input {
+      display: none;
+    }
+
+    &-radio {
+      border-width: 2px;
+      border-style: solid;
+      border-color: var(--color-border);
+
+      border-radius: 50%;
+
+      flex-shrink: 0;
+
+      position: relative;
+
+      @include mixins.absolute-height(18px);
+      @include mixins.absolute-width(18px);
+    }
+
+    &:has(&-input:checked) &-radio::after {
+      border-radius: 50%;
+
+      background-color: var(--color-primary);
+
+      position: absolute;
+
+      transition: var(--transition-base);
+
+      transition-property: background-color;
+
+      content: "";
+      inset: 3px;
+    }
+
+    &:hover {
+      & > .#{$_name}__item-label {
+        color: var(--color-text-primary);
+      }
+    }
+
+    &-label {
+      color: var(--color-text-secondary);
+
+      flex: 1;
+
+      transition: var(--transition-base);
+
+      min-width: 0;
+
+      @include mixins.font(14px);
+    }
+  }
+
+  &__preview {
+    padding: 16px;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    border-radius: var(--radius-md);
+
+    background:
+      radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), #070707;
+
+    display: grid;
+    align-content: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    & > img {
+      height: clamp(250px, 15vw, 180px);
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  @media (width <= 900px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+
+    &__preview {
+      order: -1;
+    }
+  }
+}

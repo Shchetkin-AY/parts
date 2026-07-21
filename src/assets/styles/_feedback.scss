@@ -1,4 +1,5 @@
-@use "./colors";
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "feedback";
 
@@ -12,7 +13,7 @@ $_name: "feedback";
 
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: var(--space-md);
 
       @media (width <= 425px) {
         padding-top: 30px;
@@ -27,13 +28,12 @@ $_name: "feedback";
     padding-right: 20px;
 
     display: grid;
-    gap: 20px;
+    gap: var(--space-md);
 
     &-subtitle {
-      font-size: 12px;
-      font-weight: 500;
-      color: colors.$text-muted;
-      line-height: 16px;
+      color: var(--color-text-muted);
+
+      @include mixins.font(12px, 500, 16px);
     }
   }
 }

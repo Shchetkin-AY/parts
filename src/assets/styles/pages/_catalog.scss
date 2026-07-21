@@ -1,43 +1,8 @@
-@use "../colors";
+@use "colors";
 
 $_name: "catalog";
 
 .#{$_name} {
-  --catalog-inline: 24px;
-  --catalog-section-gap: 32px;
-
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(var(--catalog-inline), 1fr)
-    [content-start] minmax(0, var(--container, 1440px))
-    [content-end] minmax(var(--catalog-inline), 1fr)
-    [full-end];
-  justify-items: center;
-
-  width: 100%;
-  row-gap: var(--catalog-section-gap);
-
-  &__section {
-    display: grid;
-    grid-template-columns:
-      [full-start] minmax(var(--catalog-inline), 1fr)
-      [content-start] minmax(0, var(--container, 1440px))
-      [content-end] minmax(var(--catalog-inline), 1fr)
-      [full-end];
-    grid-column: full;
-
-    min-width: 0;
-    width: 100%;
-  }
-
-  &__section > * {
-    grid-column: content;
-
-    min-width: 0;
-    max-width: var(--container, 1440px);
-    width: 100%;
-  }
-
   &__layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -134,16 +99,12 @@ $_name: "catalog";
     border: 1px solid colors.$border;
     border-radius: 8px;
 
-    background: colors.$surface-container-low;
+    background: colors.$surface-3;
 
     display: grid;
     place-items: center;
 
     min-height: 160px;
-  }
-
-  @media (width >= 768px) {
-    --catalog-inline: 32px;
   }
 
   @media (width >= 1024px) {
@@ -184,12 +145,6 @@ $_name: "catalog";
   @media (width <= 720px) {
     &__grid {
       grid-template-columns: 1fr;
-    }
-  }
-
-  @supports (grid-template-columns: subgrid) {
-    &__section {
-      grid-template-columns: subgrid;
     }
   }
 }

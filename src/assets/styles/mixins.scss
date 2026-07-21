@@ -1,4 +1,54 @@
-@use "./colors";
+@use "colors";
+
+@mixin page-layout {
+  --page-inline: var(--space-md);
+  --page-section-gap: var(--space-lg);
+
+  display: grid;
+
+  grid-template-columns:
+    [full-start] minmax(var(--page-inline), 1fr)
+    [content-start] minmax(0, var(--container))
+    [content-end] minmax(var(--page-inline), 1fr)
+    [full-end];
+
+  row-gap: var(--page-section-gap);
+
+  width: 100%;
+
+  &__section {
+    display: grid;
+
+    grid-template-columns:
+      [full-start] minmax(var(--page-inline), 1fr)
+      [content-start] minmax(0, var(--container))
+      [content-end] minmax(var(--page-inline), 1fr)
+      [full-end];
+
+    grid-column: full;
+
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__section > * {
+    grid-column: content;
+
+    min-width: 0;
+    max-width: var(--container);
+    width: 100%;
+  }
+
+  @media (width >= 768px) {
+    --page-inline: var(--space-lg);
+  }
+
+  @supports (grid-template-columns: subgrid) {
+    &__section {
+      grid-template-columns: subgrid;
+    }
+  }
+}
 
 @mixin truncate-text {
   text-overflow: ellipsis;
@@ -10,7 +60,7 @@
 }
 
 @mixin scrollbar($size: 8px) {
-  scrollbar-color: colors.color(grey, 0.5) colors.color(black, 0.1);
+  scrollbar-color: colors.color(color-grey, 0.5) colors.color(color-black, 0.1);
   scrollbar-width: thin;
 
   &::-webkit-scrollbar {
@@ -39,4 +89,30 @@
       background-color: colors.color(black, 0.4);
     }
   }
+}
+
+@mixin absolute-height($size) {
+  min-height: $size;
+  max-height: $size;
+  height: $size;
+}
+
+@mixin absolute-width($size) {
+  min-width: $size;
+  max-width: $size;
+  width: $size;
+}
+
+@mixin font($font-size: 14px, $font-weight: 400, $line-height: null) {
+  $computed-line-height: null;
+
+  @if $line-height {
+    $computed-line-height: $line-height;
+  } @else {
+    $computed-line-height: calc($font-size + 2px);
+  }
+
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $computed-line-height;
 }

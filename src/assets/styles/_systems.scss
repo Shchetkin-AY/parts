@@ -7,6 +7,8 @@ $_name: "systems";
   display: grid;
   justify-items: center;
 
+  width: 100%;
+
   &-content {
     display: grid;
     gap: 20px;
@@ -28,7 +30,7 @@ $_name: "systems";
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 
-    width: min(100%, $container);
+    width: min(100%, var(--container-width));
 
     @media (width <= 1100px) {
       grid-template-columns: 1fr;
@@ -39,7 +41,7 @@ $_name: "systems";
 
 .systems-card {
   border: 1px solid colors.$border;
-  border-radius: $radius-md;
+  border-radius: var(--radius-md);
 
   background: colors.$surface;
 
@@ -48,9 +50,9 @@ $_name: "systems";
   overflow: hidden;
 
   transition:
-    transform $transition-base,
-    border-color $transition-base,
-    box-shadow $transition-base;
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 
   min-height: 400px;
 
@@ -84,8 +86,8 @@ $_name: "systems";
     opacity: 0.72;
 
     transition:
-      transform $transition-slow,
-      opacity $transition-slow;
+      transform var(--transition-slow),
+      opacity var(--transition-slow);
 
     height: 100%;
     width: 100%;

@@ -1,5 +1,4 @@
-@use "variables";
-@use "colors";
+@use "root";
 @use "accessories";
 @use "feedback";
 @use "layout";
@@ -13,66 +12,24 @@
 @use "product-highlight";
 @use "footer";
 @use "components/g";
-@use "components/home";
-@use "components/single";
+@use "components/main";
+@use "components/product";
+@use "page";
 @use "pages";
-
-:root {
-  --font-family: inherit;
-  --font-size: 12px;
-  --line-height: 1.2;
-  --min-height: 24px;
-  --letter-spacing: 1px;
-  --container: 1440px;
-  --container-padding: 16px;
-  --section-gap: 32px;
-  --section-padding: 24px;
-  --border-radius: 5px;
-  --border-width: 1px;
-  --border-color: #3f3f46;
-
-  @each $name, $color in colors.$colors {
-    --#{$name}: #{$color};
-    --#{$name}-rgb: #{colors.hex-to-rgb($color)};
-  }
-}
 
 body {
   margin: 0;
 
-  font-family: Lexend, sans-serif;
-  color: colors.$text;
+  font-family: var(--font-family-primary);
+  color: var(--color-text);
 
-  background-color: colors.$bg;
+  background: var(--color-bg);
 
   overflow-x: hidden;
 }
 
 #app {
   min-height: 100vh;
-}
-
-.container {
-  display: grid;
-  gap: 32px;
-
-  width: min(100% - (var(--container-padding) * 2), var(--container));
-  margin-inline: auto;
-}
-
-.content-container {
-  margin-left: auto;
-  margin-right: auto;
-
-  max-width: var(--container);
-  width: 100%;
-}
-
-.blueprint-line {
-  background-image:
-    linear-gradient(to right, rgb(72 72 72 / 90%) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(72 72 72 / 90%) 1px, transparent 1px);
-  background-size: 40px 40px;
 }
 
 *,

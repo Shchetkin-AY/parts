@@ -1,0 +1,94 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "purchase";
+
+.#{$_name} {
+  padding: 20px;
+
+  border-width: 1px;
+  border-style: solid;
+
+  border-color: var(--color-border);
+  border-radius: var(--radius-md);
+
+  background-color: var(--color-surface);
+
+  display: grid;
+  gap: var(--space-md);
+  align-self: start;
+
+  &__availability {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+
+    &-dot {
+      border-radius: 50%;
+
+      background-color: var(--color-success);
+
+      box-shadow: 0 0 0 4px colors.color(color-success, 0.15);
+
+      @include mixins.absolute-height(8px);
+      @include mixins.absolute-width(8px);
+    }
+
+    &-text {
+      color: var(--color-text-primary);
+
+      text-transform: uppercase;
+
+      @include mixins.font(14px);
+    }
+  }
+
+  &__price {
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+
+    @include mixins.font(40px, 600);
+  }
+
+  &__note {
+    color: var(--color-text-muted);
+
+    display: flex;
+    align-items: center;
+
+    @include mixins.font(11px);
+  }
+
+  &__kit {
+    display: grid;
+    gap: var(--space-sm);
+
+    &-list {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(14px, 500);
+    }
+
+    &-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: var(--space-xs);
+      align-items: center;
+
+      &-label {
+        color: var(--color-text-secondary);
+
+        @include mixins.font(14px);
+      }
+
+      @include mixins.absolute-height(20px);
+    }
+  }
+
+  @include mixins.absolute-height(500px);
+}

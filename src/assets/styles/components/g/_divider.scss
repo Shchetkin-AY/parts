@@ -1,4 +1,5 @@
-@use "../../colors";
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "g-divider";
 
@@ -9,20 +10,12 @@ $_name: "g-divider";
   flex: 1;
 
   &--horizontal {
-    min-height: 1px;
-    max-height: 1px;
-    height: 1px;
-    min-width: 100%;
-    max-width: 100%;
-    width: 100%;
+    @include mixins.absolute-height(1px);
+    @include mixins.absolute-width(100%);
   }
 
   &--vertical {
-    min-height: 100%;
-    max-height: 100%;
-    height: 100%;
-    min-width: 1px;
-    max-width: 1px;
-    width: 1px;
+    @include mixins.absolute-height(100%);
+    @include mixins.absolute-width(1px);
   }
 }

@@ -5,7 +5,7 @@ $_name: "product-highlight";
 .#{$_name} {
   padding-block: 128px;
 
-  background: colors.$surface-container-low;
+  background: colors.$surface-3;
 
   & > .content-container {
     display: grid;

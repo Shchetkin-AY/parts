@@ -1,5 +1,5 @@
-@use "../../colors";
-@use "../../variables" as *;
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "g-dialog";
 
@@ -19,40 +19,33 @@ $_name: "g-dialog";
   z-index: 50;
 
   &__title {
-    margin: 0;
     padding: 20px;
 
-    font-size: 20px;
-    font-weight: 500;
-    color: colors.$text-primary;
-    line-height: 22px;
+    color: var(--colors-text-primary);
+
     text-align: start;
-    text-decoration: none;
     text-overflow: ellipsis;
-    letter-spacing: -0.6px;
     white-space: nowrap;
 
     overflow: hidden;
 
+    @include mixins.font(20px, 500);
+
     @media screen and (width <= 768px) {
       padding: 15px;
 
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 20px;
+      @include mixins.font(18px, 500);
     }
 
     @media screen and (width <= 420px) {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 16px;
+      @include mixins.font(14px, 500);
     }
   }
 
   &__holder {
-    border-radius: $radius-sm;
+    border-radius: var(--radius-sm);
 
-    background-color: colors.$surface;
+    background-color: var(--color-surface);
 
     display: grid;
 
@@ -77,7 +70,7 @@ $_name: "g-dialog";
   }
 
   &__close {
-    border-radius: $radius-xs;
+    border-radius: var(--radius-xs);
 
     background-color: rgb(255 255 255 / 7%);
 
@@ -95,20 +88,16 @@ $_name: "g-dialog";
 
     cursor: pointer;
 
-    min-height: 40px;
-    max-height: 40px;
-    height: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    width: 40px;
-
     &:hover {
-      background-color: colors.color(text, 0.2);
+      background-color: colors.color(color-text, 0.2);
     }
 
     &:active {
-      background-color: colors.color(text, 0.3);
+      background-color: colors.color(color-text, 0.3);
     }
+
+    @include mixins.absolute-height(40px);
+    @include mixins.absolute-width(40px);
   }
 
   &--mobile {
