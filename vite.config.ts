@@ -99,10 +99,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler',
-        additionalData: `
-        @use "@/assets/styles/colors" as colors;
-        @use "@/assets/styles/variables" as *;
-      `
+        loadPaths: [ resolve(__dirname, 'src/assets/styles') ]
       } as any
     }
   },
