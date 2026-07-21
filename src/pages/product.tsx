@@ -2,9 +2,10 @@ import { type CatalogItem } from '@/utils'
 import { computed, defineComponent, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCatalogStore } from '@/stores/catalog'
-import Accessories from '@/components/accessories'
-import { Breadcrumbs, ProductHero, ProductPurchase, ProductRelated, ProductTabs } from '@/components/single'
+import Accessories from '@/components/accessories/list'
+import { Breadcrumbs, ProductHero, ProductRelated, ProductTabs, Purchase } from '@/components/product'
 import ProductGallery from '@/components/product-gallery'
+import { Page } from '@/components'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -50,29 +51,34 @@ export default defineComponent({
       )
     }
 
-    const renderGallery = () => {
-      const item = currentItem.value
-
-      if (!item) {
-        return null
-      }
-
+    const renderGallery = (item: CatalogItem) => {
       return <ProductGallery value={item.series} />
     }
-    const renderHero = () => {
+    const renderHero = (item: CatalogItem) => {
+      return <ProductHero item={item} />
+    }
+    const renderPurchase = (item: CatalogItem) => {
+      return <Purchase item={item} />
+    }
+
+    const renderHeaderContent = () => {
       const item = currentItem.value
 
-      if (!item) {
-        return null
-      }
-
-      return (
-        <section class="product-page__section product-page__section--hero">
-          <div class="product-page__hero">
-            {renderGallery()}
-            <ProductHero item={item} />
-            <ProductPurchase item={item} />
+      if (item) {
+        return (
+          <div class="product-page__header">
+            {renderGallery(item)}
+            {renderHero(item)}
+            {renderPurchase(item)}
           </div>
+        )
+      }
+    }
+
+    const renderHeader = () => {
+      return (
+        <section class="page__section page__section--contained product-page__section--hero">
+          {renderHeaderContent()}
         </section>
       )
     }
@@ -80,20 +86,18 @@ export default defineComponent({
     const renderTabsSection = () => {
       const item = currentItem.value
 
-      if (!item) {
-        return null
+      if (item) {
+        return (
+          <section class="page__section page__section--contained product-page__section--tabs">
+            <ProductTabs value={item} />
+          </section>
+        )
       }
-
-      return (
-        <section class="product-page__section product-page__section--tabs">
-          <ProductTabs item={item} />
-        </section>
-      )
     }
 
     const renderCatalog = () => {
       return (
-        <section class="product-page__section product-page__section--catalog">
+        <section class="page__section page__section--contained product-page__section--catalog">
           <div class="product-page__catalog">
             <div class="product-page__catalog-products">
               <ProductRelated item={currentItem.value} relatedItems={relatedItems.value} />
@@ -115,7 +119,7 @@ export default defineComponent({
       }
 
       return (
-        <section class="product-page__section product-page__section--breadcrumbs">
+        <section class="page__section page__section--contained product-page__section--breadcrumbs">
           <Breadcrumbs item={item} />
         </section>
       )
@@ -127,12 +131,12 @@ export default defineComponent({
       }
 
       return (
-        <div class="product-page">
+        <Page class="product-page">
           {renderBreadcrumbsSection()}
-          {renderHero()}
+          {renderHeader()}
           {renderTabsSection()}
           {renderCatalog()}
-        </div>
+        </Page>
       )
     }
   }

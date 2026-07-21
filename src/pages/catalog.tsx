@@ -2,6 +2,7 @@ import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem } from '@/utils'
 import { CatalogPagination } from '@/components/catalog-pagination'
+import { Page } from '@/components'
 import Filter from '@/components/filter'
 import ProductCard from '@/components/product-card'
 import { useCatalogStore } from '@/stores/catalog'
@@ -237,14 +238,17 @@ export default defineComponent({
       )
     }
 
-    return () =>
-      <div class="catalog">
-        <section class="catalog__section catalog__section--main">
-          <div class="catalog__layout">
-            {renderFilter()}
-            {renderContent()}
-          </div>
-        </section>
-      </div>
+    return () => {
+      return (
+        <Page class="catalog">
+          <section class="page__section page__section--contained catalog__section--main">
+            <div class="catalog__layout">
+              {renderFilter()}
+              {renderContent()}
+            </div>
+          </section>
+        </Page>
+      )
+    }
   }
 })

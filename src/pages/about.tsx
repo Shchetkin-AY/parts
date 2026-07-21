@@ -1,3 +1,4 @@
+import { Page } from '@/components'
 import { defineComponent } from 'vue'
 
 interface AboutHistoryItem {
@@ -101,7 +102,7 @@ export default defineComponent({
   setup() {
     const renderHero = () => {
       return (
-        <section class="about__section about__section--hero">
+        <section class="page__section about__section about__section--hero">
           <div class="about__hero-media">
             <img
               alt="Крупный план индустриальной ковки"
@@ -141,7 +142,7 @@ export default defineComponent({
     }
     const renderHistory = () => {
       return (
-        <section class="about__section">
+        <section class="page__section about__section">
           <div class="about__history">
             <div class="about__history-main">
               <h2 class="about__title">История совершенства</h2>
@@ -179,7 +180,7 @@ export default defineComponent({
     }
     const renderForging = () => {
       return (
-        <section class="about__section about__section--tone">
+        <section class="page__section about__section about__section--tone">
           <div class="about__forging">
             <div class="about__forging-copy">
               <h2 class="about__title">
@@ -225,7 +226,7 @@ export default defineComponent({
     }
     const renderPrecision = () => {
       return (
-        <section class="about__section">
+        <section class="page__section about__section">
           <div class="about__precision">
             <div class="about__precision-stats">
               {precisionStats.map(renderPrecisionStat)}
@@ -255,7 +256,7 @@ export default defineComponent({
     }
     const renderMaterials = () => {
       return (
-        <section class="about__section about__section--materials">
+        <section class="page__section about__section about__section--materials">
           <div class="about__materials">
             <div class="about__materials-copy">
               <h2 class="about__title">
@@ -287,12 +288,12 @@ export default defineComponent({
     }
 
     return () =>
-      <div class="about">
+      <Page class="about">
         {renderHero()}
         {renderHistory()}
         {renderForging()}
         {renderPrecision()}
         {renderMaterials()}
-      </div>
+      </Page>
   }
 })
