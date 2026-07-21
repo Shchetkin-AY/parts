@@ -1,6 +1,6 @@
 import { Teleport, defineComponent, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { GButton, GIcon } from './g'
+import { GButton, GIcon } from '@/components'
 import { Colors, Icons } from '@/utils'
 
 interface NavigationLink {
@@ -94,8 +94,9 @@ export default defineComponent({
       }
     })
 
-    const renderBrand = () =>
-      <div class="navigation__brand">ISKOR</div>
+    const renderBrand = () => {
+      return <div class="navigation__brand">ISKOR</div>
+    }
 
     const renderLink = ({ label, href, isActive }: NavigationLink) => {
       if (isRouteLink(href)) {
@@ -113,10 +114,13 @@ export default defineComponent({
       }
 
       return (
-        <a class={{
-          navigation__link: true,
-          'navigation__link--active': Boolean(isActive)
-        }} href={href}>
+        <a
+          class={{
+            ['navigation__link']: true,
+            ['navigation__link--active']: Boolean(isActive)
+          }}
+          href={href}
+        >
           {label}
         </a>
       )
@@ -136,17 +140,70 @@ export default defineComponent({
         </div>
       </a>
 
-    const renderActions = () =>
-      <div class="navigation__actions">
-        {renderPhoneIcon()}
-        <div class="navigation__menu" >
+    const renderActions = () => {
+      return (
+        <div class="navigation__actions">
+          {renderPhoneIcon()}
+          <div class="navigation__menu" >
+            <GButton
+              icon={Icons.menu}
+              iconColor={Colors['text-primary']}
+              onClick={openMenu}
+            />
+          </div>
+        </div>
+      )
+    }
+
+    const renderMenuOverlay = () => {
+      return (
+        <div
+          class={{
+            ['navigation__overlay']: true,
+            ['open']: isMenuOpen.value
+          }}
+          onClick={closeMenu}
+        />
+      )
+    }
+    const renderCloseMenuButton = () => {
+      return (
+        <div class="navigation__drawer-header">
           <GButton
-            icon={Icons.menu}
+            icon={Icons.close}
             iconColor={Colors['text-primary']}
-            onClick={openMenu}
+            onClick={closeMenu}
           />
         </div>
-      </div>
+      )
+    }
+    const renderMenuLinks = () => {
+      return links.map(link => {
+        return (
+          <div class="navigation__drawer-item" onClick={closeMenu}>
+            {renderLink(link)}
+          </div>
+        )
+      })
+    }
+    const renderMenu = () => {
+      return (
+        <aside
+          class={{
+            ['navigation__drawer']: true,
+            ['open']: isMenuOpen.value
+          }}
+          role="dialog"
+          aria-modal={true}
+          aria-label="Меню навигации"
+        >
+          {renderCloseMenuButton()}
+          <div class="navigation__drawer-content">
+            {renderMenuLinks()}
+          </div>
+        </aside>
+      )
+    }
 
     const renderMenuDrawer = () => {
       if (!menuMounted.value) {
@@ -155,36 +212,26 @@ export default defineComponent({
 
       return (
         <Teleport to="body">
-          <div class={'navigation__overlay ' + (isMenuOpen.value ? 'open' : '')} onClick={closeMenu} />
-
-          <aside class={'navigation__drawer ' + (isMenuOpen.value ? 'open' : '')} role="dialog" aria-modal={true} aria-label="Меню навигации">
-            <div class="navigation__drawer-header">
-              <GButton
-                icon={Icons.close}
-                iconColor={Colors['text-primary']}
-                onClick={closeMenu}
-              />
-            </div>
-
-            <div class="navigation__drawer-content">
-              {links.map(link =>
-                <div class="navigation__drawer-item" onClick={closeMenu}>
-                  {renderLink(link)}
-                </div>)}
-            </div>
-          </aside>
+          {renderMenuOverlay()}
+          {renderMenu()}
         </Teleport>
       )
     }
 
-    return () =>
-      <nav class="navigation" aria-label="Основная навигация">
-        <div class="navigation__container">
-          {renderBrand()}
-          {renderLinks()}
-          {renderActions()}
-        </div>
-        {renderMenuDrawer()}
-      </nav>
+    return () => {
+      return (
+        <nav
+          class="navigation"
+          aria-label="Основная навигация"
+        >
+          <div class="navigation__container">
+            {renderBrand()}
+            {renderLinks()}
+            {renderActions()}
+          </div>
+          {renderMenuDrawer()}
+        </nav>
+      )
+    }
   }
 })
