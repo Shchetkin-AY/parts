@@ -3,6 +3,8 @@ import { GButton, GDialog } from '@/components/g'
 import Form from '@/components/feedback/form'
 import { ButtonModes, Colors, FeedbackPayload, FeedbackTypes } from '@/utils'
 
+const className = 'feedback'
+
 export default defineComponent({
   name: 'Feedback',
 
@@ -88,7 +90,7 @@ export default defineComponent({
 
     const renderFooter = () => {
       return (
-        <div class={'feedback__dialog-footer'}>
+        <div class={`${className}__dialog-footer`}>
           <GButton
             label={'Закрыть'}
             mode={ButtonModes.flat}
