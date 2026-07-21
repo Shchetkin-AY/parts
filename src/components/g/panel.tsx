@@ -1,4 +1,4 @@
-import { ComponentNames, Icons, Colors, getString } from '@/utils'
+import { Colors, ComponentNames, Icons, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
 import { GIcon } from '@/components'
 
@@ -9,7 +9,7 @@ export const panelProps = {
   },
 
   label: {
-    type: [Number, String] as PropType<string | number>,
+    type: [ Number, String ] as PropType<string | number>,
     default: undefined
   },
 
@@ -29,7 +29,7 @@ export const GPanel = defineComponent({
 
   props: panelProps,
 
-  emits: ['update:modelValue'],
+  emits: [ 'update:modelValue' ],
 
   setup(props, { slots, emit }) {
     const classes = computed<Record<string, boolean>>(() => {
