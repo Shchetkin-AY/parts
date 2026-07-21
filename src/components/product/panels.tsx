@@ -1,0 +1,175 @@
+import { AccessoryItem, type CatalogItem, formatWheelDiameterRange } from '@/utils'
+import { Fragment, PropType, defineComponent, reactive } from 'vue'
+import { GPanel } from '@/components'
+import Item from '@/components/accessories/item'
+import ColorPanel from '@/components/palette/panel'
+
+export const ProductTabs = defineComponent({
+  name: 'ProductTabs',
+
+  props: {
+    value: {
+      type: Object as PropType<CatalogItem>,
+      required: true
+    }
+  },
+
+  setup(props) {
+    const className = 'product-panels'
+
+    const kitItems: AccessoryItem[] = [
+      {
+        id: 1,
+        title: `Суппорт ${props.value.series}`,
+        description: '2 шт.',
+        image: `/images/products/${props.value.series.toLowerCase()}/2.webp`
+      },
+      {
+        id: 2,
+        title: 'Тормозной диск',
+        description: '2 шт.',
+        image: '/images/accessories/disk-alt.webp'
+      },
+      {
+        id: 3,
+        title: 'Тормозные магистрали',
+        description: 'Комплект',
+        image: '/images/accessories/hoses.webp'
+      },
+      {
+        id: 4,
+        title: 'Колодки Savanini',
+        description: 'Комплект',
+        image: '/images/accessories/pads.webp'
+      },
+      {
+        id: 5,
+        title: 'Адаптеры для установки',
+        description: 'Комплект',
+        image: '/images/accessories/adapters.webp'
+      }
+    ]
+
+    const expanded = reactive<Record<string, boolean>>({
+      specs: false,
+      compatibility: false,
+      kit: false,
+      palette: false
+    })
+
+    const renderRow = (label: string, value: string) => {
+      return (
+        <div class={`${className}__specs-row`}>
+          <span class={`${className}__specs-label`}>{label}</span>
+          <span class={`${className}__specs-value`}>{value}</span>
+        </div>
+      )
+    }
+
+    const renderSpecsContent = () => {
+      const rows = [
+        {
+          label: 'Количество поршней, шт.',
+          value: `${props.value.pistonCount}`
+        },
+        {
+          label: 'Диаметр колёс, in',
+          value: formatWheelDiameterRange(props.value.wheelDiameter)
+        },
+        {
+          label: 'Диаметр диска, мм',
+          value: `${props.value.discDiameter}`
+        },
+        {
+          label: 'Габариты суппорта, мм',
+          value: props.value.dimensions
+        },
+        {
+          label: 'Площадь колодок, см',
+          value: props.value.padFrictionArea
+        },
+        {
+          label: 'Площадь поршней, см²',
+          value: `${props.value.pistonArea}`
+        },
+        {
+          label: 'Применимость',
+          value: props.value.application
+        }
+      ]
+
+      return (
+        <div class={`${className}__specs`}>
+          {rows.map(row => renderRow(row.label, row.value))}
+        </div>
+      )
+    }
+
+    const renderCompatibility = () => {
+      const rows = [
+        {
+          label: 'Марка автомобиля',
+          value: props.value.vehicleBrand
+        },
+        {
+          label: 'Модель',
+          value: props.value.vehicleModel
+        },
+        {
+          label: 'Класс совместимости',
+          value: props.value.compatibilityClass
+        },
+        {
+          label: 'Заводской диск, мм',
+          value: props.value.factoryDiscDiameter.toString()
+        }
+      ]
+
+      return (
+        <div class={`${className}__specs`}>
+          {rows.map(row => renderRow(row.label, row.value))}
+        </div>
+      )
+    }
+
+    const renderKit = () => {
+      return (
+        <div class={`${className}__kit`}>
+          {kitItems.map(item => {
+            return <Item value={item}/>
+          })}
+        </div>
+      )
+    }
+
+    const renderPalette = () => {
+      return <ColorPanel />
+    }
+
+    return () => {
+      return (
+        <Fragment>
+          <div class={className} >
+            <div class={`${className}__holder`} >
+              <GPanel v-model={expanded.specs} label="Характеристики" outline>
+                {renderSpecsContent()}
+              </GPanel>
+
+              <GPanel v-model={expanded.compatibility} label="Совместимость" outline>
+                {renderCompatibility()}
+              </GPanel>
+
+              <GPanel v-model={expanded.kit} label="Комплектация" outline>
+                {renderKit()}
+              </GPanel>
+
+              <GPanel v-model={expanded.palette} label="Цветовые решения" outline>
+                {renderPalette()}
+              </GPanel>
+            </div>
+          </div>
+        </Fragment>
+      )
+    }
+  }
+})

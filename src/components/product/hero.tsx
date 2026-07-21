@@ -2,6 +2,7 @@ import { PropType, defineComponent } from 'vue'
 
 import { type CatalogItem, Colors, Icons } from '@/utils'
 import { GIcon } from '@/components/g/icon'
+import { useViewportStore } from '@/stores'
 
 interface Stat {
   label: string
@@ -20,6 +21,10 @@ export const ProductHero = defineComponent({
   },
 
   setup(props) {
+    const viewportStore = useViewportStore()
+
+    const className = 'product-hero'
+
     const stats: Stat[] = [
       {
         label: 'Количество поршней',
@@ -53,9 +58,9 @@ export const ProductHero = defineComponent({
       }
     ]
 
-    const renderInfo = () => {
+    const renderSeries = () => {
       return (
-        <div class="product-page__hero-series">
+        <div class={`${className}__header-series`}>
           {props.item.brand} {props.item.series}
         </div>
       )
@@ -63,57 +68,66 @@ export const ProductHero = defineComponent({
 
     const renderModel = () => {
       return (
-        <h1 class="product-page__hero-title">
+        <h1 class={`${className}__header-model`}>
           {String(props.item.model)}
         </h1>
       )
     }
 
-    const renderDescription = () => {
-      return (
-        <p class="product-page__hero-description">
-          {props.item.description}
-        </p>
-      )
-    }
-
     const renderHeader = () => {
       return (
-        <div class="product-page__hero-header">
-          {renderInfo()}
+        <div class={`${className}__header`}>
+          {renderSeries()}
           {renderModel()}
         </div>
       )
     }
 
-    const renderStatIcon = (icon: Icons) => {
+    const renderDescription = () => {
       return (
-        <GIcon icon={icon} color={Colors.primary} size={40} />
+        <p class={`${className}__description`}>
+          {props.item.description}
+        </p>
+      )
+    }
+
+    const renderStatIcon = (icon: Icons) => {
+      if (viewportStore.size.width > 1400) {
+        return (
+          <GIcon icon={icon} color={Colors.primary} size={40} />
+        )
+      }
+    }
+    const renderStatContent = (label: string, value: string) => {
+      return (
+        <div class={`${className}__stat-content`}>
+          <span class={`${className}__stat-content-value`}>{value}</span>
+          <span class={`${className}__stat-content-label`}>{label}</span>
+        </div>
       )
     }
     const renderStat = (label: string, icon: Icons, value: string) => {
       return (
-        <div class="product-page__hero-stat">
+        <div class={`${className}__stat`}>
           {renderStatIcon(icon)}
-          <div class="product-page__hero-stat-copy">
-            <span class="product-page__hero-stat-value">{value}</span>
-            <span class="product-page__hero-stat-label">{label}</span>
-          </div>
+          {renderStatContent(label, value)}
         </div>
       )
     }
 
     const renderHeroStats = () => {
       return (
-        <div class="product-page__hero-stats">
-          {stats.map(stat => renderStat(stat.label, stat.icon, stat.value))}
+        <div class={`${className}__stats`}>
+          {stats.map(stat => {
+            return renderStat(stat.label, stat.icon, stat.value)
+          })}
         </div>
       )
     }
 
     return () => {
       return (
-        <div class="product-page__hero-content">
+        <div class={className}>
           {renderHeader()}
           {renderDescription()}
           {renderHeroStats()}

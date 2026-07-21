@@ -2,8 +2,6 @@ import { type CatalogItem } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 
-const className = 'breadcrumbs'
-
 export const Breadcrumbs = defineComponent({
   name: 'Breadcrumbs',
 
@@ -15,6 +13,8 @@ export const Breadcrumbs = defineComponent({
   },
 
   setup(props) {
+    const className = 'breadcrumbs'
+
     const renderBreadcrumbItem = (label: string, to?: string) => {
       if (to) {
         return (

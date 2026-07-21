@@ -2,17 +2,18 @@ import { type CatalogItem, Colors, Icons, Sizes, formatUsd } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { GButton } from '@/components/g/button'
 import { GIcon } from '@/components/g/icon'
+import { GDivider } from '../g'
 
 const purchaseKitItems = [
   'Суппорт: 2 шт',
   'Тормозной диск: 2 шт',
   'Колодки: комплект',
-  'Переходники: комплект',
-  'Тормозные шланги: комплект'
+  'Адаптеры: комплект',
+  'Тормозные магистрали: комплект'
 ]
 
-export const ProductPurchase = defineComponent({
-  name: 'ProductPurchase',
+export const Purchase = defineComponent({
+  name: 'Purchase',
 
   props: {
     item: {
@@ -22,15 +23,21 @@ export const ProductPurchase = defineComponent({
   },
 
   setup(props) {
+    const className = 'purchase'
+
     const renderOrderButton = () => {
       return (
-        <GButton label={'Заказать комплект'} color={Colors.primary} size={Sizes.large} />
+        <GButton
+          label={'Заказать комплект'}
+          color={Colors.primary}
+          size={Sizes.large}
+        />
       )
     }
 
     const renderPurchaseNote = () => {
       return (
-        <p class="product-page__purchase-note">
+        <p class={`${className}__note`}>
           Финальная стоимость зависит конфигурации.
         </p>
       )
@@ -38,42 +45,52 @@ export const ProductPurchase = defineComponent({
 
     const renderPurchaseAvailability = () => {
       return (
-        <div class="product-page__purchase-availability">
-          <span class="product-page__purchase-dot" />
-          <span class="product-page__purchase-availability-text">Под заказ</span>
+        <div class={`${className}__availability`}>
+          <span class={`${className}__availability-dot`} />
+          <span class={`${className}__availability-text`}>Под заказ</span>
         </div>
       )
     }
 
     const renderPurchasePrice = () => {
       return (
-        <div class="product-page__purchase-price">
+        <div class={`${className}__price`}>
           {formatUsd(props.item.priceUsd)}
         </div>
       )
     }
 
+    const renderKitItemIcon = () => {
+      return <GIcon icon={Icons['check-circle']} color={Colors.primary} size={20} />
+    }
+    const renderKitItemLabel = (label: string) => {
+      return <span class={`${className}__kit-item-label`}>{label}</span>
+    }
     const renderKitItem = (label: string) => {
       return (
-        <div class="product-page__kit-item">
-          <GIcon icon={Icons['check-circle']} color={Colors.primary} size={20} />
-          <span class="product-page__kit-item-label">{label}</span>
+        <div class={`${className}__kit-item`}>
+          {renderKitItemIcon()}
+          {renderKitItemLabel(label)}
         </div>
       )
     }
 
     const renderKitList = () => {
       return (
-        <div class="product-page__kit-list">
+        <div class={`${className}__kit-list`}>
           {purchaseKitItems.map(item => renderKitItem(item))}
         </div>
       )
     }
 
+    const renderDivider = () => {
+      return <GDivider />
+    }
+
     const renderPurchaseKit = () => {
       return (
-        <div class="product-page__purchase-kit">
-          <div class="product-page__purchase-kit-title">В комплект входит</div>
+        <div class={`${className}__kit`}>
+          <div class={`${className}__kit-title`}>В комплект входит</div>
           {renderKitList()}
         </div>
       )
@@ -81,14 +98,12 @@ export const ProductPurchase = defineComponent({
 
     return () => {
       return (
-        <aside class="product-page__purchase">
+        <aside class={className}>
           {renderPurchaseAvailability()}
           {renderPurchasePrice()}
           {renderOrderButton()}
           {renderPurchaseNote()}
-
-          <div class="product-page__purchase-divider" />
-
+          {renderDivider()}
           {renderPurchaseKit()}
         </aside>
       )
