@@ -20,5 +20,7 @@ export enum Icons {
   'wheel-diameter' = 'wheel-diameter',
   ui = 'ui',
   piston = 'piston',
-  wheel = 'wheel'
+  wheel = 'wheel',
+  'arrow-up' = 'arrow-up',
+  'arrow-down' = 'arrow-down'
 }

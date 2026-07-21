@@ -8,5 +8,6 @@ export enum ComponentNames {
   overlay = 'g-overlay',
   select = 'g-select',
   'text-area' = 'g-text-area',
-  'text-field' = 'g-text-field'
+  'text-field' = 'g-text-field',
+  panel = 'g-panel'
 }
