@@ -6,12 +6,15 @@ import Accessories from '@/components/accessories/list'
 import { Breadcrumbs, ProductHero, ProductRelated, ProductTabs, Purchase } from '@/components/product'
 import ProductGallery from '@/components/product-gallery'
 import { Page } from '@/components'
+import { useViewportStore } from '@/stores'
 
 export default defineComponent({
   name: 'ProductPage',
 
   setup() {
     const route = useRoute()
+
+    const viewportStore = useViewportStore()
     const catalogStore = useCatalogStore()
 
     onBeforeMount(() => {
@@ -33,12 +36,20 @@ export default defineComponent({
 
     const relatedItems = computed(() => {
       const item = currentItem.value
-
       if (!item) {
         return []
       }
 
-      return catalogStore.getRelatedItems(item, 4)
+      let itemsCount = 4
+
+      if (viewportStore.size.width < 1520) {
+        itemsCount = 3
+      }
+      if (viewportStore.size.width < 1100) {
+        itemsCount = 2
+      }
+
+      return catalogStore.getRelatedItems(item, itemsCount)
     })
 
     const renderEmptyState = () => {
@@ -61,38 +72,30 @@ export default defineComponent({
       return <Purchase item={item} />
     }
 
-    const renderHeaderContent = () => {
+    const renderHeroProductSection = () => {
       const item = currentItem.value
 
-      if (item) {
-        return (
-          <div class="product-page__header">
-            {renderGallery(item)}
-            {renderHero(item)}
+      if (!item) {
+        return null
+      }
+
+      return (
+        <section class="page__section page__section--contained">
+          <div class="product-page__hero-product">
+            <div class="product-page__hero-main">
+              <Breadcrumbs item={item} />
+              <div class="product-page__header">
+                {renderGallery(item)}
+                {renderHero(item)}
+              </div>
+              <div class="product-page__section--tabs">
+                <ProductTabs value={item} />
+              </div>
+            </div>
             {renderPurchase(item)}
           </div>
-        )
-      }
-    }
-
-    const renderHeader = () => {
-      return (
-        <section class="page__section page__section--contained product-page__section--hero">
-          {renderHeaderContent()}
         </section>
       )
-    }
-
-    const renderTabsSection = () => {
-      const item = currentItem.value
-
-      if (item) {
-        return (
-          <section class="page__section page__section--contained product-page__section--tabs">
-            <ProductTabs value={item} />
-          </section>
-        )
-      }
     }
 
     const renderCatalog = () => {
@@ -111,20 +114,6 @@ export default defineComponent({
       )
     }
 
-    const renderBreadcrumbsSection = () => {
-      const item = currentItem.value
-
-      if (!item) {
-        return null
-      }
-
-      return (
-        <section class="page__section page__section--contained product-page__section--breadcrumbs">
-          <Breadcrumbs item={item} />
-        </section>
-      )
-    }
-
     return () => {
       if (!currentItem.value) {
         return renderEmptyState()
@@ -132,9 +121,7 @@ export default defineComponent({
 
       return (
         <Page class="product-page">
-          {renderBreadcrumbsSection()}
-          {renderHeader()}
-          {renderTabsSection()}
+          {renderHeroProductSection()}
           {renderCatalog()}
         </Page>
       )

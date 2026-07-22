@@ -10,14 +10,20 @@ $_name: "product-page";
 
   &__header {
     display: grid;
-    grid-template-columns: 540px 1fr minmax(0, 400px);
+    grid-template-columns: repeat(2, minmax(0, 540px));
     gap: 20px;
     align-items: start;
 
     min-height: 500px;
 
-    @media (width <= 1280px) {
+    @media (width <= 1320px) {
       grid-template-columns: 1fr;
+    }
+
+    @media (width <= 768px) {
+      > *:last-child {
+        order: -1;
+      }
     }
   }
 
@@ -33,25 +39,60 @@ $_name: "product-page";
     width: min(100%, var(--layout-width));
   }
 
-  &__catalog {
+  &__hero-main {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 20px;
-    align-items: stretch;
+    gap: var(--page-section-gap);
+
+    min-width: 0;
   }
 
-  @media (width <= 1280px) {
-    &__related-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  &__hero-product {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 400px);
+    gap: 20px;
+    align-items: start;
+
+    .purchase {
+      margin-top: 48px;
+
+      position: sticky;
+      top: 128px;
+
+      z-index: 1;
+    }
+
+    @media (width <= 900px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width <= 768px) {
+      grid-template-columns: 1fr;
+
+      .purchase {
+        margin-top: 0;
+
+        position: static;
+      }
+    }
+  }
+
+  &__catalog {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 400px);
+    gap: 20px;
+    align-items: stretch;
+
+    @media (width <= 900px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width <= 768px) {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (width <= 820px) {
     &__kit-panel {
-      grid-template-columns: 1fr;
-    }
-
-    &__related-grid {
       grid-template-columns: 1fr;
     }
 

@@ -116,13 +116,15 @@ export const ProductHero = defineComponent({
     }
 
     const renderHeroStats = () => {
-      return (
-        <div class={`${className}__stats`}>
-          {stats.map(stat => {
-            return renderStat(stat.label, stat.icon, stat.value)
-          })}
-        </div>
-      )
+      if (viewportStore.size.width > 1320) {
+        return (
+          <div class={`${className}__stats`}>
+            {stats.map(stat => {
+              return renderStat(stat.label, stat.icon, stat.value)
+            })}
+          </div>
+        )
+      }
     }
 
     return () => {

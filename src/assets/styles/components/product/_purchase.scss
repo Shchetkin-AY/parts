@@ -18,6 +18,8 @@ $_name: "purchase";
   gap: var(--space-md);
   align-self: start;
 
+  min-height: 400px;
+
   &__availability {
     display: flex;
     gap: var(--space-sm);
@@ -90,5 +92,7 @@ $_name: "purchase";
     }
   }
 
-  @include mixins.absolute-height(500px);
+  @media (width <= 1024px) {
+    min-width: 0;
+  }
 }

@@ -7,9 +7,9 @@ $_name: "product-gallery";
   grid-template-columns: auto 1fr;
   gap: 16px;
 
-  min-height: 500px;
-  max-height: 500px;
-  height: 500px;
+  min-height: 458px;
+  max-height: 458px;
+  height: 458px;
 
   &__main {
     padding: 16px;
@@ -29,6 +29,10 @@ $_name: "product-gallery";
     position: relative;
 
     overflow: hidden;
+
+    min-height: 458px;
+    max-height: 458px;
+    height: 458px;
 
     &-image {
       height: clamp(250px, 15vw, 180px);
