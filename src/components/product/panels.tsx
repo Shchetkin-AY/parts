@@ -28,7 +28,7 @@ export const ProductTabs = defineComponent({
         id: 2,
         title: 'Тормозной диск',
         description: '2 шт.',
-        image: '/images/accessories/disk-alt.webp'
+        image: '/images/accessories/disk.webp'
       },
       {
         id: 3,
