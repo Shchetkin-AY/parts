@@ -1,4 +1,4 @@
-@use "./colors";
+@use "colors";
 @use "./variables" as *;
 
 $_name: "systems";
@@ -7,12 +7,12 @@ $_name: "systems";
   display: grid;
   justify-items: center;
 
-  width: 100%;
-
   &-content {
     display: grid;
     gap: 20px;
     align-items: center;
+
+    min-width: 100%;
   }
 
   &__title {
@@ -30,7 +30,7 @@ $_name: "systems";
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 
-    width: min(100%, var(--container-width));
+    width: min(100%, var(--layout-width));
 
     @media (width <= 1100px) {
       grid-template-columns: 1fr;
