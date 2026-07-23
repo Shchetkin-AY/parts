@@ -24,6 +24,6 @@ export interface CatalogItem {
   vehicleBrand: string
   vehicleModel: string
   factoryDiscDiameter: number
-  dataStatus: string
   description: string
+  compatibleCount: number
 }

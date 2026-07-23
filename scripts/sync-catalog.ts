@@ -53,8 +53,8 @@ const CATALOG_HEADERS = [
   'vehicleBrand',
   'vehicleModel',
   'factoryDiscDiameter',
-  'dataStatus',
-  'description'
+  'description',
+  'compatibleCount'
 ] as const
 
 type CatalogHeader = typeof CATALOG_HEADERS[number]

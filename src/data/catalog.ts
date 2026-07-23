@@ -29,8 +29,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 213,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный 4-поршневой суппорт для городских автомобилей. Улучшает отклик педали и стабильность торможения при ежедневной эксплуатации."
+    "description": "Компактный 4-поршневой суппорт для городских автомобилей. Улучшает отклик педали и стабильность торможения при ежедневной эксплуатации.",
+    "compatibleCount": "0"
   },
   {
     "id": 2,
@@ -58,8 +58,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 240,
-    "dataStatus": "По тех. параметрам",
-    "description": "Легкий 4-поршневой тормозной комплект для компактных автомобилей с акцентом на управляемость и комфорт."
+    "description": "Легкий 4-поршневой тормозной комплект для компактных автомобилей с акцентом на управляемость и комфорт.",
+    "compatibleCount": "0"
   },
   {
     "id": 3,
@@ -87,8 +87,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 260,
-    "dataStatus": "По тех. параметрам",
-    "description": "Легкий 4-поршневой тормозной комплект для компактных автомобилей с акцентом на управляемость и комфорт."
+    "description": "Легкий 4-поршневой тормозной комплект для компактных автомобилей с акцентом на управляемость и комфорт.",
+    "compatibleCount": "3"
   },
   {
     "id": 4,
@@ -116,8 +116,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "HONDA",
     "vehicleModel": "Fit GE8",
     "factoryDiscDiameter": 282,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "6-поршневой суппорт для мощных автомобилей. Обеспечивает высокую стабильность торможения и контроль на скорости."
+    "description": "6-поршневой суппорт для мощных автомобилей. Обеспечивает высокую стабильность торможения и контроль на скорости.",
+    "compatibleCount": "124"
   },
   {
     "id": 5,
@@ -145,8 +145,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "HONDA",
     "vehicleModel": "Fit GE8",
     "factoryDiscDiameter": 282,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "4-поршневая система из кованого алюминия с балансом между комфортом, ресурсом и эффективностью."
+    "description": "4-поршневая система из кованого алюминия с балансом между комфортом, ресурсом и эффективностью.",
+    "compatibleCount": "11"
   },
   {
     "id": 6,
@@ -174,8 +174,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 282,
-    "dataStatus": "По тех. параметрам",
-    "description": "Универсальный performance-суппорт для ежедневной езды и динамичного вождения."
+    "description": "Универсальный performance-суппорт для ежедневной езды и динамичного вождения.",
+    "compatibleCount": "12"
   },
   {
     "id": 7,
@@ -203,8 +203,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "FORD",
     "vehicleModel": "Mondeo 2017",
     "factoryDiscDiameter": 300,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "4-поршневая система из кованого алюминия с балансом между комфортом, ресурсом и эффективностью."
+    "description": "4-поршневая система из кованого алюминия с балансом между комфортом, ресурсом и эффективностью.",
+    "compatibleCount": "108"
   },
   {
     "id": 8,
@@ -232,8 +232,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Универсальный performance-суппорт для ежедневной езды и динамичного вождения."
+    "description": "Универсальный performance-суппорт для ежедневной езды и динамичного вождения.",
+    "compatibleCount": "127"
   },
   {
     "id": 9,
@@ -261,8 +261,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Кованый 4-поршневой суппорт с высокой жесткостью корпуса и точным распределением усилия."
+    "description": "Кованый 4-поршневой суппорт с высокой жесткостью корпуса и точным распределением усилия.",
+    "compatibleCount": "167"
   },
   {
     "id": 10,
@@ -290,8 +290,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Высокопроизводительный 4-поршневой суппорт с анодированным покрытием и стабильной работой под нагрузкой."
+    "description": "Высокопроизводительный 4-поршневой суппорт с анодированным покрытием и стабильной работой под нагрузкой.",
+    "compatibleCount": "10"
   },
   {
     "id": 11,
@@ -319,8 +319,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "TOYOTA",
     "vehicleModel": "86",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом."
+    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом.",
+    "compatibleCount": "87"
   },
   {
     "id": 12,
@@ -348,8 +348,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "SUBARU",
     "vehicleModel": "BRZ",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления."
+    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления.",
+    "compatibleCount": "171"
   },
   {
     "id": 13,
@@ -377,8 +377,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "TOYOTA",
     "vehicleModel": "86",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах."
+    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах.",
+    "compatibleCount": "160"
   },
   {
     "id": 14,
@@ -406,8 +406,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактная performance-система с улучшенным охлаждением и малым весом."
+    "description": "Компактная performance-система с улучшенным охлаждением и малым весом.",
+    "compatibleCount": "0"
   },
   {
     "id": 15,
@@ -435,8 +435,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Тормозной комплект с акцентом на стабильность, ресурс и уверенное замедление."
+    "description": "Тормозной комплект с акцентом на стабильность, ресурс и уверенное замедление.",
+    "compatibleCount": "0"
   },
   {
     "id": 16,
@@ -464,8 +464,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Обновленная версия 6-поршневой системы с улучшенным охлаждением и стабильностью при интенсивном торможении."
+    "description": "Обновленная версия 6-поршневой системы с улучшенным охлаждением и стабильностью при интенсивном торможении.",
+    "compatibleCount": "1"
   },
   {
     "id": 17,
@@ -493,8 +493,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "TOYOTA",
     "vehicleModel": "86",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды."
+    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды.",
+    "compatibleCount": "2"
   },
   {
     "id": 18,
@@ -522,8 +522,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения."
+    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения.",
+    "compatibleCount": "4"
   },
   {
     "id": 19,
@@ -551,8 +551,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 344,
-    "dataStatus": "По тех. параметрам",
-    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения."
+    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения.",
+    "compatibleCount": "4"
   },
   {
     "id": 20,
@@ -580,8 +580,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "5 Series",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом."
+    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом.",
+    "compatibleCount": "246"
   },
   {
     "id": 21,
@@ -609,8 +609,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "AUDI",
     "vehicleModel": "A6",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом."
+    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом.",
+    "compatibleCount": "246"
   },
   {
     "id": 22,
@@ -638,8 +638,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "ZEEKR",
     "vehicleModel": "1",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом."
+    "description": "Флагманский 6-поршневой суппорт из кованого алюминия с высокой жесткостью и эффективным теплоотводом.",
+    "compatibleCount": "246"
   },
   {
     "id": 23,
@@ -667,8 +667,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "HONDA",
     "vehicleModel": "Accord",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления."
+    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления.",
+    "compatibleCount": "254"
   },
   {
     "id": 24,
@@ -696,8 +696,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "MERCEDES",
     "vehicleModel": "C-Class",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления."
+    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления.",
+    "compatibleCount": "254"
   },
   {
     "id": 25,
@@ -725,8 +725,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "3 Series",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления."
+    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления.",
+    "compatibleCount": "254"
   },
   {
     "id": 26,
@@ -754,8 +754,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах."
+    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах.",
+    "compatibleCount": "203"
   },
   {
     "id": 27,
@@ -783,8 +783,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "X5",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактная performance-система с улучшенным охлаждением и малым весом."
+    "description": "Компактная performance-система с улучшенным охлаждением и малым весом.",
+    "compatibleCount": "0"
   },
   {
     "id": 28,
@@ -812,8 +812,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "AUDI",
     "vehicleModel": "Q7",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Тормозной комплект с акцентом на стабильность, ресурс и уверенное замедление."
+    "description": "Тормозной комплект с акцентом на стабильность, ресурс и уверенное замедление.",
+    "compatibleCount": "0"
   },
   {
     "id": 29,
@@ -841,8 +841,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды."
+    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды.",
+    "compatibleCount": "0"
   },
   {
     "id": 30,
@@ -870,8 +870,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Производительный 6-поршневой суппорт с увеличенной площадью контакта колодок и стабильной работой под нагрузкой."
+    "description": "Производительный 6-поршневой суппорт с увеличенной площадью контакта колодок и стабильной работой под нагрузкой.",
+    "compatibleCount": "2"
   },
   {
     "id": 31,
@@ -899,8 +899,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения."
+    "description": "Легкий спортивный суппорт для ежедневной эксплуатации и активного стиля вождения.",
+    "compatibleCount": "0"
   },
   {
     "id": 32,
@@ -928,8 +928,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "5 Series",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Высокопроизводительный 4-поршневой суппорт с анодированным покрытием и стабильной работой под нагрузкой."
+    "description": "Высокопроизводительный 4-поршневой суппорт с анодированным покрытием и стабильной работой под нагрузкой.",
+    "compatibleCount": "115"
   },
   {
     "id": 33,
@@ -957,8 +957,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей."
+    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей.",
+    "compatibleCount": "18"
   },
   {
     "id": 34,
@@ -986,8 +986,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "PORSCHE",
     "vehicleModel": "Cayenne Turbo",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Универсальный тормозной комплект для городского и спортивного использования."
+    "description": "Универсальный тормозной комплект для городского и спортивного использования.",
+    "compatibleCount": "1"
   },
   {
     "id": 35,
@@ -1015,8 +1015,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "X5M",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей."
+    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей.",
+    "compatibleCount": "35"
   },
   {
     "id": 36,
@@ -1044,8 +1044,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления."
+    "description": "Производительная 6-поршневая система для street и track day использования с равномерным распределением давления.",
+    "compatibleCount": "222"
   },
   {
     "id": 37,
@@ -1073,8 +1073,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах."
+    "description": "Усиленный 6-поршневой суппорт с anodized + vacuum coating и стабильной работой при высоких температурах.",
+    "compatibleCount": "140"
   },
   {
     "id": 38,
@@ -1102,8 +1102,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Performance-система для автомобилей повышенной мощности с улучшенной модуляцией тормозного усилия."
+    "description": "Performance-система для автомобилей повышенной мощности с улучшенной модуляцией тормозного усилия.",
+    "compatibleCount": "234"
   },
   {
     "id": 39,
@@ -1131,8 +1131,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды."
+    "description": "6-поршневая система для уверенного торможения на высоких скоростях. Подходит для активной городской и трассовой езды.",
+    "compatibleCount": "0"
   },
   {
     "id": 40,
@@ -1160,8 +1160,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Производительный 6-поршневой суппорт с увеличенной площадью контакта колодок и стабильной работой под нагрузкой."
+    "description": "Производительный 6-поршневой суппорт с увеличенной площадью контакта колодок и стабильной работой под нагрузкой.",
+    "compatibleCount": "1"
   },
   {
     "id": 41,
@@ -1189,8 +1189,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "PORSCHE",
     "vehicleModel": "Panamera",
     "factoryDiscDiameter": 400,
-    "dataStatus": "По тех. параметрам",
-    "description": "Performance-система для автомобилей повышенной мощности с улучшенной модуляцией тормозного усилия."
+    "description": "Performance-система для автомобилей повышенной мощности с улучшенной модуляцией тормозного усилия.",
+    "compatibleCount": "213"
   },
   {
     "id": 42,
@@ -1218,8 +1218,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "7 Series",
     "factoryDiscDiameter": 400,
-    "dataStatus": "По тех. параметрам",
-    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей."
+    "description": "Высокопроизводительная тормозная система для тяжелых и мощных автомобилей.",
+    "compatibleCount": "76"
   },
   {
     "id": 43,
@@ -1247,8 +1247,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "AUDI",
     "vehicleModel": "RS Q8",
     "factoryDiscDiameter": 400,
-    "dataStatus": "По тех. параметрам",
-    "description": "Универсальный тормозной комплект для городского и спортивного использования."
+    "description": "Универсальный тормозной комплект для городского и спортивного использования.",
+    "compatibleCount": "20"
   },
   {
     "id": 44,
@@ -1276,8 +1276,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 282,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "0"
   },
   {
     "id": 45,
@@ -1305,8 +1305,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный rear-caliper с линейным тормозным усилием и высокой устойчивостью к перегреву."
+    "description": "Компактный rear-caliper с линейным тормозным усилием и высокой устойчивостью к перегреву.",
+    "compatibleCount": "4"
   },
   {
     "id": 46,
@@ -1334,8 +1334,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Спортивный тормозной комплект с быстрым откликом педали и устойчивостью к fade-эффекту."
+    "description": "Спортивный тормозной комплект с быстрым откликом педали и устойчивостью к fade-эффекту.",
+    "compatibleCount": "1"
   },
   {
     "id": 47,
@@ -1363,8 +1363,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "4"
   },
   {
     "id": 48,
@@ -1392,8 +1392,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный задний 4-поршневой суппорт из forged aluminum с улучшенным балансом торможения."
+    "description": "Компактный задний 4-поршневой суппорт из forged aluminum с улучшенным балансом торможения.",
+    "compatibleCount": "46"
   },
   {
     "id": 49,
@@ -1421,8 +1421,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BYD",
     "vehicleModel": "Dolphin 2021",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции."
+    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции.",
+    "compatibleCount": "55"
   },
   {
     "id": 50,
@@ -1450,8 +1450,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний кованый суппорт с малым весом и высокой жесткостью. Подходит для дорожного и спортивного применения."
+    "description": "Задний кованый суппорт с малым весом и высокой жесткостью. Подходит для дорожного и спортивного применения.",
+    "compatibleCount": "30"
   },
   {
     "id": 51,
@@ -1479,8 +1479,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 330,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный задний суппорт для производительных тормозных конфигураций и увеличенных дисков."
+    "description": "Усиленный задний суппорт для производительных тормозных конфигураций и увеличенных дисков.",
+    "compatibleCount": "2"
   },
   {
     "id": 52,
@@ -1508,8 +1508,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "0"
   },
   {
     "id": 53,
@@ -1537,8 +1537,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "46"
   },
   {
     "id": 54,
@@ -1566,8 +1566,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "46"
   },
   {
     "id": 55,
@@ -1595,8 +1595,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции."
+    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции.",
+    "compatibleCount": "231"
   },
   {
     "id": 56,
@@ -1624,8 +1624,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний forged-aluminum суппорт для работы с увеличенными дисками и улучшенным тормозным балансом."
+    "description": "Задний forged-aluminum суппорт для работы с увеличенными дисками и улучшенным тормозным балансом.",
+    "compatibleCount": "106"
   },
   {
     "id": 57,
@@ -1653,8 +1653,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "DEEPAL",
     "vehicleModel": "S07 2023",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "106"
   },
   {
     "id": 58,
@@ -1682,8 +1682,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции."
+    "description": "Комплект performance-класса с увеличенной эффективностью охлаждения и высокой жесткостью конструкции.",
+    "compatibleCount": "197"
   },
   {
     "id": 59,
@@ -1711,8 +1711,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний forged-aluminum суппорт для работы с увеличенными дисками и улучшенным тормозным балансом."
+    "description": "Задний forged-aluminum суппорт для работы с увеличенными дисками и улучшенным тормозным балансом.",
+    "compatibleCount": "69"
   },
   {
     "id": 60,
@@ -1740,8 +1740,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "TOYOTA",
     "vehicleModel": "Highlander 2024",
     "factoryDiscDiameter": 380,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "69"
   },
   {
     "id": 61,
@@ -1769,8 +1769,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный задний суппорт для производительных тормозных конфигураций и увеличенных дисков."
+    "description": "Усиленный задний суппорт для производительных тормозных конфигураций и увеличенных дисков.",
+    "compatibleCount": "1"
   },
   {
     "id": 62,
@@ -1798,8 +1798,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью."
+    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью.",
+    "compatibleCount": "12"
   },
   {
     "id": 63,
@@ -1827,8 +1827,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "M2/M3",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью."
+    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью.",
+    "compatibleCount": "13"
   },
   {
     "id": 64,
@@ -1856,8 +1856,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "AUDI",
     "vehicleModel": "RS4",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью."
+    "description": "Задний тормозной комплект с оптимизированным балансом усилия и улучшенной стабильностью.",
+    "compatibleCount": "8"
   },
   {
     "id": 65,
@@ -1885,8 +1885,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "BMW",
     "vehicleModel": "M3/M4",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков."
+    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков.",
+    "compatibleCount": "23"
   },
   {
     "id": 66,
@@ -1914,8 +1914,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "AUDI",
     "vehicleModel": "RS6/RS7",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков."
+    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков.",
+    "compatibleCount": "21"
   },
   {
     "id": 67,
@@ -1943,8 +1943,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "PORSCHE",
     "vehicleModel": "911 Turbo",
     "factoryDiscDiameter": 400,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков."
+    "description": "Усиленный rear brake kit для мощных автомобилей и увеличенных тормозных дисков.",
+    "compatibleCount": "13"
   },
   {
     "id": 68,
@@ -1972,8 +1972,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения."
+    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения.",
+    "compatibleCount": "0"
   },
   {
     "id": 69,
@@ -2001,8 +2001,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 300,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "0"
   },
   {
     "id": 70,
@@ -2030,8 +2030,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения."
+    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения.",
+    "compatibleCount": "4"
   },
   {
     "id": 71,
@@ -2059,8 +2059,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 332,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "4"
   },
   {
     "id": 72,
@@ -2088,8 +2088,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Performance rear-kit с высокой устойчивостью к перегреву и стабильной работой под нагрузкой."
+    "description": "Performance rear-kit с высокой устойчивостью к перегреву и стабильной работой под нагрузкой.",
+    "compatibleCount": "2"
   },
   {
     "id": 73,
@@ -2117,8 +2117,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения."
+    "description": "Компактный rear-kit для производительных конфигураций с повышенной точностью торможения.",
+    "compatibleCount": "4"
   },
   {
     "id": 74,
@@ -2146,8 +2146,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "2"
   },
   {
     "id": 75,
@@ -2175,8 +2175,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 355,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "4"
   },
   {
     "id": 76,
@@ -2204,8 +2204,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Performance rear-kit с высокой устойчивостью к перегреву и стабильной работой под нагрузкой."
+    "description": "Performance rear-kit с высокой устойчивостью к перегреву и стабильной работой под нагрузкой.",
+    "compatibleCount": "7"
   },
   {
     "id": 77,
@@ -2233,8 +2233,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой."
+    "description": "Комплект передних и задних тормозных суппортов Savanini с улучшенным балансом торможения, высокой жесткостью и performance-настройкой.",
+    "compatibleCount": "7"
   },
   {
     "id": 78,
@@ -2262,8 +2262,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "TOYOTA",
     "vehicleModel": "86",
     "factoryDiscDiameter": 332,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении."
+    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении.",
+    "compatibleCount": "6"
   },
   {
     "id": 79,
@@ -2291,8 +2291,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "SUBARU",
     "vehicleModel": "BRZ",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении."
+    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении.",
+    "compatibleCount": "6"
   },
   {
     "id": 80,
@@ -2320,8 +2320,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "LI",
     "vehicleModel": "I6/N6",
     "factoryDiscDiameter": 355,
-    "dataStatus": "Подтверждено сайтом (HTML)",
-    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью."
+    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью.",
+    "compatibleCount": "11"
   },
   {
     "id": 81,
@@ -2349,8 +2349,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении."
+    "description": "Усиленная версия N600 с улучшенной жесткостью и стабильностью при интенсивном торможении.",
+    "compatibleCount": "1"
   },
   {
     "id": 82,
@@ -2378,8 +2378,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "",
     "vehicleModel": "",
     "factoryDiscDiameter": 380,
-    "dataStatus": "По тех. параметрам",
-    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью."
+    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью.",
+    "compatibleCount": "17"
   },
   {
     "id": 83,
@@ -2407,8 +2407,8 @@ export const catalog: CatalogItem[] = [
     "vehicleBrand": "FERRARI",
     "vehicleModel": "SF90 STRADALE",
     "factoryDiscDiameter": 400,
-    "dataStatus": "Подтверждено PDF",
-    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью."
+    "description": "Надежная 6-поршневая система с хорошим балансом между комфортом и производительностью.",
+    "compatibleCount": "6"
   }
 ]
 export type { CatalogItem }
