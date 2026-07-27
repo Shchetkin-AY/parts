@@ -108,11 +108,17 @@ export const ProductTabs = defineComponent({
 
     const catalogStore = useCatalogStore()
 
-    const compatibilityRows = computed<{ label: string; value: string }[]>(() => {
+    const compatibilityRows = computed<{ label: string;
+      value: string }[]>(() => {
       const records = catalogStore.getCompatibilityByGoodsId(props.value.id)
 
       if (records.length === 0) {
-        return [ { label: 'Информация отсутствует', value: '' } ]
+        return [
+          {
+            label: 'Информация отсутствует',
+            value: ''
+          }
+        ]
       }
 
       return records.map((record: CompatibilityItem) => ({
