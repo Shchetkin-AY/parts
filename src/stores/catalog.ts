@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogItem, type CompatibilityItem, type SelectOption } from '@/utils'
+import { CatalogFilterField, CatalogFilterParams, CatalogItem, CompatibilityItem, SelectOption } from '@/utils'
 
 const normalize = (value: number | string): string => {
   return String(value).trim()
@@ -110,6 +110,7 @@ const getItemFieldValue = (item: CatalogItem, field: CatalogFilterField): string
 
 interface CompatibilityIndices {
   brands: string[]
+  allModels: string[]
   modelsByBrand: Map<string, string[]>
   goodsIdsByBrandModel: Map<string, Set<number>>
   goodsIdsByBrand: Map<string, Set<number>>
@@ -118,6 +119,7 @@ interface CompatibilityIndices {
 
 const buildCompatibilityIndices = (items: readonly CompatibilityItem[]): CompatibilityIndices => {
   const brandsSet = new Set<string>()
+  const allModelsSet = new Set<string>()
   const modelsByBrand = new Map<string, Set<string>>()
   const goodsIdsByBrandModel = new Map<string, Set<number>>()
   const goodsIdsByBrand = new Map<string, Set<number>>()
@@ -135,6 +137,9 @@ const buildCompatibilityIndices = (items: readonly CompatibilityItem[]): Compati
 
     // brands
     brandsSet.add(brand)
+
+    // allModels
+    allModelsSet.add(model)
 
     // byBrand
     if (!goodsIdsByBrand.has(brand)) {
@@ -163,6 +168,7 @@ const buildCompatibilityIndices = (items: readonly CompatibilityItem[]): Compati
 
   return {
     brands: sortStrings([ ...brandsSet ]),
+    allModels: sortStrings([ ...allModelsSet ]),
     modelsByBrand: new Map(
       [ ...modelsByBrand ].map(([ brand, models ]) => [ brand, sortStrings([ ...models ]) ])
     ),
@@ -325,13 +331,16 @@ export const useCatalogStore = defineStore('catalog', () => {
     }
 
     if (field === CatalogFilterField.model) {
-      if (!markParam) {
-        return []
+      if (markParam) {
+        const models = compatibilityIndices.value.modelsByBrand.get(markParam) ?? []
+
+        return models.map(model => ({
+          label: getOptionLabel(field, model),
+          value: model
+        }))
       }
 
-      const models = compatibilityIndices.value.modelsByBrand.get(markParam) ?? []
-
-      return models.map(model => ({
+      return compatibilityIndices.value.allModels.map(model => ({
         label: getOptionLabel(field, model),
         value: model
       }))
