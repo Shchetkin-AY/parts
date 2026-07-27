@@ -29,10 +29,7 @@ const SHEET_ID = readEnv(
   '1TwtaO56Hk7SRlFU27Ahpc6aMuFcJ-gqMjriW1FMK_JE'
 )
 
-const API_KEY = readEnv(
-  'GOOGLE_SHEETS_API_KEY',
-  'AIzaSyDTJB_VoqtrpXBQcY-9G7keK4x33OZ3FKc'
-)
+const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', '')
 
 const VALUE_RENDER_OPTION = 'FORMATTED_VALUE'
 
