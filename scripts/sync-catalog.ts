@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import type {
   CatalogItem,
   CompatibilityItem
-} from '../src/utils/types/catalog'
+} from '../src/utils/interfaces/catalog'
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, '..')
