@@ -1,3 +1,5 @@
+@use "mixins" as mixins;
+
 $_name: "page";
 
 .#{$_name} {
@@ -11,7 +13,6 @@ $_name: "page";
     [content-end] minmax(var(--page-inline), 1fr)
     [full-end];
 
-  width: 100%;
   row-gap: var(--page-section-gap);
 
   &__section {
@@ -34,6 +35,8 @@ $_name: "page";
     max-width: minmax(0, var(--layout-width));
     width: 100%;
   }
+
+  @include mixins.absolute-width(100%);
 
   @media (width >= 768px) {
     --page-inline: var(--space-lg);

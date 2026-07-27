@@ -28,16 +28,16 @@ $_name: "purchase";
     &-dot {
       border-radius: 50%;
 
-      background-color: var(--color-success);
+      background-color: var(--color-warning);
 
-      box-shadow: 0 0 0 4px colors.color(color-success, 0.15);
+      box-shadow: 0 0 0 4px colors.color(color-warning, 0.15);
 
       @include mixins.absolute-height(8px);
       @include mixins.absolute-width(8px);
     }
 
     &-text {
-      color: var(--color-text-primary);
+      color: var(--color-warning);
 
       text-transform: uppercase;
 

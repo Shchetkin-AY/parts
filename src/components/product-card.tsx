@@ -1,7 +1,12 @@
-import { ButtonModes, type CatalogItem, Colors, Sizes, formatUsd, formatWheelDiameterRange, getString } from '@/utils'
-import { PropType, computed, defineComponent } from 'vue'
-import { GButton, GChip } from './g'
 import { useRouter } from 'vue-router'
+import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
+
+import {
+  ButtonModes, type CatalogItem, Colors, Sizes,
+  formatUsd, formatWheelDiameterRange
+} from '@/utils'
+
+import { GButton, GChip } from '@/components'
 
 export default defineComponent({
 
@@ -21,24 +26,32 @@ export default defineComponent({
 
   setup(props) {
     const router = useRouter()
+    const seriesKey = computed(() => props.value.series.toLowerCase())
 
-    const title = computed(() => {
-      return props.value.model
-    })
+    const className = 'product-card'
+
+    const images = computed(() =>
+      [ 0, 1, 2 ].map(n => `/images/products/${seriesKey.value}/${n}.webp`))
+
+    const activeImage = ref(Math.floor(Math.random() * images.value.length))
+    const hover = ref<boolean>(false)
+
+    const title = computed(() => props.value.model)
 
     const subtitle = computed(() => {
-      const piston = getString(props.value.pistonCount)
-      const parts = [ props.value.wheelDiameter ? formatWheelDiameterRange(props.value.wheelDiameter) : '', piston ? `${piston} порш.` : '' ].filter(Boolean)
+      const parts = [
+        formatWheelDiameterRange(props.value.wheelDiameter),
+        `${props.value.discDiameter} мм`
+      ].filter(Boolean)
 
       return parts.join(' · ')
     })
 
-    const classes = computed(() => {
-      return {
-
-        'product-card': true,
-        'product-card--hit': props.badge
-      }
+    onMounted(() => {
+      images.value.forEach(src => {
+        const image = new Image()
+        image.src = src
+      })
     })
 
     const clickHandler = () => {
@@ -73,26 +86,64 @@ export default defineComponent({
         </div>
       )
     }
+    const renderOrderTime = () => {
+      return (
+        <div class="product-card__lead-time">
+          Под заказ
+        </div>
+      )
+    }
+    const renderMediaHeader = () => {
+      return (
+        <div class="product-card__media-header">
+          {renderChips()}
+          {renderOrderTime()}
+        </div>
+      )
+    }
+
+    const renderGalleryDots = () => {
+      if (images.value.length <= 1) {
+        return null
+      }
+
+      return (
+        <div class="product-card__gallery-dots">
+          {images.value.map((_, i) =>
+            <span
+              key={i}
+              class={[
+                'product-card__dot',
+                { 'product-card__dot--active': activeImage.value === i }
+              ]}
+              onMouseenter={(e: Event) => {
+                e.stopPropagation(); activeImage.value = i
+              }}
+              onClick={(e: Event) => e.stopPropagation()}
+            />)}
+        </div>
+      )
+    }
 
     const renderImage = () => {
       return (
-
         <div class="product-card__media">
-          {renderChips()}
+          {renderMediaHeader()}
           <img
             class="product-card__image"
-            src={`/images/products/${props.value.series.toLowerCase()}/1.webp`}
+            src={images.value[activeImage.value]}
             alt={title.value}
             loading="lazy"
             decoding="async"
+            onError={(e: Event) => (e.target as HTMLImageElement).style.display = 'none'}
           />
+          {renderGalleryDots()}
         </div>
       )
     }
 
     const renderHeader = () => {
       return (
-
         <div class="product-card__header">
           <div class="product-card__title">
             {title.value}
@@ -105,19 +156,27 @@ export default defineComponent({
       )
     }
 
+    const renderSpecs = () => {
+      return (
+        <div class="product-card__specs">
+          <div class="product-card__spec">
+            {props.value.features}
+          </div>
+        </div>
+      )
+    }
+
     const renderFooter = () => {
       return (
-
         <div class="product-card__footer">
           <div class="product-card__price">
             {formatUsd(props.value.priceUsd)}
           </div>
           <GButton
             label={'Подробнее'}
-            size={Sizes.medium}
-            color={Colors['text-secondary']}
+            size={Sizes.small}
+            color={hover.value ? Colors.primary : Colors['text-secondary']}
             mode={ButtonModes.flat}
-            onClick={clickHandler}
           />
         </div>
       )
@@ -125,9 +184,9 @@ export default defineComponent({
 
     const renderContent = () => {
       return (
-
         <div class="product-card__content">
           {renderHeader()}
+          {renderSpecs()}
           {renderFooter()}
         </div>
       )
@@ -136,7 +195,10 @@ export default defineComponent({
     return () => {
       return (
         <div
-          class={classes.value}
+          class={className}
+          onMouseenter={() => hover.value = true}
+          onMouseleave={() => hover.value = false}
+          onClick={clickHandler}
         >
           {renderImage()}
           {renderContent()}

@@ -4,7 +4,10 @@
 $_name: "product-card";
 
 .#{$_name} {
+  --series-accent: #{colors.$border-strong};
+
   border: 1px solid colors.$border;
+  border-top: 2px solid var(--series-accent);
   border-radius: 12px;
 
   background: colors.$surface;
@@ -12,7 +15,7 @@ $_name: "product-card";
   box-shadow: 0 16px 40px rgb(0 0 0 / 22%);
 
   display: grid;
-  grid-template-rows: 224px auto;
+  grid-template-rows: 200px auto;
 
   position: relative;
 
@@ -32,6 +35,8 @@ $_name: "product-card";
     box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
 
     transform: translateY(-4px);
+
+    cursor: pointer;
   }
 
   &__media {
@@ -47,6 +52,22 @@ $_name: "product-card";
     position: relative;
 
     overflow: hidden;
+
+    &-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-xs);
+      align-content: start;
+
+      position: absolute;
+      top: 14px;
+      left: 14px;
+
+      max-width: calc(100% - 28px);
+      width: 100%;
+
+      z-index: 3;
+    }
   }
 
   &__image {
@@ -59,11 +80,45 @@ $_name: "product-card";
   &__chips {
     display: flex;
     gap: 5px;
-    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__gallery-dots {
+    display: flex;
+    gap: 8px;
 
     position: absolute;
-    top: 14px;
-    left: 14px;
+    bottom: 12px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 3;
+  }
+
+  &__dot {
+    border-radius: 50%;
+
+    background: rgb(255 255 255 / 25%);
+
+    transition:
+      background 0.15s ease,
+      transform 0.15s ease;
+
+    cursor: pointer;
+
+    height: 8px;
+    width: 8px;
+
+    &:hover {
+      background: rgb(255 255 255 / 55%);
+    }
+
+    &--active {
+      background: colors.$text-primary;
+
+      transform: scale(1.2);
+    }
   }
 
   &__content {
@@ -94,11 +149,34 @@ $_name: "product-card";
     letter-spacing: 1px;
   }
 
+  &__specs {
+    padding: 10px 0;
+
+    border-top: 1px solid colors.$border;
+    border-bottom: 1px solid colors.$border;
+
+    display: flex;
+    gap: 14px;
+  }
+
+  &__spec {
+    font-size: 11px;
+    color: colors.$text-muted;
+
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    svg,
+    i {
+      font-size: 14px;
+      color: var(--series-accent);
+    }
+  }
+
   &__footer {
     display: grid;
-    grid-template-rows: 1fr auto;
-    gap: 15px;
-    align-items: center;
+    gap: 8px;
   }
 
   &__price {
@@ -107,6 +185,28 @@ $_name: "product-card";
     color: colors.$text-secondary;
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
+  }
+
+  &__lead-time {
+    font-size: 11px;
+    color: var(--color-warning);
+
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    &::before {
+      border-radius: 50%;
+
+      background: currentcolor;
+
+      flex-shrink: 0;
+
+      content: "";
+
+      height: 6px;
+      width: 6px;
+    }
   }
 
   @media (width <= 768px) {
@@ -123,7 +223,7 @@ $_name: "product-card";
     }
 
     &__footer {
-      gap: 12px;
+      gap: 10px;
     }
   }
 }

@@ -13,9 +13,9 @@ export default defineComponent({
 
   setup(props) {
     const images = computed(() => [
+      `/images/products/${props.value.toLowerCase()}/0.webp`,
       `/images/products/${props.value.toLowerCase()}/1.webp`,
       `/images/products/${props.value.toLowerCase()}/2.webp`,
-      `/images/products/${props.value.toLowerCase()}/3.webp`,
       '/images/accessories/pads.webp',
       '/images/accessories/discs.webp'
     ])
