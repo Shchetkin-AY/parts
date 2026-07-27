@@ -23,7 +23,7 @@ export default defineComponent({
     const router = useRouter()
 
     const title = computed(() => {
-      return [ props.value.series, props.value.model ].join('  ')
+      return props.value.model
     })
 
     const subtitle = computed(() => {
@@ -95,7 +95,7 @@ export default defineComponent({
 
         <div class="product-card__header">
           <div class="product-card__title">
-            {props.value.model}
+            {title.value}
           </div>
 
           <div class="product-card__subtitle">

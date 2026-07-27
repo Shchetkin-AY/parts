@@ -1,6 +1,7 @@
 import { type CatalogItem } from '@/utils'
-import { PropType, defineComponent } from 'vue'
+import { PropType, computed, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useCatalogStore } from '@/stores/catalog'
 
 export const Breadcrumbs = defineComponent({
   name: 'Breadcrumbs',
@@ -14,6 +15,23 @@ export const Breadcrumbs = defineComponent({
 
   setup(props) {
     const className = 'breadcrumbs'
+    const catalogStore = useCatalogStore()
+
+    const compatibilityBrand = computed(() => {
+      const records = catalogStore.getCompatibilityByGoodsId(props.item.id)
+
+      return records.length > 0 ? records[0].brand : ''
+    })
+
+    const title = computed(() => {
+      const brand = compatibilityBrand.value
+
+      if (brand) {
+        return `${props.item.series} ${brand} ${props.item.model}`
+      }
+
+      return `${props.item.series} ${props.item.model}`
+    })
 
     const renderBreadcrumbItem = (label: string, to?: string) => {
       if (to) {
@@ -47,7 +65,7 @@ export const Breadcrumbs = defineComponent({
           {renderSeparator()}
           {renderBreadcrumbItem(props.item.category)}
           {renderSeparator()}
-          {renderBreadcrumbItem(`${props.item.series} ${props.item.model}`)}
+          {renderBreadcrumbItem(title.value)}
         </div>
       )
     }

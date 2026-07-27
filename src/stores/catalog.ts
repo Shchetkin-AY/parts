@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogItem, type SelectOption } from '@/utils'
+import { CatalogFilterField, type CatalogFilterParams, type CatalogItem, type CompatibilityItem, type SelectOption } from '@/utils'
 
 const normalize = (value: number | string): string => {
   return String(value).trim()
@@ -8,100 +8,6 @@ const normalize = (value: number | string): string => {
 
 const getFilterParam = (params: CatalogFilterParams, field: CatalogFilterField): string => {
   return normalize(params[field] ?? '')
-}
-
-const isCompatibleItem = (item: CatalogItem): boolean => {
-  return Boolean(
-    normalize(item.vehicleBrand)
-    && normalize(item.vehicleModel)
-    && normalize(item.discDiameter)
-    && normalize(item.wheelDiameter)
-  )
-}
-
-const sortStrings = (values: string[]): string[] => {
-  return [ ...values ].sort((firstValue, secondValue) => {
-    return firstValue.localeCompare(secondValue, 'ru', {
-      numeric: true,
-      sensitivity: 'base'
-    })
-  })
-}
-
-const sortNumbers = (values: number[]): number[] => {
-  return [ ...values ].sort((firstValue, secondValue) => firstValue - secondValue)
-}
-
-const getUniqueStrings = (
-  items: readonly CatalogItem[],
-  getValue: (item: CatalogItem) => number | string
-): string[] => {
-  const values = new Set<string>()
-
-  items.forEach(item => {
-    const value = normalize(getValue(item))
-
-    if (value) {
-      values.add(value)
-    }
-  })
-
-  return sortStrings([ ...values ])
-}
-
-const getUniqueNumbers = (
-  items: readonly CatalogItem[],
-  getValue: (item: CatalogItem) => number
-): number[] => {
-  const values = new Set<number>()
-
-  items.forEach(item => {
-    const value = getValue(item)
-
-    if (Number.isFinite(value)) {
-      values.add(value)
-    }
-  })
-
-  return sortNumbers([ ...values ])
-}
-
-const getWheelDiameterValues = (value: number | string): number[] => {
-  const diameterValues = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
-
-  return diameterValues
-    .map(diameterValue => Number(diameterValue.replace(',', '.')))
-    .filter(Number.isFinite)
-}
-
-const getUniqueWheelDiameters = (items: readonly CatalogItem[]): number[] => {
-  const values = new Set<number>()
-
-  items.forEach(item => {
-    getWheelDiameterValues(item.wheelDiameter).forEach(value => values.add(value))
-  })
-
-  return sortNumbers([ ...values ])
-}
-
-const getItemFieldValue = (item: CatalogItem, field: CatalogFilterField): string => {
-  if (field === CatalogFilterField.mark) {
-    return normalize(item.vehicleBrand)
-  }
-
-  if (field === CatalogFilterField.model) {
-    return normalize(item.vehicleModel)
-  }
-
-  if (field === CatalogFilterField.series) {
-    return normalize(item.series)
-  }
-
-  if (field === CatalogFilterField.wheelDiameter) {
-    return normalize(item.wheelDiameter)
-  }
-
-  return normalize(item.discDiameter)
 }
 
 const getOptionLabel = (field: CatalogFilterField, value: string): string => {
@@ -133,39 +39,171 @@ const sortOptions = (field: CatalogFilterField, options: SelectOption[]): Select
   })
 }
 
+const sortStrings = (values: string[]): string[] => {
+  return [ ...values ].sort((firstValue, secondValue) => {
+    return firstValue.localeCompare(secondValue, 'ru', {
+      numeric: true,
+      sensitivity: 'base'
+    })
+  })
+}
+
+const sortNumbers = (values: number[]): number[] => {
+  return [ ...values ].sort((firstValue, secondValue) => firstValue - secondValue)
+}
+
+const getWheelDiameterValues = (value: number | string): number[] => {
+  const diameterValues = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
+
+  return diameterValues
+    .map(diameterValue => Number(diameterValue.replace(',', '.')))
+    .filter(Number.isFinite)
+}
+
+const getUniqueWheelDiameters = (items: readonly CatalogItem[]): number[] => {
+  const values = new Set<number>()
+
+  items.forEach(item => {
+    getWheelDiameterValues(item.wheelDiameter).forEach(value => values.add(value))
+  })
+
+  return sortNumbers([ ...values ])
+}
+
+const getUniqueDiscDiameters = (items: readonly CatalogItem[]): number[] => {
+  const values = new Set<number>()
+
+  items.forEach(item => {
+    if (Number.isFinite(item.discDiameter)) {
+      values.add(item.discDiameter)
+    }
+  })
+
+  return sortNumbers([ ...values ])
+}
+
+const getUniqueSeries = (items: readonly CatalogItem[]): string[] => {
+  const values = new Set<string>()
+
+  items.forEach(item => {
+    const value = normalize(item.series)
+
+    if (value) {
+      values.add(value)
+    }
+  })
+
+  return sortStrings([ ...values ])
+}
+
+const getItemFieldValue = (item: CatalogItem, field: CatalogFilterField): string => {
+  if (field === CatalogFilterField.series) {
+    return normalize(item.series)
+  }
+
+  if (field === CatalogFilterField.wheelDiameter) {
+    return normalize(item.wheelDiameter)
+  }
+
+  return normalize(item.discDiameter)
+}
+
+interface CompatibilityIndices {
+  brands: string[]
+  modelsByBrand: Map<string, string[]>
+  goodsIdsByBrandModel: Map<string, Set<number>>
+  goodsIdsByBrand: Map<string, Set<number>>
+  itemsByGoodsId: Map<number, CompatibilityItem[]>
+}
+
+const buildCompatibilityIndices = (items: readonly CompatibilityItem[]): CompatibilityIndices => {
+  const brandsSet = new Set<string>()
+  const modelsByBrand = new Map<string, Set<string>>()
+  const goodsIdsByBrandModel = new Map<string, Set<number>>()
+  const goodsIdsByBrand = new Map<string, Set<number>>()
+  const itemsByGoodsId = new Map<number, CompatibilityItem[]>()
+
+  for (const item of items) {
+    const brand = normalize(item.brand)
+    const model = normalize(item.model)
+
+    if (!brand || !model) {
+      continue
+    }
+
+    const key = `${brand}::${model}`
+
+    // brands
+    brandsSet.add(brand)
+
+    // byBrand
+    if (!goodsIdsByBrand.has(brand)) {
+      goodsIdsByBrand.set(brand, new Set())
+    }
+    goodsIdsByBrand.get(brand)!.add(item.goodsId)
+
+    // byBrandModel
+    if (!goodsIdsByBrandModel.has(key)) {
+      goodsIdsByBrandModel.set(key, new Set())
+    }
+    goodsIdsByBrandModel.get(key)!.add(item.goodsId)
+
+    // modelsByBrand
+    if (!modelsByBrand.has(brand)) {
+      modelsByBrand.set(brand, new Set())
+    }
+    modelsByBrand.get(brand)!.add(model)
+
+    // byGoodsId
+    if (!itemsByGoodsId.has(item.goodsId)) {
+      itemsByGoodsId.set(item.goodsId, [])
+    }
+    itemsByGoodsId.get(item.goodsId)!.push(item)
+  }
+
+  return {
+    brands: sortStrings([ ...brandsSet ]),
+    modelsByBrand: new Map(
+      [ ...modelsByBrand ].map(([ brand, models ]) => [ brand, sortStrings([ ...models ]) ])
+    ),
+    goodsIdsByBrandModel,
+    goodsIdsByBrand,
+    itemsByGoodsId
+  }
+}
+
 export const useCatalogStore = defineStore('catalog', () => {
   const items = ref<CatalogItem[]>([])
+  const compatibilityItems = ref<CompatibilityItem[]>([])
   const isLoading = ref(false)
   const loadError = ref<unknown>(null)
-  let pendingLoad: Promise<CatalogItem[]> | null = null
+  let pendingLoad: Promise<void> | null = null
 
   const isLoaded = computed(() => items.value.length > 0)
   const itemsById = computed(() => new Map(items.value.map(item => [ item.id, item ])))
-  const compatibleItems = computed(() => items.value.filter(isCompatibleItem))
-  const categories = computed(() => getUniqueStrings(items.value, item => item.category))
-  const series = computed(() => getUniqueStrings(items.value, item => item.series))
-  const vehicleBrands = computed(() => getUniqueStrings(compatibleItems.value, item => item.vehicleBrand))
-  const discDiameters = computed(() => getUniqueNumbers(compatibleItems.value, item => item.discDiameter))
-  const wheelDiameters = computed(() => getUniqueWheelDiameters(compatibleItems.value))
-  const errorMessage = computed(() => {
-    if (!loadError.value) {
-      return ''
+
+  const compatibilityIndices = computed(() => buildCompatibilityIndices(compatibilityItems.value))
+
+  const compatibleItems = computed(() => {
+    const hasCompatibility = compatibilityItems.value.length > 0
+
+    if (!hasCompatibility) {
+      return items.value
     }
 
-    if (loadError.value instanceof Error) {
-      return loadError.value.message
-    }
+    const compGoodsIds = new Set(compatibilityItems.value.map(item => item.goodsId))
 
-    if (typeof loadError.value === 'string') {
-      return loadError.value
-    }
-
-    return 'Unknown catalog load error'
+    return items.value.filter(item => compGoodsIds.has(item.id))
   })
 
-  const load = async (): Promise<CatalogItem[]> => {
+  const series = computed(() => getUniqueSeries(compatibleItems.value))
+  const discDiameters = computed(() => getUniqueDiscDiameters(compatibleItems.value))
+  const wheelDiameters = computed(() => getUniqueWheelDiameters(compatibleItems.value))
+  const brands = computed(() => compatibilityIndices.value.brands)
+
+  const load = async (): Promise<void> => {
     if (isLoaded.value) {
-      return items.value
+      return
     }
 
     if (pendingLoad) {
@@ -175,11 +213,13 @@ export const useCatalogStore = defineStore('catalog', () => {
     isLoading.value = true
     loadError.value = null
 
-    pendingLoad = import('@/data/catalog')
-      .then(module => {
-        items.value = [ ...module.default ] as CatalogItem[]
-
-        return items.value
+    pendingLoad = Promise.all([
+      import('@/data/catalog'),
+      import('@/data/compatibility')
+    ])
+      .then(([ catalogModule, compatibilityModule ]) => {
+        items.value = [ ...catalogModule.default ] as CatalogItem[]
+        compatibilityItems.value = [ ...compatibilityModule.default ] as CompatibilityItem[]
       })
       .catch((error: unknown) => {
         loadError.value = error
@@ -196,6 +236,10 @@ export const useCatalogStore = defineStore('catalog', () => {
 
   const getById = (id: number): CatalogItem | undefined => {
     return itemsById.value.get(id)
+  }
+
+  const getCompatibilityByGoodsId = (goodsId: number): CompatibilityItem[] => {
+    return compatibilityIndices.value.itemsByGoodsId.get(goodsId) ?? []
   }
 
   const getRelatedItems = (item: CatalogItem, count = 5): CatalogItem[] => {
@@ -217,14 +261,24 @@ export const useCatalogStore = defineStore('catalog', () => {
     const wheelDiameterParam = getFilterParam(params, CatalogFilterField.wheelDiameter)
     const wheelDiameterValue = Number(wheelDiameterParam)
 
-    return sourceItems.filter(item => {
-      const isMarkMatched = excludedField === CatalogFilterField.mark
-        || !markParam
-        || getItemFieldValue(item, CatalogFilterField.mark) === markParam
+    // Step 1: filter by brand+model via compatibility indices
+    let candidateIds: Set<number> | null = null
 
-      const isModelMatched = excludedField === CatalogFilterField.model
-        || !modelParam
-        || getItemFieldValue(item, CatalogFilterField.model) === modelParam
+    if (excludedField !== CatalogFilterField.mark && excludedField !== CatalogFilterField.model) {
+      const { goodsIdsByBrandModel, goodsIdsByBrand } = compatibilityIndices.value
+
+      if (markParam && modelParam) {
+        candidateIds = goodsIdsByBrandModel.get(`${markParam}::${modelParam}`) ?? new Set()
+      } else if (markParam) {
+        candidateIds = goodsIdsByBrand.get(markParam) ?? new Set()
+      }
+    }
+
+    // Step 2: filter source items by candidateIds + other fields
+    return sourceItems.filter(item => {
+      if (candidateIds && !candidateIds.has(item.id)) {
+        return false
+      }
 
       const isSeriesMatched = excludedField === CatalogFilterField.series
         || !seriesParam
@@ -238,7 +292,7 @@ export const useCatalogStore = defineStore('catalog', () => {
         || !wheelDiameterParam
         || getWheelDiameterValues(item.wheelDiameter).includes(wheelDiameterValue)
 
-      return isMarkMatched && isModelMatched && isSeriesMatched && isDiameterMatched && isWheelDiameterMatched
+      return isSeriesMatched && isDiameterMatched && isWheelDiameterMatched
     })
   }
 
@@ -247,9 +301,49 @@ export const useCatalogStore = defineStore('catalog', () => {
     params: CatalogFilterParams,
     sourceItems: readonly CatalogItem[] = compatibleItems.value
   ): SelectOption[] => {
-    const optionsMap = new Map<string, SelectOption>()
+    const markParam = getFilterParam(params, CatalogFilterField.mark)
+    const modelParam = getFilterParam(params, CatalogFilterField.model)
 
-    filterItems(params, sourceItems, field).forEach(item => {
+    // mark/model options come from compatibility indices
+    if (field === CatalogFilterField.mark) {
+      const { brands, goodsIdsByBrandModel } = compatibilityIndices.value
+
+      if (modelParam) {
+        // only brands that have this model
+        return brands
+          .filter(brand => goodsIdsByBrandModel.has(`${brand}::${modelParam}`))
+          .map(brand => ({
+            label: getOptionLabel(field, brand),
+            value: brand
+          }))
+      }
+
+      return brands.map(brand => ({
+        label: getOptionLabel(field, brand),
+        value: brand
+      }))
+    }
+
+    if (field === CatalogFilterField.model) {
+      if (!markParam) {
+        return []
+      }
+
+      const models = compatibilityIndices.value.modelsByBrand.get(markParam) ?? []
+
+      return models.map(model => ({
+        label: getOptionLabel(field, model),
+        value: model
+      }))
+    }
+
+    // series / diameter / wheelDiameter options come from catalog items
+    const optionsMap = new Map<string, SelectOption>()
+    const filteredItems = markParam || modelParam
+      ? filterItems(params, sourceItems, field)
+      : sourceItems
+
+    filteredItems.forEach(item => {
       const values = field === CatalogFilterField.wheelDiameter
         ? getWheelDiameterValues(item.wheelDiameter).map(String)
         : [ getItemFieldValue(item, field) ]
@@ -270,21 +364,20 @@ export const useCatalogStore = defineStore('catalog', () => {
   }
 
   return {
-    categories,
+    brands,
     compatibleItems,
+    compatibilityItems,
     discDiameters,
-    errorMessage,
     filterItems,
     getById,
+    getCompatibilityByGoodsId,
     getFilterOptions,
     getRelatedItems,
     isLoaded,
     isLoading,
     items,
     load,
-    loadError,
     series,
-    vehicleBrands,
     wheelDiameters
   }
 })

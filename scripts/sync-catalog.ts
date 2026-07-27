@@ -1,7 +1,11 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { CatalogItem } from '../src/utils/types/catalog'
+
+import type {
+  CatalogItem,
+  CompatibilityItem
+} from '../src/utils/types/catalog'
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, '..')
@@ -20,55 +24,99 @@ function resolveProjectPath(value: string): string {
   return path.resolve(PROJECT_ROOT, value)
 }
 
-const SHEET_ID = readEnv('GOOGLE_SHEET_ID', '1TwtaO56Hk7SRlFU27Ahpc6aMuFcJ-gqMjriW1FMK_JE')
-const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', 'AIzaSyDTJB_VoqtrpXBQcY-9G7keK4x33OZ3FKc')
-const RANGE = readEnv('GOOGLE_SHEET_RANGE', 'goods!A:AA')
-const OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_OUTPUT', 'src/data/data.json'))
-const TS_OUTPUT_PATH = resolveProjectPath(readEnv('GOOGLE_SHEET_TS_OUTPUT', 'src/data/catalog.ts'))
+const SHEET_ID = readEnv(
+  'GOOGLE_SHEET_ID',
+  '1TwtaO56Hk7SRlFU27Ahpc6aMuFcJ-gqMjriW1FMK_JE'
+)
+
+const API_KEY = readEnv(
+  'GOOGLE_SHEETS_API_KEY',
+  'AIzaSyDTJB_VoqtrpXBQcY-9G7keK4x33OZ3FKc'
+)
+
 const VALUE_RENDER_OPTION = 'FORMATTED_VALUE'
 
-const CATALOG_HEADERS = [
+const GOODS_RANGE = readEnv(
+  'GOOGLE_SHEET_GOODS_RANGE',
+  'goods!A:V'
+)
+
+const COMPATIBILITY_RANGE = readEnv(
+  'GOOGLE_SHEET_COMPATIBILITY_RANGE',
+  'compatibility!A:H'
+)
+
+const CATALOG_TS_PATH = resolveProjectPath(
+  readEnv(
+    'GOOGLE_SHEET_TS_OUTPUT',
+    'src/data/catalog.ts'
+  )
+)
+
+const COMPATIBILITY_TS_PATH = resolveProjectPath(
+  readEnv(
+    'GOOGLE_SHEET_TS_COMPATIBILITY_OUTPUT',
+    'src/data/compatibility.ts'
+  )
+)
+
+const CATALOG_HEADER_MAP = {
+  id: 'id',
+  category: 'category',
+  brand: 'brand',
+  series: 'series',
+  model: 'model',
+  pistonCount: 'pistonCount',
+  wheelDiameter: 'wheelDiameter',
+  pistonArea: 'pistonArea',
+  discDiameter: 'discDiameter',
+  padFrictionArea: 'padFrictionArea',
+  dimensions: 'dimensions',
+  depth: 'depth',
+  height: 'height',
+  width: 'width',
+  constructionType: 'constructionType',
+  coating: 'coating',
+  features: 'features',
+  application: 'application',
+  setId: 'setId',
+  priceUsd: 'priceUsd',
+  priceCny: 'priceCny',
+  description: 'description'
+} as const
+
+type CatalogHeader =
+    typeof CATALOG_HEADER_MAP[keyof typeof CATALOG_HEADER_MAP]
+
+const COMPATIBILITY_HEADER_MAP = {
+  id: 'id',
+  goods_id: 'goodsId',
+  brand: 'brand',
+  model: 'model',
+  platform: 'platform',
+  year_from: 'yearFrom',
+  year_to: 'yearTo',
+  wheel_inch: 'wheelInch'
+} as const
+
+type CompatibilityHeader =
+    typeof COMPATIBILITY_HEADER_MAP[keyof typeof COMPATIBILITY_HEADER_MAP]
+
+const CATALOG_NUMERIC_HEADERS = new Set<CatalogHeader>([
   'id',
-  'category',
-  'brand',
-  'series',
-  'model',
   'pistonCount',
-  'wheelDiameter',
   'pistonArea',
   'discDiameter',
-  'padFrictionArea',
-  'dimensions',
-  'depth',
-  'height',
-  'width',
-  'constructionType',
-  'coating',
-  'features',
-  'application',
   'setId',
   'priceUsd',
-  'priceCny',
-  'compatibilityClass',
-  'vehicleBrand',
-  'vehicleModel',
-  'factoryDiscDiameter',
-  'description',
-  'compatibleCount'
-] as const
-
-type CatalogHeader = typeof CATALOG_HEADERS[number]
-
-const NUMERIC_HEADERS = new Set<CatalogHeader>([
-  'id',
-  'pistonCount',
-  'pistonArea',
-  'discDiameter',
-  'setId',
-  'priceUsd',
-  'priceCny',
-  'factoryDiscDiameter'
+  'priceCny'
 ])
+
+const COMPATIBILITY_NUMERIC_HEADERS =
+  new Set<CompatibilityHeader>([
+    'id',
+    'goodsId'
+  ])
 
 interface SheetValuesResponse {
   values?: SheetCell[][]
@@ -78,130 +126,220 @@ interface SheetValuesResponse {
   }
 }
 
-type SheetCell = boolean | number | string
+type SheetCell =
+  | boolean
+  | number
+  | string
 
-function isCatalogHeader(value: string): value is CatalogHeader {
-  return (CATALOG_HEADERS as readonly string[]).includes(value)
+function getHeaderKeys<T extends Record<string, string>>(
+  headers: string[],
+  map: T
+): T[keyof T][] {
+  const allowed = Object.keys(map)
+
+  const unknown = headers.filter(header => !allowed.includes(header))
+
+  if (unknown.length > 0) {
+    throw new Error(
+      `Unknown headers: ${unknown.join(', ')}`
+    )
+  }
+
+  const missing = allowed.filter(header => !headers.includes(header))
+
+  if (missing.length > 0) {
+    throw new Error(
+      `Missing headers: ${missing.join(', ')}`
+    )
+  }
+
+  return headers.map(header => map[header as keyof T])
 }
 
-function getHeaderKeys(headers: string[]): CatalogHeader[] {
-  const keys = [ ...headers ]
-  const unknownKeys = keys.filter(key => !isCatalogHeader(key))
-  const missingKeys = CATALOG_HEADERS.filter(key => !keys.includes(key))
-  const duplicatedKeys = keys.filter((key, index) => keys.indexOf(key) !== index)
-
-  if (unknownKeys.length > 0) {
-    throw new Error(`Unknown sheet headers: ${unknownKeys.map(key => JSON.stringify(key)).join(', ')}`)
-  }
-
-  if (missingKeys.length > 0) {
-    throw new Error(`Missing sheet headers: ${missingKeys.join(', ')}`)
-  }
-
-  if (duplicatedKeys.length > 0) {
-    throw new Error(`Duplicate sheet headers: ${[ ...new Set(duplicatedKeys) ].join(', ')}`)
-  }
-
-  return keys as CatalogHeader[]
-}
-
-function convertValue(key: CatalogHeader, value: SheetCell | undefined, rowIndex: number): CatalogItem[CatalogHeader] {
-  const normalized = String(value ?? '').trim()
+function convertValue(
+  key: string,
+  value: SheetCell | undefined,
+  numericFields: Set<string>,
+  booleanFields: Set<string>,
+  row: number
+): unknown {
+  const normalized =
+    value == null
+      ? ''
+      : String(value).trim()
 
   if (!normalized) {
-    if (NUMERIC_HEADERS.has(key)) {
-      throw new Error(`Empty numeric value in row ${rowIndex}, column "${key}"`)
+    if (numericFields.has(key)) {
+      throw new Error(
+        `Empty numeric value. Row ${row}, field "${key}"`
+      )
+    }
+
+    if (booleanFields.has(key)) {
+      return false
     }
 
     return ''
   }
 
-  if (!NUMERIC_HEADERS.has(key)) {
+  if (booleanFields.has(key)) {
+    return normalized.toLowerCase() === 'true'
+      || normalized === '1'
+      || normalized.toLowerCase() === 'yes'
+  }
+
+  if (!numericFields.has(key)) {
     return normalized
   }
 
-  const compact = normalized.replace(/\s+/g, '').replace(',', '.')
-  const numberValue = Number(compact)
+  const numberValue = Number(
+    normalized
+      .replace(/\s+/g, '')
+      .replace(',', '.')
+  )
 
   if (!Number.isFinite(numberValue)) {
-    throw new Error(`Invalid numeric value "${value}" in row ${rowIndex}, column "${key}"`)
+    throw new Error(
+      `Invalid number "${normalized}". Row ${row}, field "${key}"`
+    )
   }
 
   return numberValue
 }
 
-function toJson(rows: SheetCell[][]): CatalogItem[] {
-  const [ headers, ...data ] = rows
+function parseSheet<T extends object>(
+  rows: SheetCell[][],
+  headerMap: Record<string, string>,
+  numericFields: Set<string>,
+  booleanFields = new Set<string>()
+): T[] {
+  const [ headers, ...values ] = rows
 
-  if (!headers?.length) {
-    throw new Error('Sheet header row is empty')
+  if (!headers) {
+    throw new Error('Sheet is empty')
   }
 
-  const keys = getHeaderKeys(headers.map(String))
+  const keys = getHeaderKeys(
+    headers.map(String),
+    headerMap
+  )
 
-  return data
-    .map((row, rowIndex) => {
-      const obj: Partial<CatalogItem> = {}
-      const writableObj = obj as Record<CatalogHeader, CatalogItem[CatalogHeader]>
-      const sheetRowIndex = rowIndex + 2
+  return values.map((row, index) => {
+    const object: Record<string, unknown> = {}
 
-      keys.forEach((key, index) => {
-        writableObj[key] = convertValue(key, row[index], sheetRowIndex)
-      })
-
-      return obj as CatalogItem
+    keys.forEach((key, column) => {
+      object[key] = convertValue(
+        key,
+        row[column],
+        numericFields,
+        booleanFields,
+        index + 2
+      )
     })
+
+    return object as T
+  })
 }
 
-async function main() {
+async function loadSheet(range: string): Promise<SheetCell[][]> {
   const params = new URLSearchParams({
     key: API_KEY,
     valueRenderOption: VALUE_RENDER_OPTION
   })
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}?${params.toString()}`
 
-  const res = await fetch(url)
-  const data = await res.json() as SheetValuesResponse
+  const url =
+    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}?${params}`
 
-  if (!res.ok) {
-    const message = data.error?.message ?? res.statusText
+  const response = await fetch(url)
 
-    throw new Error(`Google Sheets request failed: ${res.status} ${message}`)
+  const data =
+    await response.json() as SheetValuesResponse
+
+  if (!response.ok) {
+    throw new Error(
+      data.error?.message ?? response.statusText
+    )
   }
 
   if (!data.values) {
-    throw new Error('No data received from Google Sheets')
+    throw new Error(
+      `Sheet "${range}" is empty`
+    )
   }
 
-  const json = toJson(data.values)
-  await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true })
-  await fs.mkdir(path.dirname(TS_OUTPUT_PATH), { recursive: true })
-  await fs.writeFile(OUTPUT_PATH, JSON.stringify(json, null, 2), 'utf-8')
+  return data.values
+}
 
-  const tsModule = [
+async function writeTsModule<T>(
+  outputPath: string,
+  variableName: string,
+  typeName: string,
+  importPath: string,
+  data: T[]
+) {
+  const module = [
     '/* eslint-disable */',
-    '// Auto-generated by scripts/sync-catalog.ts. Do not edit.',
-    'import type { CatalogItem } from \'@/utils/types/catalog\'',
+    '// Auto-generated. Do not edit.',
+    `import type { ${typeName} } from '${importPath}'`,
     '',
-    `export const catalog: CatalogItem[] = ${JSON.stringify(json, null, 2)}`,
-    'export type { CatalogItem }',
-    'export default catalog',
+    `export const ${variableName}: ${typeName}[] = ${JSON.stringify(data, null, 2)}`,
+    '',
+    `export default ${variableName}`,
     ''
   ].join('\n')
 
-  await fs.writeFile(TS_OUTPUT_PATH, tsModule, 'utf-8')
+  await fs.mkdir(path.dirname(outputPath), { recursive: true })
+  await fs.writeFile(outputPath, module, 'utf8')
+}
+
+async function main() {
+  const [
+    goodsRows,
+    compatibilityRows
+  ] = await Promise.all([
+    loadSheet(GOODS_RANGE),
+    loadSheet(COMPATIBILITY_RANGE)
+  ])
+
+  const catalog = parseSheet<CatalogItem>(
+    goodsRows,
+    CATALOG_HEADER_MAP,
+    CATALOG_NUMERIC_HEADERS
+  )
+
+  const compatibility = parseSheet<CompatibilityItem>(
+    compatibilityRows,
+    COMPATIBILITY_HEADER_MAP,
+    COMPATIBILITY_NUMERIC_HEADERS
+  )
+
+  await Promise.all([
+    writeTsModule(
+      CATALOG_TS_PATH,
+      'catalog',
+      'CatalogItem',
+      '@/utils/types/catalog',
+      catalog
+    ),
+
+    writeTsModule(
+      COMPATIBILITY_TS_PATH,
+      'compatibility',
+      'CompatibilityItem',
+      '@/utils/types/catalog',
+      compatibility
+    )
+
+  ])
 
   // eslint-disable-next-line
-  console.log('✅ Catalog items loaded:', json.length)
+  console.log(`✅ Catalog: ${catalog.length}`)
   // eslint-disable-next-line
-  console.log('✅ Catalog JSON updated:')
-  // eslint-disable-next-line
-  console.log('✅ Catalog TS module updated:')
+  console.log(`✅ Compatibility: ${compatibility.length}`)
 }
 
 // eslint-disable-next-line
 main().catch(error => {
-  console.error('❌ Failed to sync Google Sheets catalog')
   console.error(error)
   process.exitCode = 1
 })

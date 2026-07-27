@@ -69,7 +69,7 @@ export const ProductHero = defineComponent({
     const renderModel = () => {
       return (
         <h1 class={`${className}__header-model`}>
-          {String(props.item.model)}
+          {props.item.model}
         </h1>
       )
     }

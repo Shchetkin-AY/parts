@@ -1,8 +1,9 @@
-import { AccessoryItem, type CatalogItem, formatWheelDiameterRange } from '@/utils'
-import { Fragment, PropType, defineComponent, reactive } from 'vue'
+import { AccessoryItem, type CatalogItem, type CompatibilityItem, formatWheelDiameterRange } from '@/utils'
+import { Fragment, PropType, computed, defineComponent, reactive } from 'vue'
 import { GPanel } from '@/components'
 import Item from '@/components/accessories/item'
 import ColorPanel from '@/components/palette/panel'
+import { useCatalogStore } from '@/stores/catalog'
 
 export const ProductTabs = defineComponent({
   name: 'ProductTabs',
@@ -105,29 +106,32 @@ export const ProductTabs = defineComponent({
       )
     }
 
-    const renderCompatibility = () => {
-      const rows = [
-        {
-          label: 'Марка автомобиля',
-          value: props.value.vehicleBrand
-        },
-        {
-          label: 'Модель',
-          value: props.value.vehicleModel
-        },
-        {
-          label: 'Класс совместимости',
-          value: props.value.compatibilityClass
-        },
-        {
-          label: 'Заводской диск, мм',
-          value: props.value.factoryDiscDiameter.toString()
-        }
-      ]
+    const catalogStore = useCatalogStore()
 
+    const compatibilityRows = computed<{ label: string; value: string }[]>(() => {
+      const records = catalogStore.getCompatibilityByGoodsId(props.value.id)
+
+      if (records.length === 0) {
+        return [ { label: 'Информация отсутствует', value: '' } ]
+      }
+
+      return records.map((record: CompatibilityItem) => ({
+        label: `${record.brand} ${record.model}`,
+        value: [
+          record.platform ? `Платформа: ${record.platform}` : '',
+          record.yearFrom ? `c ${record.yearFrom}` : '',
+          record.yearTo ? `по ${record.yearTo}` : '',
+          record.wheelInch ? `${record.wheelInch}"` : ''
+        ].filter(Boolean).join(', ')
+      }))
+    })
+
+    const renderCompatibility = () => {
       return (
         <div class={`${className}__specs`}>
-          {rows.map(row => renderRow(row.label, row.value))}
+          {compatibilityRows.value.length === 1 && !compatibilityRows.value[0].value
+            ? renderRow(compatibilityRows.value[0].label, '')
+            : compatibilityRows.value.map(row => renderRow(row.label, row.value))}
         </div>
       )
     }
