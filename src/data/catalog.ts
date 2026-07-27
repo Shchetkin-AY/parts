@@ -1,6 +1,6 @@
 /* eslint-disable */
 // Auto-generated. Do not edit.
-import type { CatalogItem } from '@/utils/types/catalog'
+import type { CatalogItem } from '@/utils/interfaces/catalog'
 
 export const catalog: CatalogItem[] = [
   {
