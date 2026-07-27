@@ -25,7 +25,7 @@ $_name: "g-chip";
     min-height: 14px;
     & > .#{$_name}__content {
       & > .#{$_name}__label {
-        @include mixins.font(8px, 600);
+        @include mixins.font(8px, 500);
       }
     }
   }
@@ -42,7 +42,7 @@ $_name: "g-chip";
         padding-left: 8px;
         padding-right: 8px;
 
-        @include mixins.font(10px, 600);
+        @include mixins.font(10px, 500);
       }
     }
   }
