@@ -86,7 +86,7 @@ export const ProductTabs = defineComponent({
           value: props.value.dimensions
         },
         {
-          label: 'Площадь колодок, см',
+          label: 'Площадь колодок, см²',
           value: props.value.padFrictionArea
         },
         {
