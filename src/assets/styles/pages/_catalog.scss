@@ -150,11 +150,8 @@ $_name: "catalog";
 }
 
 .catalog-pagination {
-  margin-top: 20px;
-  padding-top: 20px;
-
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -181,29 +178,9 @@ $_name: "catalog";
     height: 40px;
     width: 40px;
 
-    .g-chip {
-      pointer-events: none;
-
-      min-height: 40px;
-      min-width: 40px;
-    }
-
-    .g-chip__label {
-      font-size: 12px;
-    }
-
-    &--active {
-      cursor: default;
-      pointer-events: none;
-    }
-
     &--ellipsis {
       cursor: default;
       pointer-events: none;
     }
-  }
-
-  .g-button {
-    min-width: 96px;
   }
 }

@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent } from 'vue'
 
-import { GButton, GChip } from '@/components/g'
+import { GButton } from '@/components/g'
 import { ButtonModes, Colors, Sizes } from '@/utils'
 
 type PageItem = number | 'ellipsis'
@@ -83,7 +83,11 @@ export const CatalogPagination = defineComponent({
       if (item === 'ellipsis') {
         return (
           <span class="catalog-pagination__item catalog-pagination__item--ellipsis" key={`ellipsis-${index}`}>
-            <GChip label="..." size={Sizes.large} outline />
+            <GButton
+              label="..."
+              size={Sizes.small}
+              mode={ButtonModes.outline}
+            />
           </span>
         )
       }
@@ -91,23 +95,14 @@ export const CatalogPagination = defineComponent({
       const isActive = item === currentPage.value
 
       return (
-        <button
-          class={{
-            'catalog-pagination__item': true,
-            'catalog-pagination__item--active': isActive
-          }}
-          type="button"
+        <GButton
+          label={item}
+          size={Sizes.small}
+          color={isActive ? Colors.primary : undefined}
+          mode={isActive ? ButtonModes.flat : ButtonModes.outline}
           key={item}
-          aria-current={isActive ? 'page' : undefined}
-          aria-label={`Страница ${item}`}
           onClick={() => setPage(item)}
-        >
-          <GChip
-            label={item}
-            size={Sizes.large}
-            color={isActive ? Colors.primary : undefined}
-          />
-        </button>
+        />
       )
     }
 
@@ -120,8 +115,11 @@ export const CatalogPagination = defineComponent({
         <nav class="catalog-pagination" aria-label="Пагинация каталога">
           <GButton
             label="Назад"
-            disabled={currentPage.value === 1}
+            size={Sizes.small}
+            color={Colors.muted}
             mode={ButtonModes.outline}
+
+            disabled={currentPage.value === 1}
             onClick={() => setPage(currentPage.value - 1)}
           />
 
@@ -131,6 +129,7 @@ export const CatalogPagination = defineComponent({
 
           <GButton
             label="Вперёд"
+            size={Sizes.small}
             disabled={currentPage.value === totalPages.value}
             color={Colors.primary}
             onClick={() => setPage(currentPage.value + 1)}
