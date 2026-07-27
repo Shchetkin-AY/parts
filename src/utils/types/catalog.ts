@@ -20,10 +20,16 @@ export interface CatalogItem {
   setId: number
   priceUsd: number
   priceCny: number
-  compatibilityClass: string
-  vehicleBrand: string
-  vehicleModel: string
-  factoryDiscDiameter: number
   description: string
-  compatibleCount: number
+}
+
+export interface CompatibilityItem {
+  id: number
+  goodsId: number
+  brand: string
+  model: string
+  platform: string
+  yearFrom: string
+  yearTo: string
+  wheelInch: string
 }
