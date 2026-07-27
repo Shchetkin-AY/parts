@@ -176,7 +176,7 @@ export default defineComponent({
             label={'Подробнее'}
             size={Sizes.small}
             color={hover.value ? Colors.primary : Colors['text-secondary']}
-            mode={ButtonModes.flat}
+            mode={hover.value ? undefined : ButtonModes.flat }
           />
         </div>
       )
