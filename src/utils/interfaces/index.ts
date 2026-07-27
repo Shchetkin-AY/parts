@@ -1,5 +1,6 @@
 export * from './accessories'
 export * from './benefits'
+export * from './catalog'
 export * from './icon'
 export * from './feedback'
 export * from './filter'

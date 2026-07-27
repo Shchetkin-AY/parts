@@ -26,5 +26,7 @@ export enum Colors {
 
   white = 'white',
   black = 'black',
-  grey = 'grey'
+  grey = 'grey',
+
+  success = 'success'
 }
