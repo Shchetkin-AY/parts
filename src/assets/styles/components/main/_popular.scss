@@ -11,17 +11,43 @@ $_name: "popular";
 
   width: 100%;
 
-  &__title {
-    color: var(--color-text-primary);
-    line-height: 1;
-    text-align: center;
-    text-transform: uppercase;
-
+  &__header {
     display: grid;
-    justify-content: start;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-sm);
+    align-items: center;
 
-    @include mixins.font(20px, 600);
+    &-title {
+      color: var(--color-text-primary);
+      line-height: 1;
+      text-align: center;
+      text-transform: uppercase;
+
+      display: grid;
+      justify-content: start;
+
+      @include mixins.font(20px, 600);
+      @include mixins.absolute-width(100%);
+    }
+
+    &-link {
+      color: var(--color-primary);
+
+      display: flex;
+      justify-content: end;
+
+      &:hover {
+        color: var(--color-primary-hover);
+      }
+
+      @include mixins.font(13px, 600);
+    }
+
     @include mixins.absolute-width(100%);
+
+    @media (width <= 500px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__cards {

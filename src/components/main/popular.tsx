@@ -3,6 +3,7 @@ import { computed, defineComponent, onBeforeMount } from 'vue'
 import { useCatalogStore } from '@/stores/catalog'
 import type { CatalogItem } from '@/utils'
 import ProductCard from '@/components/product-card'
+import { RouterLink } from 'vue-router'
 
 export default defineComponent({
   name: 'Popular',
@@ -30,9 +31,29 @@ export default defineComponent({
       return pickRandom(catalogStore.items, 5)
     })
 
+    const renderCatalogLink = () => {
+      return (
+        <RouterLink
+          class={`${className}__header-link`}
+          to={'/catalog'}
+        >
+          Смотреть каталог →
+        </RouterLink>
+      )
+    }
+
     const renderTitle = () => {
       return (
-        <div class={`${className}__title`}>Популярные комплекты</div>
+        <div class={`${className}__header-title`}>Популярные комплекты</div>
+      )
+    }
+
+    const renderHeader = () => {
+      return (
+        <div class={`${className}__header`}>
+          {renderTitle()}
+          {renderCatalogLink()}
+        </div>
       )
     }
 
@@ -60,7 +81,7 @@ export default defineComponent({
     return () => {
       return (
         <section class={className}>
-          {renderTitle()}
+          {renderHeader()}
           {renderContent()}
         </section>
       )
