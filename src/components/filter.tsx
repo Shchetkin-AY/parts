@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent, onBeforeMount, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption } from '@/utils'
+import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption, Sizes } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
 import { useCatalogStore } from '@/stores/catalog'
 import Feedback from './feedback'
@@ -336,9 +336,15 @@ export default defineComponent({
     const renderFooter = () => {
       return (
         <div class="filter__panel-footer">
-          <a class="filter__panel-footer__content" onClick={callHandler}>
+          <a class="filter__panel-footer__content">
             <span class="filter__panel-footer__content-title">Не нашли свой автомобиль?</span>
-            <span class="filter__panel-footer__content-description">Получить консультацию</span>
+            <GButton
+              label={'Получить консультацию'}
+              size={Sizes.small}
+              mode={ButtonModes.outline}
+              color={Colors.primary}
+              onClick={callHandler}
+            />
           </a>
         </div>
       )
