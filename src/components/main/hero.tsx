@@ -1,11 +1,16 @@
 import { defineComponent } from 'vue'
 
 import { useViewportStore } from '@/stores'
+import { GButton } from '../g'
+import { Colors } from '@/utils'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Hero',
 
   setup() {
+    const router = useRouter()
+
     const viewportStore = useViewportStore()
 
     const className = 'hero'
@@ -71,12 +76,23 @@ export default defineComponent({
       )
     }
 
+    const renderCatalogButton = () => {
+      return (
+        <GButton
+          label={'Смотреть каталог'}
+          color={Colors.primary}
+          onClick={() => router.push({ name: 'catalog' })}
+        />
+      )
+    }
+
     const renderCopy = () => {
       return (
         <div class={`${className}__text`}>
           {renderEyebrow()}
           {renderTitle()}
           {renderText()}
+          {renderCatalogButton()}
         </div>
       )
     }
