@@ -1,17 +1,63 @@
-import { PropType, computed, defineComponent, onBeforeMount, reactive, ref, watch } from 'vue'
+// filter.tsx — итоговая версия с конфигом полей и wheelDiameter
+import { PropType, computed, defineComponent, onBeforeMount, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption, Sizes } from '@/utils'
 import { GButton, GDivider, GSelect } from '@/components'
 import { useCatalogStore } from '@/stores/catalog'
 import Feedback from './feedback'
+import { ref } from 'vue'
 
 type FilterOrientation = 'horizontal' | 'vertical'
+
+interface FilterFieldConfig {
+  field: CatalogFilterField
+  label: string
+  ariaLabel: string
+  placeholder: string
+  verticalOnly?: boolean
+}
+
+const filterFieldsConfig: FilterFieldConfig[] = [
+  {
+    field: CatalogFilterField.mark,
+    label: 'Марка',
+    ariaLabel: 'Марка автомобиля',
+    placeholder: 'Выберите марку'
+  },
+  {
+    field: CatalogFilterField.model,
+    label: 'Модель',
+    ariaLabel: 'Модель автомобиля',
+    placeholder: 'Выберите модель'
+  },
+  {
+    field: CatalogFilterField.series,
+    label: 'Серия',
+    ariaLabel: 'Серия',
+    placeholder: 'Выберите серию',
+    verticalOnly: true
+  },
+  {
+    field: CatalogFilterField.wheelDiameter,
+    label: 'Диаметр колёс',
+    ariaLabel: 'Диаметр колёс',
+    placeholder: 'Выберите диаметр колёс',
+    verticalOnly: true
+  },
+  {
+    field: CatalogFilterField.diameter,
+    label: 'Диаметр диска',
+    ariaLabel: 'Диаметр диска',
+    placeholder: 'Выберите диаметр диска'
+  }
+]
 
 const emptyFilterParams: CatalogFilterParams = {
   [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
   [CatalogFilterField.model]: '',
-  [CatalogFilterField.series]: ''
+  [CatalogFilterField.series]: '',
+  [CatalogFilterField.wheelDiameter]: ''
 }
 
 const normalizeFilterValue = (value: number | string): string => {
@@ -40,26 +86,23 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const router = useRouter()
-
     const catalogStore = useCatalogStore()
-
     const showFeedback = ref(false)
 
-    const params = reactive<CatalogFilterParams>({
-      ...emptyFilterParams
-    })
+    const params = reactive<CatalogFilterParams>({ ...emptyFilterParams })
 
     const sourceItems = computed(() => {
       return props.items.length > 0 ? props.items : catalogStore.compatibleItems
     })
 
     const resolveInitialParams = (): CatalogFilterParams => {
-      return {
-        [CatalogFilterField.diameter]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.diameter] ?? ''),
-        [CatalogFilterField.mark]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.mark] ?? ''),
-        [CatalogFilterField.model]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.model] ?? ''),
-        [CatalogFilterField.series]: normalizeFilterValue(props.initialParams?.[CatalogFilterField.series] ?? '')
-      }
+      const result = { ...emptyFilterParams }
+
+      filterFieldsConfig.forEach(config => {
+        result[config.field] = normalizeFilterValue(props.initialParams?.[config.field] ?? '')
+      })
+
+      return result
     }
 
     const getFilteredItems = (excludedField?: CatalogFilterField): CatalogItem[] => {
@@ -70,29 +113,21 @@ export default defineComponent({
       return catalogStore.getFilterOptions(field, params, sourceItems.value)
     }
 
-    const markOptions = computed(() => {
-      return getUniqueOptions(CatalogFilterField.mark)
-    })
-    const modelOptions = computed(() => {
-      return getUniqueOptions(CatalogFilterField.model)
-    })
-    const diameterOptions = computed(() => {
-      return getUniqueOptions(CatalogFilterField.diameter)
-    })
-    const seriesOptions = computed(() => {
-      return getUniqueOptions(CatalogFilterField.series)
-    })
-    const filteredItems = computed(() => {
-      return getFilteredItems()
-    })
-    const isSubmitDisabled = computed(() => {
-      return filteredItems.value.length === 0
+    const optionsByField = computed(() => {
+      const result = {} as Record<CatalogFilterField, SelectOption[]>
+
+      filterFieldsConfig.forEach(config => {
+        result[config.field] = getUniqueOptions(config.field)
+      })
+
+      return result
     })
 
+    const filteredItems = computed(() => getFilteredItems())
+    const isSubmitDisabled = computed(() => filteredItems.value.length === 0)
+
     const hasOption = (options: SelectOption[], value: string): boolean => {
-      return options.some(option => {
-        return option.value === value
-      })
+      return options.some(option => option.value === value)
     }
 
     const syncParamByOptions = (field: CatalogFilterField, options: SelectOption[]): void => {
@@ -108,57 +143,32 @@ export default defineComponent({
     const syncParamsFromInitial = (): void => {
       const resolvedParams = resolveInitialParams()
 
-      params[CatalogFilterField.diameter] = resolvedParams[CatalogFilterField.diameter]
-      params[CatalogFilterField.mark] = resolvedParams[CatalogFilterField.mark]
-      params[CatalogFilterField.model] = resolvedParams[CatalogFilterField.model]
-      params[CatalogFilterField.series] = resolvedParams[CatalogFilterField.series]
+      filterFieldsConfig.forEach(config => {
+        params[config.field] = resolvedParams[config.field]
+      })
     }
 
-    watch(
-      () => props.initialParams,
-      syncParamsFromInitial,
-      {
-        deep: true,
-        immediate: true
-      }
-    )
-    watch(
-      () => markOptions.value,
-      options => syncParamByOptions(CatalogFilterField.mark, options),
-      { immediate: true }
-    )
-    watch(
-      () => modelOptions.value,
-      options => syncParamByOptions(CatalogFilterField.model, options),
-      { immediate: true }
-    )
-    watch(
-      () => diameterOptions.value,
-      options => syncParamByOptions(CatalogFilterField.diameter, options),
-      { immediate: true }
-    )
-    watch(
-      () => seriesOptions.value,
-      options => syncParamByOptions(CatalogFilterField.series, options),
-      { immediate: true }
-    )
+    watch(() => props.initialParams, syncParamsFromInitial, {
+      deep: true,
+      immediate: true
+    })
+
+    filterFieldsConfig.forEach(config => {
+      watch(
+        () => optionsByField.value[config.field],
+        options => syncParamByOptions(config.field, options),
+        { immediate: true }
+      )
+    })
 
     const filterPayload = computed<CatalogFilterSubmitPayload<CatalogItem>>(() => {
       return {
         items: [ ...filteredItems.value ],
-        params: {
-          ...params
-        }
+        params: { ...params }
       }
     })
 
-    watch(
-      () => filterPayload.value,
-      payload => {
-        emit('change', payload)
-      },
-      { immediate: true }
-    )
+    watch(() => filterPayload.value, payload => emit('change', payload), { immediate: true })
 
     onBeforeMount(() => {
       catalogStore.load()
@@ -167,27 +177,19 @@ export default defineComponent({
     const getCatalogQueryParams = (): Record<string, string> => {
       const query: Record<string, string> = {}
 
-      if (params[CatalogFilterField.mark]) {
-        query[CatalogFilterField.mark] = params[CatalogFilterField.mark]
-      }
-      if (params[CatalogFilterField.model]) {
-        query[CatalogFilterField.model] = params[CatalogFilterField.model]
-      }
-      if (params[CatalogFilterField.diameter]) {
-        query[CatalogFilterField.diameter] = params[CatalogFilterField.diameter]
-      }
-      if (params[CatalogFilterField.series]) {
-        query[CatalogFilterField.series] = params[CatalogFilterField.series]
-      }
+      filterFieldsConfig.forEach(config => {
+        if (params[config.field]) {
+          query[config.field] = params[config.field]
+        }
+      })
 
       return query
     }
 
     const resetHandler = (): void => {
-      params[CatalogFilterField.diameter] = ''
-      params[CatalogFilterField.mark] = ''
-      params[CatalogFilterField.model] = ''
-      params[CatalogFilterField.series] = ''
+      filterFieldsConfig.forEach(config => {
+        params[config.field] = ''
+      })
     }
 
     const submitHandler = (): void => {
@@ -211,70 +213,26 @@ export default defineComponent({
       showFeedback.value = true
     }
 
-    const renderMarkSelect = () => {
-      return (
-        <div class="filter__field">
-          <GSelect
-            v-model={params[CatalogFilterField.mark]}
-            ariaLabel="Марка автомобиля"
-            clearable
-            label="Марка"
-            modelValue={params[CatalogFilterField.mark]}
-            placeholder="Выберите марку"
-            options={markOptions.value}
-          />
-        </div>
-      )
-    }
-    const renderModelSelect = () => {
-      return (
-        <div class="filter__field">
-          <GSelect
-            v-model={params[CatalogFilterField.model]}
-            ariaLabel="Модель автомобиля"
-            clearable
-            label="Модель"
-            modelValue={params[CatalogFilterField.model]}
-            placeholder="Выберите модель"
-            options={modelOptions.value}
-          />
-        </div>
-      )
-    }
-    const renderSeriesSelect = () => {
-      if (props.orientation !== 'vertical') {
+    const renderField = (config: FilterFieldConfig) => {
+      if (config.verticalOnly && props.orientation !== 'vertical') {
         return null
       }
 
       return (
-        <div class="filter__field">
+        <div class="filter__field" key={config.field}>
           <GSelect
-            v-model={params[CatalogFilterField.series]}
-            ariaLabel="Серия"
+            v-model={params[config.field]}
+            ariaLabel={config.ariaLabel}
             clearable
-            label="Серия"
-            modelValue={params[CatalogFilterField.series]}
-            placeholder="Выберите серию"
-            options={seriesOptions.value}
+            label={config.label}
+            modelValue={params[config.field]}
+            placeholder={config.placeholder}
+            options={optionsByField.value[config.field]}
           />
         </div>
       )
     }
-    const renderDiameterSelect = () => {
-      return (
-        <div class="filter__field">
-          <GSelect
-            v-model={params[CatalogFilterField.diameter]}
-            ariaLabel="Диаметр диска"
-            clearable
-            label="Диаметр диска"
-            modelValue={params[CatalogFilterField.diameter]}
-            placeholder="Выберите диаметр диска"
-            options={diameterOptions.value}
-          />
-        </div>
-      )
-    }
+
     const renderAction = () => {
       return (
         <div class="filter__action filter__action--horizontal">
@@ -287,6 +245,7 @@ export default defineComponent({
         </div>
       )
     }
+
     const renderResetAction = () => {
       if (props.orientation !== 'vertical') {
         return null
@@ -302,37 +261,16 @@ export default defineComponent({
         </div>
       )
     }
-    const renderTitle = () => {
-      return (
-        <span class="filter__panel-header-title">
-          Подбор по автомобилю
-        </span>
-      )
-    }
-    const renderDescription = () => {
-      return (
-        <span class="filter__panel-header-description">
-          Найдите совместимую тормозную систему для вашего автомобиля
-        </span>
-      )
-    }
+
     const renderHeader = () => {
       return (
         <div class="filter__panel-header">
-          {renderTitle()}
-          {renderDescription()}
+          <span class="filter__panel-header-title">Подбор по автомобилю</span>
+          <span class="filter__panel-header-description">Найдите совместимую тормозную систему для вашего автомобиля</span>
         </div>
       )
     }
-    const renderDivider = () => {
-      return <GDivider />
-    }
 
-    const renderFeedback = () => {
-      return (
-        <Feedback v-model={showFeedback.value}/>
-      )
-    }
     const renderFooter = () => {
       return (
         <div class="filter__panel-footer">
@@ -351,26 +289,21 @@ export default defineComponent({
     }
 
     return () =>
-      <section
-        class={{
-          filter: true,
-          'filter--vertical': props.orientation === 'vertical'
-        }}
-      >
+      <section class={{
+        filter: true,
+        'filter--vertical': props.orientation === 'vertical'
+      }}>
         <div class="filter__panel">
           {renderHeader()}
           <div class="filter__panel-fields">
-            {renderMarkSelect()}
-            {renderModelSelect()}
-            {renderSeriesSelect()}
-            {renderDiameterSelect()}
+            {filterFieldsConfig.map(renderField)}
             {renderAction()}
             {renderResetAction()}
           </div>
-          {renderDivider()}
+          <GDivider />
           {renderFooter()}
         </div>
-        {renderFeedback()}
+        <Feedback v-model={showFeedback.value} />
       </section>
   }
 })

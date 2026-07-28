@@ -8,11 +8,9 @@ $_name: "product-card";
 
   border: 1px solid colors.$border;
   border-top: 2px solid var(--series-accent);
-  border-radius: 12px;
+  border-radius: 10px;
 
   background: colors.$surface;
-
-  box-shadow: 0 16px 40px rgb(0 0 0 / 22%);
 
   display: grid;
   grid-template-rows: 200px auto;
@@ -32,15 +30,13 @@ $_name: "product-card";
   &:hover {
     border-color: colors.$border-strong;
 
-    box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
-
     transform: translateY(-4px);
 
     cursor: pointer;
   }
 
   &__media {
-    padding: 20px;
+    padding: 16px;
 
     background:
       radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
@@ -57,7 +53,7 @@ $_name: "product-card";
       display: grid;
       grid-template-columns: 1fr auto;
       gap: var(--space-xs);
-      align-content: start;
+      align-items: start;
 
       position: absolute;
       top: 14px;
@@ -80,6 +76,7 @@ $_name: "product-card";
   &__chips {
     display: flex;
     gap: 5px;
+    flex-direction: column;
     flex-wrap: wrap;
   }
 
@@ -141,12 +138,10 @@ $_name: "product-card";
   }
 
   &__title {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 600;
     color: colors.$text-primary;
-    line-height: 1.2;
     text-transform: uppercase;
-    letter-spacing: 1px;
   }
 
   &__specs {
@@ -180,19 +175,24 @@ $_name: "product-card";
   }
 
   &__price {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
-    color: colors.$text-secondary;
+    color: var(--color-text-primary);
     text-transform: uppercase;
+
+    display: flex;
+    align-items: center;
     font-variant-numeric: tabular-nums;
   }
 
   &__lead-time {
     font-size: 11px;
     color: var(--color-warning);
+    line-height: 20px;
 
     display: flex;
     gap: 6px;
+    align-items: start;
     align-items: center;
 
     &::before {

@@ -1,3 +1,4 @@
+// catalog.scss
 @use "colors";
 
 $_name: "catalog";
@@ -20,22 +21,6 @@ $_name: "catalog";
     height: fit-content;
   }
 
-  &__sidebar-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: colors.$primary;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  &__sidebar-actions {
-    display: grid;
-  }
-
-  &__sidebar-actions .button {
-    width: 100%;
-  }
-
   &__content {
     display: grid;
     gap: 32px;
@@ -48,32 +33,26 @@ $_name: "catalog";
 
     border-bottom: 1px solid colors.$border;
 
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+
+  &__mobile-toolbar {
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 8px;
+  }
+
+  &__toolbar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
   }
 
-  &__title-group {
-    display: grid;
-    gap: 10px;
-  }
-
-  &__title {
-    font-size: 30px;
-    font-weight: 700;
-    color: colors.$text;
-    line-height: 30px;
-    text-transform: uppercase;
-  }
-
-  &__description {
-    font-size: 14px;
-    color: colors.$text-secondary;
-    line-height: 16px;
-
-    max-width: 650px;
+  &__sort {
+    min-width: 200px;
   }
 
   &__meta {
@@ -81,6 +60,53 @@ $_name: "catalog";
     color: colors.$text-secondary;
     text-transform: uppercase;
     letter-spacing: 1px;
+  }
+
+  &__chips-row {
+    min-height: 32px;
+  }
+
+  &__chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__chip {
+    padding: 6px 8px 6px 12px;
+
+    font-size: 11px;
+    color: colors.$text;
+
+    border: 1px solid colors.$border;
+    border-radius: 20px;
+
+    background: colors.$surface-3;
+
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    cursor: pointer;
+
+    &-remove {
+      font-size: 13px;
+      color: colors.$text-muted;
+    }
+
+    &:hover &-remove {
+      color: colors.$primary;
+    }
+
+    &--reset {
+      padding: 6px 4px;
+
+      color: colors.$primary;
+
+      border-color: transparent;
+
+      background: transparent;
+    }
   }
 
   &__grid {
@@ -113,20 +139,10 @@ $_name: "catalog";
       gap: 48px;
       align-items: start;
     }
-  }
 
-  @media (width >= 1024px) {
     &__sidebar {
       position: sticky;
       top: 128px;
-    }
-  }
-
-  @media (width >= 768px) {
-    &__header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
     }
   }
 
@@ -147,6 +163,23 @@ $_name: "catalog";
       grid-template-columns: 1fr;
     }
   }
+}
+
+.sr-only {
+  margin: -1px;
+  padding: 0;
+
+  white-space: nowrap;
+
+  border: 0;
+
+  position: absolute;
+
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+
+  height: 1px;
+  width: 1px;
 }
 
 .catalog-pagination {

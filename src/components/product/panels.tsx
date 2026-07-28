@@ -1,4 +1,4 @@
-import { AccessoryItem, type CatalogItem, type CompatibilityItem, formatWheelDiameterRange } from '@/utils'
+import { AccessoryItem, type CatalogItem, type CompatibilityItem, getWheelDiameterRange } from '@/utils'
 import { Fragment, PropType, computed, defineComponent, reactive } from 'vue'
 import { GPanel } from '@/components'
 import Item from '@/components/accessories/item'
@@ -75,7 +75,7 @@ export const ProductTabs = defineComponent({
         },
         {
           label: 'Диаметр колёс, in',
-          value: formatWheelDiameterRange(props.value.wheelDiameter)
+          value: getWheelDiameterRange(props.value.wheelDiameter)
         },
         {
           label: 'Диаметр диска, мм',

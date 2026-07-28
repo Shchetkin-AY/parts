@@ -3,7 +3,8 @@ import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 
 import {
   ButtonModes, type CatalogItem, Colors, Sizes,
-  formatUsd, formatWheelDiameterRange
+  formatUsd,
+  getWheelDiameterRange
 } from '@/utils'
 
 import { GButton, GChip } from '@/components'
@@ -40,7 +41,7 @@ export default defineComponent({
 
     const subtitle = computed(() => {
       const parts = [
-        formatWheelDiameterRange(props.value.wheelDiameter),
+        getWheelDiameterRange(props.value.wheelDiameter),
         `${props.value.discDiameter} мм`
       ].filter(Boolean)
 

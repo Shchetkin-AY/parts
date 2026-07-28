@@ -114,7 +114,7 @@ export const CatalogPagination = defineComponent({
       return (
         <nav class="catalog-pagination" aria-label="Пагинация каталога">
           <GButton
-            label="Назад"
+            label="<"
             size={Sizes.small}
             color={Colors.muted}
             mode={ButtonModes.outline}
@@ -128,7 +128,7 @@ export const CatalogPagination = defineComponent({
           </div>
 
           <GButton
-            label="Вперёд"
+            label=">"
             size={Sizes.small}
             disabled={currentPage.value === totalPages.value}
             color={Colors.primary}

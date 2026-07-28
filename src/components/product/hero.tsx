@@ -1,6 +1,6 @@
 import { PropType, defineComponent } from 'vue'
 
-import { type CatalogItem, Colors, Icons } from '@/utils'
+import { type CatalogItem, Colors, Icons, getWheelDiameterRange } from '@/utils'
 import { GIcon } from '@/components/g/icon'
 import { useViewportStore } from '@/stores'
 
@@ -39,7 +39,7 @@ export const ProductHero = defineComponent({
       {
         label: 'Диаметр колес',
         icon: Icons.wheel,
-        value: props.item.wheelDiameter
+        value: getWheelDiameterRange(props.item.wheelDiameter)
       },
       {
         label: 'Площадь поршней',
