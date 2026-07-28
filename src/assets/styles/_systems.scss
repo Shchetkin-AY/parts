@@ -1,5 +1,5 @@
 @use "colors";
-@use "./variables" as *;
+@use "mixins" as mixins;
 
 $_name: "systems";
 
@@ -7,163 +7,154 @@ $_name: "systems";
   display: grid;
   justify-items: center;
 
-  &-content {
+  &__content {
     display: grid;
-    gap: 20px;
+    gap: var(--space-sm);
     align-items: center;
 
-    min-width: 100%;
+    @include mixins.absolute-width(100%);
   }
 
   &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: colors.$text-primary;
-    line-height: 1;
+    color: var(--color-text-primary);
+
     text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
+
+    @include mixins.font(20px, 600);
   }
 
   &__cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--space-sm);
 
     width: min(100%, var(--layout-width));
 
     @media (width <= 1100px) {
       grid-template-columns: 1fr;
-      gap: 20px;
-    }
-  }
-}
-
-.systems-card {
-  border: 1px solid colors.$border;
-  border-radius: var(--radius-md);
-
-  background: colors.$surface;
-
-  position: relative;
-
-  overflow: hidden;
-
-  transition:
-    transform var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
-
-  min-height: 400px;
-
-  &:hover {
-    border-color: colors.$border-strong;
-
-    box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
-
-    transform: translateY(-4px);
-
-    .systems-card__image {
-      transform: scale(1.01);
-    }
-
-    .systems-card__link {
-      color: colors.$primary-hover;
     }
   }
 
-  &__media {
-    display: grid;
-    place-items: center;
+  &-card {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    border-radius: var(--radius-md);
 
-    position: absolute;
-
-    z-index: 0;
-    inset: 0;
-  }
-
-  &__image {
-    opacity: 0.72;
-
-    transition:
-      transform var(--transition-slow),
-      opacity var(--transition-slow);
-
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-
-    mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
-  }
-
-  &__overlay {
-    background:
-      linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 50%) 58%, rgb(0 0 0 / 82%) 100%),
-      radial-gradient(circle at top, rgb(255 255 255 / 3%), transparent 45%);
-
-    position: absolute;
-
-    z-index: 1;
-    inset: 0;
-  }
-
-  &__content {
-    padding: 16px;
-
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 16px;
+    background-color: var(--colors-surface);
 
     position: relative;
 
-    height: 100%;
+    overflow: hidden;
 
-    z-index: 2;
-  }
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
 
-  &__header {
-    display: grid;
-    gap: 2.4px;
-    align-self: start;
-  }
+    &:hover {
+      border-color: var(--color-border-strong);
 
-  &__title {
-    font-size: 16px;
-    font-weight: 500;
-    color: colors.$text-primary;
-    text-transform: uppercase;
-  }
+      box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
 
-  &__subtitle {
-    font-size: 12px;
-    font-weight: 300;
-    color: colors.$text-secondary;
-    line-height: 1.2;
-  }
+      transform: translateY(-4px);
+    }
 
-  &__features {
-    display: grid;
-    gap: 4px;
-    align-items: center;
-    align-self: end;
-  }
+    &__media {
+      display: grid;
+      place-items: center;
 
-  &__feature {
-    font-size: 12.4px;
-    color: colors.$text-secondary;
+      position: absolute;
 
-    display: grid;
-    grid-template-columns: 16px minmax(0, 1fr);
-    gap: 7.2px;
-    align-items: center;
-  }
+      z-index: 0;
+      inset: 0;
+    }
 
-  &__check {
-    font-size: 14.4px;
-    font-weight: 700;
-    color: colors.$primary;
-    line-height: 1;
+    &__image {
+      opacity: 0.72;
 
-    transform: translateY(0.8px);
+      transition:
+        transform var(--transition-slow),
+        opacity var(--transition-slow);
+      object-fit: cover;
+
+      mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
+
+      @include mixins.absolute-width(100%);
+    }
+
+    &__overlay {
+      background:
+        linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 50%) 58%, rgb(0 0 0 / 82%) 100%),
+        radial-gradient(circle at top, rgb(255 255 255 / 3%), transparent 45%);
+
+      position: absolute;
+
+      z-index: 1;
+      inset: 0;
+    }
+
+    &__content {
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      padding-left: var(--space-sm);
+      padding-right: var(--space-sm);
+
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: var(--space-sm);
+
+      position: relative;
+
+      z-index: 2;
+
+      @include mixins.absolute-height(100%);
+    }
+
+    &__header {
+      display: grid;
+      gap: 2px;
+      align-self: start;
+    }
+
+    &__title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(16px, 500);
+    }
+
+    &__subtitle {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px);
+    }
+
+    &__features {
+      display: grid;
+      gap: 4px;
+      align-items: center;
+      align-self: end;
+    }
+
+    &__feature {
+      color: var(--color-text-secondary);
+
+      display: grid;
+      grid-template-columns: 16px minmax(0, 1fr);
+      gap: var(--space-sm);
+      align-items: center;
+
+      @include mixins.font(12px);
+    }
+
+    &__check {
+      color: var(--color-primary);
+
+      transform: translateY(0.8px);
+
+      @include mixins.font(14px, 700);
+    }
+
+    @include mixins.absolute-height(400px);
   }
 }

@@ -1,60 +1,36 @@
 import { defineComponent } from 'vue'
-import { SystemCard, SystemsSeriesTypes } from '@/utils'
+import { SystemCard, SystemCards } from '@/utils'
 import SystemsCard from '@/components/systems/card'
 
 export default defineComponent({
-  name: 'GSystemCards',
+  name: 'SystemCards',
 
   setup() {
-    const cards: SystemCard[] = [
-      {
-        type: SystemsSeriesTypes.s,
-        title: 'S-series',
-        subtitle: 'Ежедневная езда',
-        image: '/images/categories/street.webp',
-        features: [
-          'Комфорт и надёжность',
-          'Оптимальны для города',
-          'Низкий уровень шума'
-        ]
-      },
-      {
-        type: SystemsSeriesTypes.r,
-        title: 'R-series',
-        subtitle: 'Активная езда',
-        image: '/images/categories/sport.webp',
-        features: [
-          'Высокая эффективность',
-          'Устойчивость к перегреву',
-          'Точный контроль'
-        ]
-      },
-      {
-        type: SystemsSeriesTypes.n,
-        title: 'N-series',
-        subtitle: 'Трек и автоспорт',
-        image: '/images/categories/track.webp',
-        features: [
-          'Максимальная мощность',
-          'Работа при экстремальных нагрузках',
-          'Для трека и соревнований'
-        ]
-      }
-    ]
+    const className = 'systems'
 
-    const renderTitle = () =>
-      <span class="systems__title">Серии комплектов</span>
+    const renderTitle = () => {
+      return <span class={`${className}__title`}>Серии комплектов</span>
+    }
+
+    const renderCard = (card: SystemCard) => {
+      return (
+        <SystemsCard
+          value={card}
+          key={card.type}
+        />
+      )
+    }
 
     const renderCards = () => {
-      return cards.map(card => {
-        return <SystemsCard key={card.type} value={card} />
+      return SystemCards.map(card => {
+        return renderCard(card)
       })
     }
     const renderContent = () => {
       return (
-        <div class="systems-content" >
+        <div class={`${className}__content`} >
           {renderTitle()}
-          <div class="systems__cards">
+          <div class={`${className}__cards`}>
             {renderCards()}
           </div>
         </div>
@@ -63,7 +39,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <section class="systems">
+        <section class={className}>
           {renderContent()}
         </section>
       )

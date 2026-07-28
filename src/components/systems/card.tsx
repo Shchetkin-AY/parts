@@ -1,5 +1,5 @@
-import { SystemCard } from '@/utils'
-import { PropType, computed, defineComponent } from 'vue'
+import { Colors, SystemCard } from '@/utils'
+import { PropType, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 import { GIcon } from '@/components'
 import { Icons } from '@/utils'
@@ -15,62 +15,67 @@ export default defineComponent({
   },
 
   setup(props) {
-    const classes = computed(() => ({
-      'systems-card': true,
-      [`systems-card--${props.value.type}`]: true
-    }))
-
-    const renderHeader = () => {
-      return (
-        <div class="systems-card__header">
-          <h3 class="systems-card__title">{props.value.title}</h3>
-          <p class="systems-card__subtitle">{props.value.subtitle}</p>
-        </div>
-      )
-    }
+    const className = 'systems-card'
 
     const renderImage = () => {
       return (
-        <div class="systems-card__media">
+        <div class={`${className}__media`}>
           <img
+            class={`${className}__image`}
             src={props.value.image}
             alt={props.value.title}
-            class="systems-card__image"
             loading="lazy"
             decoding="async"
           />
         </div>
       )
     }
+    const renderOverlay = () => {
+      return <div class={`${className}__overlay`} />
+    }
 
     const renderFeature = (feature: string) => {
       return (
-        <div class="systems-card__feature">
-          <GIcon icon={Icons.check} color="primary"/>
+        <div class={`${className}__feature`}>
+          <GIcon icon={Icons.check} color={Colors.primary} />
           <span>{feature}</span>
         </div>
       )
     }
 
+    const renderHeader = () => {
+      return (
+        <div class={`${className}__header`}>
+          <div class={`${className}__title`}>{props.value.title}</div>
+          <div class={`${className}__subtitle`}>{props.value.subtitle}</div>
+        </div>
+      )
+    }
     const renderFeatures = () => {
       return (
-        <div class="systems-card__features">
+        <div class={`${className}__features`}>
           {props.value.features.map(feature => renderFeature(feature))}
+        </div>
+      )
+    }
+    const renderContent = () => {
+      return (
+        <div class={`${className}__content`}>
+          {renderHeader()}
+          {renderFeatures()}
         </div>
       )
     }
 
     return () => {
       return (
-        <RouterLink class={classes.value} to={{ name: 'catalog' }}>
+        <RouterLink
+          class={className}
+          to={{ name: 'catalog' }}
+        >
           {renderImage()}
-
-          <div class="systems-card__overlay" />
-
-          <div class="systems-card__content">
-            {renderHeader()}
-            {renderFeatures()}
-          </div>
+          {renderOverlay()}
+          {renderContent()}
         </RouterLink>
       )
     }
