@@ -5,16 +5,14 @@ $_name: "g-select";
 
 .#{$_name} {
   display: grid;
-  gap: 6px;
+  gap: 4px;
 
   &__label {
     padding-left: 10px;
 
     color: var(--color-text-primary);
 
-    text-transform: uppercase;
-
-    @include mixins.font(10px, 500);
+    @include mixins.font(12px, 500);
   }
 
   &__field {
