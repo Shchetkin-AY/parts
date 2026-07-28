@@ -4,7 +4,7 @@
 $_name: "benefits";
 
 .#{$_name} {
-  padding: 16px;
+  padding: 24px;
 
   border-width: 1px;
   border-style: solid;
@@ -15,7 +15,7 @@ $_name: "benefits";
 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-sm);
+  gap: var(--space-md);
 
   position: relative;
 
@@ -60,6 +60,9 @@ $_name: "benefits";
   }
 
   @media (width <= 720px) {
+    padding: 16px;
+
     grid-template-columns: 1fr;
+    gap: var(--space-sm);
   }
 }
