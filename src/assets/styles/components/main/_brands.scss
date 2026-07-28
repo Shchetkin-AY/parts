@@ -35,7 +35,6 @@ $_name: "brands";
 
     @media (width <= 768px) {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-sm);
     }
   }
 
@@ -43,5 +42,10 @@ $_name: "brands";
     height: 120px;
     width: 100px;
     object-fit: contain;
+
+    @media (width <= 768px) {
+      height: 80px;
+      width: 80px;
+    }
   }
 }
