@@ -1,3 +1,5 @@
+import { CatalogItem } from './interfaces'
+
 export const numberToPxOrString = (value: string | number): string => {
   if (typeof value === 'string') {
     return value
@@ -15,19 +17,31 @@ export const formatUsd = (value: number): string => {
   return `$ ${usdFormatter.format(value).replace(/,/g, ' ')}`
 }
 
-export const formatWheelDiameterRange = (value: number | string): string => {
-  const diameters = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
-  const normalizedDiameters = diameters.map(diameter => diameter.replace(',', '.'))
+const extractDiameters = (value: number | string): number[] => {
+  return (String(value).match(/\d+(?:[.,]\d+)?/g) ?? [])
+    .map(diameter => Number(diameter.replace(',', '.')))
+    .filter(Number.isFinite)
+}
 
-  if (normalizedDiameters.length >= 2) {
-    return normalizedDiameters.map(diameter => `R${diameter}`).join('-')
+/**
+ * Возвращает диапазон диаметров колёс в формате "R12-R15" или "R15",
+ * если диаметр всего один.
+ *
+ * Принимает либо строку/число одного товара (item.wheelDiameter),
+ * либо массив CatalogItem — тогда диапазон строится по всем товарам вместе
+ * (например, по всем SKU одного setId).
+ */
+export const getWheelDiameterRange = (source: number | string | CatalogItem[]): string => {
+  const diameters = Array.isArray(source)
+    ? source.flatMap(item => extractDiameters(item.wheelDiameter))
+    : extractDiameters(source)
+
+  if (diameters.length === 0) {
+    return ''
   }
 
-  const wheelDiameter = Number(normalizedDiameters[0] ?? value)
+  const min = Math.min(...diameters)
+  const max = Math.max(...diameters)
 
-  if (Number.isFinite(wheelDiameter)) {
-    return `R${wheelDiameter}-R${wheelDiameter + 3}`
-  }
-
-  return `R${value}`
+  return min === max ? `R${min}` : `R${min} - R${max}`
 }

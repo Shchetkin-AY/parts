@@ -53,9 +53,22 @@ const sortNumbers = (values: number[]): number[] => {
 }
 
 const getWheelDiameterValues = (value: number | string): number[] => {
-  const diameterValues = String(value).match(/\d+(?:[.,]\d+)?/g) ?? []
+  const source = String(value)
+  const rangeMatch = source.match(/(\d+)\s*-\s*(\d+)/)
 
-  return diameterValues
+  if (rangeMatch) {
+    const from = Number(rangeMatch[1])
+    const to = Number(rangeMatch[2])
+    const result: number[] = []
+
+    for (let diameter = from; diameter <= to; diameter++) {
+      result.push(diameter)
+    }
+
+    return result
+  }
+
+  return (source.match(/\d+(?:[.,]\d+)?/g) ?? [])
     .map(diameterValue => Number(diameterValue.replace(',', '.')))
     .filter(Number.isFinite)
 }
