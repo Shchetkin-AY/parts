@@ -1,4 +1,3 @@
-// filter.tsx — итоговая версия с конфигом полей и wheelDiameter
 import { PropType, computed, defineComponent, onBeforeMount, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ButtonModes, CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Colors, type SelectOption, Sizes } from '@/utils'

@@ -15,54 +15,20 @@ $_name: "benefits";
 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  gap: var(--space-sm);
 
   position: relative;
 
-  &__title {
-    font-size: clamp(48px, 6vw, 88px);
-    font-weight: 900;
-    color: colors.$text;
-    line-height: 0.88;
-    text-transform: uppercase;
-    letter-spacing: -1.28px;
-
-    span {
-      color: colors.$text;
-
-      display: block;
-    }
-  }
-
-  &__description {
-    margin-top: 28px;
-
-    font-size: 16.8px;
-    font-weight: 300;
-    color: colors.$text-soft;
-    line-height: 1.75;
-
-    max-width: 640px;
-  }
-
   &__item {
-    padding: 20px;
-
-    border-right: 1px solid colors.$border;
-
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 20px;
+    gap: var(--space-sm);
     align-content: start;
     align-content: center;
 
     position: relative;
 
     overflow: hidden;
-
-    &:nth-child(4n) {
-      border-right: none;
-    }
 
     &-icon {
       display: inline-flex;
@@ -77,42 +43,15 @@ $_name: "benefits";
     }
 
     &-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: colors.$text-primary;
-      letter-spacing: 0.7px;
+      color: var(--color-text-primary);
+
+      @include mixins.font(14px, 500);
     }
 
     &-text {
-      font-size: 12px;
-      font-weight: 300;
-      color: colors.$text-muted;
-      letter-spacing: 0.7px;
-    }
+      color: var(--color-text-muted);
 
-    @media (width <= 1200px) {
-      border-right: 1px solid colors.$border;
-
-      &:nth-child(2n) {
-        border-right: none;
-      }
-    }
-
-    @media (width <= 720px) {
-      padding-bottom: 16px;
-
-      border-right: none;
-      border-bottom: 1px solid colors.$border;
-
-      &:first-child {
-        padding-top: 0;
-      }
-
-      &:last-child {
-        padding-bottom: 0;
-
-        border-bottom: none;
-      }
+      @include mixins.font(12px);
     }
   }
 
@@ -122,10 +61,5 @@ $_name: "benefits";
 
   @media (width <= 720px) {
     grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  @media (width <= 720px) {
-    padding: 16px;
   }
 }

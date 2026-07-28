@@ -1,40 +1,28 @@
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { GIcon } from '@/components'
-import { BenefitsItem, Colors, Icons } from '@/utils'
-
-const className = 'benefits'
+import { BenefitsItem, BenefitsItems, Colors, Icons } from '@/utils'
+import { useViewportStore } from '@/stores'
 
 export default defineComponent({
   name: 'Benefits',
 
   setup() {
-    const items: BenefitsItem[] = [
-      {
-        icon: Icons.verified,
-        title: 'Официальный дистрибьютор',
-        text: 'Прямые поставки'
-      },
-      {
-        icon: Icons.settings,
-        title: 'Индивидуальные решения',
-        text: 'Под заказ любой конфигурации'
-      },
-      {
-        icon: Icons.delivery,
-        title: 'Быстрая доставка',
-        text: 'По всей России'
-      },
-      {
-        icon: Icons.warranty,
-        title: 'Гарантия и поддержка',
-        text: '1 год'
+    const viewportStore = useViewportStore()
+
+    const className = 'benefits'
+
+    const iconSize = computed<number>(() => {
+      if (viewportStore.size.width > 720) {
+        return 46
       }
-    ]
+
+      return 28
+    })
 
     const renderItemIcon = (icon: Icons) => {
       return (
         <div class={`${className}__item-icon`}>
-          <GIcon icon={icon} size={46} color={Colors.primary} />
+          <GIcon icon={icon} size={iconSize.value} color={Colors.primary} />
         </div>
       )
     }
@@ -57,7 +45,7 @@ export default defineComponent({
     }
 
     const renderItems = () => {
-      return items.map(item => {
+      return BenefitsItems.map(item => {
         return renderItem(item)
       })
     }
