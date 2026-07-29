@@ -1,6 +1,7 @@
 import { type CatalogItem } from '@/utils'
-import { PropType, defineComponent } from 'vue'
+import { PropType, computed, defineComponent } from 'vue'
 import ProductCard from '@/components/product-card'
+import { useCatalogStore, useViewportStore } from '@/stores'
 
 export const ProductRelated = defineComponent({
   name: 'ProductRelated',
@@ -9,22 +10,40 @@ export const ProductRelated = defineComponent({
     item: {
       type: Object as PropType<CatalogItem | null>,
       default: null
-    },
-    relatedItems: {
-      type: Array as PropType<CatalogItem[]>,
-      default: () => []
     }
   },
 
   setup(props) {
+    const viewportStore = useViewportStore()
+    const catalogStore = useCatalogStore()
+
+    const className = 'related'
+
+    const items = computed(() => {
+      if (!props.item) {
+        return []
+      }
+
+      let itemsCount = 4
+
+      if (viewportStore.size.width < 1520) {
+        itemsCount = 3
+      }
+      if (viewportStore.size.width < 1100) {
+        itemsCount = 2
+      }
+
+      return catalogStore.getRelatedItems(props.item, itemsCount)
+    })
+
     const renderRelatedHeader = () => {
       if (!props.item) {
         return null
       }
 
       return (
-        <div class="product-page__related-header">
-          <div class="product-page__related-title">
+        <div class="related-header">
+          <div class="related-title">
             Другие комплекты {props.item.series}
           </div>
         </div>
@@ -33,7 +52,7 @@ export const ProductRelated = defineComponent({
 
     const renderRelatedCard = (item: CatalogItem) => {
       return (
-        <div class="product-page__related-item">
+        <div class="related-item">
           <ProductCard
             value={item}
             badge={item.id === props.item?.id}
@@ -42,19 +61,19 @@ export const ProductRelated = defineComponent({
       )
     }
 
-    const renderRelatedGrid = () => {
+    const renderRelatedCards = () => {
       return (
-        <div class="product-page__related-grid">
-          {props.relatedItems.map(item => renderRelatedCard(item))}
+        <div class="related-cards">
+          {items.value.map(item => renderRelatedCard(item))}
         </div>
       )
     }
 
     return () => {
       return (
-        <section class="product-page__related">
+        <section class="related">
           {renderRelatedHeader()}
-          {renderRelatedGrid()}
+          {renderRelatedCards()}
         </section>
       )
     }

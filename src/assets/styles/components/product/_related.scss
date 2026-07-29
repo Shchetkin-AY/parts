@@ -1,33 +1,32 @@
-@use "../../colors";
-@use "../../variables" as *;
+@use "colors";
+@use "mixins" as mixins;
 
-.#{"product-page"} {
-  &__related {
-    display: grid;
-    gap: 24px;
-  }
+$_name: "related";
 
-  &__related-header {
+.#{$_name} {
+  display: grid;
+  gap: var(--space-md);
+
+  &-header {
     display: flex;
-    gap: 24px;
+    gap: var(--space-md);
     align-items: center;
     justify-content: space-between;
   }
 
-  &__related-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: colors.$text-primary;
-    line-height: 1;
+  &-title {
+    color: var(--color-text-primary);
+
     text-align: left;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
+
+    @include mixins.font(20px, 600);
   }
 
-  &__related-grid {
+  &-cards {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
+    gap: var(--space-sm);
 
     @media (width <= 1520px) {
       grid-template-columns: repeat(3, 1fr);

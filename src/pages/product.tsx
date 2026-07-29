@@ -1,7 +1,7 @@
 import { useRoute } from 'vue-router'
 import { computed, defineComponent, onBeforeMount } from 'vue'
 
-import { useCatalogStore, useViewportStore } from '@/stores'
+import { useCatalogStore } from '@/stores'
 
 import { CatalogItem } from '@/utils'
 import { Breadcrumbs, Page, ProductHero, ProductRelated, ProductTabs, Purchase } from '@/components'
@@ -14,7 +14,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
 
-    const viewportStore = useViewportStore()
     const catalogStore = useCatalogStore()
 
     onBeforeMount(() => {
@@ -32,24 +31,6 @@ export default defineComponent({
       const item = catalogStore.getById(routeId.value)
 
       return item ?? null
-    })
-
-    const relatedItems = computed(() => {
-      const item = currentItem.value
-      if (!item) {
-        return []
-      }
-
-      let itemsCount = 4
-
-      if (viewportStore.size.width < 1520) {
-        itemsCount = 3
-      }
-      if (viewportStore.size.width < 1100) {
-        itemsCount = 2
-      }
-
-      return catalogStore.getRelatedItems(item, itemsCount)
     })
 
     const renderEmptyState = () => {
@@ -104,7 +85,7 @@ export default defineComponent({
         <section class="page__section page__section--contained product-page__section--catalog">
           <div class="product-page__catalog">
             <div class="product-page__catalog-products">
-              <ProductRelated item={currentItem.value} relatedItems={relatedItems.value} />
+              <ProductRelated item={currentItem.value} />
             </div>
 
             <aside class="product-page__catalog-accessories">
