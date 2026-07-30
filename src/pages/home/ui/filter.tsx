@@ -39,6 +39,8 @@ export default defineComponent({
       () => catalogStore.compatibleItems
     )
 
+    const className = 'home-filter'
+
     const showFeedback = ref(false)
 
     const submitHandler = (): void => {
@@ -55,7 +57,7 @@ export default defineComponent({
     }
 
     const renderField = (config: FilterFieldConfig) =>
-      <div class="filter__field" key={config.field}>
+      <div class={`${className}__field`} key={config.field}>
         <UiSelect
           v-model={params[config.field]}
           ariaLabel={config.ariaLabel}
@@ -67,30 +69,41 @@ export default defineComponent({
         />
       </div>
 
+    const renderFields = () => {
+      return fieldsConfig.map(field => {
+        return renderField(field)
+      })
+    }
+
+    const renderSubmitButton = () => {
+      return (
+        <div class={`${className}__submit`}>
+          <UiButton
+            color={Color.primary}
+            disabled={filteredItems.value.length === 0}
+            label="Найти комплекты"
+            onClick={submitHandler}
+          />
+        </div>
+      )
+    }
+
     return () =>
-      <div class="filter">
-        <div class="filter__panel">
-          <div class="filter__panel-header">
-            <span class="filter__panel-header-title">Подбор по автомобилю</span>
-            <span class="filter__panel-header-description">Найдите совместимую тормозную систему для вашего автомобиля</span>
-          </div>
-          <div class="filter__panel-fields">
-            {fieldsConfig.map(renderField)}
-            <div class="filter__action filter__action--horizontal">
-              <UiButton
-                color={Color.primary}
-                disabled={filteredItems.value.length === 0}
-                label="Найти комплекты"
-                onClick={submitHandler}
-              />
-            </div>
-          </div>
-          <UiDivider />
-          <div class="filter__panel-footer">
-            <div class="filter__panel-footer__content" >
-              <span class="filter__panel-footer__content-title">Не нашли свой автомобиль?</span>
-              <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
-            </div>
+      <div class={className}>
+        <div class={`${className}__header`}>
+          <span class={`${className}__header-title`}>Подбор по автомобилю</span>
+          <span class={`${className}__header-description`}>Найдите совместимую тормозную систему для вашего автомобиля</span>
+        </div>
+        <div class={`${className}__fields`}>
+          {renderFields()}
+          {renderSubmitButton()}
+
+        </div>
+        <UiDivider />
+        <div class={`${className}__footer`} >
+          <div class={`${className}__footer-content`} >
+            <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
+            <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
           </div>
         </div>
         <Feedback v-model={showFeedback.value} />
