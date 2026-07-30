@@ -8,6 +8,7 @@ export enum Color {
   'text-primary' = 'text-primary',
   'text-secondary' = 'text-secondary',
   'text-muted' = 'text-muted',
+  'text-dim' = 'text-dim',
   'text-soft' = 'text-soft',
   'text-inverse' = 'text-inverse',
   'text-on-primary' = 'text-on-primary',

@@ -44,7 +44,7 @@ export default defineComponent({
     const submitHandler = (): void => {
       const query = buildCatalogFilterQuery(params)
 
-      void router.push(
+      router.push(
         Object.keys(query).length === 0
           ? { name: 'catalog' }
           : {
