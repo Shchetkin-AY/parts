@@ -17,8 +17,6 @@ export const ProductRelated = defineComponent({
     const viewportStore = useViewportStore()
     const catalogStore = useCatalogStore()
 
-    const className = 'related'
-
     const items = computed(() => {
       if (!props.item) {
         return []
