@@ -5,7 +5,7 @@ $_name: "popular";
 
 .#{$_name} {
   display: grid;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   align-items: center;
   justify-items: center;
 
@@ -19,15 +19,10 @@ $_name: "popular";
 
     &-title {
       color: var(--color-text-primary);
-      line-height: 1;
-      text-align: center;
-      text-transform: uppercase;
 
-      display: grid;
-      justify-content: start;
+      text-align: left;
 
       @include mixins.font(20px, 600);
-      @include mixins.absolute-width(100%);
     }
 
     &-link {
@@ -41,6 +36,10 @@ $_name: "popular";
       }
 
       @include mixins.font(13px, 600);
+
+      @media (width <= 500px) {
+        justify-content: start;
+      }
     }
 
     @include mixins.absolute-width(100%);
@@ -55,6 +54,8 @@ $_name: "popular";
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-sm);
 
+    @include mixins.absolute-width(100%);
+
     @media (width <= 1100px) {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -63,7 +64,7 @@ $_name: "popular";
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (width <= 500px) {
+    @media (width <= 600px) {
       grid-template-columns: 1fr;
     }
   }
