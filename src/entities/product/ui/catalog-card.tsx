@@ -4,7 +4,8 @@ import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 import {
   ButtonMode, type CatalogItem, Color, Size,
   formatUsd,
-  getWheelDiameterRange
+  getWheelDiameterRange,
+  pluralize
 } from '@/utils'
 
 import { UiButton, UiChip } from '@/ui'
@@ -31,14 +32,17 @@ export default defineComponent({
 
     const className = 'product-catalog-card'
 
-    const images = computed(() =>
-      [ 0, 1, 2 ].map(n => `/images/products/${seriesKey.value}/${n}.webp`))
-
-    const activeImage = ref(Math.floor(Math.random() * images.value.length))
     const hover = ref<boolean>(false)
 
     const title = computed(() => props.value.model)
 
+    const pistonCount = computed<string>(() => {
+      return pluralize(props.value.pistonCount, 'поршень', 'поршня', 'поршней')
+    })
+    const images = computed(() => {
+      return [ 0, 1, 2 ].map(n => `/images/products/${seriesKey.value}/${n}.webp`)
+    })
+    const activeImage = ref(Math.floor(Math.random() * images.value.length))
     const subtitle = computed(() => {
       const parts = [
         getWheelDiameterRange(props.value.wheelDiameter),
@@ -80,7 +84,7 @@ export default defineComponent({
       return (
         <div class="product-catalog-card__chips">
           <UiChip
-            label={`${props.value.pistonCount} ${props.value.pistonCount < 5 ? 'поршня' : 'поршней'}`}
+            label={pistonCount.value}
             color={Color.muted}
           />
           {renderHitChip()}
