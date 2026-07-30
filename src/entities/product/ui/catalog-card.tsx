@@ -37,7 +37,10 @@ export default defineComponent({
     const title = computed(() => props.value.model)
 
     const pistonCount = computed<string>(() => {
-      return pluralize(props.value.pistonCount, 'поршень', 'поршня', 'поршней')
+      return [
+        props.value.pistonCount,
+        pluralize(props.value.pistonCount, 'поршень', 'поршня', 'поршней')
+      ].join(' ')
     })
     const images = computed(() => {
       return [ 0, 1, 2 ].map(n => `/images/products/${seriesKey.value}/${n}.webp`)
