@@ -80,8 +80,9 @@ export default defineComponent({
         <div class={`${className}__submit`}>
           <UiButton
             color={Color.primary}
-            disabled={filteredItems.value.length === 0}
             label="Найти комплекты"
+            minWidth={'100%'}
+            disabled={filteredItems.value.length === 0}
             onClick={submitHandler}
           />
         </div>
