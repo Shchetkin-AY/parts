@@ -56,6 +56,21 @@ export default defineComponent({
       )
     }
 
+    const renderHeaderTitle = () => {
+      return <span class={`${className}__header-title`}>Подбор по автомобилю</span>
+    }
+    const renderHeaderDescription = () => {
+      return <span class={`${className}__header-description`}>Найдите совместимую тормозную систему для вашего автомобиля</span>
+    }
+    const renderHeader = () => {
+      return (
+        <div class={`${className}__header`}>
+          {renderHeaderTitle()}
+          {renderHeaderDescription()}
+        </div>
+      )
+    }
+
     const renderField = (config: FilterFieldConfig) =>
       <div class={`${className}__field`} key={config.field}>
         <UiSelect
@@ -91,10 +106,7 @@ export default defineComponent({
 
     return () =>
       <div class={className}>
-        <div class={`${className}__header`}>
-          <span class={`${className}__header-title`}>Подбор по автомобилю</span>
-          <span class={`${className}__header-description`}>Найдите совместимую тормозную систему для вашего автомобиля</span>
-        </div>
+        {renderHeader()}
         <div class={`${className}__fields`}>
           {renderFields()}
           {renderSubmitButton()}
