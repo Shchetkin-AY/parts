@@ -1,5 +1,0 @@
-export * from './breadcrumbs'
-export * from './hero'
-export * from './purchase'
-export * from './related'
-export * from './panels'

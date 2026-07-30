@@ -1,20 +1,11 @@
 @use "root";
-@use "accessories";
-@use "feedback";
-@use "layout";
-@use "navigation";
-@use "filter";
-@use "systems";
-@use "product-card";
-@use "product-gallery";
-@use "production-route";
-@use "technical-excellence";
-@use "product-highlight";
-@use "footer";
-@use "components/g";
-@use "components/main";
-@use "components/product";
-@use "page";
+@use "layouts";
+@use "ui";
+@use "entities/accessory";
+@use "entities/product";
+@use "features/feedback";
+@use "features/filter";
+@use "widgets";
 @use "pages";
 
 body {

@@ -1,0 +1,123 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-chip";
+
+@mixin _colors {
+  @each $name, $value in colors.$colors {
+    &--#{$name} {
+      background-color: colors.color(color-#{$name}, 0.2);
+
+      & > .#{$_name}__content {
+        & > .#{$_name}__label {
+          color: colors.color(color-#{$name});
+        }
+      }
+    }
+  }
+}
+
+@mixin _sizes {
+  &--small {
+    padding-left: 5px;
+    padding-right: 5px;
+
+    min-height: 14px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        @include mixins.font(8px, 500);
+      }
+    }
+  }
+
+  &--medium {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    min-height: 18px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        @include mixins.font(10px, 500);
+      }
+    }
+  }
+
+  &--large {
+    padding-left: 14px;
+    padding-right: 14px;
+
+    min-height: 32px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        @include mixins.font(12px, 600);
+      }
+    }
+  }
+}
+
+.#{$_name} {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  color: var(--color-text);
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(--radius-xs);
+
+  background-color: var(--color-border);
+
+  display: grid;
+  place-content: center;
+  place-items: center;
+
+  position: relative;
+
+  width: fit-content;
+
+  z-index: 1;
+
+  &__content {
+    display: grid;
+    align-items: center;
+
+    user-select: none;
+  }
+
+  &__label {
+    color: currentcolor;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    display: inline-block;
+
+    overflow-x: hidden;
+
+    @include mixins.font(10px, 600);
+  }
+
+  &--outline {
+    border-color: var(--color-border);
+  }
+
+  &--round {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &--absolute {
+    position: absolute;
+  }
+
+  @include _colors;
+  @include _sizes;
+}

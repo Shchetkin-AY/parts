@@ -1,0 +1,21 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-divider";
+
+.#{$_name} {
+  background-color: colors.$border;
+
+  display: flex;
+  flex: 1;
+
+  &--horizontal {
+    @include mixins.absolute-height(1px);
+    @include mixins.absolute-width(100%);
+  }
+
+  &--vertical {
+    @include mixins.absolute-height(100%);
+    @include mixins.absolute-width(1px);
+  }
+}

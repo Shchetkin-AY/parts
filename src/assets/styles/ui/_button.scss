@@ -1,0 +1,243 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-button";
+
+@mixin _colors {
+  @each $name in colors.$color-names {
+    &--color-#{$name} {
+      &:not(.#{$_name}--disabled) {
+        background-color: colors.color(color-#{$name});
+
+        & > .#{$_name}__content {
+          & > .#{$_name}__icon,
+          & > .#{$_name}__label {
+            color: colors.color(color-text);
+          }
+        }
+
+        &.#{$_name}--outline,
+        &.#{$_name}--flat {
+          & > .#{$_name}__content {
+            & > .#{$_name}__label {
+              color: colors.color(color-#{$name});
+            }
+          }
+        }
+
+        &:hover {
+          &::before {
+            background-color: colors.color(color-bg, 0.2);
+          }
+        }
+
+        &:active {
+          &::before {
+            background-color: colors.color(color-bg, 0.3);
+          }
+        }
+
+        &.#{$_name}--flat {
+          background-color: colors.color(color-#{$name}, 0.1);
+        }
+        &.#{$_name}--outline {
+          border-color: colors.color(color-#{$name}, 0.5);
+
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+@mixin _sizes {
+  &--small {
+    min-height: 34px;
+    max-height: 34px;
+
+    height: 34px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        @include mixins.font(10px, 600);
+      }
+    }
+  }
+
+  &--medium {
+    @include mixins.absolute-height(40px);
+  }
+
+  &--large {
+    & > .#{$_name}__content {
+      & > .#{$_name}__label {
+        @include mixins.font(16px, 600);
+      }
+    }
+
+    @include mixins.absolute-height(60px);
+  }
+}
+
+@mixin _transition {
+  transition:
+    transform var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.#{$_name} {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  color: var(--color-text);
+  vertical-align: middle;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(--radius-xs);
+  outline: none;
+
+  background-color: transparent;
+
+  display: grid;
+  place-items: center stretch;
+
+  position: relative;
+
+  cursor: pointer;
+  user-select: none;
+
+  min-width: 40px;
+
+  &__label {
+    padding-left: 22px;
+    padding-right: 22px;
+
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+
+    display: inline-block;
+
+    overflow: hidden;
+
+    @include mixins.font(14px, 600);
+    @include _transition;
+  }
+
+  &__icon {
+    color: var(--color-text-inverse);
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    & i,
+    & svg {
+      @include _transition;
+    }
+
+    @include _transition;
+  }
+
+  &__content {
+    display: grid;
+    gap: 5px;
+    place-items: center;
+  }
+
+  &:hover {
+    &::before {
+      background-color: colors.color(color-text, 0.08);
+    }
+  }
+
+  &:active {
+    &::before {
+      background-color: colors.color(color-text, 0.1);
+    }
+  }
+
+  &::before {
+    border-radius: var(--radius-xs);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    content: "";
+
+    height: 100%;
+    width: 100%;
+
+    @include _transition;
+  }
+
+  &--outline {
+    color: currentcolor;
+
+    border-color: var(--color-border);
+
+    background-color: transparent;
+
+    & > .#{$_name}__content {
+      & > .#{$_name}__icon,
+      & > .#{$_name}__label {
+        color: currentcolor;
+      }
+    }
+
+    & > .#{$_name}__loading {
+      color: currentcolor;
+    }
+
+    &:hover {
+      &::before {
+        background-color: colors.color(color-border, 0.05);
+      }
+    }
+
+    &:active {
+      &::before {
+        background-color: colors.color(color-border, 0.08);
+      }
+    }
+  }
+
+  &--icon-only {
+    padding-left: 0;
+    padding-right: 0;
+
+    & > .#{$_name}__content {
+      gap: 0;
+    }
+
+    @include mixins.absolute-width(40px);
+  }
+
+  &--disabled {
+    background-color: colors.color(color-grey, 0.05);
+
+    cursor: default;
+    pointer-events: none;
+
+    & > .#{$_name}__content {
+      & > .#{$_name}__icon,
+      & > .#{$_name}__label {
+        color: colors.color(color-grey, 0.15);
+      }
+    }
+  }
+
+  @include mixins.absolute-height(40px);
+  @include _transition;
+  @include _colors;
+  @include _sizes;
+}

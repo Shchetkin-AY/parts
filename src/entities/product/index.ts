@@ -1,0 +1,7 @@
+export { default as ProductCatalogCard } from './ui/catalog-card'
+export { default as ProductGallery } from './ui/gallery'
+export * from './ui/breadcrumbs'
+export * from './ui/details'
+export * from './ui/hero'
+export * from './ui/purchase'
+export * from './ui/related'

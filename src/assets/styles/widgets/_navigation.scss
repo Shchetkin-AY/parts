@@ -1,0 +1,251 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "navigation";
+
+.#{$_name} {
+  border-bottom: 1px solid var(--color-border);
+
+  background-color: var(--color-surface-container-lowest);
+
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
+  position: fixed;
+  top: 0;
+
+  height: 96px;
+  width: 100%;
+
+  z-index: 20;
+  padding-inline: var(--space-md);
+
+  &__container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-sm);
+    align-items: center;
+
+    width: min(100%, var(--layout-width));
+
+    @media (width >= 768px) {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+  }
+
+  &__brand {
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    min-width: 0;
+    justify-self: start;
+
+    @include mixins.font(36px, 900);
+  }
+
+  &__links {
+    display: none;
+
+    @media (width >= 768px) {
+      text-transform: uppercase;
+
+      display: grid;
+      grid-auto-flow: column;
+      gap: var(--space-xxl);
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+
+      @include mixins.font(12px, 400, 16px);
+    }
+  }
+
+  &__link {
+    display: grid;
+
+    transition: color 0.2s ease;
+
+    &--active {
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 10px;
+      text-decoration-color: var(--color-primary);
+      text-decoration-thickness: 2px;
+    }
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+
+    &:active {
+      color: var(--color-primary-active);
+    }
+
+    @include mixins.font(14px, 700, 16px);
+  }
+
+  &__actions {
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--space-sm);
+    align-items: center;
+    justify-self: end;
+
+    @media (width >= 768px) {
+      gap: var(--space-sm);
+    }
+  }
+
+  &__phone {
+    padding-left: 12px;
+    padding-right: 12px;
+
+    border-radius: var(--border-radius);
+
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+    gap: var(--space-sm);
+    align-items: center;
+
+    transition:
+      transform var(--transition-fast),
+      background-color var(--transition-fast);
+
+    cursor: pointer;
+
+    max-width: fit-content;
+
+    &-content {
+      display: grid;
+      grid-template-rows: repeat(2, auto);
+      gap: 4px;
+
+      &-title {
+        color: var(--color-text-primary);
+
+        @include mixins.font(14px, 500);
+      }
+
+      &-subtitle {
+        color: var(--color-text-secondary);
+
+        @include mixins.font(12px);
+      }
+
+      @media (width <= 950px) {
+        display: none;
+      }
+    }
+
+    @include mixins.absolute-height(40px);
+
+    @media (width <= 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__menu {
+    padding: 8px;
+
+    color: var(--color-text-primary);
+
+    border: 0;
+
+    background: transparent;
+
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    @media (width >= 768px) {
+      display: none;
+    }
+  }
+
+  /* Mobile drawer and overlay */
+  &__overlay {
+    background: colors.color(color-bg, 0.8);
+
+    position: fixed;
+
+    opacity: 0;
+
+    transition: opacity 300ms ease;
+
+    pointer-events: none;
+
+    z-index: 9998;
+    inset: 0;
+
+    &.open {
+      opacity: 1;
+
+      pointer-events: auto;
+    }
+  }
+
+  &__drawer {
+    padding: 18px;
+
+    background: var(--color-surface);
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+    transform: translateX(100%);
+
+    pointer-events: none;
+
+    width: min(300px, 350px);
+
+    z-index: 9999;
+    will-change: transform;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    &-content {
+      padding-top: 8px;
+
+      display: grid;
+      gap: var(--space-xl);
+
+      .navigation__drawer-item {
+        > .navigation__link {
+          @include mixins.font(18px, 700);
+        }
+      }
+    }
+
+    &.open {
+      transform: translateX(0);
+
+      pointer-events: auto;
+    }
+
+    @include mixins.absolute-height(100%);
+  }
+
+  @media (width >= 768px) {
+    padding-inline: 48px;
+  }
+}

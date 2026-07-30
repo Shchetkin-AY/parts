@@ -4,9 +4,9 @@ import { computed, defineComponent, onBeforeMount } from 'vue'
 import { useCatalogStore } from '@/stores'
 
 import { CatalogItem } from '@/utils'
-import { Breadcrumbs, Page, ProductHero, ProductRelated, ProductTabs, Purchase } from '@/components'
-import ProductGallery from '@/components/product-gallery'
-import Accessories from '@/components/accessories/list'
+import { Page } from '@/ui'
+import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase } from '@/entities/product'
+import { Accessories } from '@/entities/accessory'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -61,7 +61,7 @@ export default defineComponent({
       }
 
       return (
-        <section class="page__section page__section--contained">
+        <section class="isk-page__section isk-page__section--contained">
           <div class="product-page__hero-product">
             <div class="product-page__hero-main">
               <Breadcrumbs item={item} />
@@ -70,7 +70,7 @@ export default defineComponent({
                 {renderHero(item)}
               </div>
               <div class="product-page__section--tabs">
-                <ProductTabs value={item} />
+                <ProductDetails value={item} />
               </div>
 
             </div>
@@ -82,7 +82,7 @@ export default defineComponent({
 
     const renderCatalog = () => {
       return (
-        <section class="page__section page__section--contained product-page__section--catalog">
+        <section class="isk-page__section isk-page__section--contained product-page__section--catalog">
           <div class="product-page__catalog">
             <div class="product-page__catalog-products">
               <ProductRelated item={currentItem.value} />

@@ -1,6 +1,6 @@
 /* eslint-disable */
 // Auto-generated. Do not edit.
-import type { CompatibilityItem } from '@/utils/interfaces/catalog'
+import type { CompatibilityItem } from '@/utils'
 
 export const compatibility: CompatibilityItem[] = [
   {

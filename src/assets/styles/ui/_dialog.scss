@@ -1,0 +1,195 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-dialog";
+
+.#{$_name} {
+  padding: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 50;
+
+  &__title {
+    padding: 20px;
+
+    color: var(--colors-text-primary);
+
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    @include mixins.font(20px, 500);
+
+    @media screen and (width <= 768px) {
+      padding: 15px;
+
+      @include mixins.font(18px, 500);
+    }
+
+    @media screen and (width <= 420px) {
+      @include mixins.font(14px, 500);
+    }
+  }
+
+  &__holder {
+    border-radius: var(--radius-sm);
+
+    background-color: var(--color-surface);
+
+    display: grid;
+
+    position: relative;
+
+    z-index: 1;
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    width: 100%;
+  }
+
+  &__body {
+    flex: 1;
+
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &__close {
+    border-radius: var(--radius-xs);
+
+    background-color: rgb(255 255 255 / 7%);
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    position: absolute;
+    top: 0;
+    right: -50px;
+
+    transition-property: background-color, transform;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: colors.color(color-text, 0.2);
+    }
+
+    &:active {
+      background-color: colors.color(color-text, 0.3);
+    }
+
+    @include mixins.absolute-height(40px);
+    @include mixins.absolute-width(40px);
+  }
+
+  &--mobile {
+    align-items: flex-end;
+
+    & > .#{$_name}__holder {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+
+      max-height: 90%;
+      min-width: 100%;
+
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  @media screen and (width <= 1024px) {
+    padding: 15px;
+  }
+
+  @media screen and (width <= 768px) {
+    padding: 0;
+  }
+}
+
+.show-dialog {
+  &-enter-active,
+  &-leave-active {
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+
+    & .#{$_name}__holder {
+      transition-property: opacity, transform;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in-out;
+    }
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+
+    & .#{$_name}__holder {
+      opacity: 0;
+
+      transform: scale(0, 0);
+    }
+  }
+
+  &--mobile {
+    &-enter {
+      &-active {
+        transition-property: transform;
+        transition-duration: 300ms;
+        transition-timing-function: ease-in-out;
+
+        & .#{$_name}__holder {
+          transition-property: transform;
+          transition-duration: 300ms;
+          transition-timing-function: ease-in-out;
+          transform: translate(0, 100%);
+        }
+      }
+
+      &-to {
+        & .#{$_name}__holder {
+          transform: translate(0, 0);
+        }
+      }
+    }
+
+    &-leave {
+      &-active {
+        transition-property: opacity, transform;
+        transition-duration: 200ms;
+        transition-timing-function: ease-in-out;
+
+        & .#{$_name}__holder {
+          transition-property: transform;
+          transition-duration: 200ms;
+          transition-timing-function: ease-in-out;
+          transform: translate(0, 0);
+        }
+      }
+
+      &-to {
+        & .#{$_name}__holder {
+          transform: translate(0, 100%);
+        }
+      }
+    }
+  }
+}

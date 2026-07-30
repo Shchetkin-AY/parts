@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
-import Navigation from '@/components/navigation'
-import Footer from '@/components/footer'
+import Navigation from '@/widgets/navigation'
+import Footer from '@/widgets/footer'
 
 export default defineComponent({
   name: 'Layout',

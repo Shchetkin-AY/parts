@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'home',
-        component: () => import('@/pages/main')
+        component: () => import('@/pages/home')
       },
       {
         path: 'catalog',
