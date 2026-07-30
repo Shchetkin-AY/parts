@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent, ref, watch } from 'vue'
 
-import { type MenuItem, type MenuPosition, type SelectOption, UiComponentName } from '@/utils'
+import { type MenuItem, type MenuPosition, type SelectOption, Size, UiComponentName } from '@/utils'
 import { UiMenu } from '@/ui'
 import { getPrimitiveProp } from '@/ui/shared-props'
 
@@ -14,6 +14,7 @@ export interface SelectProps {
   placeholder?: string
   rounded?: boolean
   required?: boolean
+  size?: Size
 }
 
 export const selectProps = {
@@ -29,7 +30,11 @@ export const selectProps = {
   },
   placeholder: getPrimitiveProp(String),
   rounded: getPrimitiveProp(Boolean, false, true),
-  required: getPrimitiveProp(Boolean, false, false)
+  required: getPrimitiveProp(Boolean, false, false),
+  size: {
+    type: String as PropType<Size>,
+    default: Size.medium
+  }
 }
 
 const baseClassName = 'isk-select'
@@ -47,6 +52,7 @@ export const UiSelect = defineComponent({
 
     const fieldClassName = computed(() => {
       const result = [ `${baseClassName}__field` ]
+      result.push(`${baseClassName}__field--${props.size}`)
       if (isFieldDisabled.value) {
         result.push(`${baseClassName}__field--disabled`)
       }
@@ -275,6 +281,7 @@ export const UiSelect = defineComponent({
           ariaLabel={resolvedAriaLabel.value}
           items={menuItems.value}
           menuPosition={menuPosition.value}
+          size={props.size}
           onClose={closeMenu}
           onSelect={handleMenuSelect}
         />

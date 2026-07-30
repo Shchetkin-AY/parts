@@ -17,6 +17,10 @@ export const chipProps = {
     type: String as PropType<Size>,
     default: Size.medium
   },
+  remove: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
 
   cut: {
     type: Boolean as PropType<boolean>,
@@ -61,7 +65,9 @@ export const UiChip = defineComponent({
 
   props: chipProps,
 
-  setup(props) {
+  emits: [ 'remove' ],
+
+  setup(props, { emit }) {
     const rootRef = ref<HTMLElement | null>(null)
     const labelRef = ref<HTMLElement | null>(null)
 
@@ -72,6 +78,8 @@ export const UiChip = defineComponent({
 
         [`${UiComponentName.chip}--round`]: props.round,
         [`${UiComponentName.chip}--outline`]: props.outline,
+        [`${UiComponentName.chip}--remove`]: props.remove,
+
         [`${UiComponentName.chip}--${props.size}`]: !!props.size,
         [`${UiComponentName.chip}--${props.color}`]: !!props.color
       }
@@ -111,6 +119,10 @@ export const UiChip = defineComponent({
       return result
     })
 
+    const removeHandler = () => {
+      emit('remove')
+    }
+
     const renderLabel = () => {
       if (label.value) {
         return (
@@ -124,10 +136,46 @@ export const UiChip = defineComponent({
         )
       }
     }
+    const renderClear = () => {
+      if (props.remove) {
+        return (
+          <span
+            aria-hidden="true"
+            class={`${UiComponentName.chip}__remove`}
+            data-chip-remove
+            onClick={removeHandler}
+          >
+            <svg
+              aria-hidden="true"
+              class={`${UiComponentName.chip}__remove-icon`}
+              fill="none"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.5 8.5L8.5 15.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+              />
+              <path
+                d="M15.5 15.5L8.5 8.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+              />
+            </svg>
+          </span>
+        )
+      }
+    }
     const renderContent = () => {
       return (
         <div class={`${UiComponentName.chip}__content`}>
           {renderLabel()}
+          {renderClear()}
         </div>
       )
     }

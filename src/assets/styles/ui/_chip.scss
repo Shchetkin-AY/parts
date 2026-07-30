@@ -21,49 +21,43 @@ $_name: "isk-chip";
   &--small {
     padding-left: 5px;
     padding-right: 5px;
-
-    min-height: 14px;
     & > .#{$_name}__content {
-      & > .#{$_name}__label {
-        @include mixins.font(8px, 500);
-      }
+      @include mixins.font(8px, 500);
     }
+
+    @include mixins.absolute-height(14px);
   }
 
   &--medium {
     padding-left: 10px;
-    padding-right: 10px;
 
-    min-height: 18px;
-    & > .#{$_name}__content {
-      & > .#{$_name}__label {
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-left: 8px;
-        padding-right: 8px;
-
-        @include mixins.font(10px, 500);
-      }
+    &:not(.#{$_name}--remove) {
+      padding-right: 10px;
     }
+
+    & > .#{$_name}__content {
+      @include mixins.font(10px, 500);
+    }
+
+    @include mixins.absolute-height(18px);
   }
 
   &--large {
     padding-left: 14px;
-    padding-right: 14px;
 
-    min-height: 32px;
-    & > .#{$_name}__content {
-      & > .#{$_name}__label {
-        @include mixins.font(12px, 600);
-      }
+    &:not(.#{$_name}--remove) {
+      padding-right: 14px;
     }
+
+    & > .#{$_name}__content {
+      @include mixins.font(12px, 500);
+    }
+
+    @include mixins.absolute-height(24px);
   }
 }
 
 .#{$_name} {
-  padding-left: 10px;
-  padding-right: 10px;
-
   color: var(--color-text);
 
   border-width: 1px;
@@ -85,6 +79,8 @@ $_name: "isk-chip";
 
   &__content {
     display: grid;
+    grid-auto-flow: column;
+    gap: 6px;
     align-items: center;
 
     user-select: none;
@@ -95,14 +91,26 @@ $_name: "isk-chip";
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 
     display: inline-block;
 
-    overflow-x: hidden;
+    @include mixins.truncate-text;
+  }
 
-    @include mixins.font(10px, 600);
+  &__remove {
+    color: var(--color-text-secondary);
+
+    display: grid;
+    place-items: center;
+
+    height: 22px;
+    width: 22px;
+
+    &:hover {
+      color: var(--color-primary);
+
+      cursor: pointer;
+    }
   }
 
   &--outline {

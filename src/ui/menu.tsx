@@ -1,12 +1,13 @@
 import { type CSSProperties, PropType, Teleport, computed, defineComponent, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
 
-import type { MenuItem, MenuItemRole, MenuPosition } from '@/utils'
+import { MenuItem, MenuItemRole, MenuPosition, Size } from '@/utils'
 import { getPrimitiveProp } from '@/ui/shared-props'
 
 export interface MenuProps {
   anchorElement?: HTMLElement | null
   ariaLabel: string
   items: MenuItem[]
+  size: Size
   menuPosition?: MenuPosition | null
 }
 
@@ -25,6 +26,11 @@ export const menuProps = {
     default: undefined
   },
 
+  size: {
+    type: String as PropType<Size>,
+    default: Size.medium
+  },
+
   menuPosition: {
     type: Object as PropType<MenuPosition | null>,
     required: false,
@@ -34,8 +40,6 @@ export const menuProps = {
 
 const viewportMargin = 8
 
-const baseClassName = 'isk-menu'
-
 export const UiMenu = defineComponent({
   name: 'UiMenu',
 
@@ -44,8 +48,17 @@ export const UiMenu = defineComponent({
   emits: [ 'close', 'select' ],
 
   setup(props: MenuProps, { emit }) {
+    const baseClassName = 'isk-menu'
+
     const menuReference = ref<HTMLDivElement | null>(null)
     const resolvedMenuPosition = ref(props.menuPosition ?? null)
+
+    const classes = computed<Record<string, boolean>>(() => {
+      return {
+        [baseClassName]: true,
+        [`${baseClassName}--${props.size}`]: true
+      }
+    })
 
     const menuStyle = computed<CSSProperties>(() => {
       if (!resolvedMenuPosition.value) {
@@ -251,11 +264,11 @@ export const UiMenu = defineComponent({
         <Teleport to="body">
           <div class={`${baseClassName}__layer`}>
             <div
-              ref={menuReference}
+              class={classes.value}
               aria-label={props.ariaLabel}
-              class={baseClassName}
-              role="menu"
               style={menuStyle.value}
+              role="menu"
+              ref={menuReference}
             >
               {props.items.map(renderMenuItem)}
             </div>

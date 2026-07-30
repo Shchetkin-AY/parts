@@ -91,5 +91,13 @@ $_name: "isk-menu";
     }
   }
 
+  &--small {
+    & > .#{$_name}__item {
+      min-height: 24px;
+
+      @include mixins.font(11px);
+    }
+  }
+
   @include mixins.scrollbar(4px);
 }

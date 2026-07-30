@@ -47,8 +47,15 @@ $_name: "isk-select";
       background: colors.color(color-grey, 0.13);
     }
 
-    @include mixins.absolute-height(40px);
-    @include mixins.font(12px);
+    &--small {
+      @include mixins.font(11px);
+      @include mixins.absolute-height(24px);
+    }
+
+    &--medium {
+      @include mixins.absolute-height(40px);
+      @include mixins.font(12px);
+    }
   }
 
   &__value,
