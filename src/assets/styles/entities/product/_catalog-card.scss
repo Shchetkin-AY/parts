@@ -143,9 +143,8 @@ $_name: "product-catalog-card";
   }
 
   &__specs {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
-    border-top: 1px solid colors.$border;
     border-bottom: 1px solid colors.$border;
 
     display: flex;
