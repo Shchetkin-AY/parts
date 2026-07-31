@@ -6,6 +6,11 @@
 @use "features/feedback";
 @use "widgets";
 @use "pages";
+@use "mixins";
+
+html {
+  @include mixins.scrollbar;
+}
 
 html[data-scroll-lock] {
   overflow: hidden;
