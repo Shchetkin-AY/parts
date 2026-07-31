@@ -43,5 +43,5 @@ export const getWheelDiameterRange = (source: number | string | CatalogItem[]): 
   const min = Math.min(...diameters)
   const max = Math.max(...diameters)
 
-  return min === max ? `R${min}` : `R${min} - R${max}`
+  return min === max ? `от R${min}` : `R${min} - R${max}`
 }
