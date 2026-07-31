@@ -10,6 +10,8 @@ import {
 
 import { UiButton, UiChip } from '@/ui'
 
+const SWIPE_THRESHOLD = 40 // минимальное смещение по X в px, чтобы считать это свайпом
+
 export default defineComponent({
 
   name: 'ProductCatalogCard',
@@ -72,6 +74,70 @@ export default defineComponent({
       })
     }
 
+    // --- свайп ---
+    const touchStartX = ref<number | null>(null)
+    const touchStartY = ref<number | null>(null)
+    const isSwiping = ref(false)
+
+    const setActiveImage = (index: number): void => {
+      const total = images.value.length
+      activeImage.value = (index % total + total) % total
+    }
+
+    const touchStartHandler = (e: TouchEvent): void => {
+      if (images.value.length <= 1) {
+        return
+      }
+
+      const touch = e.touches[0]
+      touchStartX.value = touch.clientX
+      touchStartY.value = touch.clientY
+      isSwiping.value = false
+    }
+
+    const touchMoveHandler = (e: TouchEvent): void => {
+      if (touchStartX.value === null || touchStartY.value === null) {
+        return
+      }
+
+      const touch = e.touches[0]
+      const deltaX = touch.clientX - touchStartX.value
+      const deltaY = touch.clientY - touchStartY.value
+
+      // если движение больше по X, чем по Y — это свайп галереи,
+      // блокируем вертикальный скролл страницы
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        isSwiping.value = true
+        e.preventDefault()
+      }
+    }
+
+    const touchEndHandler = (e: TouchEvent): void => {
+      if (touchStartX.value === null || !isSwiping.value) {
+        touchStartX.value = null
+        touchStartY.value = null
+
+        return
+      }
+
+      const touch = e.changedTouches[0]
+      const deltaX = touch.clientX - touchStartX.value
+
+      if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+        e.stopPropagation()
+        if (deltaX < 0) {
+          setActiveImage(activeImage.value + 1)
+        } else {
+          setActiveImage(activeImage.value - 1)
+        }
+      }
+
+      touchStartX.value = null
+      touchStartY.value = null
+      isSwiping.value = false
+    }
+    // --- /свайп ---
+
     const renderHitChip = () => {
       if (props.badge) {
         return (
@@ -127,7 +193,9 @@ export default defineComponent({
               onMouseenter={(e: Event) => {
                 e.stopPropagation(); activeImage.value = i
               }}
-              onClick={(e: Event) => e.stopPropagation()}
+              onClick={(e: Event) => {
+                e.stopPropagation(); setActiveImage(i)
+              }}
             />)}
         </div>
       )
@@ -135,7 +203,12 @@ export default defineComponent({
 
     const renderImage = () => {
       return (
-        <div class="product-catalog-card__media">
+        <div
+          class="product-catalog-card__media"
+          onTouchstart={touchStartHandler}
+          onTouchmove={touchMoveHandler}
+          onTouchend={touchEndHandler}
+        >
           {renderMediaHeader()}
           <img
             class="product-catalog-card__image"
@@ -143,6 +216,7 @@ export default defineComponent({
             alt={title.value}
             loading="lazy"
             decoding="async"
+            draggable={false}
             onError={(e: Event) => (e.target as HTMLImageElement).style.display = 'none'}
           />
           {renderGalleryDots()}

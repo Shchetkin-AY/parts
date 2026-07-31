@@ -4,9 +4,9 @@ import { useCatalogStore } from '@/stores'
 import { UiButton, UiDivider, UiSelect } from '@/ui'
 import Feedback from '@/features/feedback'
 
-import { ButtonMode, CatalogFilterField, Color, FilterFieldConfig, Size, buildCatalogFilterQuery, useCatalogFilterFields } from '@/utils'
+import { ButtonMode, CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery, useCatalogFilterFields } from '@/utils'
 
-const fieldsConfig: FilterFieldConfig[] = [
+const fieldsConfig: FilterFieldProps[] = [
   {
     field: CatalogFilterField.mark,
     label: 'Марка',
@@ -71,7 +71,7 @@ export default defineComponent({
       )
     }
 
-    const renderField = (config: FilterFieldConfig) =>
+    const renderField = (config: FilterFieldProps) =>
       <div class={`${className}__field`} key={config.field}>
         <UiSelect
           v-model={params[config.field]}
@@ -104,6 +104,21 @@ export default defineComponent({
       )
     }
 
+    const renderFooter = () => {
+      return (
+        <div class={`${className}__footer`} >
+          <div class={`${className}__footer-content`} >
+            <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
+            <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
+          </div>
+        </div>
+      )
+    }
+
+    const renderFeedback = () => {
+      return <Feedback v-model={showFeedback.value} />
+    }
+
     return () =>
       <div class={className}>
         {renderHeader()}
@@ -113,13 +128,8 @@ export default defineComponent({
 
         </div>
         <UiDivider />
-        <div class={`${className}__footer`} >
-          <div class={`${className}__footer-content`} >
-            <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
-            <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
-          </div>
-        </div>
-        <Feedback v-model={showFeedback.value} />
+        {renderFooter()}
+        {renderFeedback()}
       </div>
   }
 })

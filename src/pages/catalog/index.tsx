@@ -1,16 +1,14 @@
-// catalog-page.tsx — оркестратор
-import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { CatalogFilterField, type CatalogFilterParams, type CatalogFilterSubmitPayload, type CatalogItem, Color } from '@/utils'
-import { CatalogPagination } from '@/pages/catalog/ui/pagination'
-import { Page, UiChip, UiSelect } from '@/ui'
+import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
+import { CatalogFilterField, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, Size, pluralize } from '@/utils'
 import { useCatalogStore, useViewportStore } from '@/stores'
-import Filter from '@/pages/catalog/ui/filter'
+import { Page, UiChip, UiDivider, UiSelect } from '@/ui'
+import { Pagination } from '@/pages/catalog/ui/pagination'
 import ProductCatalogCard from '@/entities/product/ui/catalog-card'
+import Filter from '@/pages/catalog/ui/filter'
 
 const catalogItemsPerPage = 12
 const mobileBreakpoint = 1024
-const catalogDescription = 'Комплекты Savanini для гражданских автомобилей, трековых автомобилей и спортивного использования.'
 
 enum SortField {
   popularity = 'popularity',
@@ -97,20 +95,13 @@ export default defineComponent({
     const sortField = ref<SortField>(SortField.popularity)
     const filterParams = ref<CatalogFilterParams>({ ...emptyFilterParams })
 
+    // --- вьюпорт ---
     const isMobile = computed(() => viewportStore.size.width < mobileBreakpoint)
+
+    // --- источник данных ---
     const sourceItems = computed<CatalogItem[]>(() => catalogStore.items)
 
-    const resultTitle = computed(() => {
-      const result = [ 'Тормозные системы' ]
-      const subtitle = [ filterParams.value.mark, filterParams.value.model ].filter(Boolean).join(' / ')
-
-      if (subtitle) {
-        result.push(subtitle)
-      }
-
-      return result.join(' — ')
-    })
-
+    // --- фильтр: route <-> params ---
     const routeFilterParams = computed<CatalogFilterParams>(() => {
       return {
         [CatalogFilterField.diameter]: getRouteQueryValue(route.query, CatalogFilterField.diameter),
@@ -119,14 +110,6 @@ export default defineComponent({
         [CatalogFilterField.series]: getRouteQueryValue(route.query, CatalogFilterField.series),
         [CatalogFilterField.wheelDiameter]: getRouteQueryValue(route.query, CatalogFilterField.wheelDiameter)
       }
-    })
-
-    const sortedItems = computed(() => sortItems(filteredItems.value, sortField.value))
-
-    const paginatedItems = computed<CatalogItem[]>(() => {
-      const start = (currentPage.value - 1) * catalogItemsPerPage
-
-      return sortedItems.value.slice(start, start + catalogItemsPerPage)
     })
 
     const activeFilterChips = computed(() => {
@@ -139,6 +122,23 @@ export default defineComponent({
         }))
     })
 
+    // --- сортировка и пагинация ---
+    const sortedItems = computed(() => sortItems(filteredItems.value, sortField.value))
+
+    const paginatedItems = computed<CatalogItem[]>(() => {
+      const start = (currentPage.value - 1) * catalogItemsPerPage
+
+      return sortedItems.value.slice(start, start + catalogItemsPerPage)
+    })
+
+    const itemsCountLabel = computed<string>(() => {
+      return [
+        filteredItems.value.length,
+        pluralize(filteredItems.value.length, 'товар', 'товара', 'товаров')
+      ].join(' ')
+    })
+
+    // --- методы ---
     const applyFilterParams = (params: CatalogFilterParams): void => {
       filterParams.value = params
       filteredItems.value = [ ...catalogStore.filterItems(filterParams.value, sourceItems.value) ]
@@ -226,105 +226,117 @@ export default defineComponent({
       })
     }
 
-    const resetAllChips = (): void => {
-      handleFilterPayload({
-        items: [],
-        params: { ...emptyFilterParams }
-      })
+    // ============ RENDER: дерево функций строго по порядку вывода ============
+
+    // --- сайдбар (десктоп) / фильтр переиспользуется и в mobile toolbar ---
+    const renderFilter = () => {
+      return (
+        <Filter
+          initialParams={routeFilterParams.value}
+          items={sourceItems.value}
+          onChange={handleFilterPayload}
+          onSubmit={handleFilterPayload}
+        />
+      )
     }
 
-    // isMobile здесь решает только РАЗМЕЩЕНИЕ (сайдбар vs строка тулбара),
-    // не то, как Filter должен выглядеть — это его собственная забота
     const renderSidebar = () => {
-      if (isMobile.value) {
-        return null
+      if (!isMobile.value) {
+        return (
+          <aside class="catalog__sidebar">
+            {renderFilter()}
+          </aside>
+        )
       }
+    }
 
+    // --- заголовок ---
+    const renderHeaderTitle = () => {
       return (
-        <aside class="catalog__sidebar">
-          <Filter
-            initialParams={routeFilterParams.value}
-            items={sourceItems.value}
-            onChange={handleFilterPayload}
-            onSubmit={handleFilterPayload}
-          />
-        </aside>
+        <div class="catalog__header-title">
+          {'Тормозные комплекты SAVANINI'}
+        </div>
       )
+    }
+
+    // --- тулбар: счётчик + сортировка (+ фильтр-триггер на мобильном) ---
+    const renderFilteredItemsCount = () => {
+      return <div class="catalog__toolbar-count">{itemsCountLabel.value}</div>
     }
 
     const renderSort = () => {
       return (
         <UiSelect
-          class="catalog__sort"
+          v-model={sortField.value}
           ariaLabel="Сортировка"
-          modelValue={sortField.value}
+          size={Size.small}
           options={sortOptions}
-          onUpdate:modelValue={(value: SortField) => sortField.value = value}
         />
       )
     }
 
-    const renderMobileToolbar = () => {
-      if (!isMobile.value) {
-        return null
-      }
-
+    const renderToolbar = () => {
       return (
-        <div class="catalog__mobile-toolbar">
-          <Filter
-            initialParams={routeFilterParams.value}
-            items={sourceItems.value}
-            onChange={handleFilterPayload}
-            onSubmit={handleFilterPayload}
-          />
+        <div class="catalog__toolbar">
+          {renderFilteredItemsCount()}
           {renderSort()}
         </div>
       )
     }
 
+    // --- чипы активных фильтров ---
     const renderChips = () => {
+      if (isMobile.value) {
+        return renderFilter()
+      }
+
       if (activeFilterChips.value.length === 0) {
         return null
       }
 
       return (
         <div class="catalog__chips">
-          {activeFilterChips.value.map(chip =>
-            <button class="catalog__chip" key={chip.field} onClick={() => removeChip(chip.field)}>
-              {chip.label}: {chip.value}
-              <span class="catalog__chip-remove">×</span>
-            </button>)}
-          <button class="catalog__chip catalog__chip--reset" onClick={resetAllChips}>
-            Сбросить всё
-          </button>
+          {
+            activeFilterChips.value.map(chip =>
+              <UiChip
+                label={`${chip.label}: ${chip.value}`}
+                size={Size.large}
+                color={Color.muted}
+                remove
+                onRemove={() => removeChip(chip.field)}
+              />)
+          }
         </div>
       )
     }
 
-    const renderGridHeader = () => {
+    const renderChipsRow = () => {
+      return <div class="catalog__chips-row">{renderChips()}</div>
+    }
+
+    const renderHeaderActions = () => {
+      return (
+        <div class="catalog__header-actions">
+          {renderChipsRow()}
+          {renderToolbar()}
+        </div>
+      )
+    }
+
+    const renderHeader = () => {
       return (
         <div class="catalog__header">
-          <h1 class="sr-only">{resultTitle.value}</h1>
-
-          <p class="catalog__description">{catalogDescription}</p>
-
-          {!isMobile.value &&
-            <div class="catalog__toolbar">
-              <UiChip label={`${filteredItems.value.length} товаров`} color={Color.muted} />
-              {renderSort()}
-            </div>
-          }
-
-          {renderMobileToolbar()}
-
-          <div class="catalog__chips-row">
-            {renderChips()}
-          </div>
+          {renderHeaderTitle()}
+          <UiDivider />
+          {renderHeaderActions()}
         </div>
       )
     }
 
-    const renderProductCard = (item: CatalogItem) => <ProductCatalogCard value={item} key={item.id} />
+    // --- сетка товаров ---
+    const renderProductCard = (item: CatalogItem) => {
+      return <ProductCatalogCard value={item} key={item.id} />
+    }
 
     const renderEmptyState = () => {
       const message = catalogStore.isLoading ? 'Загрузка каталога...' : 'По текущим параметрам ничего не найдено.'
@@ -344,31 +356,40 @@ export default defineComponent({
       )
     }
 
-    const renderPagination = () =>
-      <CatalogPagination
-        page={currentPage.value}
-        total={filteredItems.value.length}
-        perPage={catalogItemsPerPage}
-        onChange={handlePageChange}
-      />
+    const renderPagination = () => {
+      return (
+        <Pagination
+          page={currentPage.value}
+          total={filteredItems.value.length}
+          perPage={catalogItemsPerPage}
+          onChange={handlePageChange}
+        />
+      )
+    }
 
     const renderContent = () => {
       return (
         <section class="catalog__content">
-          {renderGridHeader()}
+          {renderHeader()}
           {renderProducts()}
           {renderPagination()}
         </section>
       )
     }
 
+    const renderLayout = () => {
+      return (
+        <div class="catalog__layout">
+          {renderSidebar()}
+          {renderContent()}
+        </div>
+      )
+    }
+
     return () =>
       <Page class="catalog">
         <section class="isk-page__section isk-page__section--contained catalog__section--main">
-          <div class="catalog__layout">
-            {renderSidebar()}
-            {renderContent()}
-          </div>
+          {renderLayout()}
         </section>
       </Page>
   }

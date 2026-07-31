@@ -1,5 +1,5 @@
-// catalog.scss
 @use "colors";
+@use "mixins" as mixins;
 
 $_name: "catalog";
 
@@ -23,91 +23,76 @@ $_name: "catalog";
 
   &__content {
     display: grid;
-    gap: 32px;
+    gap: 24px;
 
     min-width: 0;
   }
 
   &__header {
-    padding-bottom: 20px;
-
-    border-bottom: 1px solid colors.$border;
-
     display: grid;
     gap: 12px;
-  }
 
-  &__description {
-    margin: 0;
+    &-title {
+      color: var(--color-text-primary);
+      text-align: left;
 
-    font-size: 13px;
-    color: colors.$text-secondary;
-    line-height: 1.5;
+      display: flex;
+      gap: var(--space-xs);
 
-    max-width: 480px;
+      @include mixins.font(20px, 600);
+    }
+
+    &-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-sm);
+      align-items: start;
+      justify-content: space-between;
+    }
   }
 
   &__mobile-toolbar {
-    display: flex;
+    display: grid;
     gap: 8px;
   }
 
   &__toolbar {
-    display: flex;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: auto 150px;
+
+    gap: 8px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-wrap: wrap;
-  }
 
-  &__sort {
-    min-width: 200px;
-  }
+    &-count {
+      color: var(--color-muted);
 
-  &__chips-row {
-    min-height: 32px;
+      user-select: none;
+
+      @include mixins.font(12px);
+    }
+
+    @include mixins.absolute-width(100%);
+    @include mixins.absolute-height(100%);
+
+    @media (width < 425px) {
+      grid-template-columns: 1fr;
+      justify-items: end;
+    }
   }
 
   &__chips {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  &__chip {
-    padding: 6px 8px 6px 12px;
-
-    font-size: 11px;
-    color: colors.$text;
-
-    border: 1px solid colors.$border;
-    border-radius: 20px;
-
-    background: colors.$surface-3;
-
-    display: flex;
-    gap: 6px;
     align-items: center;
+    flex-wrap: wrap;
 
-    cursor: pointer;
+    &-row {
+      display: flex;
+      align-items: center;
 
-    &-remove {
-      font-size: 13px;
-      color: colors.$text-muted;
-    }
-
-    &:hover &-remove {
-      color: colors.$primary;
-    }
-
-    &--reset {
-      padding: 6px 4px;
-
-      color: colors.$primary;
-
-      border-color: transparent;
-
-      background: transparent;
+      @include mixins.absolute-height(100%);
     }
   }
 
@@ -137,8 +122,8 @@ $_name: "catalog";
 
   @media (width >= 1024px) {
     &__layout {
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 48px;
+      grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+      gap: 32px;
       align-items: start;
     }
 
@@ -160,62 +145,9 @@ $_name: "catalog";
     }
   }
 
-  @media (width <= 720px) {
+  @media (width <= 600px) {
     &__grid {
       grid-template-columns: 1fr;
-    }
-  }
-}
-
-.sr-only {
-  margin: -1px;
-  padding: 0;
-
-  white-space: nowrap;
-
-  border: 0;
-
-  position: absolute;
-
-  overflow: hidden;
-  clip-path: rect(0, 0, 0, 0);
-
-  height: 1px;
-  width: 1px;
-}
-
-.catalog-pagination {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  &__pages {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  &__item {
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
-
-    display: grid;
-    place-items: center;
-
-    cursor: pointer;
-
-    height: 40px;
-    width: 40px;
-
-    &--ellipsis {
-      cursor: default;
-      pointer-events: none;
     }
   }
 }

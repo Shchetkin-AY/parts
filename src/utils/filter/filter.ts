@@ -22,7 +22,7 @@ export interface CatalogFilterSubmitPayload<Item = CatalogFilterItem> {
   params: CatalogFilterParams
 }
 
-export interface FilterFieldConfig {
+export interface FilterFieldProps {
   field: CatalogFilterField
   label: string
   ariaLabel: string
@@ -48,7 +48,7 @@ export const buildCatalogFilterQuery = (params: CatalogFilterParams): Record<str
 }
 
 export const useCatalogFilterFields = (
-  fieldsConfig: FilterFieldConfig[],
+  fieldsConfig: FilterFieldProps[],
   sourceItems: () => CatalogItem[],
   initial?: () => Partial<CatalogFilterParams>
 ) => {
