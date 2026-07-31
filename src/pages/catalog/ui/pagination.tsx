@@ -51,6 +51,30 @@ const paginationRange = (
   return items
 }
 
+// Компактный "скользящий" вид: currentPage, currentPage+1, ..., totalPages
+const minimalRange = (currentPage: number, totalPages: number): PageItem[] => {
+  const windowStart = currentPage
+  const windowEnd = Math.min(currentPage + 1, totalPages)
+
+  const items: PageItem[] = windowStart === windowEnd
+    ? [ windowStart ]
+    : [ windowStart, windowEnd ]
+
+  if (windowEnd === totalPages) {
+    // последняя страница уже в окне — больше ничего не нужно
+  } else if (windowEnd === totalPages - 1) {
+    // последняя страница вплотную к окну — ellipsis не нужен
+    items.push(totalPages)
+  } else {
+    items.push('ellipsis')
+    items.push(totalPages)
+  }
+
+  return items
+}
+
+type ViewMode = 'full' | 'compact' | 'minimal'
+
 export const Pagination = defineComponent({
   name: 'Pagination',
 
@@ -76,34 +100,39 @@ export const Pagination = defineComponent({
   setup(props) {
     const viewportStore = useViewportStore()
 
-    const rangeOptions = computed<PaginationRangeOptions>(() => {
+    const viewMode = computed<ViewMode>(() => {
       const width = viewportStore.size.width
 
       if (width < 380) {
-        return {
-          siblingCount: 0,
-          boundaryCount: 1
-        }
+        return 'minimal'
       }
-      if (width < 640) {
-        return {
-          siblingCount: 1,
-          boundaryCount: 1
-        }
+      if (width < 600) {
+        return 'compact'
       }
 
-      return {
-        siblingCount: 1,
-        boundaryCount: 1
-      }
+      return 'full'
     })
 
     const totalPages = computed<number>(() => Math.ceil(props.total / props.perPage))
     const currentPage = computed<number>(() => {
       return Math.min(Math.max(props.page, 1), totalPages.value)
     })
+
     const pages = computed<PageItem[]>(() => {
-      return paginationRange(currentPage.value, totalPages.value, rangeOptions.value)
+      switch (viewMode.value) {
+        case 'minimal':
+          return minimalRange(currentPage.value, totalPages.value)
+        case 'compact':
+          return paginationRange(currentPage.value, totalPages.value, {
+            siblingCount: 0,
+            boundaryCount: 1
+          })
+        default:
+          return paginationRange(currentPage.value, totalPages.value, {
+            siblingCount: 1,
+            boundaryCount: 1
+          })
+      }
     })
 
     const setPage = (page: number): void => {
@@ -115,9 +144,7 @@ export const Pagination = defineComponent({
     const renderPageItem = (item: PageItem, index: number) => {
       if (item === 'ellipsis') {
         return (
-          <span class="pagination__item pagination__item--ellipsis" key={`ellipsis-${index}`}>
-            ...
-          </span>
+          <span key={`ellipsis-${index}`}>...</span>
         )
       }
 
@@ -156,7 +183,6 @@ export const Pagination = defineComponent({
           </div>
 
           <UiButton
-            class="pagination__nav"
             label=">"
             size={Size.small}
             disabled={currentPage.value === totalPages.value}

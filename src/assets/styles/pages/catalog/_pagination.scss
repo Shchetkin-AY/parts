@@ -2,11 +2,13 @@ $_name: "pagination";
 
 .#{$_name} {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   justify-content: center;
 
   max-width: 100%;
+
+  width: 100%;
 
   &__nav {
     flex: 0 0 auto;
@@ -14,16 +16,13 @@ $_name: "pagination";
 
   &__pages {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    justify-content: center;
 
-    flex-wrap: nowrap;
+    flex: 1 1 auto;
 
-    overflow-x: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    min-width: 0;
+    max-width: fit-content;
   }
 
   &__item {
@@ -35,7 +34,7 @@ $_name: "pagination";
 
     display: grid;
     place-items: center;
-    flex: 0 0 auto;
+    flex: 0 0 auto; // фиксированный размер, ничего не сжимаем — лишнее прячется через ellipsis
 
     cursor: pointer;
 
