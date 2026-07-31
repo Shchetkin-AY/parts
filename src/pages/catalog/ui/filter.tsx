@@ -23,7 +23,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const viewportStore = useViewportStore()
     const showFeedback = ref(false)
-    const isSheetOpen = ref(false)
     const showDialog = ref<boolean>(false)
 
     const className = 'catalog-filter'
@@ -68,7 +67,7 @@ export default defineComponent({
         items: filteredItems.value,
         params: { ...params }
       })
-      isSheetOpen.value = false
+      showDialog.value = false
     }
 
     const resetHandler = (): void => {
