@@ -30,6 +30,7 @@ $_name: "isk-menu";
   width: max-content;
 
   z-index: 1000;
+  overscroll-behavior-y: contain;
   backdrop-filter: blur(18px);
 
   &__layer {
