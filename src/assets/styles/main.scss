@@ -7,6 +7,10 @@
 @use "widgets";
 @use "pages";
 
+html[data-scroll-lock] {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
 

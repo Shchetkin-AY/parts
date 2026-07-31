@@ -1,5 +1,5 @@
-import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
-import { Color, Icons, UiComponentName, numberToPxOrString } from '@/utils'
+import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
+import { Color, Icons, UiComponentName, lockPageScroll, numberToPxOrString, unlockPageScroll } from '@/utils'
 import { UiOverlay } from '@/ui/overlay'
 import { UiButton } from '@/ui/button'
 
@@ -110,6 +110,18 @@ export const UiDialog = defineComponent({
       })
     })
 
+    watch(
+      () => proxy.value,
+      value => {
+        if (value) {
+          lockPageScroll()
+        } else {
+          unlockPageScroll()
+        }
+      },
+      { immediate: true }
+    )
+
     const handleResize = () => {
       windowWidth.value = window.innerWidth
     }
@@ -120,6 +132,7 @@ export const UiDialog = defineComponent({
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleResize)
+      unlockPageScroll()
       proxy.value = false
     })
 

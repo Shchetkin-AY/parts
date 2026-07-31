@@ -1,5 +1,6 @@
 export * from './convertors'
 export * from './pluralize'
+export * from './overflow'
 export * from './prices'
 export * from './strings'
 export * from './validators'

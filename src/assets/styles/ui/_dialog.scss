@@ -111,11 +111,24 @@ $_name: "isk-dialog";
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
 
-      max-height: 90%;
-      min-width: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
 
+      max-height: 90%;
+
+      min-width: 100%;
       max-width: 100%;
       width: 100%;
+    }
+
+    & .#{$_name}__body {
+      overflow-x: hidden;
+
+      overflow-y: auto;
+
+      min-height: 0;
+
+      @include mixins.scrollbar;
     }
   }
 
