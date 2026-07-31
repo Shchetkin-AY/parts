@@ -2,12 +2,20 @@ import { PropType, computed, defineComponent } from 'vue'
 
 import { UiButton } from '@/ui'
 import { ButtonMode, Color, Size } from '@/utils'
+import { useViewportStore } from '@/stores'
 
 type PageItem = number | 'ellipsis'
 
-const paginationRange = (currentPage: number, totalPages: number): PageItem[] => {
-  const siblingCount = 1
-  const boundaryCount = 1
+interface PaginationRangeOptions {
+  siblingCount?: number
+  boundaryCount?: number
+}
+
+const paginationRange = (
+  currentPage: number,
+  totalPages: number,
+  { siblingCount = 1, boundaryCount = 1 }: PaginationRangeOptions = {}
+): PageItem[] => {
   const visibleSlots = boundaryCount * 2 + siblingCount * 2 + 3
 
   if (totalPages <= visibleSlots) {
@@ -43,8 +51,8 @@ const paginationRange = (currentPage: number, totalPages: number): PageItem[] =>
   return items
 }
 
-export const CatalogPagination = defineComponent({
-  name: 'CatalogPagination',
+export const Pagination = defineComponent({
+  name: 'Pagination',
 
   props: {
     page: {
@@ -66,12 +74,36 @@ export const CatalogPagination = defineComponent({
   },
 
   setup(props) {
+    const viewportStore = useViewportStore()
+
+    const rangeOptions = computed<PaginationRangeOptions>(() => {
+      const width = viewportStore.size.width
+
+      if (width < 380) {
+        return {
+          siblingCount: 0,
+          boundaryCount: 1
+        }
+      }
+      if (width < 640) {
+        return {
+          siblingCount: 1,
+          boundaryCount: 1
+        }
+      }
+
+      return {
+        siblingCount: 1,
+        boundaryCount: 1
+      }
+    })
+
     const totalPages = computed<number>(() => Math.ceil(props.total / props.perPage))
     const currentPage = computed<number>(() => {
       return Math.min(Math.max(props.page, 1), totalPages.value)
     })
     const pages = computed<PageItem[]>(() => {
-      return paginationRange(currentPage.value, totalPages.value)
+      return paginationRange(currentPage.value, totalPages.value, rangeOptions.value)
     })
 
     const setPage = (page: number): void => {
@@ -79,15 +111,12 @@ export const CatalogPagination = defineComponent({
         props.onChange?.(page)
       }
     }
+
     const renderPageItem = (item: PageItem, index: number) => {
       if (item === 'ellipsis') {
         return (
-          <span class="catalog-pagination__item catalog-pagination__item--ellipsis" key={`ellipsis-${index}`}>
-            <UiButton
-              label="..."
-              size={Size.small}
-              mode={ButtonMode.outline}
-            />
+          <span class="pagination__item pagination__item--ellipsis" key={`ellipsis-${index}`}>
+            ...
           </span>
         )
       }
@@ -98,8 +127,8 @@ export const CatalogPagination = defineComponent({
         <UiButton
           label={item}
           size={Size.small}
-          color={isActive ? Color.primary : undefined}
-          mode={isActive ? ButtonMode.flat : ButtonMode.outline}
+          color={isActive ? Color.primary : Color.muted}
+          mode={isActive ? undefined : ButtonMode.outline}
           key={item}
           onClick={() => setPage(item)}
         />
@@ -112,22 +141,22 @@ export const CatalogPagination = defineComponent({
       }
 
       return (
-        <nav class="catalog-pagination" aria-label="Пагинация каталога">
+        <nav class="pagination" aria-label="Пагинация каталога">
           <UiButton
             label="<"
             size={Size.small}
             color={Color.muted}
             mode={ButtonMode.outline}
-
             disabled={currentPage.value === 1}
             onClick={() => setPage(currentPage.value - 1)}
           />
 
-          <div class="catalog-pagination__pages">
+          <div class="pagination__pages">
             {pages.value.map(renderPageItem)}
           </div>
 
           <UiButton
+            class="pagination__nav"
             label=">"
             size={Size.small}
             disabled={currentPage.value === totalPages.value}

@@ -1,0 +1,50 @@
+$_name: "pagination";
+
+.#{$_name} {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 100%;
+
+  &__nav {
+    flex: 0 0 auto;
+  }
+
+  &__pages {
+    display: flex;
+    gap: 8px;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__item {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+
+    cursor: pointer;
+
+    height: 40px;
+    width: 40px;
+
+    &--ellipsis {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}
