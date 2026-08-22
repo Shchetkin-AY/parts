@@ -1,8 +1,15 @@
-import { Color, SystemCardItem } from '@/utils'
+import { Color, SystemCardItem, SystemsSeriesTypes } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 import { UiIcon } from '@/ui'
 import { Icons } from '@/utils'
+
+const catalogSeriesByType: Record<SystemsSeriesTypes, string> = {
+  [SystemsSeriesTypes.s]: 'S-Series',
+  [SystemsSeriesTypes.r]: 'R-Series',
+  [SystemsSeriesTypes.n]: 'N-Series',
+  [SystemsSeriesTypes.sr]: 'SR-Series'
+}
 
 export default defineComponent({
   name: 'SystemsCard',
@@ -71,7 +78,12 @@ export default defineComponent({
       return (
         <RouterLink
           class={className}
-          to={{ name: 'catalog' }}
+          to={{
+            name: 'catalog',
+            query: {
+              series: catalogSeriesByType[props.value.type]
+            }
+          }}
         >
           {renderImage()}
           {renderOverlay()}
