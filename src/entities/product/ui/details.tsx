@@ -1,4 +1,4 @@
-import { AccessoryItem, type CatalogItem, type CompatibilityItem, getWheelDiameterRange } from '@/utils'
+import { AccessoryItem, type CatalogItem, getWheelDiameterRange } from '@/utils'
 import { Fragment, PropType, computed, defineComponent, reactive } from 'vue'
 import { UiPanel } from '@/ui'
 import Item from '@/entities/accessory/ui/item'
@@ -121,7 +121,7 @@ export const ProductDetails = defineComponent({
         ]
       }
 
-      return records.map((record: CompatibilityItem) => ({
+      return records.map(record => ({
         label: `${record.brand} ${record.model}`,
         value: [
           record.platform ? `Платформа: ${record.platform}` : '',
