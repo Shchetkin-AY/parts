@@ -4,10 +4,8 @@
   "description": "Cars parts site",
   "type": "module",
   "scripts": {
-    "prebuild": "npm run lint && npm run lint:css",
+    "prebuild": "npm run sync:catalog && npm run lint && npm run lint:css",
     "build": "vite build",
-    "build:sync": "pnpm run build",
-    "postbuild": "pnpm run sync:catalog",
     "start": "vite --force",
     "sync:catalog": "pnpm exec tsx scripts/sync-catalog.ts",
     "sync:sheet": "pnpm run sync:catalog",
@@ -18,7 +16,6 @@
     "lint:css": "stylelint src/**/*.scss",
     "lint:css:fix": "stylelint src/**/*.scss --fix",
     "deploy": "pnpm run build",
-    "r": "npm run release",
     "d": "npm run deploy"
   },
   "packageManager": "pnpm@10.33.0",
@@ -28,6 +25,7 @@
     "@types/node": "^25.5.0",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
     "autoprefixer": "^10.4.27",
+    "dotenv": "^17.4.2",
     "eslint": "10.1.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-unused-imports": "^4.4.1",
