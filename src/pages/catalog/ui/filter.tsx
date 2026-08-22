@@ -1,5 +1,5 @@
 import { Fragment, PropType, computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
-import { ButtonMode, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, FilterFieldProps, FilterFields, Size, pluralize, useCatalogFilterFields } from '@/utils'
+import { ButtonMode, CatalogFilterParams, CatalogItem, Color, FilterFieldProps, FilterFields, Size, pluralize, useCatalogFilterFields } from '@/utils'
 import { UiButton, UiDialog, UiDivider, UiSelect } from '@/ui'
 import { useCatalogStore, useViewportStore } from '@/stores'
 import Feedback from '@/features/feedback'
@@ -18,7 +18,7 @@ export default defineComponent({
     }
   },
 
-  emits: [ 'change', 'submit' ],
+  emits: [ 'submit' ],
 
   setup(props, { emit }) {
     const viewportStore = useViewportStore()
@@ -45,17 +45,12 @@ export default defineComponent({
     })
 
     watch(
-      () => filteredItems.value,
-      items => emit('change', {
-        items,
-        params: { ...params }
-      } satisfies CatalogFilterSubmitPayload<CatalogItem>),
-      { immediate: true }
-    )
-
-    watch(
       () => ({ ...params }),
       () => {
+        if (isMobile.value) {
+          return
+        }
+
         emit('submit', {
           items: filteredItems.value,
           params: { ...params }
@@ -78,12 +73,6 @@ export default defineComponent({
 
     const resetHandler = (): void => {
       reset()
-      if (!isMobile.value) {
-        emit('submit', {
-          items: filteredItems.value,
-          params: { ...params }
-        })
-      }
     }
 
     const renderHeaderTitle = () => {

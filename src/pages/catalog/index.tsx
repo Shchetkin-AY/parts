@@ -40,12 +40,10 @@ const filterFieldLabels: Record<CatalogFilterField, string> = {
   [CatalogFilterField.mark]: 'Марка',
   [CatalogFilterField.model]: 'Модель',
   [CatalogFilterField.series]: 'Серия',
-  [CatalogFilterField.wheelDiameter]: 'Диаметр колёс',
-  [CatalogFilterField.diameter]: 'Диаметр диска'
+  [CatalogFilterField.wheelDiameter]: 'Диаметр колёс'
 }
 
 const emptyFilterParams: CatalogFilterParams = {
-  [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
   [CatalogFilterField.model]: '',
   [CatalogFilterField.series]: '',
@@ -104,7 +102,6 @@ export default defineComponent({
     // --- фильтр: route <-> params ---
     const routeFilterParams = computed<CatalogFilterParams>(() => {
       return {
-        [CatalogFilterField.diameter]: getRouteQueryValue(route.query, CatalogFilterField.diameter),
         [CatalogFilterField.mark]: getRouteQueryValue(route.query, CatalogFilterField.mark),
         [CatalogFilterField.model]: getRouteQueryValue(route.query, CatalogFilterField.model),
         [CatalogFilterField.series]: getRouteQueryValue(route.query, CatalogFilterField.series),
@@ -234,7 +231,6 @@ export default defineComponent({
         <Filter
           initialParams={routeFilterParams.value}
           items={sourceItems.value}
-          onChange={handleFilterPayload}
           onSubmit={handleFilterPayload}
         />
       )

@@ -353,14 +353,14 @@ async function main() {
       CATALOG_TS_PATH,
       'catalog',
       'CatalogItem[]',
-      '@/utils/types/catalog',
+      '@/utils/catalog/catalog',
       catalog
     ),
     writeTsModule(
       COMPATIBILITY_TS_PATH,
       'compatibility',
       'Record<number, Array<{ brand: string; model: string; platform?: string; yearFrom: number | null; yearTo: number | null; wheelInch: number | null }>>',
-      '@/utils/types/catalog',
+      '@/utils/catalog/catalog',
       compatibility
     )
   ])

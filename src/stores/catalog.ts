@@ -16,6 +16,11 @@ const getFilterParam = (
   field: CatalogFilterField
 ): string => normalize(params[field] ?? '')
 
+const getCompatibilityIds = (item: CatalogItem): number[] => [
+  item.id,
+  item.setId
+]
+
 const getOptionLabel = (field: CatalogFilterField, value: string): string => {
   if (field === FilterField.wheelDiameter) {
     return `R${value}`
@@ -194,7 +199,8 @@ export const useCatalogStore = defineStore('catalog', () => {
       return items.value
     }
 
-    return items.value.filter(item => ids.has(item.id))
+    return items.value.filter(item =>
+      getCompatibilityIds(item).some(id => ids.has(id)))
   })
 
   const series = computed(() => getUniqueSeries(compatibleItems.value))
@@ -311,7 +317,7 @@ export const useCatalogStore = defineStore('catalog', () => {
 
     // 2. Фильтр по series + wheelDiameter (diameter больше не используется)
     return sourceItems.filter(item => {
-      if (candidateIds && !candidateIds.has(item.id)) {
+      if (candidateIds && !getCompatibilityIds(item).some(id => candidateIds!.has(id))) {
         return false
       }
 
