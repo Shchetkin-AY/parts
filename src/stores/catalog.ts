@@ -337,7 +337,6 @@ export const useCatalogStore = defineStore('catalog', () => {
     const markParam = getFilterParam(params, FilterField.mark)
     const modelParam = getFilterParam(params, FilterField.model)
 
-    // mark / model — из индексов совместимости
     if (field === FilterField.mark) {
       const { brands, goodsIdsByBrandModel } = compatibilityIndices.value
 
@@ -374,20 +373,15 @@ export const useCatalogStore = defineStore('catalog', () => {
       }))
     }
 
-    // series / wheelDiameter — из каталога
-    const optionsMap = new Map<string, SelectOption>()
-    const filteredItems =
-      markParam || modelParam
-        ? filterItems(params, sourceItems, field)
-        : sourceItems
+    if (field === FilterField.series) {
+      const optionsMap = new Map<string, SelectOption>()
+      const filteredItems =
+        markParam || modelParam
+          ? filterItems(params, sourceItems, field)
+          : sourceItems
 
-    filteredItems.forEach(item => {
-      const values =
-        field === FilterField.wheelDiameter
-          ? getWheelDiameterValues(item.wheelDiameter).map(String)
-          : [ normalize(item.series) ]
-
-      values.forEach(value => {
+      filteredItems.forEach(item => {
+        const value = normalize(item.series)
         if (!value || optionsMap.has(value)) {
           return
         }
@@ -396,9 +390,34 @@ export const useCatalogStore = defineStore('catalog', () => {
           value
         })
       })
-    })
 
-    return sortOptions(field, [ ...optionsMap.values() ])
+      return sortOptions(field, [ ...optionsMap.values() ])
+    }
+
+    if (field === FilterField.wheelDiameter) {
+      const optionsMap = new Map<string, SelectOption>()
+      const filteredItems =
+        markParam || modelParam
+          ? filterItems(params, sourceItems, field)
+          : sourceItems
+
+      filteredItems.forEach(item => {
+        getWheelDiameterValues(item.wheelDiameter).forEach(d => {
+          const value = String(d)
+          if (optionsMap.has(value)) {
+            return
+          }
+          optionsMap.set(value, {
+            label: getOptionLabel(field, value),
+            value
+          })
+        })
+      })
+
+      return sortOptions(field, [ ...optionsMap.values() ])
+    }
+
+    return []
   }
 
   return {

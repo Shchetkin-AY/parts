@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCatalogStore } from '@/stores'
 import { UiButton, UiDivider, UiSelect } from '@/ui'
@@ -20,10 +20,10 @@ const fieldsConfig: FilterFieldProps[] = [
     placeholder: 'Выберите модель'
   },
   {
-    field: CatalogFilterField.diameter,
-    label: 'Диаметр диска',
-    ariaLabel: 'Диаметр диска',
-    placeholder: 'Выберите диаметр диска'
+    field: CatalogFilterField.wheelDiameter,
+    label: 'Диаметр колёс',
+    ariaLabel: 'Диаметр колёс',
+    placeholder: 'Выберите диаметр колёс'
   }
 ]
 
@@ -40,6 +40,11 @@ export default defineComponent({
     )
 
     const className = 'home-filter'
+
+    onBeforeMount(async () => {
+      await catalogStore.loadCatalog()
+      await catalogStore.loadCompatibility()
+    })
 
     const showFeedback = ref(false)
 
