@@ -14,21 +14,15 @@ export const FilterFields: FilterFieldProps[] = [
     placeholder: 'Выберите модель'
   },
   {
-    field: CatalogFilterField.series,
-    label: 'Серия',
-    ariaLabel: 'Серия',
-    placeholder: 'Выберите серию'
-  },
-  {
     field: CatalogFilterField.wheelDiameter,
     label: 'Диаметр колёс',
     ariaLabel: 'Диаметр колёс',
     placeholder: 'Выберите диаметр колёс'
   },
   {
-    field: CatalogFilterField.diameter,
-    label: 'Диаметр диска',
-    ariaLabel: 'Диаметр диска',
-    placeholder: 'Выберите диаметр диска'
+    field: CatalogFilterField.series,
+    label: 'Серия',
+    ariaLabel: 'Серия',
+    placeholder: 'Выберите серию'
   }
 ]

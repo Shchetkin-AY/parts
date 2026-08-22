@@ -6,11 +6,10 @@ import { CatalogFilterField } from './field'
 
 export type CatalogFilterItem = Pick<
   CatalogItem,
-  'discDiameter' | 'series' | 'wheelDiameter'
+  'series' | 'wheelDiameter'
 >
 
 export interface CatalogFilterParams {
-  [CatalogFilterField.diameter]?: string
   [CatalogFilterField.mark]?: string
   [CatalogFilterField.model]?: string
   [CatalogFilterField.series]?: string
@@ -30,7 +29,6 @@ export interface FilterFieldProps {
 }
 
 const emptyFilterParams: CatalogFilterParams = {
-  [CatalogFilterField.diameter]: '',
   [CatalogFilterField.mark]: '',
   [CatalogFilterField.model]: '',
   [CatalogFilterField.series]: '',
@@ -82,6 +80,9 @@ export const useCatalogFilterFields = (
     watch(
       () => optionsByField.value[config.field],
       options => {
+        if (!catalogStore.isLoaded) {
+          return
+        }
         const hasCurrent = options.some(option => option.value === params[config.field])
 
         if (params[config.field] && !hasCurrent) {
