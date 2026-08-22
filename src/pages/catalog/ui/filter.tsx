@@ -1,7 +1,7 @@
-import { Fragment, PropType, computed, defineComponent, ref, watch } from 'vue'
+import { Fragment, PropType, computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { ButtonMode, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, FilterFieldProps, FilterFields, Size, pluralize, useCatalogFilterFields } from '@/utils'
 import { UiButton, UiDialog, UiDivider, UiSelect } from '@/ui'
-import { useViewportStore } from '@/stores'
+import { useCatalogStore, useViewportStore } from '@/stores'
 import Feedback from '@/features/feedback'
 
 export default defineComponent({
@@ -22,6 +22,8 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const viewportStore = useViewportStore()
+    const catalogStore = useCatalogStore()
+
     const showFeedback = ref(false)
     const showDialog = ref<boolean>(false)
 
@@ -61,6 +63,10 @@ export default defineComponent({
       },
       { deep: true }
     )
+
+    onBeforeMount(async () => {
+      await catalogStore.loadCompatibility()
+    })
 
     const submitHandler = (): void => {
       emit('submit', {
