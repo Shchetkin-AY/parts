@@ -17,7 +17,8 @@ export default defineComponent({
     const catalogStore = useCatalogStore()
 
     onBeforeMount(() => {
-      void catalogStore.load()
+      catalogStore.load()
+      catalogStore.loadCompatibility()
     })
 
     const routeId = computed(() => {
