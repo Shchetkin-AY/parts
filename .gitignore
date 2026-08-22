@@ -15,6 +15,4 @@ node_modules
 .clinerules
 .clineignore
 .codex
-.copilot-commit-message-instructions.md
-.continue
 src/templates/*
