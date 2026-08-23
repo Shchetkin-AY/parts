@@ -1,4 +1,4 @@
-import { PropType, computed, defineComponent, onBeforeUnmount, reactive, ref } from 'vue'
+import { PropType, computed, defineComponent, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import { UiButton, UiDialog } from '@/ui'
 import Form from '@/features/feedback/form'
 import { ButtonMode, Color, FeedbackPayload, FeedbackTypes } from '@/utils'
@@ -17,6 +17,11 @@ export default defineComponent({
     type: {
       type: String as PropType<FeedbackTypes>,
       default: FeedbackTypes.question
+    },
+
+    topic: {
+      type: String,
+      default: ''
     }
   },
 
@@ -42,6 +47,19 @@ export default defineComponent({
     const updatePayload = (value: FeedbackPayload) => {
       Object.assign(payload, value)
     }
+
+    const setTopic = () => {
+      payload.comment = props.topic ? `Интересует: ${props.topic}` : ''
+    }
+
+    watch(
+      () => [ props.modelValue, props.topic ],
+      ([ isOpen, topic ], previous) => {
+        if (isOpen && (!previous?.[0] || topic !== previous?.[1])) {
+          setTopic()
+        }
+      }
+    )
 
     onBeforeUnmount(() => {
       payload.name = ''
