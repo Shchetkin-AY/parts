@@ -1,3 +1,4 @@
+export * from './accessories-page'
 export * from './accessory'
 export * from './catalog'
 export * from './filter'
