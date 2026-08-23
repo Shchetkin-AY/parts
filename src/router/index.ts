@@ -17,6 +17,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/catalog')
       },
       {
+        path: 'accessories',
+        name: 'accessories',
+        component: () => import('@/pages/accessories')
+      },
+      {
         path: 'catalog/:category/:id',
         name: 'catalog.single',
         component: () => import('@/pages/product')
