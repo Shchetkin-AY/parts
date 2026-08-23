@@ -9,7 +9,15 @@
 @use "mixins";
 
 html {
+  scroll-behavior: smooth;
+
   @include mixins.scrollbar;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 html[data-scroll-lock] {
