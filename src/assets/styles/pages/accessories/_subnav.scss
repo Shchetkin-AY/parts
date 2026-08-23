@@ -1,0 +1,69 @@
+$_name: "accessories-page";
+
+.#{$_name} {
+  &__subnav {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+
+    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+
+    grid-column: full;
+
+    position: sticky;
+    top: 96px;
+
+    z-index: 10;
+    backdrop-filter: blur(12px);
+  }
+
+  &__subnav > nav {
+    grid-column: content;
+
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__subnav .#{$_name}__container {
+    padding-block: var(--space-xs);
+
+    display: flex;
+    gap: calc(var(--space-xs) / 2);
+
+    overflow-x: auto;
+  }
+
+  &__subnav a {
+    padding: var(--space-xs) var(--space-sm);
+
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+
+    border-radius: var(--radius-xs);
+
+    flex: 0 0 auto;
+
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  &__subnav a:hover {
+    color: var(--color-primary);
+
+    background: var(--color-surface-3);
+  }
+
+  &__subnav a:focus-visible,
+  &__subnav a.is-active {
+    color: var(--color-primary);
+  }
+
+  @media (width <= 760px) {
+    &__subnav {
+      top: 96px;
+    }
+  }
+}

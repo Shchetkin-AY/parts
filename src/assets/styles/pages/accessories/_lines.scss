@@ -1,0 +1,30 @@
+// Accessories page: секция армированных магистралей
+$_name: "accessories-page";
+
+.#{$_name} {
+  &__lines-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: var(--space-xxl);
+    align-items: center;
+  }
+
+  &__lines-grid > div:last-child {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  &__lines-grid img {
+    border-radius: var(--radius-xs);
+
+    width: 100%;
+  }
+
+  @media (width <= 760px) {
+    &__lines-grid {
+      grid-template-columns: 1fr;
+
+      gap: var(--space-lg);
+    }
+  }
+}
