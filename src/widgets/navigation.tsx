@@ -15,8 +15,12 @@ const links: NavigationLink[] = [
     href: '/'
   },
   {
-    label: 'Каталог',
+    label: 'Комплекты',
     href: '/catalog'
+  },
+  {
+    label: 'Комплектующие',
+    href: '/accessories'
   },
   {
     label: 'О бренде',
