@@ -31,6 +31,7 @@ $text-meta: #3f3f46;
 $text-muted-light: #8b8b8b;
 $success: #53ff7d;
 $warning: #f5b942;
+$info: #2f5bc2;
 $colors: (
   "white": $white,
   "black": $black,
@@ -66,7 +67,8 @@ $colors: (
   "text-meta": $text-meta,
   "text-muted-light": $text-muted-light,
   "success": $success,
-  "warning": $warning
+  "warning": $warning,
+  "info": $info
 );
 $color-names: map.keys($colors);
 
