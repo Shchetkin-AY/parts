@@ -4,8 +4,8 @@
 $_name: "discs";
 
 .#{$_name} {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
 
   display: grid;
   gap: var(--space-lg);
@@ -55,10 +55,10 @@ $_name: "discs";
     }
 
     &-caption {
-      font-size: 10px;
       color: var(--color-text-muted-light);
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+
+      @include mixins.font(10px, 400, null, 0.7px);
     }
   }
 
@@ -119,6 +119,9 @@ $_name: "discs";
   }
 
   @media (width <= 760px) {
+    padding-top: unset;
+    padding-bottom: unset;
+
     &__split {
       grid-template-columns: 1fr;
 

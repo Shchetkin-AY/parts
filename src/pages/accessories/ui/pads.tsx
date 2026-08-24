@@ -11,7 +11,7 @@ export default defineComponent({
   emits: [ 'order' ],
 
   setup(_, { emit }) {
-    const activePad = ref()
+    const activePad = ref<PadId>(pads[0].id)
 
     const className = 'pads'
 

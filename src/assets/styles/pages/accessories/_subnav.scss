@@ -1,6 +1,11 @@
+@use "colors";
+@use "mixins" as mixins;
+
 $_name: "accessories-page";
 
 .#{$_name} {
+  --accessories-navigation-height: 96px;
+
   &__subnav {
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
@@ -10,7 +15,7 @@ $_name: "accessories-page";
     grid-column: full;
 
     position: sticky;
-    top: 96px;
+    top: var(--accessories-navigation-height);
 
     z-index: 10;
     backdrop-filter: blur(12px);
@@ -21,6 +26,10 @@ $_name: "accessories-page";
 
     min-width: 0;
     width: 100%;
+  }
+
+  &__subnav ~ .isk-page__section {
+    scroll-margin-top: calc(var(--accessories-navigation-height) + var(--space-lg) + var(--space-sm));
   }
 
   &__subnav .#{$_name}__container {
@@ -35,11 +44,8 @@ $_name: "accessories-page";
   &__subnav a {
     padding: var(--space-xs) var(--space-sm);
 
-    font-size: 11px;
-    font-weight: 600;
     color: var(--color-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
 
     border-radius: var(--radius-xs);
 
@@ -48,6 +54,8 @@ $_name: "accessories-page";
     transition:
       color 0.2s ease,
       background 0.2s ease;
+
+    @include mixins.font(11px, 600);
   }
 
   &__subnav a:hover {
@@ -63,7 +71,7 @@ $_name: "accessories-page";
 
   @media (width <= 760px) {
     &__subnav {
-      top: 96px;
+      top: var(--accessories-navigation-height);
     }
   }
 }

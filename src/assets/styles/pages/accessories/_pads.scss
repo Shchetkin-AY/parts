@@ -4,8 +4,8 @@
 $_name: "pads";
 
 .#{$_name} {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
 
   display: grid;
   gap: var(--space-lg);
@@ -23,10 +23,9 @@ $_name: "pads";
     gap: var(--space-sm);
 
     &-title {
-      font-size: 16px;
       color: var(--color-text-primary);
 
-      @include mixins.font(14px);
+      @include mixins.font(16px);
     }
 
     &-scales {
@@ -238,9 +237,14 @@ $_name: "pads";
       @include mixins.font(14px, 500);
     }
 
-    &-subtitle,
-    &-description {
+    &-subtitle {
       color: var(--color-text-secondary);
+
+      @include mixins.font(14px);
+    }
+
+    &-description {
+      color: var(--color-text-muted);
 
       @include mixins.font(12px);
     }
@@ -253,64 +257,49 @@ $_name: "pads";
   }
 
   &__cards h3 {
-    font-size: 15px;
-    font-weight: 600;
     color: var(--color-text-primary);
     text-transform: uppercase;
+
+    @include mixins.font(15px, 600);
   }
 
   &__cards article p {
-    font-size: 14px;
     color: var(--color-text-secondary);
-    line-height: 1.6;
+
+    @include mixins.font(14px, 400, 1.6);
   }
 
   &__cards article small {
     padding-top: var(--space-sm);
 
-    font-size: 11px;
     color: var(--color-text-secondary);
     text-transform: uppercase;
 
     border-top: 1px solid var(--color-border);
 
     display: block;
+
+    @include mixins.font(11px);
   }
 
   &__cards article small b {
-    font-weight: 400;
     color: var(--color-success);
+
+    @include mixins.font(11px, 400);
   }
 
-  @media (width <= 760px) {
+  @media screen and (width <= 760px) {
+    padding-top: unset;
+
     &__cards {
       grid-template-columns: 1fr;
+      gap: var(--space-sm);
     }
   }
 
   @media (width <= 425px) {
     &__panel-scales {
       padding-left: calc(var(--space-xxl) + var(--space-sm));
-    }
-
-    &__panel-grid {
-      left: calc(var(--space-xxl) + var(--space-sm));
-    }
-
-    &__panel-scale b {
-      right: calc(100% + var(--space-xs));
-    }
-
-    &__panel-selected {
-      grid-template-columns: 1fr;
-    }
-
-    &__panel-selected span,
-    &__panel-selected small {
-      text-align: left;
-
-      grid-column: 1;
-      grid-row: auto;
     }
   }
 }

@@ -103,7 +103,7 @@
   width: $size;
 }
 
-@mixin font($font-size: 14px, $font-weight: 400, $line-height: null) {
+@mixin font($font-size: 14px, $font-weight: 400, $line-height: null, $letter-spacing: 0.5px) {
   $computed-line-height: null;
 
   @if $line-height {
@@ -115,5 +115,5 @@
   font-size: $font-size;
   font-weight: $font-weight;
   line-height: $computed-line-height;
-  letter-spacing: 0.5px;
+  letter-spacing: $letter-spacing;
 }

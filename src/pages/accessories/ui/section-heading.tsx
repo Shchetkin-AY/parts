@@ -19,13 +19,13 @@ export default defineComponent({
   },
 
   setup(props) {
-    const renderEyebrow = () => <span class="accessories__eyebrow">{props.eyebrow}</span>
+    const renderEyebrow = () => <span class="accessories-page__eyebrow">{props.eyebrow}</span>
 
     const renderTitle = () => <h2>{props.title}</h2>
 
     const renderCopy = () => {
       return (
-        <div class="accessories__heading-copy">
+        <div class="accessories-page__heading-copy">
           {renderTitle()}
           {renderEyebrow()}
         </div>
@@ -35,7 +35,7 @@ export default defineComponent({
     const renderDescription = () => <p>{props.description}</p>
 
     return () =>
-      <div class="accessories__heading">
+      <div class="accessories-page__heading">
         {renderCopy()}
         {renderDescription()}
       </div>

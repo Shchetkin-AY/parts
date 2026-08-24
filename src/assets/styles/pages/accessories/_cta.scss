@@ -4,7 +4,7 @@
 $_name: "cta";
 
 .#{$_name} {
-  padding: 24px;
+  padding: var(--space-md);
 
   border-width: 1px;
   border-style: solid;
@@ -35,4 +35,12 @@ $_name: "cta";
   }
 
   @include mixins.absolute-width(100%);
+
+  @media screen and (width <= 720px) {
+    padding: var(--space-sm);
+  }
+
+  @media screen and (width < 500px) {
+    grid-template-columns: 1fr;
+  }
 }

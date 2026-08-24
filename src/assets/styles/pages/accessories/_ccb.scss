@@ -4,8 +4,8 @@
 $_name: "ccb";
 
 .#{$_name} {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
 
   display: grid;
   gap: var(--space-lg);
@@ -75,8 +75,6 @@ $_name: "ccb";
     &-item {
       padding-top: var(--space-xs);
 
-      font-size: 16px;
-      font-weight: 500;
       color: var(--color-text-primary);
 
       border-top: 2px solid var(--color-border);
@@ -84,16 +82,17 @@ $_name: "ccb";
       display: grid;
 
       gap: var(--space-xs);
+
+      @include mixins.font(16px, 500);
     }
 
     &-label {
-      font-size: 10px;
-      font-weight: 400;
       color: var(--color-text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
 
       display: block;
+
+      @include mixins.font(10px);
     }
   }
 
@@ -101,23 +100,24 @@ $_name: "ccb";
     display: grid;
     gap: var(--space-md);
 
-    & div {
+    &-item {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: var(--space-xs);
     }
 
-    & span,
-    & strong {
-      font-size: 12px;
+    &-label,
+    &-value {
       color: var(--color-text-secondary);
+
+      @include mixins.font(12px);
     }
 
-    & strong {
-      font-weight: 400;
+    &-value {
+      @include mixins.font(12px, 400);
     }
 
-    & i {
+    &-bar {
       border-radius: var(--radius-xs);
 
       grid-column: 1 / -1;
@@ -140,11 +140,11 @@ $_name: "ccb";
       width: 50%;
     }
 
-    & small {
-      font-size: 10px;
+    &-note {
       color: var(--color-text-muted-light);
-      line-height: 1.5;
       text-transform: uppercase;
+
+      @include mixins.font(10px, 400, 1.5);
     }
   }
 
@@ -153,8 +153,8 @@ $_name: "ccb";
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-md);
 
-    & > .accessories__feature {
-      padding-top: 20px;
+    & > .accessories-page__feature {
+      padding-top: var(--space-sm);
 
       border-top: 2px solid var(--color-border-strong);
     }
@@ -163,14 +163,20 @@ $_name: "ccb";
   }
 
   @media (width <= 760px) {
-    &__ccb-grid {
-      grid-template-columns: 1fr;
+    padding-top: unset;
+    padding-bottom: unset;
 
+    &__rings,
+    &__features {
+      grid-template-columns: 1fr;
+    }
+
+    &__rings {
       gap: var(--space-lg);
     }
 
-    &__feature-grid {
-      grid-template-columns: 1fr;
+    &__features {
+      gap: var(--space-md);
     }
   }
 }

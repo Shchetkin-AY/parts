@@ -5,6 +5,7 @@ import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
 import { CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
+import { useViewportStore } from '@/stores'
 
 export default defineComponent({
   name: 'Ccb',
@@ -12,6 +13,8 @@ export default defineComponent({
   emits: [ 'order' ],
 
   setup(_, { emit }) {
+    const viewportStore = useViewportStore()
+
     const className = 'ccb'
 
     const renderMetric = (metric: CcbMetric) => {
@@ -36,10 +39,10 @@ export default defineComponent({
 
     const renderWeightBar = (item: WeightCompareItem) => {
       return (
-        <div key={item.label}>
-          <span>{item.label}</span>
-          <strong>{item.value}</strong>
-          <i class={`${className}__weight-bar--${item.modifier}`} />
+        <div class={`${className}__weight-item`} key={item.label}>
+          <div class={`${className}__weight-label`}>{item.label}</div>
+          <div class={`${className}__weight-value`}>{item.value}</div>
+          <div class={`${className}__weight-bar ${className}__weight-bar--${item.modifier}`} />
         </div>
       )
     }
@@ -48,7 +51,7 @@ export default defineComponent({
       return (
         <div class={`${className}__weight`}>
           {weightCompare.map(renderWeightBar)}
-          <small>{weightCompareNote}</small>
+          <div class={`${className}__weight-note`}>{weightCompareNote}</div>
         </div>
       )
     }
@@ -70,12 +73,14 @@ export default defineComponent({
       )
     }
     const renderWide = () => {
-      return (
-        <div class={`${className}__wide`}>
-          {renderImage()}
-          {renderWideNote()}
-        </div>
-      )
+      if (viewportStore.size.width > 760) {
+        return (
+          <div class={`${className}__wide`}>
+            {renderImage()}
+            {renderWideNote()}
+          </div>
+        )
+      }
     }
 
     const renderRingsImage = () => {

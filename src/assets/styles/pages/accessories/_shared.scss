@@ -1,33 +1,9 @@
 @use "colors";
 @use "mixins" as mixins;
 
-$_name: "accessories";
+$_name: "accessories-page";
 
 .#{$_name} {
-  --accessories-section-padding: calc(var(--space-xxl) * 2);
-  --accessories-section-padding-mobile: calc(var(--space-xxl) + var(--space-sm));
-  --accessories-content-gap: var(--space-xxl);
-  --accessories-scroll-offset: 190px;
-
-  color: var(--color-text);
-
-  background: var(--color-bg);
-  scroll-padding-top: var(--accessories-scroll-offset);
-
-  &__hero,
-  &__section,
-  &__cta {
-    grid-column: full;
-  }
-
-  &__container {
-    grid-column: content;
-
-    min-width: 0;
-    max-width: var(--layout-width);
-    width: 100%;
-  }
-
   &__eyebrow {
     color: var(--color-primary);
     text-transform: uppercase;
@@ -35,25 +11,7 @@ $_name: "accessories";
     max-width: 100%;
     overflow-wrap: break-word;
 
-    @include mixins.font(13px, 700);
-  }
-
-  &__section {
-    padding-block: var(--accessories-section-padding);
-
-    background: var(--color-bg);
-
-    display: grid;
-    gap: var(--accessories-content-gap);
-  }
-
-  &__section > &__container {
-    display: grid;
-    gap: var(--accessories-content-gap);
-  }
-
-  &__section--dark {
-    background: var(--color-surface);
+    @include mixins.font(10px, 500);
   }
 
   &__heading {
@@ -65,24 +23,27 @@ $_name: "accessories";
     grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
     gap: var(--space-xxl);
     align-items: start;
-  }
 
-  &__heading-copy {
-    display: grid;
-    gap: var(--space-sm);
-  }
+    &-copy {
+      display: grid;
+      gap: var(--space-sm);
+    }
 
-  &__heading h2 {
-    font-size: clamp(30px, 4vw, 48px);
-    font-weight: 500;
-    color: var(--color-text-primary);
-    line-height: 1;
-  }
+    & h2 {
+      color: var(--color-text-primary);
 
-  &__heading > p {
-    font-size: 15px;
-    color: var(--color-text-secondary);
-    line-height: 1.7;
+      @include mixins.font(clamp(30px, 4vw, 48px), 500, 1);
+    }
+
+    & > p {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(15px, 400, 1.7);
+    }
+
+    @media screen and (width <= 760px) {
+      gap: var(--space-md);
+    }
   }
 
   &__feature {
@@ -105,12 +66,6 @@ $_name: "accessories";
   }
 
   @media (width <= 760px) {
-    --accessories-scroll-offset: 154px;
-
-    &__section {
-      padding-block: var(--accessories-section-padding-mobile);
-    }
-
     &__heading {
       grid-template-columns: 1fr;
     }

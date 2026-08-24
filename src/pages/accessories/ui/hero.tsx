@@ -7,7 +7,7 @@ export default defineComponent({
     const className = 'accessories-hero'
 
     const renderEyebrow = () => {
-      return <span class="accessories__eyebrow">Аксессуары</span>
+      return <span class={`${className}-text-eyebrow`}>Аксессуары</span>
     }
 
     const renderTitle = () => {

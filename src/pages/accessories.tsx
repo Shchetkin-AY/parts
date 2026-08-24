@@ -30,7 +30,7 @@ export default defineComponent({
 
     const renderDiscs = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section id="discs" class="isk-page__section isk-page__section--contained">
           <AccessoriesDiscs onOrder={orderHandler} />
         </section>
       )
@@ -38,7 +38,7 @@ export default defineComponent({
 
     const renderCcb = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section id="ccb" class="isk-page__section isk-page__section--contained">
           <AccessoriesCcb onOrder={orderHandler} />
         </section>
       )
@@ -46,14 +46,18 @@ export default defineComponent({
 
     const renderPads = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section id="pads" class="isk-page__section isk-page__section--contained">
           <AccessoriesPads onOrder={orderHandler} />
         </section>
       )
     }
 
     const renderLines = () => {
-      return <AccessoriesLines onOrder={orderHandler} />
+      return (
+        <section id="lines" class="isk-page__section isk-page__section--contained">
+          <AccessoriesLines onOrder={orderHandler} />
+        </section>
+      )
     }
 
     const renderFeedback = () => {
@@ -61,7 +65,7 @@ export default defineComponent({
     }
 
     return () =>
-      <Page class="accessories">
+      <Page class="accessories-page">
         {renderHero()}
         {renderSubnav()}
         {renderDiscs()}

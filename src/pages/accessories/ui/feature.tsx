@@ -13,15 +13,15 @@ export default defineComponent({
 
   setup(props) {
     const renderTitle = () => {
-      return <div class="accessories__feature-title">{props.value.title}</div>
+      return <div class="accessories-page__feature-title">{props.value.title}</div>
     }
 
     const renderText = () => {
-      return <div class="accessories__feature-description">{props.value.description}</div>
+      return <div class="accessories-page__feature-description">{props.value.description}</div>
     }
 
     return () =>
-      <div class="accessories__feature">
+      <div class="accessories-page__feature">
         {renderTitle()}
         {renderText()}
       </div>

@@ -42,6 +42,10 @@ $_name: "accessories-hero";
       overflow-wrap: anywhere;
 
       @include mixins.font(40px, 600);
+
+      @media (width < 768px) {
+        @include mixins.font(26px, 600);
+      }
     }
 
     &-description {
@@ -53,7 +57,7 @@ $_name: "accessories-hero";
       @include mixins.font(16px, 300, 24px);
 
       @media (width >= 768px) {
-        font-size: 18px;
+        @include mixins.font(18px, 300, 24px);
       }
     }
   }
@@ -66,32 +70,10 @@ $_name: "accessories-hero";
   }
 
   @media (width <= 760px) {
-    &__hero-inner {
-      padding-top: 48px;
-
-      grid-template-columns: 1fr;
-
-      gap: 32px;
-    }
+    grid-template-columns: 1fr;
 
     &-image {
       min-height: 240px;
-    }
-  }
-
-  @media (width <= 425px) {
-    &__stats {
-      gap: 10px;
-    }
-
-    &-stat {
-      &-title {
-        @include mixins.font(18px, 600);
-      }
-
-      &-description {
-        @include mixins.font(10px, 300);
-      }
     }
   }
 }

@@ -1,5 +1,5 @@
 // subnav.tsx
-import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { subnavItems } from '@/data'
 
 export default defineComponent({
@@ -7,7 +7,26 @@ export default defineComponent({
 
   setup() {
     const activeId = ref('')
+    const subnav = ref<HTMLElement | null>(null)
     const sections: HTMLElement[] = []
+
+    const scrollToSection = (id: string, behavior: ScrollBehavior = 'smooth') => {
+      const section = document.getElementById(id)
+      const navigation = document.querySelector('.navigation')
+
+      if (!section) {
+        return
+      }
+
+      const navigationHeight = navigation?.getBoundingClientRect().height ?? 0
+      const subnavHeight = subnav.value?.getBoundingClientRect().height ?? 0
+      const top = section.getBoundingClientRect().top + window.scrollY - navigationHeight - subnavHeight
+
+      window.scrollTo({
+        top,
+        behavior
+      })
+    }
 
     const updateActiveId = () => {
       const viewportMiddle = window.innerHeight / 2
@@ -38,7 +57,16 @@ export default defineComponent({
         }
       })
 
+      updateActiveId()
       window.addEventListener('scroll', updateActiveId, { passive: true })
+
+      void nextTick(() => {
+        const id = window.location.hash.slice(1)
+        if (id) {
+          scrollToSection(id, 'auto')
+          updateActiveId()
+        }
+      })
     })
 
     onBeforeUnmount(() => {
@@ -49,7 +77,16 @@ export default defineComponent({
       const [ id, label ] = item
 
       return (
-        <a href={`#${id}`} class={{ 'is-active': activeId.value === id }} key={id}>
+        <a
+          href={`#${id}`}
+          class={{ 'is-active': activeId.value === id }}
+          key={id}
+          onClick={(event: MouseEvent) => {
+            event.preventDefault()
+            window.history.pushState(null, '', `#${id}`)
+            scrollToSection(id)
+          }}
+        >
           {label}
         </a>
       )
@@ -60,7 +97,7 @@ export default defineComponent({
     const renderContainer = () => <div class="accessories-page__container">{renderLinks()}</div>
 
     return () =>
-      <section class="isk-page__section isk-page__section--contained accessories-page__subnav">
+      <section ref={subnav} class="isk-page__section isk-page__section--contained accessories-page__subnav">
         <nav aria-label="Разделы страницы">
           {renderContainer()}
         </nav>
