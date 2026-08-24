@@ -38,7 +38,7 @@ export default defineComponent({
       return (
         <img
           class={`${className}-image`}
-          src="/images/accessories/hero-12p.webp"
+          src="/images/products/r-series/0.webp"
           alt="12-поршневой суппорт SAVANINI на составном диске"
         />
       )
