@@ -121,6 +121,7 @@ export default defineComponent({
           title="Не уверены, какое исполнение нужно?"
           description="Подскажем по вашей машине и стилю езды"
           topic="Тормозные диски"
+          label="Подобрать диски"
           onOpen={(topic: string) => emit('order', topic)}
         />
       )
