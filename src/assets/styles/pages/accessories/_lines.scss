@@ -21,6 +21,12 @@ $_name: "lines";
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: var(--space-xxl);
     align-items: center;
+
+    @media screen and (width <= 760px) {
+      grid-template-columns: 1fr;
+
+      gap: var(--space-lg);
+    }
   }
 
   &__features {
@@ -29,19 +35,15 @@ $_name: "lines";
     align-items: start;
   }
 
-  &-image {
+  &__image {
     border-radius: var(--radius-xs);
 
     height: 100%;
     width: 100%;
     object-fit: contain;
-  }
 
-  @media (width <= 760px) {
-    &__lines-grid {
-      grid-template-columns: 1fr;
-
-      gap: var(--space-lg);
+    @media screen and (width <= 760px) {
+      order: -1;
     }
   }
 }

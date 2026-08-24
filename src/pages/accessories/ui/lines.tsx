@@ -39,7 +39,7 @@ export default defineComponent({
     const renderImage = () => {
       return (
         <img
-          class={`${className}__images-image`}
+          class={`${className}__image`}
           src={'/images/accessories/hoses-01.webp'}
           alt={'Армированные тормозные шланги SAVANINI'}
           key={'/images/accessories/hoses-01.webp'}
