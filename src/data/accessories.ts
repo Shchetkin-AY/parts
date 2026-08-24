@@ -148,7 +148,3 @@ export const linesFeatures: FeatureItem[] = [
   }
 ]
 
-export const linesImages: GalleryItem[] = [
-  [ '/images/accessories/hoses-01.webp', 'Армированные тормозные шланги SAVANINI' ],
-  [ '/images/accessories/hoses-02.webp', 'Оплётка армированного шланга SAVANINI' ]
-]

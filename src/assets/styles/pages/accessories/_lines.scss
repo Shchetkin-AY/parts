@@ -29,17 +29,12 @@ $_name: "lines";
     align-items: start;
   }
 
-  &__images {
-    display: grid;
-    gap: var(--space-sm);
+  &-image {
+    border-radius: var(--radius-xs);
 
-    &-image {
-      border-radius: var(--radius-xs);
-
-      height: 100%;
-      width: 100%;
-      object-fit: contain;
-    }
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
 
   @media (width <= 760px) {

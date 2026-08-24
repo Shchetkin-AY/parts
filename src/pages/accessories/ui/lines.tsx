@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 
-import { linesFeatures, linesImages } from '@/data'
+import { linesFeatures } from '@/data'
 import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
@@ -36,23 +36,14 @@ export default defineComponent({
       )
     }
 
-    const renderImage = (image: [ string, string ]) => {
-      const [ src, alt ] = image
-
+    const renderImage = () => {
       return (
         <img
           class={`${className}__images-image`}
-          src={src}
-          alt={alt}
-          key={src}
+          src={'/images/accessories/hoses-01.webp'}
+          alt={'Армированные тормозные шланги SAVANINI'}
+          key={'/images/accessories/hoses-01.webp'}
         />
-      )
-    }
-    const renderImages = () => {
-      return (
-        <div class={`${className}__images`}>
-          {linesImages.map(renderImage)}
-        </div>
       )
     }
 
@@ -60,7 +51,7 @@ export default defineComponent({
       return (
         <div class={`${className}__grid`}>
           {renderFeatures()}
-          {renderImages()}
+          {renderImage()}
         </div>
       )
     }
