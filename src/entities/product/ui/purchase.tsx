@@ -22,7 +22,9 @@ export const Purchase = defineComponent({
     }
   },
 
-  setup(props) {
+  emits: [ 'order' ],
+
+  setup(props, { emit }) {
     const className = 'purchase'
 
     const renderOrderButton = () => {
@@ -31,6 +33,7 @@ export const Purchase = defineComponent({
           label={'Заказать комплект'}
           color={Color.primary}
           size={Size.large}
+          onClick={() => emit('order')}
         />
       )
     }
