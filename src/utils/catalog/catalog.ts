@@ -1,6 +1,8 @@
+import { CatalogCategories } from './categories'
+
 export interface CatalogItem {
   id: number
-  category: string
+  category: CatalogCategories
   brand: string
   series: string
   model: string
