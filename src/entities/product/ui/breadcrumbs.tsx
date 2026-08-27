@@ -1,7 +1,7 @@
-import { type CatalogItem } from '@/utils'
-import { PropType, computed, defineComponent } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useCatalogStore } from '@/stores/catalog'
+import { RouterLink, useRoute } from 'vue-router'
+import { PropType, defineComponent } from 'vue'
+
+import { CatalogFilterField, CatalogFilterParams, CatalogItem, buildCatalogFilterQuery } from '@/utils'
 
 export const Breadcrumbs = defineComponent({
   name: 'Breadcrumbs',
@@ -14,58 +14,71 @@ export const Breadcrumbs = defineComponent({
   },
 
   setup(props) {
+    const route = useRoute()
+
     const className = 'breadcrumbs'
-    const catalogStore = useCatalogStore()
 
-    const compatibilityBrand = computed(() => {
-      const records = catalogStore.getCompatibilityByGoodsId(props.item.id)
-
-      return records.length > 0 ? records[0].brand : ''
-    })
-
-    const title = computed(() => {
-      const brand = compatibilityBrand.value
-
-      if (brand) {
-        return `${props.item.series} ${brand} ${props.item.model}`
+    const getCatalogLink = (params: CatalogFilterParams = {}) => {
+      return {
+        name: 'catalog',
+        query: buildCatalogFilterQuery(params)
       }
+    }
 
-      return `${props.item.series} ${props.item.model}`
-    })
-
-    const renderBreadcrumbItem = (label: string, to?: string) => {
-      if (to) {
-        return (
-          <RouterLink
-            class={`${className}-link`}
-            to={to}
-          >
-            {label}
-          </RouterLink>
-        )
-      }
-
+    const renderBreadcrumbItem = (label: string, params: CatalogFilterParams = {}) => {
       return (
-        <span class={`${className}-current`}>
+        <RouterLink
+          class={`${className}-link`}
+          to={getCatalogLink(params)}
+        >
           {label}
-        </span>
+        </RouterLink>
       )
     }
 
     const renderSeparator = () => {
-      return <span class={`${className}-separator`}>›</span>
+      return (
+        <span
+          class={`${className}-separator`}
+          innerHTML={'/'}
+        />
+      )
     }
 
     return () => {
+      const result = [
+        renderBreadcrumbItem('Главная'),
+        renderSeparator(),
+        renderBreadcrumbItem('Каталог'),
+        renderSeparator(),
+        renderBreadcrumbItem('Комплекты')
+      ]
+
+      const { mark, model, wheelDiameter } = route.query
+
+      if (mark) {
+        result.push(renderSeparator())
+        result.push(renderBreadcrumbItem(String(mark), { [CatalogFilterField.mark]: String(mark) }))
+      }
+
+      if (model) {
+        result.push(renderSeparator())
+        result.push(renderBreadcrumbItem(String(model), { [CatalogFilterField.model]: String(model) }))
+      }
+
+      if (wheelDiameter) {
+        result.push(renderSeparator())
+        result.push(renderBreadcrumbItem(`R${String(wheelDiameter)}`, { [CatalogFilterField.wheelDiameter]: String(wheelDiameter) }))
+      }
+
+      result.push(renderSeparator())
+      result.push(renderBreadcrumbItem(props.item.series, { [CatalogFilterField.series]: props.item.series }))
+      result.push(renderSeparator())
+      result.push(renderBreadcrumbItem(props.item.model))
+
       return (
         <div class={className}>
-          {renderBreadcrumbItem('Главная', '/')}
-          {renderSeparator()}
-          {renderBreadcrumbItem('Каталог', '/catalog')}
-          {renderSeparator()}
-          {renderBreadcrumbItem(props.item.category)}
-          {renderSeparator()}
-          {renderBreadcrumbItem(title.value)}
+          {...result}
         </div>
       )
     }
