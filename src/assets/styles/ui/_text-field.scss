@@ -27,6 +27,8 @@ $_name: "isk-text-field";
 
     border: unset;
 
+    border-radius: var(--radius-xs);
+
     background-color: var(--color-surface-3);
 
     display: grid;
@@ -38,10 +40,6 @@ $_name: "isk-text-field";
 
     width: 100%;
 
-    &--rounded {
-      border-radius: var(--radius-xs);
-    }
-
     &::placeholder {
       color: var(--color-text-muted);
     }
@@ -49,6 +47,18 @@ $_name: "isk-text-field";
     &:hover,
     &:focus-visible {
       background: colors.color(color-grey, 0.13);
+    }
+
+    &--disabled {
+      background-color: colors.color(color-grey, 0.05);
+
+      cursor: default;
+      user-select: none;
+      pointer-events: none;
+
+      & > .#{$_name}__input {
+        color: colors.color(color-grey, 0.15);
+      }
     }
 
     @include mixins.absolute-height(40px);

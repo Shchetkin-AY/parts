@@ -6,6 +6,7 @@ import { InputType, UiComponentName, isEmpty } from '@/utils'
 export interface TextFieldProps {
   ariaLabel: string
   disabled?: boolean
+  loading?: boolean
   clearable?: boolean
   label: string
   max?: number
@@ -13,7 +14,6 @@ export interface TextFieldProps {
   modelValue: string
   placeholder?: string
   readonly?: boolean
-  rounded?: boolean
   required?: boolean
   suffix?: string
   type: InputType,
@@ -24,6 +24,7 @@ export interface TextFieldProps {
 export const textFieldProps = {
   ariaLabel: getPrimitiveProp(String, true),
   disabled: getPrimitiveProp(Boolean, false, false),
+  loading: getPrimitiveProp(Boolean, false, false),
   clearable: getPrimitiveProp(Boolean, false, false),
   label: getPrimitiveProp(String, true),
   max: getPrimitiveProp(Number),
@@ -31,7 +32,6 @@ export const textFieldProps = {
   modelValue: getPrimitiveProp(String, true),
   placeholder: getPrimitiveProp(String),
   readonly: getPrimitiveProp(Boolean, false, false),
-  rounded: getPrimitiveProp(Boolean, false, true),
   required: getPrimitiveProp(Boolean, false, true),
   suffix: getPrimitiveProp(String),
   hint: getPrimitiveProp(String),
@@ -64,9 +64,6 @@ export const UiTextField = defineComponent({
       }
       if (props.readonly) {
         result.push(`${baseClassName}__field--readonly`)
-      }
-      if (props.rounded) {
-        result.push(`${baseClassName}__field--rounded`)
       }
       if (props.error) {
         result.push(`${baseClassName}__field--error`)
@@ -116,9 +113,9 @@ export const UiTextField = defineComponent({
       }
 
       return (
-        <div class={`${baseClassName}__label`}>
+        <label class={`${baseClassName}__label`}>
           {label.value}
-        </div>
+        </label>
       )
     }
     const renderInput = () => {
@@ -185,10 +182,10 @@ export const UiTextField = defineComponent({
     }
     const renderField = () => {
       return (
-        <label class={fieldClassName.value}>
+        <div class={fieldClassName.value}>
           {renderInput()}
           {isClearVisible.value ? renderClear() : renderSuffix()}
-        </label>
+        </div>
       )
     }
     const renderHint = () => {
@@ -209,8 +206,9 @@ export const UiTextField = defineComponent({
       return (
         <div class={{
           [baseClassName]: true,
+          [`${baseClassName}--hint`]: true,
           [`${baseClassName}--error`]: props.error,
-          [`${baseClassName}--hint`]: true
+          [`${baseClassName}--disabled`]: props.disabled
         }}
         >
           {renderLabel()}

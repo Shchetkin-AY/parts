@@ -6,11 +6,11 @@ import { UiComponentName, numberToPxOrString } from '@/utils'
 export interface TextAreaProps {
   ariaLabel: string
   disabled?: boolean
+  loading: boolean
   label: string
   modelValue: string
   placeholder?: string
   readonly?: boolean
-  rounded?: boolean
   suffix?: string
   rows?: number
 }
@@ -18,11 +18,11 @@ export interface TextAreaProps {
 export const textAreaProps = {
   ariaLabel: getPrimitiveProp(String, true),
   disabled: getPrimitiveProp(Boolean, false, false),
+  loading: getPrimitiveProp(Boolean, false, false),
   label: getPrimitiveProp(String, true),
   modelValue: getPrimitiveProp(String, true),
   placeholder: getPrimitiveProp(String),
   readonly: getPrimitiveProp(Boolean, false, false),
-  rounded: getPrimitiveProp(Boolean, false, true),
   suffix: getPrimitiveProp(String),
   rows: getPrimitiveProp(Number, false, 3)
 }
@@ -47,9 +47,6 @@ export const UiTextArea = defineComponent({
       }
       if (props.readonly) {
         result.push(`${baseClassName}__field--readonly`)
-      }
-      if (props.rounded) {
-        result.push(`${baseClassName}__field--rounded`)
       }
 
       return result.join(' ')

@@ -26,6 +26,8 @@ $_name: "isk-text-area";
 
     border: unset;
 
+    border-radius: var(--radius-xs);
+
     background-color: var(--color-surface-3);
 
     display: grid;
@@ -38,12 +40,20 @@ $_name: "isk-text-area";
     min-height: 50px;
     width: 100%;
 
-    &--rounded {
-      border-radius: var(--radius-xs);
-    }
-
     &:focus-visible {
       background: colors.color(color-grey, 0.13);
+    }
+
+    &--disabled {
+      background-color: colors.color(color-grey, 0.05);
+
+      cursor: default;
+      user-select: none;
+      pointer-events: none;
+
+      & > .#{$_name}__input {
+        color: colors.color(color-grey, 0.15);
+      }
     }
 
     @include mixins.font(12px);
@@ -116,5 +126,24 @@ $_name: "isk-text-area";
 
     height: 22px;
     width: 22px;
+  }
+
+  &--disabled {
+    user-select: none;
+
+    & > .#{$_name}__field {
+      background-color: colors.color(color-grey, 0.05);
+
+      cursor: default;
+      pointer-events: none;
+
+      & > .#{$_name}__input {
+        color: colors.color(color-grey, 0.15);
+      }
+    }
+
+    & > .#{$_name}__label {
+      color: colors.color(color-grey, 0.15);
+    }
   }
 }
