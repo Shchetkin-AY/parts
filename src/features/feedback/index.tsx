@@ -2,6 +2,7 @@ import { PropType, computed, defineComponent, reactive, ref, watch } from 'vue'
 import { UiButton, UiDialog, UiIcon } from '@/ui'
 import Form from '@/features/feedback/form'
 import { ButtonMode, CatalogCategories, CatalogFilterField, CatalogItem, Color, FeedbackPayload, FeedbackTypes, Icons } from '@/utils'
+import { ChannelsLabels, FeedbackChannels } from '@/utils/feedback/channels'
 
 const className = 'feedback'
 
@@ -90,6 +91,7 @@ export default defineComponent({
     })
 
     const payload = reactive<FeedbackPayload>({
+      channel: FeedbackChannels.phone,
       name: '',
       phone: '',
       category: category.value,
@@ -111,6 +113,13 @@ export default defineComponent({
       }
     )
 
+    const normalizePayload = (payload: FeedbackPayload) => {
+      return {
+        ...payload,
+        channel: ChannelsLabels[payload.channel]
+      }
+    }
+
     const submitHandler = async (event: MouseEvent) => {
       event.stopPropagation()
 
@@ -127,7 +136,7 @@ export default defineComponent({
           headers: {
             'Content-Type': 'text/plain;charset=utf-8'
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(normalizePayload(payload))
         })
 
         if (response.ok) {

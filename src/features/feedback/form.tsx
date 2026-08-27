@@ -1,6 +1,7 @@
-import { FeedbackPayload, FeedbackTypes, isEmpty } from '@/utils'
+import { ButtonMode, Color, FeedbackPayload, FeedbackTypes, Size, isEmpty } from '@/utils'
 import { PropType, computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
-import { UiTextArea, UiTextField } from '@/ui'
+import { UiButton, UiTextArea, UiTextField } from '@/ui'
+import { ChannelsLabels, FeedbackChannels } from '@/utils/feedback/channels'
 
 export default defineComponent({
   name: 'Form',
@@ -46,10 +47,37 @@ export default defineComponent({
         case FeedbackTypes.order: return 'Заполните форму — мы подготовим расчет под ваш автомобиль и свяжемся с Вами'
       }
     })
-    const isValidPhone = computed(() => {
-      const digits = (proxy.value.phone ?? '').replace(/\D/g, '')
 
-      return /^(7|8)\d{10}$/.test(digits)
+    const phoneFieldProps = computed(() => {
+      const result = {
+        ariaLabel: 'phone',
+        label: 'Телефон',
+        placeholder: '+7 (000) 000 00 00',
+        hint: phoneHint.value,
+        error: phoneError.value,
+        disabled: props.loading,
+        required: true,
+        onFocus: phoneFocusHandler,
+        onBlur: phoneBlurHandler
+      }
+
+      switch (proxy.value.channel) {
+        case FeedbackChannels.telegram: {
+          result.label = 'Номер телефона или имя пользователя'
+          result.placeholder = '+7 (000) 000 00 00 или @username'
+          break
+        }
+      }
+
+      return result
+    })
+
+    const isValidPhone = computed(() => {
+      const value = proxy.value.phone ?? ''
+      const digits = value.replace(/\D/g, '')
+
+      return /^(7|8)\d{10}$/.test(digits) ||
+        proxy.value.channel === FeedbackChannels.telegram && /^@[a-zA-Z0-9_]+$/.test(value)
     })
     const isValidName = computed<boolean>(() => {
       return !isEmpty(proxy.value.name)
@@ -92,7 +120,9 @@ export default defineComponent({
       isPhoneTouched.value = true
 
       if (!isValidPhone.value) {
-        errors.phone = 'Введен неверный формат телефона'
+        errors.phone = proxy.value.channel === FeedbackChannels.telegram
+          ? 'Введите телефон или ник, начинающийся с @'
+          : 'Введен неверный формат телефона'
       } else {
         errors.phone = ''
       }
@@ -110,6 +140,32 @@ export default defineComponent({
     const renderSubtitle = () => {
       return (
         <div class={`${className}-subtitle`}>{subtitle.value}</div>
+      )
+    }
+    const renderChannel = (channel: FeedbackChannels) => {
+      return (
+        <UiButton
+          label={ChannelsLabels[channel]}
+          color={Color[channel]}
+          size={Size.small}
+          mode={proxy.value.channel === channel ? undefined : ButtonMode.outline}
+          onClick={() => proxy.value.channel = channel}
+        />
+      )
+    }
+    const renderChannelsButtons = () => {
+      return Object.values(FeedbackChannels).map(type => {
+        return renderChannel(type)
+      })
+    }
+    const renderChannels = () => {
+      return (
+        <div class={`${className}-channels`}>
+          <div class={`${className}-channels-title`}>Выберите канал связи *</div>
+          <div class={`${className}-channels-buttons`}>
+            {renderChannelsButtons()}
+          </div>
+        </div>
       )
     }
 
@@ -131,18 +187,7 @@ export default defineComponent({
     }
     const renderPhoneField = () => {
       return (
-        <UiTextField
-          v-model={proxy.value.phone}
-          ariaLabel="phone"
-          label="Телефон"
-          placeholder="+7 (000) 000 00 00"
-          hint={phoneHint.value}
-          error={phoneError.value}
-          disabled={props.loading}
-          required
-          onFocus={phoneFocusHandler}
-          onBlur={phoneBlurHandler}
-        />
+        <UiTextField v-model={proxy.value.phone} {...phoneFieldProps.value} />
       )
     }
     const renderCommentField = () => {
@@ -161,6 +206,7 @@ export default defineComponent({
       return (
         <div class={className} >
           {renderSubtitle()}
+          {renderChannels()}
           {renderNameField()}
           {renderPhoneField()}
           {renderCommentField()}

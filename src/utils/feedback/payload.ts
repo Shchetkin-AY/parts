@@ -1,4 +1,7 @@
+import { FeedbackChannels } from './channels'
+
 export interface FeedbackPayload {
+  channel: FeedbackChannels
   name: string
   phone: string
   category?: string

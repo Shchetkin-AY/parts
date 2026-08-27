@@ -32,6 +32,10 @@ $text-muted-light: #8b8b8b;
 $success: #53ff7d;
 $warning: #f5b942;
 $info: #2f5bc2;
+$phone: #34c759;
+$sms: #0d47a1;
+$telegram: #0088cc;
+$max: #9500ff;
 $colors: (
   "white": $white,
   "black": $black,
@@ -68,7 +72,12 @@ $colors: (
   "text-muted-light": $text-muted-light,
   "success": $success,
   "warning": $warning,
-  "info": $info
+  "info": $info,
+
+  "phone": $phone,
+  "sms": $sms,
+  "telegram": $telegram,
+  "max": $max
 );
 $color-names: map.keys($colors);
 

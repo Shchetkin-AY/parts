@@ -29,5 +29,13 @@ export enum Color {
   black = 'black',
   grey = 'grey',
 
-  success = 'success'
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+
+  phone = 'phone',
+  sms = 'sms',
+  max = 'max',
+  telegram = 'telegram'
 }
