@@ -1,10 +1,11 @@
 import { useRoute } from 'vue-router'
-import { computed, defineComponent, onBeforeMount } from 'vue'
+import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 
 import { useCatalogStore } from '@/stores'
 
-import { CatalogItem } from '@/utils'
+import { CatalogCategories, CatalogFilterField, CatalogItem, FeedbackTypes, formatWheelDiameter } from '@/utils'
 import { Page } from '@/ui'
+import Feedback from '@/features/feedback'
 import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase } from '@/entities/product'
 import { Accessories } from '@/entities/accessory'
 
@@ -15,6 +16,7 @@ export default defineComponent({
     const route = useRoute()
 
     const catalogStore = useCatalogStore()
+    const showFeedback = ref(false)
 
     onBeforeMount(() => {
       catalogStore.load()
@@ -28,10 +30,57 @@ export default defineComponent({
       return Number(value)
     })
 
-    const currentItem = computed<CatalogItem | null>(() => {
+    const currentItem = computed<CatalogItem | undefined>(() => {
       const item = catalogStore.getById(routeId.value)
 
-      return item ?? null
+      return item ?? undefined
+    })
+
+    const filterLabels: Record<CatalogFilterField, string> = {
+      [CatalogFilterField.mark]: 'Марка',
+      [CatalogFilterField.model]: 'Модель',
+      [CatalogFilterField.series]: 'Серия',
+      [CatalogFilterField.wheelDiameter]: 'Диаметр колёс'
+    }
+
+    const getQueryValue = (field: CatalogFilterField): string => {
+      const value = route.query[field]
+
+      return String(Array.isArray(value) ? value[0] ?? '' : value ?? '').trim()
+    }
+
+    const filterValues = computed(() => {
+      const result: string[] = []
+
+      for (const field of Object.values(CatalogFilterField)) {
+        const value = getQueryValue(field)
+        switch (field) {
+          case CatalogFilterField.wheelDiameter: {
+            if (value) {
+              result.push(`${filterLabels[field]}: ${formatWheelDiameter(value)}`)
+            }
+            break
+          }
+          default: {
+            if (value) {
+              result.push(`${filterLabels[field]}: ${value}`)
+            }
+            break
+          }
+        }
+      }
+
+      return result
+    })
+
+    const orderTopic = computed(() => {
+      const item = currentItem.value
+
+      if (!item) {
+        return ''
+      }
+
+      return [ item.model, ...filterValues.value ].join('; ')
     })
 
     const renderEmptyState = () => {
@@ -51,7 +100,20 @@ export default defineComponent({
       return <ProductHero item={item} />
     }
     const renderPurchase = (item: CatalogItem) => {
-      return <Purchase item={item} />
+      return <Purchase item={item} onOrder={() => showFeedback.value = true} />
+    }
+
+    const renderFeedback = () => {
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          type={FeedbackTypes.order}
+          filter={route.query as Record<CatalogFilterField, string>}
+          id={routeId.value}
+          category={CatalogCategories.kit}
+          topic={orderTopic.value}
+        />
+      )
     }
 
     const renderHeroProductSection = () => {
@@ -106,6 +168,7 @@ export default defineComponent({
         <Page class="product-page">
           {renderHeroProductSection()}
           {renderCatalog()}
+          {renderFeedback()}
         </Page>
       )
     }

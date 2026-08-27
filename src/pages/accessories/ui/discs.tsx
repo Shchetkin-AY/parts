@@ -4,7 +4,7 @@ import { discFeatures, discGallery, discSizes, discSizesNote } from '@/data'
 import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
-import { FeatureItem } from '@/utils'
+import { CatalogCategories, FeatureItem } from '@/utils'
 
 export default defineComponent({
   name: 'AccessoriesDiscs',
@@ -120,7 +120,7 @@ export default defineComponent({
         <SectionCta
           title="Не уверены, какое исполнение нужно?"
           description="Подскажем по вашей машине и стилю езды"
-          topic="Тормозные диски"
+          category={CatalogCategories.discs}
           label="Подобрать диски"
           onOpen={(topic: string) => emit('order', topic)}
         />

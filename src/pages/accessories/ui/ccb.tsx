@@ -4,7 +4,7 @@ import { ccbFeatures, ccbMetrics, weightCompare, weightCompareNote } from '@/dat
 import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
-import { CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
+import { CatalogCategories, CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
 import { useViewportStore } from '@/stores'
 
 export default defineComponent({
@@ -127,9 +127,9 @@ export default defineComponent({
         <SectionCta
           title="Карбон-керамика для вашего автомобиля"
           description="Подготовим предложение с учётом конфигурации и задач"
-          topic="Карбон-керамика"
+          category={CatalogCategories.ccb}
           label="Получить предложение"
-          onOpen={(topic: string) => emit('order', topic)}
+          onOpen={(category: CatalogCategories) => emit('order', category)}
         />
       )
     }

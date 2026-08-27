@@ -4,6 +4,7 @@ import { linesFeatures } from '@/data'
 import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
+import { CatalogCategories } from '@/utils'
 
 export default defineComponent({
   name: 'AccessoriesLines',
@@ -60,9 +61,9 @@ export default defineComponent({
         <SectionCta
           title="Магистрали под вашу конфигурацию"
           description="Подскажем совместимый комплект и варианты фитингов"
-          topic="Армированные магистрали"
+          category={CatalogCategories.lines}
           label="Подобрать магистрали"
-          onOpen={(topic: string) => emit('order', topic)}
+          onOpen={(category: CatalogCategories) => emit('order', category)}
         />
       )
     }

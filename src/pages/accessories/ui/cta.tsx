@@ -1,6 +1,6 @@
 import { PropType, defineComponent } from 'vue'
 import { UiButton } from '@/ui'
-import { Color } from '@/utils'
+import { CatalogCategories, Color } from '@/utils'
 
 export default defineComponent({
   name: 'Cta',
@@ -14,8 +14,8 @@ export default defineComponent({
       type: String as PropType<string>,
       required: true
     },
-    topic: {
-      type: String as PropType<string>,
+    category: {
+      type: String as PropType<CatalogCategories>,
       required: true
     },
     label: {
@@ -28,14 +28,22 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const className = 'cta'
+
     const renderText = () =>
       <div class={`${className}__text`}>
         <div class={`${className}__text-title`}>{props.title}</div>
         <div class={`${className}__text-description`}>{props.description}</div>
       </div>
 
-    const renderButton = () =>
-      <UiButton label={props.label} color={Color.primary} onClick={() => emit('open', props.topic)} />
+    const renderButton = () => {
+      return (
+        <UiButton
+          label={props.label}
+          color={Color.primary}
+          onClick={() => emit('open', props.category)}
+        />
+      )
+    }
 
     return () =>
       <div class={className}>

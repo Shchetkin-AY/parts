@@ -3,7 +3,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { axisLabels, pads } from '@/data'
 import SectionHeading from '@/pages/accessories/ui/section-heading'
 import SectionCta from '@/pages/accessories/ui/cta'
-import { PadComposition, PadId } from '@/utils'
+import { CatalogCategories, PadComposition, PadId } from '@/utils'
 
 export default defineComponent({
   name: 'AccessoriesPads',
@@ -192,9 +192,9 @@ export default defineComponent({
           <SectionCta
             title="Подберём состав под ваш режим езды"
             description="Уточним автомобиль, задачи и подходящую колодку"
-            topic="Колодки"
+            category={CatalogCategories.pads}
             label="Подобрать колодки"
-            onOpen={(topic: string) => emit('order', topic)}
+            onOpen={(category: CatalogCategories) => emit('order', category)}
           />
         </section>
       )

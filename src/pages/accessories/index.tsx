@@ -3,16 +3,17 @@ import { defineComponent, ref } from 'vue'
 import { Page } from '@/ui'
 import { Feedback } from '@/features'
 import { AccessoriesCcb, AccessoriesDiscs, AccessoriesHero, AccessoriesLines, AccessoriesPads, AccessoriesSubnav } from '@/pages/accessories/ui'
+import { CatalogCategories } from '@/utils'
 
 export default defineComponent({
   name: 'AccessoriesPage',
 
   setup() {
     const showFeedback = ref(false)
-    const feedbackTopic = ref('')
+    const feedbackCategory = ref<CatalogCategories>()
 
-    const orderHandler = (topic: string) => {
-      feedbackTopic.value = topic
+    const orderHandler = (category: CatalogCategories) => {
+      feedbackCategory.value = category
       showFeedback.value = true
     }
 
@@ -61,7 +62,12 @@ export default defineComponent({
     }
 
     const renderFeedback = () => {
-      return <Feedback v-model={showFeedback.value} topic={feedbackTopic.value} />
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          category={feedbackCategory.value}
+        />
+      )
     }
 
     return () =>
