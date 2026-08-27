@@ -8,13 +8,13 @@ export const numberToPxOrString = (value: string | number): string => {
   return value + 'px'
 }
 
-const usdFormatter = new Intl.NumberFormat('en-US', {
+const usdFormatter = new Intl.NumberFormat('ru-RU', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2
 })
 
-export const formatUsd = (value: number): string => {
-  return `$ ${usdFormatter.format(value).replace(/,/g, ' ')}`
+export const formatPrice = (value: number): string => {
+  return usdFormatter.format(value).replace(/,/g, '.')
 }
 
 const extractDiameters = (value: number | string): number[] => {

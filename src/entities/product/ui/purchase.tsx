@@ -1,4 +1,4 @@
-import { type CatalogItem, Color, Icons, Size, formatUsd } from '@/utils'
+import { type CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { UiButton } from '@/ui/button'
 import { UiIcon } from '@/ui/icon'
@@ -30,7 +30,7 @@ export const Purchase = defineComponent({
     const renderOrderButton = () => {
       return (
         <UiButton
-          label={'Заказать комплект'}
+          label={'Получить расчет'}
           color={Color.primary}
           size={Size.large}
           onClick={() => emit('order')}
@@ -58,7 +58,7 @@ export const Purchase = defineComponent({
     const renderPurchasePrice = () => {
       return (
         <div class={`${className}__price`}>
-          {formatUsd(props.item.priceUsd)}
+          {formatPrice(props.item.price)}
         </div>
       )
     }

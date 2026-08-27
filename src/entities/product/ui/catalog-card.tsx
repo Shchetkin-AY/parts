@@ -3,7 +3,7 @@ import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 
 import {
   ButtonMode, type CatalogItem, Color, Size,
-  formatUsd,
+  formatPrice,
   getWheelDiameterRange,
   pluralize
 } from '@/utils'
@@ -254,7 +254,7 @@ export default defineComponent({
       return (
         <div class="product-catalog-card__footer">
           <div class="product-catalog-card__price">
-            {formatUsd(props.value.priceUsd)}
+            {formatPrice(props.value.price)}
           </div>
           <UiButton
             label={'Подробнее'}

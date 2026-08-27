@@ -58,9 +58,7 @@ const CATALOG_HEADER_MAP = {
   coating: 'coating',
   features: 'features',
   application: 'application',
-  setId: 'setId',
-  priceUsd: 'priceUsd',
-  priceCny: 'priceCny',
+  price: 'price',
   description: 'description'
 } as const
 
@@ -85,9 +83,7 @@ const CATALOG_NUMERIC_HEADERS = new Set<CatalogHeader>([
   'pistonCount',
   'pistonArea',
   'discDiameter',
-  'setId',
-  'priceUsd',
-  'priceCny'
+  'price'
 ])
 
 const CATALOG_CATEGORY_VALUES: Record<string, CatalogCategories> = {
@@ -148,13 +144,12 @@ function convertValue(
 
   if (!normalized) {
     if (numericFields.has(key)) {
-      // Эти поля могут быть пустыми → null
       if (
         key === 'yearFrom' ||
         key === 'yearTo' ||
         key === 'wheelInch' ||
-        key === 'goodsId' || // ← добавить
-        key === 'id' // ← на всякий случай
+        key === 'goodsId' ||
+        key === 'id'
       ) {
         return null
       }

@@ -69,9 +69,9 @@ const sortItems = (items: CatalogItem[], sort: SortField): CatalogItem[] => {
 
   switch (sort) {
     case SortField.priceAsc:
-      return sorted.sort((a, b) => a.priceUsd - b.priceUsd)
+      return sorted.sort((a, b) => a.price - b.price)
     case SortField.priceDesc:
-      return sorted.sort((a, b) => b.priceUsd - a.priceUsd)
+      return sorted.sort((a, b) => b.price - a.price)
     case SortField.discDiameter:
       return sorted.sort((a, b) => a.discDiameter - b.discDiameter)
     default:

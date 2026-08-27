@@ -20,8 +20,7 @@ export interface CatalogItem {
   features: string
   application: string
   setId: number
-  priceUsd: number
-  priceCny: number
+  price: number
   description: string
 }
 
