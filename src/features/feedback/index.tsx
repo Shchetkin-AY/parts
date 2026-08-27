@@ -1,7 +1,7 @@
-import { PropType, computed, defineComponent, onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { PropType, computed, defineComponent, reactive, ref, watch } from 'vue'
 import { UiButton, UiDialog } from '@/ui'
 import Form from '@/features/feedback/form'
-import { ButtonMode, Color, FeedbackPayload, FeedbackTypes } from '@/utils'
+import { ButtonMode, CatalogCategories, CatalogFilterField, CatalogItem, Color, FeedbackPayload, FeedbackTypes } from '@/utils'
 
 const className = 'feedback'
 
@@ -19,8 +19,23 @@ export default defineComponent({
       default: FeedbackTypes.question
     },
 
+    id: {
+      type: Number as PropType<CatalogItem['id']>,
+      default: undefined
+    },
+
+    category: {
+      type: String as PropType<CatalogCategories>,
+      default: undefined
+    },
+
+    filter: {
+      type: Object as PropType<Record<CatalogFilterField, string>>,
+      default: () => ({})
+    },
+
     topic: {
-      type: String,
+      type: String as PropType<string>,
       default: ''
     }
   },
@@ -35,37 +50,54 @@ export default defineComponent({
       }
     })
 
-    const validation = ref<boolean>(false)
     const loading = ref(false)
+    const validation = ref<boolean>(false)
+
+    const title = computed(() => {
+      switch (props.type) {
+        case FeedbackTypes.question: return 'Получить консультацию'
+        case FeedbackTypes.order: return 'Получить расчет'
+      }
+    })
+    const category = computed(() => {
+      switch (props.category) {
+        case CatalogCategories.kit: return 'Комплект'
+        case CatalogCategories.pads: return 'Колодки'
+        case CatalogCategories.discs: return 'Тормозные диски'
+        case CatalogCategories.ccb: return 'Карбон-керамика'
+        case CatalogCategories.lines: return 'Тормозные магистрали'
+      }
+    })
+
+    const comment = computed(() => {
+      switch (props.type) {
+        case FeedbackTypes.question:
+          return category.value ? `Интересует: ${category.value}` : props.topic || 'Нужна консультация по подбору'
+        case FeedbackTypes.order:
+          return `Интересует: ${category.value} ${props.topic || ''}`.trim()
+      }
+    })
 
     const payload = reactive<FeedbackPayload>({
       name: '',
       phone: '',
-      comment: ''
+      category: category.value,
+      mark: props.filter.mark,
+      model: props.filter.model,
+      wheelDiameter: props.filter.wheelDiameter ? `R${props.filter.wheelDiameter}` : '',
+      goods_id: props.id,
+      comment: comment.value
     })
 
-    const updatePayload = (value: FeedbackPayload) => {
-      Object.assign(payload, value)
-    }
-
-    const setTopic = () => {
-      payload.comment = props.topic ? `Интересует: ${props.topic}` : ''
-    }
-
     watch(
-      () => [ props.modelValue, props.topic ],
-      ([ isOpen, topic ], previous) => {
-        if (isOpen && (!previous?.[0] || topic !== previous?.[1])) {
-          setTopic()
+      () => [ props.modelValue, props.topic, props.category, props.type ],
+      ([ isOpen ]) => {
+        if (isOpen) {
+          payload.category = category.value
+          payload.comment = comment.value
         }
       }
     )
-
-    onBeforeUnmount(() => {
-      payload.name = ''
-      payload.phone = ''
-      payload.comment = ''
-    })
 
     const submitHandler = async (event: MouseEvent) => {
       event.stopPropagation()
@@ -85,23 +117,25 @@ export default defineComponent({
           body: JSON.stringify(payload)
         })
 
-        if (!response.ok) {
-          throw new Error('Ошибка отправки формы')
+        if (response.ok) {
+          loading.value = false
+          proxy.value = false
+        } else {
+          loading.value = false
         }
-
-        proxy.value = false
       } catch (error) {
         console.error(error)
-      } finally {
         loading.value = false
+        proxy.value = false
       }
     }
 
     const renderForm = () => {
       return <Form
         modelValue={payload}
+        onUpdate:modelValue={value => Object.assign(payload, value)}
         type={props.type}
-        onUpdate:modelValue={updatePayload}
+        loading={loading.value}
         onValidation={event => validation.value = event }
       />
     }
@@ -138,7 +172,7 @@ export default defineComponent({
         <UiDialog
           v-slots={dialogSlots}
           v-model={proxy.value}
-          title={'Получить консультацию'}
+          title={title.value}
           maxWidth={500}
         />
       )

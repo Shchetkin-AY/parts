@@ -14,6 +14,11 @@ export default defineComponent({
     type: {
       type: String as PropType<FeedbackTypes>,
       default: FeedbackTypes.question
+    },
+
+    loading: {
+      type: Boolean as PropType<boolean>,
+      default: false
     }
   },
 
@@ -37,8 +42,8 @@ export default defineComponent({
     })
     const subtitle = computed<string>(() => {
       switch (props.type) {
-        case FeedbackTypes.question: return 'Оставьте контакты, и специалист поможет подобрать тормозную систему под ваш автомобиль.'
-        case FeedbackTypes.order: return 'Заполните форму — мы свяжемся с вами и подготовим подходящую конфигурацию.'
+        case FeedbackTypes.question: return 'Оставьте контакты, и специалист поможет подобрать тормозную систему под ваш автомобиль'
+        case FeedbackTypes.order: return 'Заполните форму — мы подготовим расчет под ваш автомобиль и свяжемся с Вами'
       }
     })
     const isValidPhone = computed(() => {
@@ -117,6 +122,7 @@ export default defineComponent({
           placeholder="Ваше имя"
           hint={nameHint.value}
           error={nameError.value}
+          disabled={props.loading}
           required
           onFocus={nameFocusHandler}
           onBlur={nameBlurHandler}
@@ -132,6 +138,7 @@ export default defineComponent({
           placeholder="+7 (000) 000 00 00"
           hint={phoneHint.value}
           error={phoneError.value}
+          disabled={props.loading}
           required
           onFocus={phoneFocusHandler}
           onBlur={phoneBlurHandler}
@@ -142,6 +149,7 @@ export default defineComponent({
       return (
         <UiTextArea
           v-model={proxy.value.comment}
+          disabled={props.loading}
           ariaLabel="comment"
           label="Комментарий"
           placeholder="Например, интересует комплект для Ауди А6"
