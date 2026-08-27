@@ -121,7 +121,12 @@ export default defineComponent({
     }
 
     const renderFeedback = () => {
-      return <Feedback v-model={showFeedback.value} />
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          topic={'Нужна консультация по подбору'}
+        />
+      )
     }
 
     return () =>
