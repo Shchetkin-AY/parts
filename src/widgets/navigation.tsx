@@ -99,7 +99,13 @@ export default defineComponent({
     })
 
     const renderBrand = () => {
-      return <div class="navigation__brand">ISKOR</div>
+      return (
+        <RouterLink
+          class="navigation__brand"
+          innerHTML={'ISKOR'}
+          to={'/'}
+        />
+      )
     }
 
     const renderLink = ({ label, href, isActive }: NavigationLink) => {
