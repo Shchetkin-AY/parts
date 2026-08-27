@@ -15,10 +15,11 @@ $_name: "feedback";
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-md);
 
-      @media (width <= 425px) {
-        padding-top: 30px;
+      @media (width <= 768px) {
+        padding-top: 60px;
 
         grid-template-columns: 1fr;
+        gap: var(--space-sm);
       }
     }
   }
@@ -34,6 +35,10 @@ $_name: "feedback";
       color: var(--color-text-muted);
 
       @include mixins.font(12px, 500, 16px);
+    }
+
+    @media (width <= 768px) {
+      gap: var(--space-sm);
     }
   }
 }
