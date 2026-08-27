@@ -161,10 +161,7 @@ export default defineComponent({
     const renderChannels = () => {
       return (
         <div class={`${className}-channels`}>
-          <div class={`${className}-channels-title`}>Выберите канал связи *</div>
-          <div class={`${className}-channels-buttons`}>
-            {renderChannelsButtons()}
-          </div>
+          {renderChannelsButtons()}
         </div>
       )
     }

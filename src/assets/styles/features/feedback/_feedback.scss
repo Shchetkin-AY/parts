@@ -134,27 +134,9 @@ $_name: "feedback";
     }
 
     &-channels {
-      padding-top: 20px;
-
       display: grid;
-
-      gap: 6px;
-
-      &-title {
-        padding-left: 10px;
-
-        color: var(--color-text-primary);
-
-        text-transform: uppercase;
-
-        @include mixins.font(10px, 500);
-      }
-
-      &-buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--space-xs);
-      }
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-xs);
     }
 
     @media screen and (width <= 768px) {
