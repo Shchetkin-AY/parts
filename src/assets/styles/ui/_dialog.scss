@@ -83,8 +83,8 @@ $_name: "isk-dialog";
     place-items: center;
 
     position: absolute;
-    top: -50px;
-    right: 0;
+    top: 0;
+    right: -50px;
 
     transition-property: background-color, transform;
     transition-duration: 300ms;

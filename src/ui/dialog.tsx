@@ -37,6 +37,11 @@ export const DialogProps = {
   width: {
     type: [ String, Number ],
     default: '100%'
+  },
+
+  closeOnOverlay: {
+    type: Boolean,
+    default: true
   }
 
 }
@@ -213,7 +218,10 @@ export const UiDialog = defineComponent({
 
     const renderOverlay = () => {
       return (
-        <UiOverlay v-model={proxy.value} />
+        <UiOverlay
+          v-model={proxy.value}
+          closeOnClick={props.closeOnOverlay}
+        />
       )
     }
 

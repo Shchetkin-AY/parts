@@ -8,6 +8,11 @@ export const UiOverlay = defineComponent({
     modelValue: {
       type: Boolean,
       default: false
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -24,6 +29,10 @@ export const UiOverlay = defineComponent({
     })
 
     const clickHandler = () => {
+      if (!props.closeOnClick) {
+        return
+      }
+
       proxy.value = false
     }
     const escHandler = (event: KeyboardEvent) => {
