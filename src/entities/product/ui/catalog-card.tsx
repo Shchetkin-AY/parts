@@ -1,4 +1,4 @@
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 
 import {
@@ -30,6 +30,7 @@ export default defineComponent({
 
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
     const seriesKey = computed(() => props.value.series.toLowerCase())
 
     const className = 'product-catalog-card'
@@ -70,7 +71,8 @@ export default defineComponent({
         params: {
           category: 'kits',
           id: props.value.id
-        }
+        },
+        query: route.query
       })
     }
 
