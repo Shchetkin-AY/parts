@@ -23,6 +23,10 @@ const extractDiameters = (value: number | string): number[] => {
     .filter(Number.isFinite)
 }
 
+export const formatWheelDiameter = (value: number | string): string => {
+  return `R${value}`
+}
+
 /**
  * Возвращает диапазон диаметров колёс в формате "R12-R15" или "R15",
  * если диаметр всего один.
@@ -43,5 +47,5 @@ export const getWheelDiameterRange = (source: number | string | CatalogItem[]): 
   const min = Math.min(...diameters)
   const max = Math.max(...diameters)
 
-  return min === max ? `от R${min}` : `R${min} - R${max}`
+  return min === max ? `от ${formatWheelDiameter(min)}` : `${formatWheelDiameter(min)} - ${formatWheelDiameter(max)}`
 }
