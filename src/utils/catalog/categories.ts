@@ -5,3 +5,5 @@ export enum CatalogCategories {
   ccb = 'ccb',
   lines = 'lines'
 }
+
+export type CatalogCategory = `${CatalogCategories}`

@@ -2,6 +2,7 @@ import 'dotenv/config'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { CatalogCategories } from '../src/utils'
 import type { CatalogItem, CompatibilityItem } from '../src/utils'
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
@@ -89,6 +90,19 @@ const CATALOG_NUMERIC_HEADERS = new Set<CatalogHeader>([
   'priceCny'
 ])
 
+const CATALOG_CATEGORY_VALUES: Record<string, CatalogCategories> = {
+  [CatalogCategories.kit]: CatalogCategories.kit,
+  [CatalogCategories.pads]: CatalogCategories.pads,
+  [CatalogCategories.discs]: CatalogCategories.discs,
+  [CatalogCategories.ccb]: CatalogCategories.ccb,
+  [CatalogCategories.lines]: CatalogCategories.lines,
+  Комплект: CatalogCategories.kit,
+  Колодки: CatalogCategories.pads,
+  'Тормозные диски': CatalogCategories.discs,
+  'Карбон-керамика': CatalogCategories.ccb,
+  'Тормозные магистрали': CatalogCategories.lines
+}
+
 const COMPATIBILITY_NUMERIC_HEADERS = new Set<CompatibilityHeader>([
   'id',
   'goodsId',
@@ -159,6 +173,16 @@ function convertValue(
       normalized === '1' ||
       normalized.toLowerCase() === 'yes'
     )
+  }
+
+  if (key === 'category') {
+    const category = CATALOG_CATEGORY_VALUES[normalized]
+
+    if (!category) {
+      throw new Error(`Invalid category "${normalized}". Row ${row}`)
+    }
+
+    return category
   }
 
   if (!numericFields.has(key)) {
