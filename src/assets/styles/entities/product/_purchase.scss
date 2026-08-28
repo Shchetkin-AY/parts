@@ -46,10 +46,9 @@ $_name: "purchase";
   }
 
   &__price {
-    font-family: var(--font-family-secondary);
     color: var(--color-text-primary);
 
-    @include mixins.font(40px, 600);
+    @include mixins.font(40px, 500);
   }
 
   &__note {
