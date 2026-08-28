@@ -2,13 +2,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 
 import {
-  ButtonMode, type CatalogItem, Color, Size,
+  type CatalogItem, Color,
   formatPrice,
   getWheelDiameterRange,
   pluralize
 } from '@/utils'
 
-import { UiButton, UiChip } from '@/ui'
+import { UiChip } from '@/ui'
 
 const SWIPE_THRESHOLD = 40 // минимальное смещение по X в px, чтобы считать это свайпом
 
@@ -252,16 +252,8 @@ export default defineComponent({
 
     const renderFooter = () => {
       return (
-        <div class="product-catalog-card__footer">
-          <div class="product-catalog-card__price">
-            {formatPrice(props.value.price)}
-          </div>
-          <UiButton
-            label={'Подробнее'}
-            size={Size.small}
-            color={hover.value ? Color.primary : Color['text-secondary']}
-            mode={hover.value ? undefined : ButtonMode.flat }
-          />
+        <div class="product-catalog-card__price">
+          {formatPrice(props.value.price)}
         </div>
       )
     }

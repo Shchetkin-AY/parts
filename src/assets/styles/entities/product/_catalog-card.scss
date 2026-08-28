@@ -1,5 +1,5 @@
 @use "colors";
-@use "./variables" as *;
+@use "mixins" as mixins;
 
 $_name: "product-catalog-card";
 
@@ -22,7 +22,6 @@ $_name: "product-catalog-card";
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 
-  min-height: 390px;
   min-width: 240px;
 
   &:hover {
@@ -165,11 +164,6 @@ $_name: "product-catalog-card";
     }
   }
 
-  &__footer {
-    display: grid;
-    gap: 8px;
-  }
-
   &__price {
     font-size: 20px;
     font-weight: 500;
@@ -205,6 +199,8 @@ $_name: "product-catalog-card";
     }
   }
 
+  @include mixins.absolute-height(365px);
+
   @media (width <= 768px) {
     border-radius: 20px;
 
@@ -216,10 +212,6 @@ $_name: "product-catalog-card";
       padding: 16px;
 
       gap: 12.8px;
-    }
-
-    &__footer {
-      gap: 10px;
     }
   }
 }
