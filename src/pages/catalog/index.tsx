@@ -67,6 +67,11 @@ const getRouteQueryValue = (routeQuery: Record<string, unknown>, field: CatalogF
 const sortItems = (items: CatalogItem[], sort: SortField): CatalogItem[] => {
   const sorted = [ ...items ]
 
+  for (let i = sorted.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [ sorted[i], sorted[j] ] = [ sorted[j], sorted[i] ]
+  }
+
   switch (sort) {
     case SortField.priceAsc:
       return sorted.sort((a, b) => a.price - b.price)
