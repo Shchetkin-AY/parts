@@ -9,13 +9,9 @@ $_name: "home-filter";
   padding-left: 24px;
   padding-right: 24px;
 
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--color-border);
-
   border-radius: var(--radius-sm);
 
-  background: colors.$surface;
+  background: var(--color-surface-2);
 
   display: grid;
   grid-template-areas: "hero";
