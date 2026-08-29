@@ -10,7 +10,7 @@ $_name: "isk-text-field";
   position: relative;
 
   &__label {
-    padding-left: 10px;
+    padding-left: 12px;
 
     color: var(--color-text-primary);
 
@@ -20,14 +20,14 @@ $_name: "isk-text-field";
   }
 
   &__field {
-    padding-left: 10px;
+    padding-left: 12px;
     padding-right: 10px;
 
     color: var(--color-text-primary);
 
     border: unset;
 
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-sm);
 
     background-color: var(--color-surface-3);
 

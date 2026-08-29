@@ -4,7 +4,7 @@ $_name: "isk-page";
 
 .#{$_name} {
   --page-inline: 24px;
-  --page-section-gap: var(--space-xxl);
+  --page-section-gap: var(--space-md);
 
   display: grid;
   grid-template-columns:
@@ -40,6 +40,7 @@ $_name: "isk-page";
 
   @media (width >= 768px) {
     --page-inline: var(--space-lg);
+    --page-section-gap: var(--space-xxl);
   }
 
   @supports (grid-template-columns: subgrid) {

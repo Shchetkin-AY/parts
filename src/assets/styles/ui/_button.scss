@@ -96,7 +96,8 @@ $_name: "isk-button";
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
-  border-radius: var(--radius-xs);
+
+  border-radius: var(--radius-sm);
   outline: none;
 
   background-color: transparent;
@@ -151,20 +152,35 @@ $_name: "isk-button";
     place-items: center;
   }
 
+  // добавили transform/box-shadow к уже существующему затемнению через
+  // ::before — pointer-events: none на --disabled (ниже) сам исключает
+  // эти состояния для неактивных кнопок, отдельный guard не нужен
   &:hover {
+    box-shadow: 0 6px 16px rgb(0 0 0 / 25%);
+
+    transform: translateY(-1px);
+
     &::before {
       background-color: colors.color(color-text, 0.08);
     }
   }
 
   &:active {
+    box-shadow: none;
+
+    transform: translateY(0);
+
     &::before {
       background-color: colors.color(color-text, 0.1);
     }
   }
 
   &::before {
-    border-radius: var(--radius-xs);
+    // синхронизировано с border-radius самой кнопки — это оверлей
+    // на всю площадь кнопки, разъехавшиеся радиусы дали бы щель
+    // между краем кнопки и краем засветки по углам
+
+    border-radius: var(--radius-sm);
 
     position: absolute;
     top: 0;
