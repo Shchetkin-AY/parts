@@ -13,7 +13,7 @@ $_name: "hero";
 
   overflow: hidden;
 
-  max-height: 460px;
+  min-height: 620px;
 
   width: min(100%, var(--layout-width));
 
@@ -38,7 +38,6 @@ $_name: "hero";
       font-weight: 700;
       color: transparent;
       text-transform: uppercase;
-      letter-spacing: -3px;
       white-space: nowrap;
 
       background: linear-gradient(
@@ -55,17 +54,25 @@ $_name: "hero";
       top: 50%;
       left: 0;
 
+      opacity: 0;
+
       transform: translateY(-50%);
+
+      animation: hero-background-reveal 1400ms ease-out both;
       -webkit-text-fill-color: transparent;
 
       &--top {
         top: 23%;
         left: -1%;
+
+        animation-delay: 150ms;
       }
 
       &--bottom {
         top: 55%;
         left: -3%;
+
+        animation-delay: 280ms;
       }
     }
   }
@@ -93,14 +100,14 @@ $_name: "hero";
 
       height: 100%;
       min-width: 0;
-      width: 52%;
+      width: 80%;
     }
 
     &-image {
       height: 100%;
       width: 100%;
       object-fit: contain;
-      mask-image: radial-gradient(ellipse at center, black 45%, transparent 66%);
+      mask-image: radial-gradient(ellipse at center, black 45%, transparent 90%);
     }
   }
 
@@ -133,6 +140,9 @@ $_name: "hero";
       color: var(--color-primary);
       text-transform: uppercase;
 
+      animation: hero-content-reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+      animation-delay: 100ms;
+
       max-width: 100%;
       overflow-wrap: break-word;
 
@@ -148,8 +158,28 @@ $_name: "hero";
       max-width: min(100%, 672px);
       overflow-wrap: anywhere;
 
-      span {
+      &-line {
+        display: block;
+
+        overflow: hidden;
+      }
+
+      &-line > span {
+        display: block;
+
+        transform: translateY(100%);
+
+        animation: hero-title-reveal 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      &-line:nth-child(1) > span {
+        animation-delay: 80ms;
+      }
+
+      &-line:nth-child(2) > span {
         color: colors.color(color-text-subtle);
+
+        animation-delay: 100ms;
       }
 
       @include mixins.font(48px, 700);
@@ -162,6 +192,10 @@ $_name: "hero";
     &-description {
       color: var(--color-text-soft);
 
+      animation: hero-content-reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
+
+      animation-delay: 350ms;
+
       max-width: min(100%, 576px);
       overflow-wrap: break-word;
 
@@ -172,6 +206,12 @@ $_name: "hero";
       }
     }
 
+    &-button {
+      opacity: 0;
+
+      animation: hero-content-reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+    }
+
     @media (width < 768px) {
       gap: 20px;
     }
@@ -179,5 +219,39 @@ $_name: "hero";
 
   @media (width <= 768px) {
     min-height: 250px;
+  }
+}
+
+@keyframes hero-content-reveal {
+  from {
+    opacity: 0;
+
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-title-reveal {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-background-reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

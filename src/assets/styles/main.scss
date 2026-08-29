@@ -8,6 +8,7 @@
 @use "widgets";
 @use "pages";
 @use "mixins";
+@use "rivals";
 
 html {
   scroll-behavior: smooth;
@@ -63,6 +64,8 @@ svg {
 a {
   color: inherit;
   text-decoration: none;
+
+  user-select: none;
 }
 
 button,

@@ -1,10 +1,11 @@
 $_name: "home";
 
 .#{$_name} {
-  --home-lead-gap: 16px;
-
   &__group {
     display: grid;
-    row-gap: var(--home-lead-gap);
+
+    @media (width <= 768px) {
+      row-gap: var(--space-sm);
+    }
   }
 }
