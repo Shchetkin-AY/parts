@@ -95,6 +95,13 @@ const getUniqueSeries = (items: readonly CatalogItem[]): string[] => {
   return sortStrings([ ...values ])
 }
 
+export enum CatalogSortField {
+  popularity = 'popularity',
+  priceAsc = 'priceAsc',
+  priceDesc = 'priceDesc',
+  discDiameter = 'discDiameter'
+}
+
 interface CompatibilityEntry {
   brand: string
   model: string
@@ -335,6 +342,36 @@ export const useCatalogStore = defineStore('catalog', () => {
     })
   }
 
+  const sortItems = (
+    sourceItems: readonly CatalogItem[],
+    sort: CatalogSortField
+  ): CatalogItem[] => {
+    const zeroPriceItems = sourceItems.filter(item => item.price === 0)
+    const regularItems = sourceItems.filter(item => item.price !== 0)
+
+    const shuffleItems = (itemsToShuffle: readonly CatalogItem[]): CatalogItem[] => {
+      const shuffled = [ ...itemsToShuffle ]
+
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[ shuffled[i], shuffled[j] ] = [ shuffled[j], shuffled[i] ]
+      }
+
+      return shuffled
+    }
+
+    switch (sort) {
+      case CatalogSortField.priceAsc:
+        return [ ...regularItems.sort((a, b) => a.price - b.price), ...zeroPriceItems ]
+      case CatalogSortField.priceDesc:
+        return [ ...regularItems.sort((a, b) => b.price - a.price), ...zeroPriceItems ]
+      case CatalogSortField.discDiameter:
+        return [ ...regularItems.sort((a, b) => a.discDiameter - b.discDiameter), ...zeroPriceItems ]
+      default:
+        return [ ...shuffleItems(regularItems), ...zeroPriceItems ]
+    }
+  }
+
   const getFilterOptions = (
     field: CatalogFilterField,
     params: CatalogFilterParams,
@@ -445,6 +482,7 @@ export const useCatalogStore = defineStore('catalog', () => {
     loadCompatibility,
     loadError,
     series,
+    sortItems,
     wheelDiameters
   }
 })

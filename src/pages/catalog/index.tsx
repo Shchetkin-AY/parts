@@ -1,7 +1,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { CatalogFilterField, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, Size, pluralize } from '@/utils'
-import { useCatalogStore, useViewportStore } from '@/stores'
+import { CatalogSortField, useCatalogStore, useViewportStore } from '@/stores'
 import { Page, UiChip, UiDivider, UiSelect } from '@/ui'
 import { Pagination } from '@/pages/catalog/ui/pagination'
 import ProductCatalogCard from '@/entities/product/ui/catalog-card'
@@ -10,29 +10,22 @@ import Filter from '@/pages/catalog/ui/filter'
 const catalogItemsPerPage = 12
 const mobileBreakpoint = 1024
 
-enum SortField {
-  popularity = 'popularity',
-  priceAsc = 'priceAsc',
-  priceDesc = 'priceDesc',
-  discDiameter = 'discDiameter'
-}
-
 const sortOptions = [
   {
     label: 'По популярности',
-    value: SortField.popularity
+    value: CatalogSortField.popularity
   },
   {
     label: 'Сначала дешевле',
-    value: SortField.priceAsc
+    value: CatalogSortField.priceAsc
   },
   {
     label: 'Сначала дороже',
-    value: SortField.priceDesc
+    value: CatalogSortField.priceDesc
   },
   {
     label: 'По диаметру диска',
-    value: SortField.discDiameter
+    value: CatalogSortField.discDiameter
   }
 ]
 
@@ -64,26 +57,6 @@ const getRouteQueryValue = (routeQuery: Record<string, unknown>, field: CatalogF
   return ''
 }
 
-const sortItems = (items: CatalogItem[], sort: SortField): CatalogItem[] => {
-  const sorted = [ ...items ]
-
-  for (let i = sorted.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [ sorted[i], sorted[j] ] = [ sorted[j], sorted[i] ]
-  }
-
-  switch (sort) {
-    case SortField.priceAsc:
-      return sorted.sort((a, b) => a.price - b.price)
-    case SortField.priceDesc:
-      return sorted.sort((a, b) => b.price - a.price)
-    case SortField.discDiameter:
-      return sorted.sort((a, b) => a.discDiameter - b.discDiameter)
-    default:
-      return sorted
-  }
-}
-
 export default defineComponent({
   name: 'CatalogPage',
 
@@ -95,7 +68,7 @@ export default defineComponent({
 
     const filteredItems = ref<CatalogItem[]>([])
     const currentPage = ref(1)
-    const sortField = ref<SortField>(SortField.popularity)
+    const sortField = ref<CatalogSortField>(CatalogSortField.popularity)
     const filterParams = ref<CatalogFilterParams>({ ...emptyFilterParams })
 
     // --- вьюпорт ---
@@ -125,7 +98,7 @@ export default defineComponent({
     })
 
     // --- сортировка и пагинация ---
-    const sortedItems = computed(() => sortItems(filteredItems.value, sortField.value))
+    const sortedItems = computed(() => catalogStore.sortItems(filteredItems.value, sortField.value))
 
     const paginatedItems = computed<CatalogItem[]>(() => {
       const start = (currentPage.value - 1) * catalogItemsPerPage
