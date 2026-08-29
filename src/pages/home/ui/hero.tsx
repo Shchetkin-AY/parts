@@ -1,16 +1,15 @@
+import { useRouter } from 'vue-router'
 import { defineComponent } from 'vue'
 
 import { useViewportStore } from '@/stores'
-import { UiButton } from '@/ui'
 import { Color } from '@/utils'
-import { useRouter } from 'vue-router'
+import { UiButton } from '@/ui'
 
 export default defineComponent({
   name: 'Hero',
 
   setup() {
     const router = useRouter()
-
     const viewportStore = useViewportStore()
 
     const className = 'hero'
@@ -20,7 +19,7 @@ export default defineComponent({
         return (
           <div class={`${className}__background`} >
             <span class={`${className}__background-text ${className}__background-text--top`}>
-              savaniny
+              savanini
             </span>
             <span class={`${className}__background-text ${className}__background-text--bottom`}>
               systems
@@ -34,7 +33,7 @@ export default defineComponent({
       return (
         <img
           class={`${className}__media-image`}
-          src={'/images/hero/hero.webp'}
+          src={'/images/hero/hero.png'}
           alt="Тормозная система Savanini"
           loading="eager"
           decoding="async"
@@ -62,8 +61,14 @@ export default defineComponent({
 
     const renderTitle = () => {
       return (
-        <h1 class={`${className}__text-title`}>SAVANINI<br />
-          <span>SYSTEMS</span>
+        <h1 class={`${className}__text-title`}>
+          <span class={`${className}__text-title-line`}>
+            <span>SAVANINI</span>
+          </span>
+
+          <span class={`${className}__text-title-line`}>
+            <span>SYSTEMS</span>
+          </span>
         </h1>
       )
     }
@@ -79,6 +84,7 @@ export default defineComponent({
     const renderCatalogButton = () => {
       return (
         <UiButton
+          class={`${className}__text-button`}
           label={'Смотреть каталог'}
           color={Color.primary}
           onClick={() => router.push({ name: 'catalog' })}

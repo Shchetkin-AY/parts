@@ -1,5 +1,7 @@
 import { defineComponent } from 'vue'
 
+import { useScrollReveal } from '@/hooks'
+
 import { Page } from '@/ui'
 import Filter from '@/pages/home/ui/filter'
 import Systems from '@/widgets/systems'
@@ -12,9 +14,11 @@ export default defineComponent({
   name: 'HomePage',
 
   setup() {
+    useScrollReveal()
+
     const renderLead = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained home__group home__group--lead">
+        <section class="isk-page__section isk-page__section--contained home__group home__group--lead" data-reveal>
           <Hero />
           <Filter />
         </section>
@@ -31,7 +35,7 @@ export default defineComponent({
 
     const renderSystems = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section class="isk-page__section isk-page__section--contained" data-reveal>
           <Systems />
         </section>
       )
@@ -39,7 +43,7 @@ export default defineComponent({
 
     const renderPopular = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section class="isk-page__section isk-page__section--contained" data-reveal>
           <Popular />
         </section>
       )
@@ -47,7 +51,7 @@ export default defineComponent({
 
     const renderBrands = () => {
       return (
-        <section class="isk-page__section isk-page__section--contained">
+        <section class="isk-page__section isk-page__section--contained" data-reveal>
           <Brands />
         </section>
       )
