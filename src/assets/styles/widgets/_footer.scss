@@ -1,26 +1,33 @@
-@use "./colors";
+@use "colors";
+@use "mixins" as mixins;
 
 $_name: "footer";
 
 .#{$_name} {
-  border-top: 1px solid rgb(255 255 255 / 10%);
+  border-top: 1px solid var(--color-border);
 
-  background: colors.$surface-container-lowest;
+  background-color: var(--color-background);
+
+  display: grid;
+  justify-items: center;
 
   overflow: hidden;
 
   width: 100%;
 
   &__container {
-    padding: 48px 24px;
+    display: grid;
+    align-items: center;
+
+    width: min(100%, var(--layout-width));
 
     @media (width >= 768px) {
-      padding-inline: 48px;
+      gap: var(--space-lg);
     }
   }
 
   &__grid {
-    margin-bottom: 48px;
+    padding-top: 24px;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -34,7 +41,7 @@ $_name: "footer";
   &__brand-column,
   &__column {
     display: grid;
-    gap: 24px;
+    gap: var(--space-md);
     align-content: start;
   }
 
@@ -43,27 +50,28 @@ $_name: "footer";
   }
 
   &__brand {
-    font-size: 30px;
-    font-weight: 900;
-    color: colors.$text;
-    line-height: 36px;
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
     text-transform: uppercase;
-    letter-spacing: -0.8px;
+    white-space: nowrap;
+
+    min-width: 0;
+    justify-self: start;
+
+    @include mixins.font(36px, 700);
   }
 
   &__text {
-    font-size: 14px;
-    font-weight: 300;
-    color: colors.color(text-dim);
-    line-height: 1.625;
+    color: var(--color-text-dim);
+
+    @include mixins.font(12px, 300);
   }
 
   &__title {
-    font-size: 10px;
-    font-weight: 700;
-    color: colors.$text;
+    color: var(--color-text-primary);
     text-transform: uppercase;
-    letter-spacing: 4.8px;
+
+    @include mixins.font(14px, 600);
   }
 
   &__links {
@@ -75,7 +83,7 @@ $_name: "footer";
     list-style: none;
 
     display: grid;
-    gap: 16px;
+    gap: var(--space-sm);
   }
 
   &__link {
@@ -102,14 +110,15 @@ $_name: "footer";
   }
 
   &__bottom {
-    padding-top: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 
-    border-top: 1px solid rgb(255 255 255 / 5%);
+    border-top: 1px solid var(--color-border);
 
     display: flex;
-    gap: 32px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
+
     flex-direction: column;
 
     @media (width >= 768px) {
@@ -139,4 +148,6 @@ $_name: "footer";
     display: flex;
     gap: 32px;
   }
+
+  @include mixins.absolute-width(100%);
 }
