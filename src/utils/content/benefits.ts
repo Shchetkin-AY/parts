@@ -20,6 +20,6 @@ export const benefitItems: BenefitItem[] = [
   {
     icon: Icons.warranty,
     title: 'Гарантия и поддержка',
-    text: '1 год'
+    text: 'До 2 лет'
   }
 ]
