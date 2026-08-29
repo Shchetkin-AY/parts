@@ -14,21 +14,6 @@ export default defineComponent({
 
     const className = 'hero'
 
-    const renderBackground = () => {
-      if (viewportStore.size.width > 1024) {
-        return (
-          <div class={`${className}__background`} >
-            <span class={`${className}__background-text ${className}__background-text--top`}>
-              savanini
-            </span>
-            <span class={`${className}__background-text ${className}__background-text--bottom`}>
-              systems
-            </span>
-          </div>
-        )
-      }
-    }
-
     const renderImage = () => {
       return (
         <img
@@ -113,7 +98,6 @@ export default defineComponent({
 
     return () =>
       <section class={className}>
-        {renderBackground()}
         {renderMedia()}
         {renderContent()}
       </section>

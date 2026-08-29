@@ -17,66 +17,6 @@ $_name: "hero";
 
   width: min(100%, var(--layout-width));
 
-  &__background {
-    display: grid;
-    gap: 4px;
-
-    position: absolute;
-
-    overflow: hidden;
-
-    user-select: none;
-    pointer-events: none;
-
-    z-index: 1;
-    inset: 0;
-
-    &-text {
-      font-family: var(--font-family-secondary);
-
-      font-size: clamp(96px, 14vw, 190px);
-      font-weight: 700;
-      color: transparent;
-      text-transform: uppercase;
-      white-space: nowrap;
-
-      background: linear-gradient(
-        90deg,
-        rgb(255 255 255 / 0%) 0%,
-        rgb(255 255 255 / 0%) 18%,
-        rgb(255 255 255 / 0.5%) 42%,
-        rgb(255 255 255 / 1.5%) 100%,
-        rgb(255 255 255 / 3%) 100%
-      );
-      background-clip: text;
-
-      position: absolute;
-      top: 50%;
-      left: 0;
-
-      opacity: 0;
-
-      transform: translateY(-50%);
-
-      animation: hero-background-reveal 1400ms ease-out both;
-      -webkit-text-fill-color: transparent;
-
-      &--top {
-        top: 23%;
-        left: -1%;
-
-        animation-delay: 150ms;
-      }
-
-      &--bottom {
-        top: 55%;
-        left: -3%;
-
-        animation-delay: 280ms;
-      }
-    }
-  }
-
   &__media {
     display: grid;
     grid-area: hero;
