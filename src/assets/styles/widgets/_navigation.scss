@@ -4,22 +4,54 @@
 $_name: "navigation";
 
 .#{$_name} {
-  border-bottom: 1px solid var(--color-border);
+  // было: border-bottom: 1px solid var(--color-border);
+  // фон страницы (#050505) и surface-container-lowest (#000000) почти
+  // не отличаются — на глаз нав сливался бы со страницей. Берём surface-2,
+  // он заметно светлее, плюс лёгкая тень видна с самого начала, а не
+  // только при скролле — иначе плавающий элемент не читается как отдельный слой
 
-  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+
+  background-color: colors.color(color-surface-2, 0.85);
+
+  box-shadow: 0 4px 16px rgb(0 0 0 / 25%);
 
   display: grid;
   align-items: center;
   justify-items: center;
 
   position: fixed;
-  top: 0;
+  top: var(--space-sm);
+  left: 50%;
 
-  height: 96px;
-  width: 100%;
+  transition:
+    height var(--transition-base),
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base);
+  transform: translateX(-50%);
+
+  height: 76px;
+  max-width: var(--layout-width);
+
+  width: calc(100% - var(--space-sm) * 2);
 
   z-index: 20;
+  backdrop-filter: blur(12px);
   padding-inline: var(--space-md);
+
+  &--scrolled {
+    border-color: var(--color-border-strong);
+
+    box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+
+    height: 64px;
+  }
+
+  &--hidden {
+    transform: translate(-50%, calc(-100% - var(--space-md)));
+  }
 
   &__container {
     display: grid;
@@ -27,15 +59,16 @@ $_name: "navigation";
     gap: var(--space-sm);
     align-items: center;
 
-    width: min(100%, var(--layout-width));
+    width: 100%;
 
     @media (width >= 768px) {
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      gap: var(--space-lg);
+      grid-template-columns: auto auto minmax(0, 1fr);
+      gap: var(--space-xxl);
     }
   }
 
   &__brand {
+    font-family: var(--font-family-secondary);
     color: var(--color-text-primary);
     text-transform: uppercase;
     white-space: nowrap;
@@ -43,7 +76,7 @@ $_name: "navigation";
     min-width: 0;
     justify-self: start;
 
-    @include mixins.font(36px, 900);
+    @include mixins.font(36px, 700);
   }
 
   &__links {
@@ -54,10 +87,10 @@ $_name: "navigation";
 
       display: grid;
       grid-auto-flow: column;
-      gap: var(--space-xxl);
+      gap: var(--space-xl);
       align-items: center;
-      justify-content: center;
-      justify-self: center;
+      justify-content: start;
+      justify-self: start;
 
       @include mixins.font(12px, 400, 16px);
     }
@@ -66,19 +99,44 @@ $_name: "navigation";
   &__link {
     display: grid;
 
-    transition: color 0.2s ease;
+    position: relative;
+
+    transition: color var(--transition-fast);
+
+    &::after {
+      background-color: var(--color-primary);
+
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+
+      transition: transform var(--transition-base);
+
+      transform: scaleX(0);
+      transform-origin: left;
+
+      content: "";
+
+      height: 2px;
+
+      width: 100%;
+    }
 
     &--active {
       font-weight: 700;
       color: var(--color-primary);
-      text-decoration: underline;
-      text-underline-offset: 10px;
-      text-decoration-color: var(--color-primary);
-      text-decoration-thickness: 2px;
+
+      &::after {
+        transform: scaleX(1);
+      }
     }
 
     &:hover {
       color: var(--color-primary-hover);
+
+      &::after {
+        transform: scaleX(1);
+      }
     }
 
     &:active {
@@ -101,52 +159,31 @@ $_name: "navigation";
   }
 
   &__phone {
-    padding-left: 12px;
-    padding-right: 12px;
+    border: unset;
+    border-radius: var(--radius-sm);
 
-    border-radius: var(--border-radius);
+    background-color: colors.color(color-surface-3, 0.5);
 
     display: grid;
-
-    grid-template-columns: auto 1fr;
-    gap: var(--space-sm);
     align-items: center;
+    justify-content: center;
 
-    transition:
-      transform var(--transition-fast),
-      background-color var(--transition-fast);
+    transition: background-color var(--transition-fast);
 
     cursor: pointer;
 
-    max-width: fit-content;
+    &:hover {
+      background-color: colors.color(color-surface-3, 0.95);
 
-    &-content {
-      display: grid;
-      grid-template-rows: repeat(2, auto);
-      gap: 4px;
+      transform: translateY(-1px);
 
-      &-title {
-        color: var(--color-text-primary);
-
-        @include mixins.font(14px, 500);
-      }
-
-      &-subtitle {
-        color: var(--color-text-secondary);
-
-        @include mixins.font(12px);
-      }
-
-      @media (width <= 950px) {
-        display: none;
+      & > svg {
+        stroke: var(--color-primary);
       }
     }
 
     @include mixins.absolute-height(40px);
-
-    @media (width <= 768px) {
-      grid-template-columns: 1fr;
-    }
+    @include mixins.absolute-width(40px);
   }
 
   &__menu {
@@ -155,6 +192,7 @@ $_name: "navigation";
     color: var(--color-text-primary);
 
     border: 0;
+    border-radius: var(--radius-xs);
 
     background: transparent;
 
@@ -162,7 +200,13 @@ $_name: "navigation";
     align-items: center;
     justify-content: center;
 
+    transition: background-color var(--transition-fast);
+
     cursor: pointer;
+
+    &:hover {
+      background-color: colors.color(color-surface-2, 0.6);
+    }
 
     @media (width >= 768px) {
       display: none;
@@ -177,7 +221,7 @@ $_name: "navigation";
 
     opacity: 0;
 
-    transition: opacity 300ms ease;
+    transition: opacity var(--transition-base);
 
     pointer-events: none;
 
@@ -194,6 +238,8 @@ $_name: "navigation";
   &__drawer {
     padding: 18px;
 
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+
     background: var(--color-surface);
 
     display: grid;
@@ -205,7 +251,7 @@ $_name: "navigation";
     right: 0;
 
     transition:
-      transform var(--transition-fast),
+      transform var(--transition-base),
       border-color var(--transition-fast),
       box-shadow var(--transition-fast);
     transform: translateX(100%);

@@ -1,7 +1,8 @@
-import { Teleport, defineComponent, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { Teleport, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { UiButton, UiIcon } from '@/ui'
+import { UiButton } from '@/ui'
 import { Color, Icons } from '@/utils'
+import Feedback from '@/features/feedback'
 
 interface NavigationLink {
   href: string
@@ -21,12 +22,15 @@ const links: NavigationLink[] = [
   {
     label: 'Комплектующие',
     href: '/accessories'
-  },
-  {
-    label: 'О бренде',
-    href: '/about'
   }
 ]
+
+// ниже какого порога считаем нав "не поднятым" — не даём тени/бордеру
+// мигать из-за пары пикселей overscroll на мобилках
+const SCROLL_THRESHOLD = 8
+// пока не проскроллили дальше этого значения, не прячем нав вообще —
+// иначе он будет уезжать сразу после хедера на длинных страницах
+const HIDE_THRESHOLD = 120
 
 export default defineComponent({
   name: 'Navigation',
@@ -34,19 +38,52 @@ export default defineComponent({
   setup() {
     const route = useRoute()
 
+    const showFeedback = ref(false)
     const menuMounted = ref(false)
     const isMenuOpen = ref(false)
     let closeTimer: ReturnType<typeof setTimeout> | null = null
     let prevBodyOverflow: string | null = null
 
+    const isScrolled = ref(false)
+    const isHidden = ref(false)
+    let lastScrollY = 0
+    let ticking = false
+
     const isRouteLink = (href: string): boolean => href.startsWith('/')
     const isRouteLinkActive = (href: string): boolean => route.path === href
 
-    const callHandler = () => {
-      window.location.href = 'tel:+79138135522'
+    const updateScrollState = (): void => {
+      const currentY = window.scrollY
+
+      isScrolled.value = currentY > SCROLL_THRESHOLD
+
+      if (currentY <= HIDE_THRESHOLD) {
+        isHidden.value = false
+      } else if (currentY > lastScrollY) {
+        isHidden.value = true
+      } else if (currentY < lastScrollY) {
+        isHidden.value = false
+      }
+
+      lastScrollY = currentY
+      ticking = false
     }
 
-    const openMenu = async () => {
+    const handleScroll = (): void => {
+      if (ticking) {
+        return
+      }
+      ticking = true
+      window.requestAnimationFrame(updateScrollState)
+    }
+
+    onMounted(() => {
+      lastScrollY = window.scrollY
+      updateScrollState()
+      window.addEventListener('scroll', handleScroll, { passive: true })
+    })
+
+    const openMenu = async (): Promise<void> => {
       if (closeTimer) {
         clearTimeout(closeTimer)
         closeTimer = null
@@ -57,7 +94,7 @@ export default defineComponent({
       isMenuOpen.value = true
     }
 
-    const closeMenu = () => {
+    const closeMenu = (): void => {
       isMenuOpen.value = false
       if (closeTimer) {
         clearTimeout(closeTimer)
@@ -68,27 +105,31 @@ export default defineComponent({
       }, 300)
     }
 
-    const handleKeydown = (e: KeyboardEvent) => {
+    const handleKeydown = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') {
         closeMenu()
       }
     }
 
-    watch(menuMounted, val => {
-      if (val) {
-        prevBodyOverflow = document.body.style.overflow
-        document.body.style.overflow = 'hidden'
-        document.addEventListener('keydown', handleKeydown)
-      } else {
-        if (prevBodyOverflow !== null) {
-          document.body.style.overflow = prevBodyOverflow
+    watch(
+      () => menuMounted,
+      val => {
+        if (val) {
+          prevBodyOverflow = document.body.style.overflow
+          document.body.style.overflow = 'hidden'
+          document.addEventListener('keydown', handleKeydown)
+        } else {
+          if (prevBodyOverflow !== null) {
+            document.body.style.overflow = prevBodyOverflow
+          }
+          prevBodyOverflow = null
+          document.removeEventListener('keydown', handleKeydown)
         }
-        prevBodyOverflow = null
-        document.removeEventListener('keydown', handleKeydown)
       }
-    })
+    )
 
     onBeforeUnmount(() => {
+      window.removeEventListener('scroll', handleScroll)
       document.removeEventListener('keydown', handleKeydown)
       if (closeTimer) {
         clearTimeout(closeTimer)
@@ -124,15 +165,15 @@ export default defineComponent({
       }
 
       return (
-        <a
+        <RouterLink
           class={{
             ['navigation__link']: true,
             ['navigation__link--active']: Boolean(isActive)
           }}
-          href={href}
+          to={href}
         >
           {label}
-        </a>
+        </RouterLink>
       )
     }
 
@@ -141,14 +182,17 @@ export default defineComponent({
         {links.map(link => renderLink(link))}
       </div>
 
-    const renderPhoneIcon = () =>
-      <a class={'navigation__phone'} onClick={callHandler}>
-        <UiIcon icon={Icons.phone} size={30} />
-        <div class={'navigation__phone-content'}>
-          <div class={'navigation__phone-content-title'}>+7 913 813 55 22</div>
-          <div class={'navigation__phone-content-subtitle'}>Консультация по телефону</div>
-        </div>
-      </a>
+    const renderPhoneIcon = () => {
+      return (
+        <UiButton
+          aria-label="Открыть форму обратной связи"
+          icon={Icons.phone}
+          color={Color['surface-3']}
+          iconColor={Color['text-primary']}
+          onClick={() => showFeedback.value = true}
+        />
+      )
+    }
 
     const renderActions = () => {
       return (
@@ -228,10 +272,23 @@ export default defineComponent({
       )
     }
 
+    const renderFeedback = () => {
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          topic={'Нужен обратный звонок'}
+        />
+      )
+    }
+
     return () => {
       return (
         <nav
-          class="navigation"
+          class={{
+            navigation: true,
+            'navigation--scrolled': isScrolled.value,
+            'navigation--hidden': isHidden.value
+          }}
           aria-label="Основная навигация"
         >
           <div class="navigation__container">
@@ -240,6 +297,7 @@ export default defineComponent({
             {renderActions()}
           </div>
           {renderMenuDrawer()}
+          {renderFeedback()}
         </nav>
       )
     }
