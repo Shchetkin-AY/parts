@@ -4,7 +4,7 @@ $_name: "isk-page";
 
 .#{$_name} {
   --page-inline: 24px;
-  --page-section-gap: 32px;
+  --page-section-gap: var(--space-xxl);
 
   display: grid;
   grid-template-columns:

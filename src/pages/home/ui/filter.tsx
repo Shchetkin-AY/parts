@@ -4,7 +4,7 @@ import { useCatalogStore } from '@/stores'
 import { UiButton, UiDivider, UiSelect } from '@/ui'
 import Feedback from '@/features/feedback'
 
-import { ButtonMode, CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery, useCatalogFilterFields } from '@/utils'
+import { CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery, useCatalogFilterFields } from '@/utils'
 
 const fieldsConfig: FilterFieldProps[] = [
   {
@@ -114,7 +114,12 @@ export default defineComponent({
         <div class={`${className}__footer`} >
           <div class={`${className}__footer-content`} >
             <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
-            <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
+            <UiButton
+              label="Получить консультацию"
+              size={Size.small}
+              color={Color['surface-3']}
+              onClick={() => showFeedback.value = true}
+            />
           </div>
         </div>
       )

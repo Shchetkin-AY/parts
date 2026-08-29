@@ -145,7 +145,7 @@ export default defineComponent({
           class="navigation__brand"
           innerHTML={'ISKOR'}
           to={'/'}
-        />
+        ><span innerHTML="//"/></RouterLink>
       )
     }
 
@@ -201,6 +201,7 @@ export default defineComponent({
           <div class="navigation__menu" >
             <UiButton
               icon={Icons.menu}
+              color={Color['surface-3']}
               iconColor={Color['text-primary']}
               onClick={openMenu}
             />

@@ -138,6 +138,8 @@ $_name: "hero";
     }
 
     &-title {
+      font-family: var(--font-family-secondary);
+
       color: var(--color-text);
 
       min-width: 0;

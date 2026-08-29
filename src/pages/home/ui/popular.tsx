@@ -37,7 +37,7 @@ export default defineComponent({
           class={`${className}__header-link`}
           to={'/catalog'}
         >
-          Смотреть каталог →
+          Смотреть все →
         </RouterLink>
       )
     }

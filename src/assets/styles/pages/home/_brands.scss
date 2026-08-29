@@ -11,6 +11,7 @@ $_name: "brands";
   width: 100%;
 
   &__title {
+    font-family: var(--font-family-secondary);
     color: var(--color-text-primary);
     line-height: 1;
     text-align: center;

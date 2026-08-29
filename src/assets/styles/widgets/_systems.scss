@@ -16,6 +16,7 @@ $_name: "systems";
   }
 
   &__title {
+    font-family: var(--font-family-secondary);
     color: var(--color-text-primary);
 
     text-align: left;
@@ -118,6 +119,7 @@ $_name: "systems";
     }
 
     &__title {
+      font-family: var(--font-family-secondary);
       color: var(--color-text-primary);
 
       @include mixins.font(16px, 500);

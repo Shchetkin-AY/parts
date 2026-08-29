@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent, reactive, ref, watch } from 'vue'
 import { UiButton, UiDialog, UiIcon } from '@/ui'
 import Form from '@/features/feedback/form'
-import { ButtonMode, CatalogCategories, CatalogFilterField, CatalogItem, Color, FeedbackPayload, FeedbackTypes, Icons } from '@/utils'
+import { CatalogCategories, CatalogFilterField, CatalogItem, Color, FeedbackPayload, FeedbackTypes, Icons } from '@/utils'
 import { ChannelsLabels, FeedbackChannels } from '@/utils/feedback/channels'
 
 const className = 'feedback'
@@ -210,8 +210,7 @@ export default defineComponent({
         <div class={`${className}__dialog-footer`}>
           <UiButton
             label={'Закрыть'}
-            mode={ButtonMode.flat}
-            color={Color.muted}
+            color={Color['surface-3']}
             disabled={loading.value}
             onClick={() => {
               proxy.value = false
