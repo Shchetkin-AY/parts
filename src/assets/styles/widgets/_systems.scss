@@ -27,7 +27,7 @@ $_name: "systems";
   &__cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-sm);
+    gap: var(--space-md);
 
     width: min(100%, var(--layout-width));
 
