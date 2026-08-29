@@ -1,9 +1,9 @@
+import { RouterLink } from 'vue-router'
 import { computed, defineComponent, onBeforeMount } from 'vue'
 
 import { useCatalogStore } from '@/stores/catalog'
-import type { CatalogItem } from '@/utils'
 import ProductCatalogCard from '@/entities/product/ui/catalog-card'
-import { RouterLink } from 'vue-router'
+import type { CatalogItem } from '@/utils'
 
 export default defineComponent({
   name: 'Popular',
@@ -28,7 +28,9 @@ export default defineComponent({
     }
 
     const systems = computed(() => {
-      return pickRandom(catalogStore.items, 5)
+      const items = catalogStore.items.filter(item => item.price !== 0)
+
+      return pickRandom(items, 5)
     })
 
     const renderCatalogLink = () => {

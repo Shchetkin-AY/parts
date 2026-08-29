@@ -16,6 +16,10 @@ const priceFormatter = new Intl.NumberFormat('ru-RU', {
 })
 
 export const formatPrice = (value: number): string => {
+  if (!value) {
+    return 'По запросу'
+  }
+
   return priceFormatter.format(value).replace(/,/g, '.')
 }
 

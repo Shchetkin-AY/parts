@@ -252,7 +252,10 @@ export default defineComponent({
 
     const renderFooter = () => {
       return (
-        <div class="product-catalog-card__price">
+        <div class={{
+          'product-catalog-card__price': true,
+          'product-catalog-card__price--empty': props.value.price === 0
+        }}>
           {formatPrice(props.value.price)}
         </div>
       )
