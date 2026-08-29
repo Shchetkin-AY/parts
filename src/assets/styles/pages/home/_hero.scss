@@ -32,8 +32,10 @@ $_name: "hero";
     inset: 0;
 
     &-text {
+      font-family: var(--font-family-secondary);
+
       font-size: clamp(96px, 14vw, 190px);
-      font-weight: 900;
+      font-weight: 700;
       color: transparent;
       text-transform: uppercase;
       letter-spacing: -3px;
@@ -150,10 +152,10 @@ $_name: "hero";
         color: colors.color(color-text-subtle);
       }
 
-      @include mixins.font(48px, 900);
+      @include mixins.font(48px, 700);
 
       @media (width >= 768px) {
-        @include mixins.font(96px, 900);
+        @include mixins.font(96px, 700);
       }
     }
 
