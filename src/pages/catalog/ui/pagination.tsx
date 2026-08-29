@@ -1,7 +1,7 @@
 import { PropType, computed, defineComponent } from 'vue'
 
 import { UiButton } from '@/ui'
-import { ButtonMode, Color, Size } from '@/utils'
+import { Color, Size } from '@/utils'
 import { useViewportStore } from '@/stores'
 
 type PageItem = number | 'ellipsis'
@@ -154,8 +154,7 @@ export const Pagination = defineComponent({
         <UiButton
           label={item}
           size={Size.small}
-          color={isActive ? Color.primary : Color.muted}
-          mode={isActive ? undefined : ButtonMode.outline}
+          color={isActive ? Color.primary : Color['surface-3']}
           key={item}
           onClick={() => setPage(item)}
         />
@@ -172,8 +171,7 @@ export const Pagination = defineComponent({
           <UiButton
             label="<"
             size={Size.small}
-            color={Color.muted}
-            mode={ButtonMode.outline}
+            color={Color['surface-3']}
             disabled={currentPage.value === 1}
             onClick={() => setPage(currentPage.value - 1)}
           />

@@ -117,7 +117,7 @@ export default defineComponent({
       return (
         <UiButton
           label="Сбросить фильтры"
-          mode={ButtonMode.outline}
+          mode={ButtonMode.flat}
           color={Color.muted}
           onClick={resetHandler}
         />
@@ -163,7 +163,11 @@ export default defineComponent({
         <div class={`${className}__footer`} >
           <div class={`${className}__footer-content`} >
             <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
-            <UiButton label="Получить консультацию" size={Size.small} mode={ButtonMode.outline} color={Color.primary} onClick={() => showFeedback.value = true}/>
+            <UiButton
+              label="Получить консультацию"
+              size={Size.small}
+              color={Color['surface-3']}
+              onClick={() => showFeedback.value = true}/>
           </div>
         </div>
       )

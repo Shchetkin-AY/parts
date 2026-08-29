@@ -6,8 +6,7 @@ $_name: "catalog-filter";
 .#{$_name} {
   padding: 16px;
 
-  border: 1px solid colors.$border;
-  border-radius: 12px;
+  border-radius: var(--space-sm);
 
   background: colors.$surface;
 
