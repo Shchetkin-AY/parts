@@ -57,17 +57,9 @@ $_name: "popular";
 
     @include mixins.absolute-width(100%);
 
-    @media (width <= 1100px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (width <= 768px) {
+    @media (width <= 900px) {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-sm);
-    }
-
-    @media (width <= 600px) {
-      grid-template-columns: 1fr;
     }
   }
 }

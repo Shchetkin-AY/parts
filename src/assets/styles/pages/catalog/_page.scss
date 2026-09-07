@@ -136,18 +136,28 @@ $_name: "catalog";
   @media (width <= 1280px) {
     &__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
   }
 
   @media (width <= 1024px) {
     &__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
   }
 
   @media (width <= 600px) {
     &__grid {
-      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    &__layout {
+      gap: 24px;
+    }
+
+    &__content {
+      gap: 16px;
     }
   }
 }
