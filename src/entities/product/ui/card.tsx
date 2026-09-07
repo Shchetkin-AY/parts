@@ -20,11 +20,6 @@ export const ProductCard = defineComponent({
     value: {
       type: Object as PropType<CatalogItem>,
       required: true
-    },
-
-    badge: {
-      type: Boolean as PropType<boolean>,
-      default: false
     }
   },
 
@@ -115,8 +110,6 @@ export const ProductCard = defineComponent({
       const deltaX = touch.clientX - touchStartX.value
       const deltaY = touch.clientY - touchStartY.value
 
-      // если движение больше по X, чем по Y — это свайп галереи,
-      // блокируем вертикальный скролл страницы
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         isSwiping.value = true
         e.preventDefault()
@@ -147,18 +140,6 @@ export const ProductCard = defineComponent({
       touchStartY.value = null
       isSwiping.value = false
     }
-    // --- /свайп ---
-
-    const renderHitChip = () => {
-      if (props.badge) {
-        return (
-          <UiChip
-            label={'ХИТ'}
-            color={Color.primary}
-          />
-        )
-      }
-    }
 
     const renderPistonChip = () => {
       return (
@@ -173,7 +154,6 @@ export const ProductCard = defineComponent({
       return (
         <div class={`${className}__media-header`}>
           {renderPistonChip()}
-          {renderHitChip()}
         </div>
       )
     }

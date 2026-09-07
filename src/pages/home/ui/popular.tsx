@@ -60,12 +60,11 @@ export default defineComponent({
     }
 
     const renderCards = () => {
-      return systems.value.map((system, index) => {
+      return systems.value.map(system => {
         return (
           <ProductCard
             key={system.id}
             value={system}
-            badge={index === 0}
           />
         )
       })
