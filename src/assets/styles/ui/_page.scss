@@ -3,8 +3,8 @@
 $_name: "isk-page";
 
 .#{$_name} {
-  --page-inline: 24px;
-  --page-section-gap: var(--space-md);
+  --page-inline: var(--space-lg);
+  --page-section-gap: var(--space-xxl);
 
   display: grid;
   grid-template-columns:
@@ -38,9 +38,9 @@ $_name: "isk-page";
 
   @include mixins.absolute-width(100%);
 
-  @media (width >= 768px) {
-    --page-inline: var(--space-lg);
-    --page-section-gap: var(--space-xxl);
+  @media screen and (width <= 900px) {
+    --page-inline: var(--space-sm);
+    --page-section-gap: var(--space-xl);
   }
 
   @supports (grid-template-columns: subgrid) {
