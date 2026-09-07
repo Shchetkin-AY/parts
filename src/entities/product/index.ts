@@ -1,4 +1,4 @@
-export { default as ProductCatalogCard } from './ui/catalog-card'
+export * from './ui/card'
 export { default as ProductGallery } from './ui/gallery'
 export * from './ui/breadcrumbs'
 export * from './ui/details'
