@@ -1,7 +1,9 @@
-import { type CatalogItem } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
-import ProductCatalogCard from '@/entities/product/ui/catalog-card'
+
 import { useCatalogStore, useViewportStore } from '@/stores'
+
+import { type CatalogItem } from '@/utils'
+import { ProductCard } from './card'
 
 export const ProductRelated = defineComponent({
   name: 'ProductRelated',
@@ -51,7 +53,7 @@ export const ProductRelated = defineComponent({
     const renderRelatedCard = (item: CatalogItem) => {
       return (
         <div class="related-item">
-          <ProductCatalogCard
+          <ProductCard
             value={item}
             badge={item.id === props.item?.id}
           />

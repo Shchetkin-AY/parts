@@ -2,7 +2,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { PropType, computed, defineComponent, onMounted, ref } from 'vue'
 
 import {
-  type CatalogItem, Color,
+  CatalogItem, Color,
   formatPrice,
   getWheelDiameterRange,
   pluralize
@@ -10,11 +10,11 @@ import {
 
 import { UiChip } from '@/ui'
 
-const SWIPE_THRESHOLD = 40 // минимальное смещение по X в px, чтобы считать это свайпом
+const SWIPE_THRESHOLD = 40
 
-export default defineComponent({
+export const ProductCard = defineComponent({
 
-  name: 'ProductCatalogCard',
+  name: 'ProductCard',
 
   props: {
     value: {
@@ -33,7 +33,7 @@ export default defineComponent({
     const route = useRoute()
     const seriesKey = computed(() => props.value.series.toLowerCase())
 
-    const className = 'product-catalog-card'
+    const className = 'product-card'
 
     const hover = ref<boolean>(false)
 
@@ -45,18 +45,27 @@ export default defineComponent({
         pluralize(props.value.pistonCount, 'поршень', 'поршня', 'поршней')
       ].join(' ')
     })
+
     const images = computed(() => {
       return [ 0, 1, 2 ].map(n => `/images/products/${seriesKey.value}/${n}.webp`)
     })
-    const activeImage = ref(Math.floor(Math.random() * images.value.length))
-    const subtitle = computed(() => {
-      const parts = [
-        getWheelDiameterRange(props.value.wheelDiameter),
-        `${props.value.discDiameter} мм`
-      ].filter(Boolean)
 
-      return parts.join(' · ')
+    const activeImage = ref(Math.floor(Math.random() * images.value.length))
+
+    const specs = computed(() => {
+      const parts: string[] = [
+        getWheelDiameterRange(props.value.wheelDiameter),
+        props.value.discDiameter ? `${props.value.discDiameter} мм` : ''
+      ]
+
+      if (props.value.pistonArea) {
+        parts.push(`${props.value.pistonArea} см²`)
+      }
+
+      return parts.filter(Boolean)
     })
+
+    const feature = computed(() => props.value.features || '')
 
     onMounted(() => {
       images.value.forEach(src => {
@@ -151,29 +160,20 @@ export default defineComponent({
       }
     }
 
-    const renderChips = () => {
+    const renderPistonChip = () => {
       return (
-        <div class="product-catalog-card__chips">
-          <UiChip
-            label={pistonCount.value}
-            color={Color.muted}
-          />
-          {renderHitChip()}
-        </div>
+        <UiChip
+          label={pistonCount.value}
+          color={Color.muted}
+        />
       )
     }
-    const renderOrderTime = () => {
-      return (
-        <div class="product-catalog-card__lead-time">
-          Под заказ
-        </div>
-      )
-    }
+
     const renderMediaHeader = () => {
       return (
-        <div class="product-catalog-card__media-header">
-          {renderChips()}
-          {renderOrderTime()}
+        <div class={`${className}__media-header`}>
+          {renderPistonChip()}
+          {renderHitChip()}
         </div>
       )
     }
@@ -184,13 +184,13 @@ export default defineComponent({
       }
 
       return (
-        <div class="product-catalog-card__gallery-dots">
+        <div class={`${className}__gallery-dots`}>
           {images.value.map((_, i) =>
             <span
               key={i}
               class={[
-                'product-catalog-card__dot',
-                { 'product-catalog-card__dot--active': activeImage.value === i }
+                `${className}__dot`,
+                { [`${className}__dot--active`]: activeImage.value === i }
               ]}
               onMouseenter={(e: Event) => {
                 e.stopPropagation(); activeImage.value = i
@@ -206,14 +206,14 @@ export default defineComponent({
     const renderImage = () => {
       return (
         <div
-          class="product-catalog-card__media"
+          class={`${className}__media`}
           onTouchstart={touchStartHandler}
           onTouchmove={touchMoveHandler}
           onTouchend={touchEndHandler}
         >
           {renderMediaHeader()}
           <img
-            class="product-catalog-card__image"
+            class={`${className}__image`}
             src={images.value[activeImage.value]}
             alt={title.value}
             loading="lazy"
@@ -226,46 +226,56 @@ export default defineComponent({
       )
     }
 
-    const renderHeader = () => {
+    const renderSpecs = () => {
       return (
-        <div class="product-catalog-card__header">
-          <div class="product-catalog-card__title">
-            {title.value}
-          </div>
-
-          <div class="product-catalog-card__subtitle">
-            {subtitle.value}
-          </div>
+        <div class={`${className}__specs`}>
+          {specs.value.map((spec, i) =>
+            <span
+              key={i}
+              class={`${className}__spec`}
+            >
+              {spec}
+            </span>)}
         </div>
       )
     }
 
-    const renderSpecs = () => {
+    const renderFeature = () => {
+      if (!feature.value) {
+        return null
+      }
+
       return (
-        <div class="product-catalog-card__specs">
-          <div class="product-catalog-card__spec">
-            {props.value.features}
-          </div>
+        <div class={`${className}__feature`}>
+          {feature.value}
         </div>
       )
     }
 
     const renderFooter = () => {
       return (
-        <div class={{
-          'product-catalog-card__price': true,
-          'product-catalog-card__price--empty': props.value.price === 0
-        }}>
-          {formatPrice(props.value.price)}
+        <div class={`${className}__footer`}>
+          <div class={{
+            [`${className}__price`]: true,
+            [`${className}__price--empty`]: props.value.price === 0
+          }}>
+            {formatPrice(props.value.price)}
+          </div>
+          <div class={`${className}__lead-time`}>
+            Под заказ
+          </div>
         </div>
       )
     }
 
     const renderContent = () => {
       return (
-        <div class="product-catalog-card__content">
-          {renderHeader()}
+        <div class={`${className}__content`}>
+          <div class={`${className}__title`}>
+            {title.value}
+          </div>
           {renderSpecs()}
+          {renderFeature()}
           {renderFooter()}
         </div>
       )
