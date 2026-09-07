@@ -99,7 +99,20 @@ $_name: "catalog";
   &__grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 22px;
+    gap: var(--space-md);
+
+    @media screen and (width <= 1280px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media screen and (width <= 1024px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    @media screen and (width <= 600px) {
+      gap: var(--space-xs);
+    }
   }
 
   &__empty {
