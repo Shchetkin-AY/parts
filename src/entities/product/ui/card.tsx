@@ -209,9 +209,9 @@ export const ProductCard = defineComponent({
     const renderSpecs = () => {
       return (
         <div class={`${className}__specs`}>
-          {specs.value.map((spec, i) =>
+          {specs.value.map((spec, index) =>
             <span
-              key={i}
+              key={index}
               class={`${className}__spec`}
             >
               {spec}
@@ -241,9 +241,11 @@ export const ProductCard = defineComponent({
           }}>
             {formatPrice(props.value.price)}
           </div>
-          <div class={`${className}__lead-time`}>
+
+          {/* // заготовка для отображения наличия */}
+          {/* <div class={`${className}__lead-time`}>
             Под заказ
-          </div>
+          </div> */}
         </div>
       )
     }
