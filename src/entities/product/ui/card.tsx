@@ -53,10 +53,6 @@ export const ProductCard = defineComponent({
         props.value.discDiameter ? `${props.value.discDiameter} мм` : ''
       ]
 
-      if (props.value.pistonArea) {
-        parts.push(`${props.value.pistonArea} см²`)
-      }
-
       return parts.filter(Boolean)
     })
 

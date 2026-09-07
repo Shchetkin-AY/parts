@@ -32,7 +32,7 @@ $_name: "product-card";
   &__media {
     aspect-ratio: 1.05;
 
-    background: radial-gradient(circle at 50% 30%, rgb(255 255 255 / 4%), transparent 60%), #080808;
+    background: linear-gradient(0deg, rgb(255 255 255 / 0%), rgb(255 255 255 / 2%) 50%), #080808;
 
     display: grid;
     place-items: center;
