@@ -4,8 +4,8 @@ import { CatalogFilterField, CatalogFilterParams, CatalogFilterSubmitPayload, Ca
 import { CatalogSortField, useCatalogStore, useViewportStore } from '@/stores'
 import { Page, UiChip, UiDivider, UiSelect } from '@/ui'
 import { Pagination } from '@/pages/catalog/ui/pagination'
-import ProductCatalogCard from '@/entities/product/ui/catalog-card'
 import Filter from '@/pages/catalog/ui/filter'
+import { ProductCard } from '@/entities/product'
 
 const catalogItemsPerPage = 12
 const mobileBreakpoint = 1024
@@ -309,7 +309,7 @@ export default defineComponent({
 
     // --- сетка товаров ---
     const renderProductCard = (item: CatalogItem) => {
-      return <ProductCatalogCard value={item} key={item.id} />
+      return <ProductCard value={item} key={item.id} />
     }
 
     const renderEmptyState = () => {
