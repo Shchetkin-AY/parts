@@ -22,14 +22,6 @@ export const chipProps = {
     default: false
   },
 
-  cut: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
-  round: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
   outline: {
     type: Boolean as PropType<boolean>,
     default: false
@@ -76,7 +68,6 @@ export const UiChip = defineComponent({
         [UiComponentName.chip]: true,
         [`${UiComponentName.chip}--absolute`]: props.position === 'absolute',
 
-        [`${UiComponentName.chip}--round`]: props.round,
         [`${UiComponentName.chip}--outline`]: props.outline,
         [`${UiComponentName.chip}--remove`]: props.remove,
 
@@ -111,12 +102,7 @@ export const UiChip = defineComponent({
         return undefined
       }
 
-      let result = getString(props.label) ?? ''
-      if (props.cut && result.length > props.length) {
-        result = result.substring(0, props.length) + '...'
-      }
-
-      return result
+      return getString(props.label) ?? ''
     })
 
     const removeHandler = () => {

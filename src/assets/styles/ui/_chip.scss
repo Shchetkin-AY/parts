@@ -87,6 +87,8 @@ $_name: "isk-chip";
   }
 
   &__label {
+    font-variant-numeric: tabular-nums;
+
     color: currentcolor;
     text-align: center;
     text-decoration: none;
@@ -115,11 +117,6 @@ $_name: "isk-chip";
 
   &--outline {
     border-color: var(--color-border);
-  }
-
-  &--round {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   &--absolute {
