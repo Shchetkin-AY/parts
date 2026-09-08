@@ -161,19 +161,21 @@ export const ProductCard = defineComponent({
 
       return (
         <div class={`${className}__gallery-dots`}>
-          {images.value.map((_, i) =>
+          {images.value.map((_, index) =>
             <span
-              key={i}
               class={[
                 `${className}__dot`,
-                { [`${className}__dot--active`]: activeImage.value === i }
+                { [`${className}__dot--active`]: activeImage.value === index }
               ]}
-              onMouseenter={(e: Event) => {
-                e.stopPropagation(); activeImage.value = i
+              onMouseenter={(event: Event) => {
+                event.stopPropagation()
+                activeImage.value = index
               }}
-              onClick={(e: Event) => {
-                e.stopPropagation(); setActiveImage(i)
+              onClick={(event: Event) => {
+                event.stopPropagation()
+                setActiveImage(index)
               }}
+              key={index}
             />)}
         </div>
       )
@@ -195,7 +197,6 @@ export const ProductCard = defineComponent({
             loading="lazy"
             decoding="async"
             draggable={false}
-            onError={(e: Event) => (e.target as HTMLImageElement).style.display = 'none'}
           />
           {renderGalleryDots()}
         </div>
@@ -207,8 +208,8 @@ export const ProductCard = defineComponent({
         <div class={`${className}__specs`}>
           {specs.value.map((spec, index) =>
             <span
-              key={index}
               class={`${className}__spec`}
+              key={index}
             >
               {spec}
             </span>)}
@@ -228,20 +229,30 @@ export const ProductCard = defineComponent({
       )
     }
 
+    const renderPrice = () => {
+      return (
+        <div class={{
+          [`${className}__price`]: true,
+          [`${className}__price--empty`]: props.value.price === 0
+        }}>
+          {formatPrice(props.value.price)}
+        </div>
+      )
+    }
+
+    // TODO заготовка для отображения наличия
+    // const renderLeadTime = () => {
+    //   return (
+    //     <div class={`${className}__lead-time`}>
+    //       Под заказ
+    //     </div>
+    //   )
+    // }
     const renderFooter = () => {
       return (
         <div class={`${className}__footer`}>
-          <div class={{
-            [`${className}__price`]: true,
-            [`${className}__price--empty`]: props.value.price === 0
-          }}>
-            {formatPrice(props.value.price)}
-          </div>
-
-          {/* // заготовка для отображения наличия */}
-          {/* <div class={`${className}__lead-time`}>
-            Под заказ
-          </div> */}
+          {renderPrice()}
+          {/* {renderLeadTime()} */}
         </div>
       )
     }
