@@ -6,10 +6,6 @@ $_name: "purchase";
 .#{$_name} {
   padding: 20px;
 
-  border-width: 1px;
-  border-style: solid;
-
-  border-color: var(--color-border);
   border-radius: var(--radius-md);
 
   background-color: var(--color-surface);
@@ -17,33 +13,6 @@ $_name: "purchase";
   display: grid;
   gap: var(--space-md);
   align-self: start;
-
-  min-height: 400px;
-
-  &__availability {
-    display: flex;
-    gap: var(--space-sm);
-    align-items: center;
-
-    &-dot {
-      border-radius: 50%;
-
-      background-color: var(--color-warning);
-
-      box-shadow: 0 0 0 4px colors.color(color-warning, 0.15);
-
-      @include mixins.absolute-height(8px);
-      @include mixins.absolute-width(8px);
-    }
-
-    &-text {
-      color: var(--color-warning);
-
-      text-transform: uppercase;
-
-      @include mixins.font(14px);
-    }
-  }
 
   &__price {
     color: var(--color-text-primary);

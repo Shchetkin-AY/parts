@@ -41,17 +41,8 @@ export const Purchase = defineComponent({
     const renderPurchaseNote = () => {
       return (
         <p class={`${className}__note`}>
-          Финальная стоимость зависит конфигурации.
+          Финальная стоимость зависит конфигурации и цвета.
         </p>
-      )
-    }
-
-    const renderPurchaseAvailability = () => {
-      return (
-        <div class={`${className}__availability`}>
-          <span class={`${className}__availability-dot`} />
-          <span class={`${className}__availability-text`}>Под заказ</span>
-        </div>
       )
     }
 
@@ -102,10 +93,9 @@ export const Purchase = defineComponent({
     return () => {
       return (
         <aside class={className}>
-          {renderPurchaseAvailability()}
           {renderPurchasePrice()}
-          {renderOrderButton()}
           {renderPurchaseNote()}
+          {renderOrderButton()}
           {renderDivider()}
           {renderPurchaseKit()}
         </aside>
