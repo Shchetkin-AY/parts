@@ -1,5 +1,5 @@
 import { type CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
-import { PropType, defineComponent } from 'vue'
+import { PropType, computed, defineComponent } from 'vue'
 import { UiButton } from '@/ui/button'
 import { UiIcon } from '@/ui/icon'
 import { UiChip, UiDivider } from '@/ui'
@@ -37,6 +37,14 @@ export const Purchase = defineComponent({
   setup(props, { emit }) {
     const className = 'purchase'
 
+    const price = computed<string>(() => {
+      if (!props.item.price) {
+        return formatPrice(props.item.price)
+      }
+
+      return formatPrice(props.item.price + props.options.reduce((total, option) => total + option.price, 0))
+    })
+
     const renderOrderButton = () => {
       return (
         <UiButton
@@ -51,7 +59,7 @@ export const Purchase = defineComponent({
     const renderPurchaseNote = () => {
       return (
         <p class={`${className}__note`}>
-          Финальная стоимость зависит от конфигурации и цвета.
+          Финальная стоимость зависит от конфигурации и цвета
         </p>
       )
     }
@@ -59,7 +67,7 @@ export const Purchase = defineComponent({
     const renderPurchasePrice = () => {
       return (
         <div class={`${className}__price`}>
-          {formatPrice(props.item.price + props.options.reduce((total, option) => total + option.price, 0))}
+          {price.value}
         </div>
       )
     }
@@ -76,7 +84,7 @@ export const Purchase = defineComponent({
                 label={`+ ${formatPrice(option.price)} ${option.label}`}
                 remove
                 size={Size.medium}
-                color={Color.muted}
+                color={Color.info}
                 onRemove={() => emit('remove', option.id)}
                 key={option.id}
               />)
