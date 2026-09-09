@@ -2,7 +2,6 @@ import { AccessoryItem, type CatalogItem, getWheelDiameterRange } from '@/utils'
 import { Fragment, PropType, computed, defineComponent, reactive } from 'vue'
 import { UiPanel } from '@/ui'
 import Item from '@/entities/accessory/ui/item'
-import ColorPanel from '@/entities/product/ui/palette-panel'
 import { useCatalogStore } from '@/stores/catalog'
 
 export const ProductDetails = defineComponent({
@@ -54,8 +53,7 @@ export const ProductDetails = defineComponent({
     const expanded = reactive<Record<string, boolean>>({
       specs: false,
       compatibility: false,
-      kit: false,
-      palette: false
+      kit: false
     })
 
     const renderRow = (label: string, value: string) => {
@@ -152,10 +150,6 @@ export const ProductDetails = defineComponent({
       )
     }
 
-    const renderPalette = () => {
-      return <ColorPanel />
-    }
-
     return () => {
       return (
         <Fragment>
@@ -171,10 +165,6 @@ export const ProductDetails = defineComponent({
 
               <UiPanel v-model={expanded.kit} label="Комплектация" outline>
                 {renderKit()}
-              </UiPanel>
-
-              <UiPanel v-model={expanded.palette} label="Цветовые решения" outline>
-                {renderPalette()}
               </UiPanel>
             </div>
           </div>
