@@ -43,9 +43,9 @@ export const ProductRelated = defineComponent({
 
       return (
         <div class="related-header">
-          <div class="related-title">
+          <h3 class="related-title">
             Другие комплекты {props.item.series}
-          </div>
+          </h3>
         </div>
       )
     }
@@ -55,7 +55,6 @@ export const ProductRelated = defineComponent({
         <div class="related-item">
           <ProductCard
             value={item}
-            badge={item.id === props.item?.id}
           />
         </div>
       )

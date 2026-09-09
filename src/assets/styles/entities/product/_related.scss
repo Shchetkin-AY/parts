@@ -15,6 +15,7 @@ $_name: "related";
   }
 
   &-title {
+    font-family: var(--font-family-secondary);
     color: var(--color-text-primary);
 
     text-align: left;
