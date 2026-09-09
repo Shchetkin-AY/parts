@@ -41,7 +41,7 @@ export const Purchase = defineComponent({
     const renderPurchaseNote = () => {
       return (
         <p class={`${className}__note`}>
-          Финальная стоимость зависит конфигурации и цвета.
+          Финальная стоимость зависит от конфигурации и цвета.
         </p>
       )
     }
@@ -55,7 +55,7 @@ export const Purchase = defineComponent({
     }
 
     const renderKitItemIcon = () => {
-      return <UiIcon icon={Icons['check-circle']} color={Color.primary} size={20} />
+      return <UiIcon icon={Icons['check-circle']} color={Color.success} size={20} />
     }
     const renderKitItemLabel = (label: string) => {
       return <span class={`${className}__kit-item-label`}>{label}</span>
