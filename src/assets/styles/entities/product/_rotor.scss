@@ -36,7 +36,10 @@ $_name: "rotor-center";
   }
 
   &__item {
-    padding: var(--space-xs);
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    padding-left: 12px;
+    padding-right: 10px;
 
     color: var(--color-text-primary);
     text-align: left;
@@ -44,7 +47,7 @@ $_name: "rotor-center";
     border: 1px solid transparent;
     border-radius: var(--radius-md);
 
-    background-color: var(--color-surface-2);
+    background-color: var(--color-surface);
 
     display: grid;
     gap: var(--space-xs);
@@ -62,8 +65,6 @@ $_name: "rotor-center";
     }
 
     &--active {
-      border-color: var(--color-border-strong);
-
       background-color: var(--color-surface-3);
     }
 

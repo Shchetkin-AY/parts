@@ -66,7 +66,10 @@ $_palette-colors: (
   }
 
   &__group {
-    padding: var(--space-xs);
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    padding-left: 12px;
+    padding-right: 10px;
 
     color: var(--color-text-primary);
 
@@ -100,8 +103,6 @@ $_palette-colors: (
     }
 
     &--active {
-      border-color: var(--color-border-strong);
-
       background-color: var(--color-surface-3);
     }
 
