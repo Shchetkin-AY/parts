@@ -362,8 +362,7 @@ export const iconPaths: Record<string, IconObject[]> = {
       name: 'path',
       attributes: {
         d: 'M11.8659 16.1947C10.5582 16.0451 9.63974 15.1837 9.22461 14.1406',
-        stroke: '#d91f26',
-        'stroke-width': '2',
+        'stroke-width': '1',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
       }
