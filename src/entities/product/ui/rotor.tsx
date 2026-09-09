@@ -27,6 +27,8 @@ export default defineComponent({
       return previewImages.value[previewIndex.value] ?? previewImages.value[0]
     })
 
+    const hasPreviewThumbs = computed(() => previewImages.value.length > 0)
+
     const selectItem = (item: RotorCenterItem) => {
       currentItem.value = item
       previewIndex.value = 0
@@ -97,6 +99,10 @@ export default defineComponent({
     }
 
     const renderPreviewThumbs = () => {
+      if (!hasPreviewThumbs.value) {
+        return null
+      }
+
       return (
         <div class={`${className}__preview-thumbs`}>
           {previewImages.value.map((src, index) =>
@@ -138,20 +144,14 @@ export default defineComponent({
       )
     }
 
-    const renderPreview = () => {
-      return (
-        <div class={`${className}__preview`}>
-          {renderPreviewMain()}
-          {renderPreviewThumbs()}
-        </div>
-      )
-    }
-
     const renderContent = () => {
       return (
         <div class={`${className}__content`}>
           {renderItems()}
-          {renderPreview()}
+          <div class={`${className}__preview`}>
+            {renderPreviewMain()}
+            {renderPreviewThumbs()}
+          </div>
         </div>
       )
     }

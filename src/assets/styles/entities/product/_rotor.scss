@@ -22,7 +22,7 @@ $_name: "rotor-center";
 
   &__content {
     display: grid;
-    grid-template-columns: 30% minmax(0, 1fr);
+    grid-template-columns: minmax(180px, 30%) minmax(0, 1fr);
     gap: var(--space-sm);
 
     user-select: none;
@@ -79,6 +79,7 @@ $_name: "rotor-center";
       gap: var(--space-xs);
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
 
       @include mixins.font(14px, 500);
     }
@@ -198,7 +199,9 @@ $_name: "rotor-center";
       &-main {
         padding: var(--space-sm);
 
-        @include mixins.absolute-height(220px);
+        min-height: 0;
+        max-height: none;
+        height: clamp(180px, 60vw, 220px);
       }
 
       &-thumbs {
@@ -206,7 +209,12 @@ $_name: "rotor-center";
 
         overflow-x: auto;
 
+        min-width: 0;
         width: 100%;
+      }
+
+      &-thumb {
+        flex: 0 0 auto;
       }
     }
   }
