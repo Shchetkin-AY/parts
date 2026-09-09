@@ -14,12 +14,11 @@ $_name: "product-gallery";
   &__main {
     padding: 16px;
 
-    border: 1px solid colors.$border;
     border-radius: 18px;
 
     background:
       radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
-      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), #070707;
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), var(--color-surface);
 
     display: grid;
     align-content: center;
@@ -51,13 +50,16 @@ $_name: "product-gallery";
   &__thumb {
     padding: 6px;
 
-    border: 1px solid colors.$border;
+    border-width: 1px;
+    border-style: solid;
+
+    border-color: transparent;
+
     border-radius: 12px;
 
-    background: colors.$surface;
     background:
       radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
-      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), #070707;
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), var(--color-surface);
 
     transition: 0.2s;
 
@@ -67,15 +69,13 @@ $_name: "product-gallery";
     width: 84px;
 
     &:hover {
-      box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
-
-      transform: translateY(-2px);
+      background-color: var(--color-surface-2);
 
       cursor: pointer;
     }
 
     &--active {
-      border-color: colors.$primary;
+      border-color: var(--color-border-strong);
     }
   }
 
