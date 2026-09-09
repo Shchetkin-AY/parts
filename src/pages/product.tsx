@@ -8,6 +8,7 @@ import { Page } from '@/ui'
 import Feedback from '@/features/feedback'
 import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase } from '@/entities/product'
 import { Accessories } from '@/entities/accessory'
+import Palette from '@/entities/product/ui/palette'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -116,6 +117,10 @@ export default defineComponent({
       )
     }
 
+    const renderPaletteSection = () => {
+      return <Palette />
+    }
+
     const renderHeroProductSection = () => {
       const item = currentItem.value
 
@@ -132,6 +137,8 @@ export default defineComponent({
                 {renderGallery(item)}
                 {renderHero(item)}
               </div>
+              {renderPaletteSection()}
+
               <div class="product-page__section--tabs">
                 <ProductDetails value={item} />
               </div>
