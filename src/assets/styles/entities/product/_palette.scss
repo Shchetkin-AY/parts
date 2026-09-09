@@ -1,4 +1,3 @@
-@use "sass:map";
 @use "mixins" as mixins;
 
 $_name: "palette";
@@ -217,7 +216,15 @@ $_palette-colors: (
           border-color var(--transition-base);
 
         &--neochrome {
-          background-color: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+          background: conic-gradient(
+            rgb(255 0 0 / 30%),
+            rgb(255 255 0 / 30%),
+            rgb(0 255 0 / 30%),
+            rgb(0 255 255 / 30%),
+            rgb(0 0 255 / 30%),
+            rgb(255 0 255 / 30%),
+            rgb(255 0 0 / 30%)
+          );
         }
 
         @include mixins.absolute-height(25px);
@@ -338,15 +345,49 @@ $_palette-colors: (
     }
   }
 
-  // @include _color("red");
-  // @include _color("silver");
-  // @include _color("blue");
-  // @include _color("gray");
-  // @include _color("neochrome");
-  // @include _color("lemon");
-  // @include _color("tiffany");
-  // @include _color("gold");
-  // @include _color("pink");
-  // @include _color("green");
-  // @include _color("purple");
+  @media (width <= 900px) {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width <= 600px) {
+    gap: var(--space-sm);
+
+    &__header-title {
+      @include mixins.font(18px, 600);
+    }
+
+    &__group-description {
+      @include mixins.font(11px);
+    }
+
+    &__preview {
+      padding: var(--space-xs);
+
+      &-colors {
+        gap: var(--space-xs) var(--space-sm);
+      }
+
+      &-images {
+        grid-template-columns: 1fr;
+      }
+
+      &-main {
+        padding: var(--space-sm);
+
+        @include mixins.absolute-height(220px);
+      }
+
+      &-thumbs {
+        padding-bottom: var(--space-xs);
+
+        flex-direction: row;
+
+        overflow-x: auto;
+
+        width: 100%;
+      }
+    }
+  }
 }

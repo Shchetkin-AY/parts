@@ -7,6 +7,7 @@ import {
   PaletteSelection,
   Size,
   formatPrice,
+  paletteGroupPrices,
   paletteGroups,
   paletteItemsByGroup
 } from '@/utils'
@@ -27,23 +28,10 @@ export default defineComponent({
     const previewIndex = ref(0)
     const singlePreviewItems = new Set([ 'tiffany', 'pink', 'green', 'gold', 'purple' ])
 
-    const groupMeta: Record<
-      PaletteGroupTypes,
-      { priceLabel?: string;
-        description: string }
-    > = {
-      [PaletteGroupTypes.base]: {
-        priceLabel: 'Без доплат',
-        description: 'Вакуумное покрытие + анодирование, цвет в самом металле. Не выцветает и не отслаивается: цвет живёт в металле, а не на нём.'
-      },
-      [PaletteGroupTypes.custom]: {
-        priceLabel: `+ ${formatPrice(5000)}`,
-        description: 'Вакуумное напыление металлов — фирменный переливающийся цвет. Не окисляется, честно передаёт цвет металла, решает проблему облезающей краски.'
-      },
-      [PaletteGroupTypes.cerakote]: {
-        priceLabel: `+ ${formatPrice(9000)}`,
-        description: 'Cerackote — керамика (США). Матовая керамика с металлическими частицами — премиум-отделка. Устойчивость к химии и коррозии.'
-      }
+    const groupDescriptions: Record<PaletteGroupTypes, string> = {
+      [PaletteGroupTypes.base]: 'Вакуумное покрытие + анодирование, цвет в самом металле. Не выцветает и не отслаивается: цвет живёт в металле, а не на нём.',
+      [PaletteGroupTypes.custom]: 'Вакуумное напыление металлов — фирменный переливающийся цвет. Не окисляется, честно передаёт цвет металла, решает проблему облезающей краски.',
+      [PaletteGroupTypes.cerakote]: 'Cerackote — керамика (США). Матовая керамика с металлическими частицами — премиум-отделка. Устойчивость к химии и коррозии.'
     }
 
     const currentItems = computed(() => {
@@ -149,7 +137,7 @@ export default defineComponent({
 
       return (
         <UiChip
-          label={groupMeta[group].priceLabel}
+          label={`+ ${formatPrice(paletteGroupPrices[group])}`}
           size={Size.medium}
           color={Color.warning}
         />
@@ -166,7 +154,7 @@ export default defineComponent({
     const renderGroupDescription = (group: PaletteGroupTypes) => {
       return (
         <span class={`${className}__group-description`}>
-          {groupMeta[group].description}
+          {groupDescriptions[group]}
         </span>
       )
     }
