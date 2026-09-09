@@ -120,14 +120,14 @@ export default defineComponent({
       if (palette) {
         options.push({
           id: 'palette',
-          label: `цвет суппорта: ${palette.item.id}`,
+          label: `цвет суппорта: ${palette.item.title}`,
           price: paletteGroupPrices[palette.group]
         })
       }
       if (rotor) {
         options.push({
           id: 'rotor',
-          label: `цвет ротора: ${rotor.id}`,
+          label: `цвет ротора: ${rotor.title}`,
           price: rotor.price
         })
       }
