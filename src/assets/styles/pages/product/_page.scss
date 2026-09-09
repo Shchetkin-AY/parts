@@ -10,7 +10,7 @@ $_name: "product-page";
 
   &__header {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 540px));
+    grid-template-columns: 60% 1fr;
     gap: 20px;
     align-items: start;
 
@@ -53,7 +53,7 @@ $_name: "product-page";
     align-items: start;
 
     .purchase {
-      margin-top: 48px;
+      margin-top: calc(var(--page-section-gap) + 16px);
 
       position: sticky;
       top: 128px;
