@@ -14,7 +14,7 @@ import {
 import { UiChip } from '@/ui'
 
 export default defineComponent({
-  name: 'ProductColors',
+  name: 'Palette',
 
   emits: [ 'select' ],
 

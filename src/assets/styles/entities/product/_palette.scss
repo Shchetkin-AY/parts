@@ -81,7 +81,6 @@ $_palette-colors: (
     background-color: var(--color-surface-2);
 
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
     gap: var(--space-xs);
     align-items: flex-start;
     justify-content: space-between;

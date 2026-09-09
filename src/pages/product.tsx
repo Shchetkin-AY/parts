@@ -9,6 +9,7 @@ import Feedback from '@/features/feedback'
 import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase } from '@/entities/product'
 import { Accessories } from '@/entities/accessory'
 import Palette from '@/entities/product/ui/palette'
+import RotorCenter from '@/entities/product/ui/rotor'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -121,6 +122,10 @@ export default defineComponent({
       return <Palette />
     }
 
+    const renderRotorCenterSection = () => {
+      return <RotorCenter />
+    }
+
     const renderHeroProductSection = () => {
       const item = currentItem.value
 
@@ -138,7 +143,7 @@ export default defineComponent({
                 {renderHero(item)}
               </div>
               {renderPaletteSection()}
-
+              {renderRotorCenterSection()}
               <div class="product-page__section--tabs">
                 <ProductDetails value={item} />
               </div>
