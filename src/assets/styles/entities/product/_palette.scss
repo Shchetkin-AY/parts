@@ -90,6 +90,8 @@ $_palette-colors: (
 
     position: relative;
 
+    opacity: 0.85;
+
     transition:
       background-color var(--transition-fast),
       transform var(--transition-fast);
@@ -104,6 +106,8 @@ $_palette-colors: (
 
     &--active {
       background-color: var(--color-surface-3);
+
+      opacity: 1;
     }
 
     &-content {

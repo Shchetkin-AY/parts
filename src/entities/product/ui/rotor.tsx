@@ -59,7 +59,7 @@ export default defineComponent({
         <UiChip
           label={`+ ${formatPrice(item.price)}`}
           size={Size.medium}
-          color={Color.warning}
+          color={Color.info}
         />
       )
     }

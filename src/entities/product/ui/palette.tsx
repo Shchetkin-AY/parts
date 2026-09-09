@@ -139,7 +139,7 @@ export default defineComponent({
         <UiChip
           label={`+ ${formatPrice(paletteGroupPrices[group])}`}
           size={Size.medium}
-          color={Color.warning}
+          color={Color.info}
         />
       )
     }
