@@ -3,64 +3,76 @@ import { PaletteItem } from './palette'
 
 export const paletteGroups: Record<PaletteGroupTypes, string> = {
   base: 'Стандартные',
-  custom: 'Индивидуальные (+50$)',
-  cerakote: 'Cerakote (+70$)'
+  custom: 'Индивидуальные',
+  cerakote: 'Cerakote'
+}
+
+export const paletteGroupPrices: Record<PaletteGroupTypes, number> = {
+  base: 0,
+  custom: 5000,
+  cerakote: 9000
 }
 
 export const paletteItemsByGroup: Record<PaletteGroupTypes, PaletteItem[]> = {
   base: [
     {
       id: 'red',
-      title: 'Оксидированный красный'
+      title: 'Красный',
+      preview: '/colors/base/red.webp'
     },
     {
       id: 'silver',
-      title: 'Гальваническое серебро'
-
+      title: 'Никель',
+      preview: '/colors/base/silver.webp'
     },
     {
       id: 'blue',
-      title: 'Оксидированный синий'
-
+      title: 'Синий',
+      preview: '/colors/base/blue.webp'
     }
   ],
   custom: [
     {
       id: 'gray',
-
-      title: 'Серый'
+      title: 'Серый',
+      preview: '/colors/custom/gray.webp'
     },
     {
-      id: 'iridescent',
-
-      title: 'Иризирующий'
+      id: 'neochrome',
+      title: 'Неохром',
+      preview: '/colors/custom/neochrome.webp'
     }
   ],
   cerakote: [
     {
-      id: 'yellow',
-      title: 'Лимонно-жёлтый'
+      id: 'lemon',
+      title: 'Лимонный',
+      preview: '/colors/cerakote/lemon.webp'
     },
     {
       id: 'tiffany',
-      title: 'Тиффани'
+      title: 'Тиффани',
+      preview: '/colors/cerakote/tiffany.webp'
     },
     {
       id: 'gold',
-      title: 'Пустынное золото'
+      title: 'Золотой',
+      preview: '/colors/cerakote/gold.webp'
     },
     {
       id: 'pink',
-      title: 'Розовый'
+      title: 'Розовый',
+      preview: '/colors/cerakote/pink.webp'
     },
     {
       id: 'green',
-      title: 'Травяной зелёный'
+      title: 'Зелёный',
+      preview: '/colors/cerakote/green.webp'
     },
     {
       id: 'purple',
-      title: 'Баклажановый'
+      title: 'Фиолетовый',
+      preview: '/colors/cerakote/purple.webp'
     }
   ]
-
 }
