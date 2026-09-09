@@ -201,6 +201,8 @@ $_name: "rotor-center";
     &__preview {
       padding: var(--space-xs);
 
+      grid-template-columns: 1fr;
+
       &-main {
         padding: var(--space-sm);
 

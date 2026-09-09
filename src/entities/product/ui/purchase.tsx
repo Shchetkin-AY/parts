@@ -2,7 +2,13 @@ import { type CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { UiButton } from '@/ui/button'
 import { UiIcon } from '@/ui/icon'
-import { UiDivider } from '@/ui'
+import { UiChip, UiDivider } from '@/ui'
+
+export interface PurchaseOption {
+  id: string
+  label: string
+  price: number
+}
 
 const purchaseKitItems = [
   'Суппорт: 2 шт',
@@ -19,10 +25,14 @@ export const Purchase = defineComponent({
     item: {
       type: Object as PropType<CatalogItem>,
       required: true
+    },
+    options: {
+      type: Array as PropType<PurchaseOption[]>,
+      default: () => []
     }
   },
 
-  emits: [ 'order' ],
+  emits: [ 'order', 'remove' ],
 
   setup(props, { emit }) {
     const className = 'purchase'
@@ -49,7 +59,28 @@ export const Purchase = defineComponent({
     const renderPurchasePrice = () => {
       return (
         <div class={`${className}__price`}>
-          {formatPrice(props.item.price)}
+          {formatPrice(props.item.price + props.options.reduce((total, option) => total + option.price, 0))}
+        </div>
+      )
+    }
+
+    const renderPurchaseOptions = () => {
+      const options = props.options.filter(option => option.price > 0)
+
+      return (
+        <div class={`${className}__options`}>
+          <div class={`${className}__options-title`}>Дополнительные опции:</div>
+          {options.length > 0
+            ? options.map(option =>
+              <UiChip
+                label={`+ ${formatPrice(option.price)} ${option.label}`}
+                remove
+                size={Size.medium}
+                color={Color.muted}
+                onRemove={() => emit('remove', option.id)}
+                key={option.id}
+              />)
+            : <span class={`${className}__options-empty`}>Не выбраны</span>}
         </div>
       )
     }
@@ -94,6 +125,7 @@ export const Purchase = defineComponent({
       return (
         <aside class={className}>
           {renderPurchasePrice()}
+          {renderPurchaseOptions()}
           {renderPurchaseNote()}
           {renderOrderButton()}
           {renderDivider()}

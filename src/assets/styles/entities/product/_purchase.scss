@@ -29,6 +29,23 @@ $_name: "purchase";
     @include mixins.font(11px);
   }
 
+  &__options {
+    display: grid;
+    gap: var(--space-xs);
+
+    &-title {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px);
+    }
+
+    &-empty {
+      color: var(--color-text-muted);
+
+      @include mixins.font(11px);
+    }
+  }
+
   &__kit {
     display: grid;
     gap: var(--space-sm);

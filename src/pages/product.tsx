@@ -3,10 +3,19 @@ import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 
 import { useCatalogStore } from '@/stores'
 
-import { CatalogCategories, CatalogFilterField, CatalogItem, FeedbackTypes, formatWheelDiameter } from '@/utils'
+import {
+  CatalogCategories,
+  CatalogFilterField,
+  CatalogItem,
+  FeedbackTypes,
+  PaletteSelection,
+  RotorCenterSelection,
+  formatWheelDiameter,
+  paletteGroupPrices
+} from '@/utils'
 import { Page } from '@/ui'
 import Feedback from '@/features/feedback'
-import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase } from '@/entities/product'
+import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase, PurchaseOption } from '@/entities/product'
 import { Accessories } from '@/entities/accessory'
 import Palette from '@/entities/product/ui/palette'
 import RotorCenter from '@/entities/product/ui/rotor'
@@ -19,6 +28,8 @@ export default defineComponent({
 
     const catalogStore = useCatalogStore()
     const showFeedback = ref(false)
+    const selectedPalette = ref<PaletteSelection | undefined>()
+    const selectedRotor = ref<RotorCenterSelection | undefined>()
 
     onBeforeMount(() => {
       catalogStore.load()
@@ -102,7 +113,40 @@ export default defineComponent({
       return <ProductHero item={item} />
     }
     const renderPurchase = (item: CatalogItem) => {
-      return <Purchase item={item} onOrder={() => showFeedback.value = true} />
+      const options: PurchaseOption[] = []
+      const palette = selectedPalette.value
+      const rotor = selectedRotor.value?.item
+
+      if (palette) {
+        options.push({
+          id: 'palette',
+          label: `цвет суппорта: ${palette.item.id}`,
+          price: paletteGroupPrices[palette.group]
+        })
+      }
+      if (rotor) {
+        options.push({
+          id: 'rotor',
+          label: `цвет ротора: ${rotor.id}`,
+          price: rotor.price
+        })
+      }
+
+      return (
+        <Purchase
+          item={item}
+          options={options}
+          onOrder={() => showFeedback.value = true}
+          onRemove={(id: string) => {
+            if (id === 'palette') {
+              selectedPalette.value = undefined
+            }
+            if (id === 'rotor') {
+              selectedRotor.value = undefined
+            }
+          }}
+        />
+      )
     }
 
     const renderFeedback = () => {
@@ -119,11 +163,11 @@ export default defineComponent({
     }
 
     const renderPaletteSection = () => {
-      return <Palette />
+      return <Palette onSelect={(selection: PaletteSelection) => selectedPalette.value = selection} />
     }
 
     const renderRotorCenterSection = () => {
-      return <RotorCenter />
+      return <RotorCenter onSelect={(selection: RotorCenterSelection) => selectedRotor.value = selection} />
     }
 
     const renderHeroProductSection = () => {
