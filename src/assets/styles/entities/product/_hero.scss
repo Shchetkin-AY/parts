@@ -14,6 +14,7 @@ $_name: "product-hero";
     min-width: 0;
 
     &-model {
+      font-family: var(--font-family-secondary);
       color: var(--color-text-primary);
       text-transform: uppercase;
       word-break: break-all;
@@ -23,7 +24,7 @@ $_name: "product-hero";
       min-width: 0;
       max-width: 100%;
 
-      @include mixins.font(60px, 800);
+      @include mixins.font(48px, 600);
     }
 
     &-series {
@@ -31,14 +32,14 @@ $_name: "product-hero";
 
       text-transform: uppercase;
 
-      @include mixins.font(16px, 500);
+      @include mixins.font(13px, 500);
     }
   }
 
   &__description {
     color: var(--color-text-secondary);
 
-    @include mixins.font(14px, 500, 22px);
+    @include mixins.font(12px);
   }
 
   &__stats {
@@ -48,18 +49,18 @@ $_name: "product-hero";
   }
 
   &__stat {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
 
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-sm);
 
     background: var(--color-surface);
 
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--space-xs);
+    gap: var(--space-sm);
     align-content: center;
     align-items: center;
 
@@ -70,15 +71,15 @@ $_name: "product-hero";
       min-width: 0;
 
       &-label {
-        color: var(--color-text-muted);
+        color: var(--color-text-secondary);
 
-        @include mixins.font(12px);
+        @include mixins.font(11px);
       }
 
       &-value {
         color: var(--color-text-primary);
 
-        @include mixins.font(14px, 600);
+        @include mixins.font(13px, 500);
       }
     }
 

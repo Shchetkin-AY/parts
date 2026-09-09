@@ -45,16 +45,6 @@ export const ProductHero = defineComponent({
         label: 'Площадь поршней',
         icon: Icons.square,
         value: `${props.item.pistonArea} см²`
-      },
-      {
-        label: 'Покрытие',
-        icon: Icons.drop,
-        value: props.item.coating
-      },
-      {
-        label: 'Применение',
-        icon: Icons.ui,
-        value: props.item.application
       }
     ]
 
@@ -94,7 +84,7 @@ export const ProductHero = defineComponent({
     const renderStatIcon = (icon: Icons) => {
       if (viewportStore.size.width > 1400) {
         return (
-          <UiIcon icon={icon} color={Color.primary} size={40} />
+          <UiIcon icon={icon} color={Color['text-secondary']} size={30} />
         )
       }
     }
