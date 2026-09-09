@@ -76,7 +76,7 @@ $_palette-colors: (
     border-style: solid;
 
     border-color: transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
 
     background-color: var(--color-surface-2);
 
@@ -162,7 +162,7 @@ $_palette-colors: (
   &__preview {
     padding: var(--space-sm);
 
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
 
     background: var(--color-surface);
 

@@ -219,27 +219,41 @@ export default defineComponent({
         </div>
       )
     }
+    const renderPreviewMainImage = () => {
+      return (
+        <img
+          class={`${className}__preview-image`}
+          src={currentPreview.value}
+          alt={`Пример цвета ${currentItem.value.title}`}
+        />
+      )
+    }
+    const renderPreviewMainChip = () => {
+      return (
+        <UiChip
+          label={'пример цвета'}
+          size={Size.medium}
+          color={Color['text-muted']}
+          position={'absolute'}
+          coordinates={{
+            bottom: 10,
+            left: 10
+          }}
+        />
+      )
+    }
+    const renderPreviewMain = () => {
+      return (
+        <div class={`${className}__preview-main`}>
+          {renderPreviewMainImage()}
+          {renderPreviewMainChip()}
+        </div>
+      )
+    }
     const renderPreviewImages = () => {
       return (
         <div class={`${className}__preview-images`}>
-          <div class={`${className}__preview-main`}>
-            <img
-              class={`${className}__preview-image`}
-              src={currentPreview.value}
-              alt={`Пример цвета ${currentItem.value.title}`}
-            />
-            <UiChip
-              label={'пример цвета'}
-              size={Size.small}
-              color={Color['text-muted']}
-              position={'absolute'}
-              coordinates={{
-                bottom: 10,
-                left: 10
-              }}
-            />
-          </div>
-
+          {renderPreviewMain()}
           {renderPreviewThumbs()}
         </div>
       )
