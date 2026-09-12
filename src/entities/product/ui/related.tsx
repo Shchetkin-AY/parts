@@ -1,8 +1,6 @@
-import { PropType, computed, defineComponent } from 'vue'
+import { PropType, defineComponent } from 'vue'
 
-import { useCatalogStore } from '@/stores'
-
-import { type CatalogItem } from '@/utils'
+import { CatalogItem } from '@/utils'
 import { ProductCard } from './card'
 
 export const ProductRelated = defineComponent({
@@ -12,23 +10,17 @@ export const ProductRelated = defineComponent({
     item: {
       type: Object as PropType<CatalogItem | null>,
       default: null
+    },
+    items: {
+      type: Array as PropType<CatalogItem[]>,
+      default: () => []
     }
   },
 
   setup(props) {
-    const catalogStore = useCatalogStore()
-
     const className = 'related'
 
-    const items = computed(() => {
-      if (!props.item) {
-        return []
-      }
-
-      return catalogStore.getRelatedItems(props.item, 4)
-    })
-
-    const renderRelatedHeader = () => {
+    const renderHeader = () => {
       if (!props.item) {
         return null
       }
@@ -42,20 +34,18 @@ export const ProductRelated = defineComponent({
       )
     }
 
-    const renderRelatedCard = (item: CatalogItem) => {
+    const renderCard = (item: CatalogItem) => {
       return (
         <div class={`${className}-item`}>
-          <ProductCard
-            value={item}
-          />
+          <ProductCard value={item} />
         </div>
       )
     }
 
-    const renderRelatedCards = () => {
+    const renderCards = () => {
       return (
         <div class={`${className}-cards`}>
-          {items.value.map(item => renderRelatedCard(item))}
+          {props.items.map(renderCard)}
         </div>
       )
     }
@@ -63,8 +53,8 @@ export const ProductRelated = defineComponent({
     return () => {
       return (
         <section class={className}>
-          {renderRelatedHeader()}
-          {renderRelatedCards()}
+          {renderHeader()}
+          {renderCards()}
         </section>
       )
     }
