@@ -11,35 +11,29 @@ import {
 interface UseScrollFadeReturn {
   viewportRef: Ref<HTMLElement | null>
   hasMore: Ref<boolean>
+  hasLess: Ref<boolean>
   update: () => void
 }
 
-/**
- * Отслеживает вертикальный скролл контейнера и сообщает,
- * есть ли ещё контент ниже видимой области.
- *
- * `sources` — реактивные источники, при изменении которых нужно
- * пересчитать флаг. Обычно это список данных и флаг открытия панели.
- */
 export const useScrollFade = (
   sources: WatchSource[] = []
 ): UseScrollFadeReturn => {
   const viewportRef = ref<HTMLElement | null>(null)
   const hasMore = ref(false)
+  const hasLess = ref(false)
 
   const update = () => {
     const el = viewportRef.value
 
     if (!el) {
       hasMore.value = false
+      hasLess.value = false
 
       return
     }
 
-    const canScroll = el.scrollHeight > el.clientHeight + 1
-    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 4
-
-    hasMore.value = canScroll && !atBottom
+    hasMore.value = el.scrollTop + el.clientHeight < el.scrollHeight - 1
+    hasLess.value = el.scrollTop > 1
   }
 
   watch(sources, () => {
@@ -58,6 +52,7 @@ export const useScrollFade = (
   return {
     viewportRef,
     hasMore,
+    hasLess,
     update
   }
 }

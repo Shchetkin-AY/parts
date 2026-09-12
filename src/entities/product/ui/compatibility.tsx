@@ -86,10 +86,6 @@ export default defineComponent({
       }
     })
 
-    const brandsCount = computed(() => {
-      return browse.brandStats.value.length
-    })
-
     const resultState = computed(() => {
       const entry = check.checkResult.value
 
@@ -109,8 +105,6 @@ export default defineComponent({
       void catalogStore.loadCompatibility()
     })
 
-    // ── Header ──────────────────────────────────────────
-
     const renderHeader = () => {
       return (
         <div class={`${className}__header`}>
@@ -118,8 +112,6 @@ export default defineComponent({
         </div>
       )
     }
-
-    // ── Check panel ─────────────────────────────────────
 
     const renderSelect = (config: SelectFieldConfig) => {
       return (
@@ -135,10 +127,9 @@ export default defineComponent({
         />
       )
     }
-
     const renderCheckFields = () => {
       return (
-        <div class={`${className}__fields`}>
+        <div class={`${className}__check-fields`}>
           {renderSelect({
             label: 'Марка',
             placeholder: 'Выберите марку',
@@ -185,7 +176,6 @@ export default defineComponent({
 
       return <li>Платформа / поколение: {platform}</li>
     }
-
     const renderResult = () => {
       const state = resultState.value
 
@@ -194,13 +184,13 @@ export default defineComponent({
       }
 
       return (
-        <div class={`${className}__result`}>
-          <div class={`${className}__result-icon`} aria-hidden="true">✓</div>
-          <div class={`${className}__result-body`}>
-            <p class={`${className}__result-title`}>
+        <div class={`${className}__check-result`}>
+          <div class={`${className}__check-result-icon`} aria-hidden="true">✓</div>
+          <div class={`${className}__check-result-body`}>
+            <p class={`${className}__check-result-title`}>
               Подходит для {state.title}
             </p>
-            <ul class={`${className}__result-list`}>
+            <ul class={`${className}__check-result-list`}>
               <li>Минимальный размер дисков: {state.wheel}</li>
               {renderResultPlatform(state.platform)}
             </ul>
@@ -221,8 +211,6 @@ export default defineComponent({
       )
     }
 
-    // ── Browse ──────────────────────────────────────────
-
     const renderToggle = () => {
       if (totalCount.value === 0) {
         return null
@@ -239,7 +227,7 @@ export default defineComponent({
         >
           <span class={`${className}__toggle-arrow`}>▸</span>
           <span>
-            Посмотреть весь список совместимых поколений ({totalCount.value})
+            Посмотреть весь список совместимых автомобилей ({totalCount.value})
           </span>
         </button>
       )
@@ -273,6 +261,7 @@ export default defineComponent({
         <div
           class={{
             [`${className}__scroll`]: true,
+            [`${className}__scroll--less`]: brandsFade.hasLess.value,
             [`${className}__scroll--more`]: brandsFade.hasMore.value
           }}
         >
@@ -297,17 +286,14 @@ export default defineComponent({
                 ))}
             </div>
           </div>
-          <div class={`${className}__scroll-fade`} aria-hidden="true" />
         </div>
       )
     }
-
     const renderAside = () => {
       return (
         <aside class={`${className}__aside`}>
           <div class={`${className}__aside-label`}>
             <span>Марки</span>
-            <span>{brandsCount.value}</span>
           </div>
           {renderBrands()}
         </aside>
@@ -383,7 +369,6 @@ export default defineComponent({
         <div class={`${className}__main`}>
           <div class={`${className}__main-head`}>
             <span class={`${className}__main-title`}>{state.title}</span>
-            <span class={`${className}__main-count`}>{state.countLabel}</span>
           </div>
           <div
             class={{
@@ -398,12 +383,10 @@ export default defineComponent({
             >
               {renderMainContent(rows, state.withBrand)}
             </div>
-            <div class={`${className}__scroll-fade`} aria-hidden="true" />
           </div>
         </div>
       )
     }
-
     const renderBrowse = () => {
       if (!browse.listOpen.value) {
         return null
