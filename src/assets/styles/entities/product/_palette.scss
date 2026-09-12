@@ -88,8 +88,6 @@ $_palette-colors: (
     align-items: flex-start;
     justify-content: space-between;
 
-    position: relative;
-
     opacity: 0.85;
 
     transition:
@@ -132,34 +130,6 @@ $_palette-colors: (
       color: var(--color-text-muted);
 
       @include mixins.font(12px);
-    }
-
-    &-price {
-      padding-left: var(--space-xs);
-      padding-right: var(--space-xs);
-
-      color: var(--color-warning);
-
-      text-align: center;
-
-      border-radius: var(--radius-xs);
-
-      background-color: color-mix(var(--color-warning) 20%, var(--color-bg));
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      position: absolute;
-      top: -10px;
-      right: 5px;
-
-      overflow: hidden;
-
-      max-width: max-content;
-
-      @include mixins.font(10px, 400, null, 0.12em);
-      @include mixins.absolute-height(18px);
     }
   }
 
