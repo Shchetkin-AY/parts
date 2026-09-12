@@ -15,10 +15,11 @@ import {
 } from '@/utils'
 import { Page } from '@/ui'
 import Feedback from '@/features/feedback'
-import { Breadcrumbs, ProductDetails, ProductGallery, ProductHero, ProductRelated, Purchase, PurchaseOption } from '@/entities/product'
-import { Accessories } from '@/entities/accessory'
+import { Breadcrumbs, ProductGallery, ProductHero, ProductRelated, Purchase, PurchaseOption } from '@/entities/product'
 import Palette from '@/entities/product/ui/palette'
 import RotorCenter from '@/entities/product/ui/rotor'
+import Specs from '@/entities/product/ui/specs'
+import Compatibility from '@/entities/product/ui/compatibility'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -31,10 +32,12 @@ export default defineComponent({
     const selectedPalette = ref<PaletteSelection | undefined>()
     const selectedRotor = ref<RotorCenterSelection | undefined>()
 
-    onBeforeMount(() => {
-      catalogStore.load()
-      catalogStore.loadCompatibility()
-    })
+    const filterLabels: Record<CatalogFilterField, string> = {
+      [CatalogFilterField.mark]: 'Марка',
+      [CatalogFilterField.model]: 'Модель',
+      [CatalogFilterField.series]: 'Серия',
+      [CatalogFilterField.wheelDiameter]: 'Диаметр колёс'
+    }
 
     const routeId = computed(() => {
       const rawId = route.params.id
@@ -49,18 +52,13 @@ export default defineComponent({
       return item ?? undefined
     })
 
-    const filterLabels: Record<CatalogFilterField, string> = {
-      [CatalogFilterField.mark]: 'Марка',
-      [CatalogFilterField.model]: 'Модель',
-      [CatalogFilterField.series]: 'Серия',
-      [CatalogFilterField.wheelDiameter]: 'Диаметр колёс'
-    }
+    const relatedItems = computed<CatalogItem[]>(() => {
+      if (!currentItem.value) {
+        return []
+      }
 
-    const getQueryValue = (field: CatalogFilterField): string => {
-      const value = route.query[field]
-
-      return String(Array.isArray(value) ? value[0] ?? '' : value ?? '').trim()
-    }
+      return catalogStore.getRelatedItems(currentItem.value)
+    })
 
     const filterValues = computed(() => {
       const result: string[] = []
@@ -86,7 +84,7 @@ export default defineComponent({
       return result
     })
 
-    const orderTopic = computed(() => {
+    const orderTopic = computed<string>(() => {
       const item = currentItem.value
 
       if (!item) {
@@ -94,6 +92,49 @@ export default defineComponent({
       }
 
       return [ item.model, ...filterValues.value ].join('; ')
+    })
+
+    const purchaseOptions = computed<PurchaseOption[]>(() => {
+      const result = []
+      const palette = selectedPalette.value
+      const rotor = selectedRotor.value?.item
+
+      if (palette) {
+        result.push({
+          id: 'palette',
+          label: `цвет суппорта: ${palette.item.title}`,
+          price: paletteGroupPrices[palette.group]
+        })
+      }
+      if (rotor) {
+        result.push({
+          id: 'rotor',
+          label: `цвет ротора: ${rotor.title}`,
+          price: rotor.price
+        })
+      }
+
+      return result
+    })
+
+    const getQueryValue = (field: CatalogFilterField): string => {
+      const value = route.query[field]
+
+      return String(Array.isArray(value) ? value[0] ?? '' : value ?? '').trim()
+    }
+
+    const removeOptionsHandler = (option: string): void => {
+      if (option === 'palette') {
+        selectedPalette.value = undefined
+      }
+      if (option === 'rotor') {
+        selectedRotor.value = undefined
+      }
+    }
+
+    onBeforeMount(() => {
+      catalogStore.load()
+      catalogStore.loadCompatibility()
     })
 
     const renderEmptyState = () => {
@@ -113,51 +154,12 @@ export default defineComponent({
       return <ProductHero item={item} />
     }
     const renderPurchase = (item: CatalogItem) => {
-      const options: PurchaseOption[] = []
-      const palette = selectedPalette.value
-      const rotor = selectedRotor.value?.item
-
-      if (palette) {
-        options.push({
-          id: 'palette',
-          label: `цвет суппорта: ${palette.item.title}`,
-          price: paletteGroupPrices[palette.group]
-        })
-      }
-      if (rotor) {
-        options.push({
-          id: 'rotor',
-          label: `цвет ротора: ${rotor.title}`,
-          price: rotor.price
-        })
-      }
-
       return (
         <Purchase
           item={item}
-          options={options}
+          options={purchaseOptions.value}
           onOrder={() => showFeedback.value = true}
-          onRemove={(id: string) => {
-            if (id === 'palette') {
-              selectedPalette.value = undefined
-            }
-            if (id === 'rotor') {
-              selectedRotor.value = undefined
-            }
-          }}
-        />
-      )
-    }
-
-    const renderFeedback = () => {
-      return (
-        <Feedback
-          v-model={showFeedback.value}
-          type={FeedbackTypes.order}
-          filter={route.query as Record<CatalogFilterField, string>}
-          id={routeId.value}
-          category={CatalogCategories.kit}
-          topic={orderTopic.value}
+          onRemove={removeOptionsHandler}
         />
       )
     }
@@ -168,6 +170,28 @@ export default defineComponent({
 
     const renderRotorCenterSection = () => {
       return <RotorCenter onSelect={(selection: RotorCenterSelection) => selectedRotor.value = selection} />
+    }
+
+    const renderSpecs = () => {
+      if (!currentItem.value) {
+        return null
+      }
+
+      return <Specs value={currentItem.value} />
+    }
+
+    const renderCompatibility = () => {
+      const item = currentItem.value
+      if (!item) {
+        return null
+      }
+
+      return (
+        <Compatibility
+          value={item.id}
+          productName={item.model}
+        />
+      )
     }
 
     const renderHeroProductSection = () => {
@@ -188,10 +212,8 @@ export default defineComponent({
               </div>
               {renderPaletteSection()}
               {renderRotorCenterSection()}
-              <div class="product-page__section--tabs">
-                <ProductDetails value={item} />
-              </div>
-
+              {renderSpecs()}
+              {renderCompatibility()}
             </div>
             {renderPurchase(item)}
           </div>
@@ -199,19 +221,36 @@ export default defineComponent({
       )
     }
 
+    const renderRelated = () => {
+      if (relatedItems.value.length === 0) {
+        return null
+      }
+
+      return (
+        <ProductRelated
+          item={currentItem.value}
+          items={relatedItems.value}
+        />
+      )
+    }
     const renderCatalog = () => {
       return (
         <section class="isk-page__section isk-page__section--contained product-page__section--catalog">
-          <div class="product-page__catalog">
-            <div class="product-page__catalog-products">
-              <ProductRelated item={currentItem.value} />
-            </div>
-
-            <aside class="product-page__catalog-accessories">
-              <Accessories />
-            </aside>
-          </div>
+          {renderRelated()}
         </section>
+      )
+    }
+
+    const renderFeedback = () => {
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          type={FeedbackTypes.order}
+          filter={route.query as Record<CatalogFilterField, string>}
+          id={routeId.value}
+          category={CatalogCategories.kit}
+          topic={orderTopic.value}
+        />
       )
     }
 
