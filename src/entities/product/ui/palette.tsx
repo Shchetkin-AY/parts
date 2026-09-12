@@ -13,6 +13,14 @@ import {
 } from '@/utils'
 import { UiChip } from '@/ui'
 
+const singlePreviewItems = new Set([ 'tiffany', 'pink', 'green', 'gold', 'purple' ])
+
+const groupDescriptions: Record<PaletteGroupTypes, string> = {
+  [PaletteGroupTypes.base]: 'Вакуумное покрытие + анодирование, цвет в самом металле. Не выцветает и не отслаивается: цвет живёт в металле, а не на нём.',
+  [PaletteGroupTypes.custom]: 'Вакуумное напыление металлов — фирменный переливающийся цвет. Не окисляется, честно передаёт цвет металла, решает проблему облезающей краски.',
+  [PaletteGroupTypes.cerakote]: 'Cerackote — керамика (США). Матовая керамика с металлическими частицами — премиум-отделка. Устойчивость к химии и коррозии.'
+}
+
 export default defineComponent({
   name: 'Palette',
 
@@ -26,13 +34,6 @@ export default defineComponent({
       paletteItemsByGroup[PaletteGroupTypes.base][0]
     )
     const previewIndex = ref(0)
-    const singlePreviewItems = new Set([ 'tiffany', 'pink', 'green', 'gold', 'purple' ])
-
-    const groupDescriptions: Record<PaletteGroupTypes, string> = {
-      [PaletteGroupTypes.base]: 'Вакуумное покрытие + анодирование, цвет в самом металле. Не выцветает и не отслаивается: цвет живёт в металле, а не на нём.',
-      [PaletteGroupTypes.custom]: 'Вакуумное напыление металлов — фирменный переливающийся цвет. Не окисляется, честно передаёт цвет металла, решает проблему облезающей краски.',
-      [PaletteGroupTypes.cerakote]: 'Cerackote — керамика (США). Матовая керамика с металлическими частицами — премиум-отделка. Устойчивость к химии и коррозии.'
-    }
 
     const currentItems = computed(() => {
       return paletteItemsByGroup[currentGroup.value]
