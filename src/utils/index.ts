@@ -1,5 +1,6 @@
 export * from './catalog'
 export * from './content'
+export * from './compatibility'
 export * from './feedback'
 export * from './filter'
 export * from './lib'

@@ -21,7 +21,6 @@ $_panel-height: 600px;
     }
   }
 
-  // ── Check panel (как home-filter) ───────────────────
   &__check {
     padding: var(--space-sm);
 
@@ -44,7 +43,7 @@ $_panel-height: 600px;
   &__fields {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-    gap: 12px;
+    gap: var(--space-sm);
     align-items: end;
 
     @media (width <= 900px) {
@@ -53,20 +52,6 @@ $_panel-height: 600px;
 
     @media (width <= 560px) {
       grid-template-columns: 1fr;
-    }
-  }
-
-  &__field {
-    min-width: 0;
-  }
-
-  &__submit {
-    display: flex;
-
-    min-width: 120px;
-
-    @media (width <= 900px) {
-      grid-column: 1 / -1;
     }
   }
 
@@ -93,13 +78,6 @@ $_panel-height: 600px;
     @include mixins.font(12px);
   }
 
-  &__search {
-    .isk-text-field__label {
-      display: none;
-    }
-  }
-
-  // ── Result (success) ────────────────────────────────
   &__result {
     padding: 14px 16px;
 
@@ -146,12 +124,6 @@ $_panel-height: 600px;
     @include mixins.font(14px, 600);
   }
 
-  &__result-lead {
-    color: var(--color-text-secondary);
-
-    @include mixins.font(13px);
-  }
-
   &__result-list {
     margin: 4px 0 0;
 
@@ -164,29 +136,6 @@ $_panel-height: 600px;
     }
 
     @include mixins.font(13px);
-  }
-
-  &__result-reset {
-    padding: 0;
-
-    font-family: inherit;
-
-    color: var(--color-text-secondary);
-    white-space: nowrap;
-
-    border: none;
-
-    background: none;
-
-    flex-shrink: 0;
-
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-text-primary);
-    }
-
-    @include mixins.font(12.5px, 500);
   }
 
   // ── Toggle list ─────────────────────────────────────

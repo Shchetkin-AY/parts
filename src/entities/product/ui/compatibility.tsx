@@ -1,40 +1,28 @@
-import {
-  PropType,
-  computed,
-  defineComponent,
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch
-} from 'vue'
+import { PropType, computed, defineComponent, onMounted } from 'vue'
 
 import { useCatalogStore } from '@/stores'
 import { Color, pluralize } from '@/utils'
-import { UiButton, UiSelect, UiTextField } from '@/ui'
+import {
+  type CompatibilityEntry,
+  type SelectOption,
+  formatPlatform,
+  formatWheel,
+  formatYears,
+  getResultName,
+  useCompatibilityBrowse,
+  useCompatibilityCheck,
+  useScrollFade
+} from '@/utils'
+import { UiButton, UiSelect } from '@/ui'
 
-/** Совпадает с CompatibilityEntry в catalog store */
-export interface CompatibilityEntry {
-  brand: string
-  model: string
-  platform?: string
-  yearFrom: number | null
-  yearTo: number | null
-  wheelInch: number | null
-}
-
-interface BrandStat {
-  brand: string
-  count: number
-}
-
-interface SelectOption {
+interface SelectFieldConfig {
   label: string
-  value: string
-}
-
-interface GenerationOption extends SelectOption {
-  entry: CompatibilityEntry
+  placeholder: string
+  ariaLabel: string
+  modelValue: string
+  options: SelectOption[]
+  disabled: boolean
+  onUpdate: (value: string) => void
 }
 
 export default defineComponent({
@@ -63,327 +51,65 @@ export default defineComponent({
 
     const catalogStore = useCatalogStore()
 
-    const selectedBrand = ref('')
-    const selectedModel = ref('')
-    const selectedGeneration = ref('')
-    const searchQuery = ref('')
-
-    const listOpen = ref(false)
-    const activeBrand = ref<string | null>(null)
-    const checkResult = ref<CompatibilityEntry | null>(null)
-
-    const brandsViewportRef = ref<HTMLElement | null>(null)
-    const mainViewportRef = ref<HTMLElement | null>(null)
-    const brandsHasMore = ref(false)
-    const mainHasMore = ref(false)
-
-    const formatYears = (item: CompatibilityEntry): string => {
-      const from = item.yearFrom
-      const to = item.yearTo
-
-      if (from == null && to == null) {
-        return '—'
-      }
-
-      if (from != null && to != null) {
-        if (from === to) {
-          return String(from)
-        }
-
-        return `${from}–${to}`
-      }
-
-      if (from != null) {
-        return `с ${from}`
-      }
-
-      return `по ${to}`
-    }
-
-    const formatPlatform = (item: CompatibilityEntry): string => {
-      const value = item.platform?.trim()
-
-      if (!value || value === '-' || value === '—') {
-        return ''
-      }
-
-      return value.replace(/,\s*/g, ' · ')
-    }
-
-    const formatWheel = (item: CompatibilityEntry): string => {
-      if (item.wheelInch == null) {
-        return '—'
-      }
-
-      return `от R${item.wheelInch}″`
-    }
-
-    onMounted(() => {
-      void catalogStore.loadCompatibility()
-      window.addEventListener('resize', updateFades)
-    })
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('resize', updateFades)
-    })
-
     const entries = computed<CompatibilityEntry[]>(() => {
       return catalogStore.getCompatibilityByGoodsId(props.value)
     })
 
-    const totalCount = computed(() => entries.value.length)
-
-    // ── Cascade options ─────────────────────────────────
-
-    const brandOptions = computed<SelectOption[]>(() => {
-      const set = new Set<string>()
-
-      for (const item of entries.value) {
-        const brand = item.brand?.trim()
-        if (brand) {
-          set.add(brand)
-        }
-      }
-
-      return Array.from(set)
-        .sort((a, b) => a.localeCompare(b, 'ru'))
-        .map(value => ({
-          label: value,
-          value
-        }))
+    const totalCount = computed<number>(() => {
+      return entries.value.length
     })
 
-    const modelOptions = computed<SelectOption[]>(() => {
-      if (!selectedBrand.value) {
-        return []
-      }
+    const check = useCompatibilityCheck(entries)
+    const browse = useCompatibilityBrowse(entries)
 
-      const set = new Set<string>()
+    const brandsFade = useScrollFade([
+      browse.brandStats,
+      browse.listOpen
+    ])
+    const mainFade = useScrollFade([
+      browse.resultRows,
+      browse.listOpen
+    ])
 
-      for (const item of entries.value) {
-        if (item.brand === selectedBrand.value && item.model?.trim()) {
-          set.add(item.model.trim())
-        }
-      }
-
-      return Array.from(set)
-        .sort((a, b) => a.localeCompare(b, 'ru', { numeric: true }))
-        .map(value => ({
-          label: value,
-          value
-        }))
+    const activeBrand = computed(() => {
+      return browse.resolvedActiveBrand.value
     })
 
-    const generationOptions = computed<GenerationOption[]>(() => {
-      if (!selectedBrand.value || !selectedModel.value) {
-        return []
+    const mainState = computed(() => {
+      const active = activeBrand.value
+      const count = browse.resultRows.value.length
+
+      return {
+        withBrand: active === null,
+        title: active ?? 'Все марки',
+        countLabel: `${count} ${pluralize(count, 'поколение', 'поколения', 'поколений')}`
       }
-
-      return entries.value
-        .filter(item =>
-          item.brand === selectedBrand.value &&
-          item.model === selectedModel.value)
-        .map((entry, index) => {
-          const platform = entry.platform?.trim()
-          const years = formatYears(entry)
-          const hasPlatform = platform && platform !== '-' && platform !== '—'
-
-          const label = hasPlatform
-            ? `${platform} · ${years}`
-            : years
-
-          return {
-            label,
-            value: String(index),
-            entry
-          }
-        })
     })
 
-    const canCheck = computed(() => {
-      return Boolean(
-        selectedBrand.value &&
-        selectedModel.value &&
-        selectedGeneration.value !== ''
-      )
+    const brandsCount = computed(() => {
+      return browse.brandStats.value.length
     })
 
-    // ── Browse list ─────────────────────────────────────
+    const resultState = computed(() => {
+      const entry = check.checkResult.value
 
-    const brandStats = computed<BrandStat[]>(() => {
-      const map = new Map<string, number>()
-
-      for (const item of entries.value) {
-        const brand = item.brand?.trim()
-        if (!brand) {
-          continue
-        }
-
-        map.set(brand, (map.get(brand) ?? 0) + 1)
-      }
-
-      return Array.from(map.entries())
-        .map(([ brand, count ]) => ({
-          brand,
-          count
-        }))
-        .sort((a, b) => a.brand.localeCompare(b.brand, 'ru'))
-    })
-
-    const query = computed(() => searchQuery.value.trim().toLowerCase())
-
-    const matchEntry = (item: CompatibilityEntry, q: string): boolean => {
-      const haystack = [
-        item.brand,
-        item.model,
-        item.platform ?? '',
-        item.yearFrom ?? '',
-        item.yearTo ?? '',
-        item.wheelInch ?? ''
-      ].join(' ').toLowerCase()
-
-      return haystack.includes(q)
-    }
-
-    const filteredBrandStats = computed<BrandStat[]>(() => {
-      const q = query.value
-
-      if (!q) {
-        return brandStats.value
-      }
-
-      return brandStats.value
-        .map(stat => {
-          const brandMatch = stat.brand.toLowerCase().includes(q)
-          const count = brandMatch
-            ? entries.value.filter(item => item.brand === stat.brand).length
-            : entries.value.filter(item =>
-              item.brand === stat.brand && matchEntry(item, q)).length
-
-          if (count === 0) {
-            return null
-          }
-
-          return {
-            brand: stat.brand,
-            count
-          }
-        })
-        .filter((stat): stat is BrandStat => stat !== null)
-    })
-
-    const resultRows = computed<CompatibilityEntry[]>(() => {
-      let rows = entries.value
-
-      if (activeBrand.value) {
-        rows = rows.filter(item => item.brand === activeBrand.value)
-      }
-
-      const q = query.value
-      if (q) {
-        rows = rows.filter(item => matchEntry(item, q))
-      }
-
-      return rows
-    })
-
-    const allFilterCount = computed(() => {
-      if (!query.value) {
-        return totalCount.value
-      }
-
-      return entries.value.filter(item => matchEntry(item, query.value)).length
-    })
-
-    const resolvedActiveBrand = computed(() => {
-      if (activeBrand.value === null) {
+      if (!entry) {
         return null
       }
 
-      const stillVisible = filteredBrandStats.value.some(
-        stat => stat.brand === activeBrand.value
-      )
-
-      return stillVisible ? activeBrand.value : null
+      return {
+        title: getResultName(entry),
+        platform: formatPlatform(entry),
+        wheel: formatWheel(entry),
+        product: props.productName.trim()
+      }
     })
 
-    // ── Actions ─────────────────────────────────────────
+    onMounted(() => {
+      void catalogStore.loadCompatibility()
+    })
 
-    const onBrandUpdate = (value: string) => {
-      selectedBrand.value = value
-      selectedModel.value = ''
-      selectedGeneration.value = ''
-      checkResult.value = null
-    }
-
-    const onModelUpdate = (value: string) => {
-      selectedModel.value = value
-      selectedGeneration.value = ''
-      checkResult.value = null
-    }
-
-    const onGenerationUpdate = (value: string) => {
-      selectedGeneration.value = value
-      checkResult.value = null
-    }
-
-    const onSearchUpdate = (value: string) => {
-      searchQuery.value = value
-
-      if (value.trim().length >= 2 && !listOpen.value) {
-        listOpen.value = true
-      }
-    }
-
-    const runCheck = () => {
-      const option = generationOptions.value.find(
-        item => item.value === selectedGeneration.value
-      )
-
-      checkResult.value = option?.entry ?? null
-    }
-
-    const resetCheck = () => {
-      selectedBrand.value = ''
-      selectedModel.value = ''
-      selectedGeneration.value = ''
-      checkResult.value = null
-    }
-
-    const toggleList = () => {
-      listOpen.value = !listOpen.value
-    }
-
-    const selectBrandFilter = (brand: string | null) => {
-      activeBrand.value = brand
-    }
-
-    // ── Fade scroll ─────────────────────────────────────
-
-    const updateFade = (el: HTMLElement | null): boolean => {
-      if (!el) {
-        return false
-      }
-
-      const canScroll = el.scrollHeight > el.clientHeight + 1
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 4
-
-      return canScroll && !atBottom
-    }
-
-    const updateFades = () => {
-      brandsHasMore.value = updateFade(brandsViewportRef.value)
-      mainHasMore.value = updateFade(mainViewportRef.value)
-    }
-
-    watch(
-      [ resultRows, filteredBrandStats, listOpen ],
-      () => {
-        void nextTick(() => updateFades())
-      }
-    )
-
-    // ── Render ──────────────────────────────────────────
+    // ── Header ──────────────────────────────────────────
 
     const renderHeader = () => {
       return (
@@ -393,95 +119,62 @@ export default defineComponent({
       )
     }
 
-    const renderSelect = (
-      label: string,
-      ariaLabel: string,
-      modelValue: string,
-      options: SelectOption[],
-      disabled: boolean,
-      onUpdate: (value: string) => void
-    ) => {
+    // ── Check panel ─────────────────────────────────────
+
+    const renderSelect = (config: SelectFieldConfig) => {
       return (
-        <div class={`${className}__field`}>
-          <UiSelect
-            ariaLabel={ariaLabel}
-            clearable={true}
-            label={label}
-            modelValue={modelValue}
-            placeholder={label}
-            options={options}
-            disabled={disabled}
-            onUpdate:modelValue={onUpdate}
-          />
-        </div>
+        <UiSelect
+          ariaLabel={config.ariaLabel}
+          clearable={true}
+          label={config.label}
+          modelValue={config.modelValue}
+          placeholder={config.placeholder}
+          options={config.options}
+          disabled={config.disabled}
+          onUpdate:modelValue={config.onUpdate}
+        />
       )
     }
 
     const renderCheckFields = () => {
       return (
         <div class={`${className}__fields`}>
-          {renderSelect(
-            'Марка',
-            'Марка автомобиля',
-            selectedBrand.value,
-            brandOptions.value,
-            false,
-            onBrandUpdate
-          )}
-          {renderSelect(
-            'Модель',
-            'Модель автомобиля',
-            selectedModel.value,
-            modelOptions.value,
-            !selectedBrand.value,
-            onModelUpdate
-          )}
-          {renderSelect(
-            'Поколение / год',
-            'Поколение или год',
-            selectedGeneration.value,
-            generationOptions.value,
-            !selectedModel.value,
-            onGenerationUpdate
-          )}
-          <div class={`${className}__submit`}>
-            <UiButton
-              label="Проверить"
-              color={Color.primary}
-              minWidth="100%"
-              disabled={!canCheck.value}
-              onClick={runCheck}
-            />
-          </div>
-        </div>
-      )
-    }
+          {renderSelect({
+            label: 'Марка',
+            placeholder: 'Выберите марку',
+            ariaLabel: 'Марка автомобиля',
+            modelValue: check.selectedBrand.value,
+            options: check.brandOptions.value,
+            disabled: false,
+            onUpdate: check.updateBrand
+          })}
+          {renderSelect({
+            label: 'Модель',
+            placeholder: 'Выберите модель',
+            ariaLabel: 'Модель автомобиля',
+            modelValue: check.selectedModel.value,
+            options: check.modelOptions.value,
+            disabled: !check.selectedBrand.value,
+            onUpdate: check.updateModel
+          })}
+          {renderSelect({
+            label: 'Год выпуска',
+            placeholder: 'Выберите год выпуска',
+            ariaLabel: 'Год выпуска автомобиля',
+            modelValue: check.selectedYear.value,
+            options: check.yearOptions.value,
+            disabled: !check.selectedModel.value,
+            onUpdate: check.updateYear
+          })}
 
-    const renderSearch = () => {
-      return (
-        <div class={`${className}__search`}>
-          <UiTextField
-            ariaLabel="Поиск по марке или модели"
-            label=""
-            modelValue={searchQuery.value}
-            placeholder="Например, BMW 3 Series или Audi A4"
-            clearable={true}
-            required={false}
-            onUpdate:modelValue={onSearchUpdate}
+          <UiButton
+            label="Проверить"
+            color={Color.primary}
+            minWidth="100%"
+            disabled={!check.canCheck.value}
+            onClick={check.runCheck}
           />
         </div>
-      )
-    }
-
-    const renderResultLead = (product: string) => {
-      if (!product) {
-        return null
-      }
-
-      return (
-        <p class={`${className}__result-lead`}>
-          Комплект {product} устанавливается без модификаций.
-        </p>
       )
     }
 
@@ -493,46 +186,25 @@ export default defineComponent({
       return <li>Платформа / поколение: {platform}</li>
     }
 
-    const getResultName = (entry: CompatibilityEntry): string => {
-      const years = formatYears(entry)
-      const nameParts = [ entry.brand, entry.model, formatPlatform(entry) ]
-
-      if (years !== '—') {
-        nameParts.push(`(${years})`)
-      }
-
-      return nameParts.filter(Boolean).join(' ')
-    }
-
     const renderResult = () => {
-      const entry = checkResult.value
-      if (!entry) {
+      const state = resultState.value
+
+      if (!state) {
         return null
       }
-
-      const platform = formatPlatform(entry)
-      const product = props.productName.trim()
 
       return (
         <div class={`${className}__result`}>
           <div class={`${className}__result-icon`} aria-hidden="true">✓</div>
           <div class={`${className}__result-body`}>
             <p class={`${className}__result-title`}>
-              Подходит для {getResultName(entry)}
+              Подходит для {state.title}
             </p>
-            {renderResultLead(product)}
             <ul class={`${className}__result-list`}>
-              <li>Минимальный размер дисков: {formatWheel(entry)}</li>
-              {renderResultPlatform(platform)}
+              <li>Минимальный размер дисков: {state.wheel}</li>
+              {renderResultPlatform(state.platform)}
             </ul>
           </div>
-          <button
-            class={`${className}__result-reset`}
-            type="button"
-            onClick={resetCheck}
-          >
-            Изменить
-          </button>
         </div>
       )
     }
@@ -544,14 +216,12 @@ export default defineComponent({
             Проверить по автомобилю
           </div>
           {renderCheckFields()}
-          <div class={`${className}__divider`}>
-            <span>или найдите по названию</span>
-          </div>
-          {renderSearch()}
           {renderResult()}
         </div>
       )
     }
+
+    // ── Browse ──────────────────────────────────────────
 
     const renderToggle = () => {
       if (totalCount.value === 0) {
@@ -562,10 +232,10 @@ export default defineComponent({
         <button
           class={{
             [`${className}__toggle`]: true,
-            [`${className}__toggle--open`]: listOpen.value
+            [`${className}__toggle--open`]: browse.listOpen.value
           }}
           type="button"
-          onClick={toggleList}
+          onClick={browse.toggleList}
         >
           <span class={`${className}__toggle-arrow`}>▸</span>
           <span>
@@ -588,7 +258,7 @@ export default defineComponent({
             [`${className}__brand--active`]: isActive
           }}
           type="button"
-          onClick={() => selectBrandFilter(brand)}
+          onClick={() => browse.selectBrand(brand)}
         >
           <span class={`${className}__brand-name`}>{label}</span>
           <span class={`${className}__brand-count`}>{count}</span>
@@ -597,29 +267,28 @@ export default defineComponent({
     }
 
     const renderBrands = () => {
-      const active = resolvedActiveBrand.value
-      const list = filteredBrandStats.value
+      const active = activeBrand.value
 
       return (
         <div
           class={{
             [`${className}__scroll`]: true,
-            [`${className}__scroll--more`]: brandsHasMore.value
+            [`${className}__scroll--more`]: brandsFade.hasMore.value
           }}
         >
           <div
             class={`${className}__scroll-viewport`}
-            ref={brandsViewportRef}
-            onScroll={updateFades}
+            ref={brandsFade.viewportRef}
+            onScroll={brandsFade.update}
           >
             <div class={`${className}__brands`}>
               {renderBrandCard(
                 'Все марки',
-                allFilterCount.value,
+                totalCount.value,
                 null,
                 active === null
               )}
-              {list.map(stat =>
+              {browse.brandStats.value.map(stat =>
                 renderBrandCard(
                   stat.brand,
                   stat.count,
@@ -638,21 +307,36 @@ export default defineComponent({
         <aside class={`${className}__aside`}>
           <div class={`${className}__aside-label`}>
             <span>Марки</span>
-            <span>{filteredBrandStats.value.length}</span>
+            <span>{brandsCount.value}</span>
           </div>
           {renderBrands()}
         </aside>
       )
     }
 
-    const renderRow = (item: CompatibilityEntry, index: number, withBrand: boolean) => {
+    const renderRowPlatform = (platform: string) => {
+      if (!platform) {
+        return null
+      }
+
+      return <span class={`${className}__row-gen`}>{platform}</span>
+    }
+
+    const renderRow = (
+      item: CompatibilityEntry,
+      index: number,
+      withBrand: boolean
+    ) => {
       const platform = formatPlatform(item)
       const modelLabel = withBrand
         ? `${item.brand} ${item.model}`
         : item.model
 
       return (
-        <div class={`${className}__row`} key={`${item.brand}-${item.model}-${index}`}>
+        <div
+          class={`${className}__row`}
+          key={`${item.brand}-${item.model}-${index}`}
+        >
           <div class={`${className}__row-model`}>
             <span>{modelLabel}</span>
             {renderRowPlatform(platform)}
@@ -676,15 +360,10 @@ export default defineComponent({
       )
     }
 
-    const renderRowPlatform = (platform: string) => {
-      if (!platform) {
-        return null
-      }
-
-      return <span class={`${className}__row-gen`}>{platform}</span>
-    }
-
-    const renderMainContent = (rows: CompatibilityEntry[], withBrand: boolean) => {
+    const renderMainContent = (
+      rows: CompatibilityEntry[],
+      withBrand: boolean
+    ) => {
       if (rows.length === 0) {
         return (
           <div class={`${className}__main-empty`}>
@@ -697,30 +376,27 @@ export default defineComponent({
     }
 
     const renderMain = () => {
-      const active = resolvedActiveBrand.value
-      const rows = resultRows.value
-      const withBrand = active === null
-      const title = active ?? 'Все марки'
-      const countLabel = `${rows.length} ${pluralize(rows.length, 'поколение', 'поколения', 'поколений')}`
+      const rows = browse.resultRows.value
+      const state = mainState.value
 
       return (
         <div class={`${className}__main`}>
           <div class={`${className}__main-head`}>
-            <span class={`${className}__main-title`}>{title}</span>
-            <span class={`${className}__main-count`}>{countLabel}</span>
+            <span class={`${className}__main-title`}>{state.title}</span>
+            <span class={`${className}__main-count`}>{state.countLabel}</span>
           </div>
           <div
             class={{
               [`${className}__scroll`]: true,
-              [`${className}__scroll--more`]: mainHasMore.value
+              [`${className}__scroll--more`]: mainFade.hasMore.value
             }}
           >
             <div
               class={`${className}__scroll-viewport`}
-              ref={mainViewportRef}
-              onScroll={updateFades}
+              ref={mainFade.viewportRef}
+              onScroll={mainFade.update}
             >
-              {renderMainContent(rows, withBrand)}
+              {renderMainContent(rows, state.withBrand)}
             </div>
             <div class={`${className}__scroll-fade`} aria-hidden="true" />
           </div>
@@ -729,7 +405,7 @@ export default defineComponent({
     }
 
     const renderBrowse = () => {
-      if (!listOpen.value) {
+      if (!browse.listOpen.value) {
         return null
       }
 
