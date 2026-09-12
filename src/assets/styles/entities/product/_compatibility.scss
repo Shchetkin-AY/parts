@@ -180,6 +180,8 @@ $_panel-height: 600px;
   }
 
   &__scroll {
+    border-radius: var(--radius-sm);
+
     position: relative;
 
     overflow: hidden;
