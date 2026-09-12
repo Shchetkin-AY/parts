@@ -90,6 +90,21 @@ const getUniqueSeries = (items: readonly CatalogItem[]): string[] => {
   return sortStrings([ ...values ])
 }
 
+export const withZeroPriceLast = (items: readonly CatalogItem[]): CatalogItem[] => {
+  const regular: CatalogItem[] = []
+  const zeroPrice: CatalogItem[] = []
+
+  for (const item of items) {
+    if (item.price === 0) {
+      zeroPrice.push(item)
+    } else {
+      regular.push(item)
+    }
+  }
+
+  return [ ...regular, ...zeroPrice ]
+}
+
 export enum CatalogSortField {
   popularity = 'popularity',
   priceAsc = 'priceAsc',
@@ -275,16 +290,18 @@ export const useCatalogStore = defineStore('catalog', () => {
     goodsId: number
   ): CompatibilityEntry[] => compatibilityByGoodsId.value[goodsId] ?? []
 
-  const getRelatedItems = (item: CatalogItem, count = 5): CatalogItem[] => {
+  const getRelatedItems = (item: CatalogItem, count?: number): CatalogItem[] => {
     const sameSeries = items.value.filter(
       entry => entry.series === item.series && entry.id !== item.id
     )
-    const source =
-      sameSeries.length > 0
-        ? sameSeries
-        : items.value.filter(entry => entry.id !== item.id)
 
-    return source.slice(0, count)
+    const ordered = withZeroPriceLast(sameSeries)
+
+    if (count == null) {
+      return ordered
+    }
+
+    return ordered.slice(0, count)
   }
 
   const filterItems = (
