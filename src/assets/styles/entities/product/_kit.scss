@@ -244,19 +244,6 @@ $_name: "product-kit";
     width: 24px;
   }
 
-  // ── Responsive ──────────────────────────────────────
-
-  @media (width <= 900px) {
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-left: 16px;
-    padding-right: 16px;
-
-    &__header-title {
-      @include mixins.font(18px, 600);
-    }
-  }
-
   @media (width <= 600px) {
     &__body {
       padding-top: 12px;
