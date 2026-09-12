@@ -1,4 +1,4 @@
-import { PropType, defineComponent } from 'vue'
+import { PropType, computed, defineComponent } from 'vue'
 
 import { type CatalogItem, Color, Icons, getWheelDiameterRange } from '@/utils'
 import { UiIcon } from '@/ui/icon'
@@ -25,7 +25,7 @@ export const ProductHero = defineComponent({
 
     const className = 'product-hero'
 
-    const stats: Stat[] = [
+    const stats = computed<Stat[]>(() => [
       {
         label: 'Количество поршней',
         icon: Icons.piston,
@@ -46,7 +46,10 @@ export const ProductHero = defineComponent({
         icon: Icons.square,
         value: `${props.item.pistonArea} см²`
       }
-    ]
+    ])
+
+    const isWideIcons = computed(() => viewportStore.size.width > 1400)
+    const isWideStats = computed(() => viewportStore.size.width > 1320)
 
     const renderSeries = () => {
       return (
@@ -82,11 +85,17 @@ export const ProductHero = defineComponent({
     }
 
     const renderStatIcon = (icon: Icons) => {
-      if (viewportStore.size.width > 1400) {
-        return (
-          <UiIcon icon={icon} color={Color['text-secondary']} size={30} />
-        )
+      if (!isWideIcons.value) {
+        return null
       }
+
+      return (
+        <UiIcon
+          icon={icon}
+          color={Color['text-secondary']}
+          size={30}
+        />
+      )
     }
     const renderStatContent = (label: string, value: string) => {
       return (
@@ -106,15 +115,15 @@ export const ProductHero = defineComponent({
     }
 
     const renderHeroStats = () => {
-      if (viewportStore.size.width > 1320) {
-        return (
-          <div class={`${className}__stats`}>
-            {stats.map(stat => {
-              return renderStat(stat.label, stat.icon, stat.value)
-            })}
-          </div>
-        )
+      if (!isWideStats.value) {
+        return null
       }
+
+      return (
+        <div class={`${className}__stats`}>
+          {stats.value.map(stat => renderStat(stat.label, stat.icon, stat.value))}
+        </div>
+      )
     }
 
     return () => {
