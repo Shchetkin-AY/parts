@@ -75,30 +75,4 @@ $_name: "product-page";
       }
     }
   }
-
-  &__catalog {
-    display: grid;
-    grid-template-columns: 1fr minmax(0, 400px);
-    gap: 20px;
-    align-items: stretch;
-
-    @media (width <= 900px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (width <= 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (width <= 820px) {
-    &__kit-panel {
-      grid-template-columns: 1fr;
-    }
-
-    &__related-header {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-  }
 }
