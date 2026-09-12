@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent } from 'vue'
 
-import { useCatalogStore, useViewportStore } from '@/stores'
+import { useCatalogStore } from '@/stores'
 
 import { type CatalogItem } from '@/utils'
 import { ProductCard } from './card'
@@ -16,24 +16,16 @@ export const ProductRelated = defineComponent({
   },
 
   setup(props) {
-    const viewportStore = useViewportStore()
     const catalogStore = useCatalogStore()
+
+    const className = 'related'
 
     const items = computed(() => {
       if (!props.item) {
         return []
       }
 
-      let itemsCount = 4
-
-      if (viewportStore.size.width < 1520) {
-        itemsCount = 3
-      }
-      if (viewportStore.size.width < 1100) {
-        itemsCount = 2
-      }
-
-      return catalogStore.getRelatedItems(props.item, itemsCount)
+      return catalogStore.getRelatedItems(props.item, 4)
     })
 
     const renderRelatedHeader = () => {
@@ -42,8 +34,8 @@ export const ProductRelated = defineComponent({
       }
 
       return (
-        <div class="related-header">
-          <h3 class="related-title">
+        <div class={`${className}-header`}>
+          <h3 class={`${className}-title`}>
             Другие комплекты {props.item.series}
           </h3>
         </div>
@@ -52,7 +44,7 @@ export const ProductRelated = defineComponent({
 
     const renderRelatedCard = (item: CatalogItem) => {
       return (
-        <div class="related-item">
+        <div class={`${className}-item`}>
           <ProductCard
             value={item}
           />
@@ -62,7 +54,7 @@ export const ProductRelated = defineComponent({
 
     const renderRelatedCards = () => {
       return (
-        <div class="related-cards">
+        <div class={`${className}-cards`}>
           {items.value.map(item => renderRelatedCard(item))}
         </div>
       )
@@ -70,7 +62,7 @@ export const ProductRelated = defineComponent({
 
     return () => {
       return (
-        <section class="related">
+        <section class={className}>
           {renderRelatedHeader()}
           {renderRelatedCards()}
         </section>
