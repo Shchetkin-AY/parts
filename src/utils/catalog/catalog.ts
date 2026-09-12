@@ -19,7 +19,6 @@ export interface CatalogItem {
   coating: string
   features: string
   application: string
-  setId: number
   price: number
   description: string
 }

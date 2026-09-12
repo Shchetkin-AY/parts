@@ -39,7 +39,7 @@ export const formatWheelDiameter = (value: number | string): string => {
  *
  * Принимает либо строку/число одного товара (item.wheelDiameter),
  * либо массив CatalogItem — тогда диапазон строится по всем товарам вместе
- * (например, по всем SKU одного setId).
+ * (например, по всем SKU одной серии).
  */
 export const getWheelDiameterRange = (source: number | string | CatalogItem[]): string => {
   const diameters = Array.isArray(source)

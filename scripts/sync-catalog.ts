@@ -23,7 +23,7 @@ const SHEET_ID = readEnv(
 const API_KEY = readEnv('GOOGLE_SHEETS_API_KEY', '')
 const VALUE_RENDER_OPTION = 'FORMATTED_VALUE'
 
-const GOODS_RANGE = readEnv('GOOGLE_SHEET_GOODS_RANGE', 'goods!A:V')
+const GOODS_RANGE = readEnv('GOOGLE_SHEET_GOODS_RANGE', 'goods!A:T')
 const COMPATIBILITY_RANGE = readEnv(
   'GOOGLE_SHEET_COMPATIBILITY_RANGE',
   'compatibility!A:H'
