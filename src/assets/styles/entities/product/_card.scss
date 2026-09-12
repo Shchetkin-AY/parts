@@ -19,14 +19,14 @@ $_name: "product-card";
     transform var(--transition-fast),
     background var(--transition-fast);
 
+  cursor: pointer;
+
   min-width: 0;
 
   &:hover {
     background-color: var(--color-surface-3);
 
     transform: translateY(-2px);
-
-    cursor: pointer;
   }
 
   &__media {

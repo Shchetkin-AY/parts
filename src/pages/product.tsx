@@ -20,6 +20,7 @@ import Palette from '@/entities/product/ui/palette'
 import RotorCenter from '@/entities/product/ui/rotor'
 import Specs from '@/entities/product/ui/specs'
 import Compatibility from '@/entities/product/ui/compatibility'
+import Kit from '@/entities/product/ui/kit'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -194,6 +195,10 @@ export default defineComponent({
       )
     }
 
+    const renderKit = () => {
+      return <Kit item={currentItem.value} />
+    }
+
     const renderHeroProductSection = () => {
       const item = currentItem.value
 
@@ -213,6 +218,7 @@ export default defineComponent({
               {renderPaletteSection()}
               {renderRotorCenterSection()}
               {renderSpecs()}
+              {renderKit()}
               {renderCompatibility()}
             </div>
             {renderPurchase(item)}
