@@ -12,25 +12,38 @@ export default defineComponent({
   },
 
   setup(props) {
-    const images = computed(() => [
-      `/images/products/${props.value.toLowerCase()}/0.webp`,
-      `/images/products/${props.value.toLowerCase()}/1.webp`,
-      `/images/products/${props.value.toLowerCase()}/2.webp`,
-      '/images/accessories/pads.webp',
-      '/images/accessories/discs.webp'
-    ])
+    const className = 'product-gallery'
+
+    const images = computed(() => {
+      const series = props.value.toLowerCase()
+
+      return [
+        `/images/products/${series}/0.webp`,
+        `/images/products/${series}/1.webp`,
+        `/images/products/${series}/2.webp`,
+        '/images/accessories/pads.webp',
+        '/images/accessories/discs.webp'
+      ]
+    })
 
     const currentImage = ref(images.value[0])
 
-    watch(images, value => {
-      currentImage.value = value[0]
-    })
+    watch(
+      () => images.value,
+      value => {
+        currentImage.value = value[0]
+      }
+    )
+
+    const clickHandler = (image: string) => {
+      currentImage.value = image
+    }
 
     const renderMainImage = () => {
       return (
-        <div class="product-gallery__main">
+        <div class={`${className}__main`}>
           <img
-            class="product-gallery__main-image"
+            class={`${className}__main-image`}
             src={currentImage.value}
           />
         </div>
@@ -41,15 +54,13 @@ export default defineComponent({
       return (
         <div
           class={{
-            'product-gallery__thumb': true,
-            'product-gallery__thumb--active': image === currentImage.value
+            [`${className}__thumb`]: true,
+            [`${className}__thumb--active`]: image === currentImage.value
           }}
-          onClick={() => {
-            currentImage.value = image
-          }}
+          onClick={() => clickHandler(image)}
         >
           <img
-            class="product-gallery__thumb-image"
+            class={`${className}__thumb-image`}
             src={image}
             alt=""
           />
@@ -59,16 +70,20 @@ export default defineComponent({
 
     const renderThumbnails = () => {
       return (
-        <div class="product-gallery__thumbs">
+        <div
+          class={`${className}__thumbs`}>
           {images.value.map(renderThumbnail)}
         </div>
       )
     }
 
-    return () =>
-      <div class="product-gallery">
-        {renderThumbnails()}
-        {renderMainImage()}
-      </div>
+    return () => {
+      return (
+        <div class={className}>
+          {renderThumbnails()}
+          {renderMainImage()}
+        </div>
+      )
+    }
   }
 })
