@@ -38,6 +38,21 @@ $_name: "product-gallery";
       height: clamp(180px, 15vw, 320px);
       width: auto;
       object-fit: contain;
+
+      @media (width <= 600px) {
+        // на мобильном ограничиваем по высоте контейнера
+
+        height: clamp(160px, 40vw, 280px);
+      }
+    }
+
+    // main идёт первым на мобильном (в DOM он второй)
+    @media (width <= 600px) {
+      order: 1;
+
+      min-height: 340px;
+      max-height: 340px;
+      height: 340px;
     }
   }
 
@@ -46,6 +61,21 @@ $_name: "product-gallery";
     gap: var(--space-xs);
     align-items: start;
     flex-direction: column;
+
+    @media (width <= 600px) {
+      justify-content: start;
+
+      flex-direction: row;
+      order: 2;
+
+      overflow-x: auto;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   &__thumb {
@@ -62,14 +92,14 @@ $_name: "product-gallery";
       radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
       radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), var(--color-surface);
 
+    flex-shrink: 0;
+
     transition: 0.2s;
 
     cursor: pointer;
 
     &:hover {
       background-color: var(--color-surface-2);
-
-      cursor: pointer;
     }
 
     &--active {
@@ -86,5 +116,13 @@ $_name: "product-gallery";
     height: 100%;
     width: 100%;
     object-fit: contain;
+  }
+
+  @media (width <= 600px) {
+    grid-template-columns: 1fr;
+
+    min-height: 0;
+    max-height: none;
+    height: auto;
   }
 }
