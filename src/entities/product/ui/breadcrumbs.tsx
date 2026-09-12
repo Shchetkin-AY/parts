@@ -38,10 +38,7 @@ export const Breadcrumbs = defineComponent({
 
     const renderSeparator = () => {
       return (
-        <span
-          class={`${className}-separator`}
-          innerHTML={'/'}
-        />
+        <span class={`${className}-separator`}>/</span>
       )
     }
 
