@@ -5,3 +5,9 @@ export interface Stat {
   value: string
   icon: Icons
 }
+
+export interface SpecItem {
+  label: string
+  value: string
+  unit?: string
+}
