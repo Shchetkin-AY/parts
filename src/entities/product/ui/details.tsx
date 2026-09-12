@@ -1,8 +1,7 @@
-import { AccessoryItem, type CatalogItem, getWheelDiameterRange } from '@/utils'
-import { Fragment, PropType, computed, defineComponent, reactive } from 'vue'
+import { AccessoryItem, type CatalogItem } from '@/utils'
+import { Fragment, PropType, defineComponent, reactive } from 'vue'
 import { UiPanel } from '@/ui'
 import Item from '@/entities/accessory/ui/item'
-import { useCatalogStore } from '@/stores/catalog'
 
 export const ProductDetails = defineComponent({
   name: 'ProductDetails',
@@ -56,90 +55,6 @@ export const ProductDetails = defineComponent({
       kit: false
     })
 
-    const renderRow = (label: string, value: string) => {
-      return (
-        <div class={`${className}__specs-row`}>
-          <span class={`${className}__specs-label`}>{label}</span>
-          <span class={`${className}__specs-value`}>{value}</span>
-        </div>
-      )
-    }
-
-    const renderSpecsContent = () => {
-      const rows = [
-        {
-          label: 'Количество поршней, шт.',
-          value: `${props.value.pistonCount}`
-        },
-        {
-          label: 'Диаметр колёс, in',
-          value: getWheelDiameterRange(props.value.wheelDiameter)
-        },
-        {
-          label: 'Диаметр диска, мм',
-          value: `${props.value.discDiameter}`
-        },
-        {
-          label: 'Габариты суппорта, мм',
-          value: props.value.dimensions
-        },
-        {
-          label: 'Площадь колодок, см²',
-          value: props.value.padFrictionArea
-        },
-        {
-          label: 'Площадь поршней, см²',
-          value: `${props.value.pistonArea}`
-        },
-        {
-          label: 'Применимость',
-          value: props.value.application
-        }
-      ]
-
-      return (
-        <div class={`${className}__specs`}>
-          {rows.map(row => renderRow(row.label, row.value))}
-        </div>
-      )
-    }
-
-    const catalogStore = useCatalogStore()
-
-    const compatibilityRows = computed<{ label: string;
-      value: string }[]>(() => {
-      const records = catalogStore.getCompatibilityByGoodsId(props.value.id)
-
-      if (records.length === 0) {
-        return [
-          {
-            label: 'Информация отсутствует',
-            value: ''
-          }
-        ]
-      }
-
-      return records.map(record => ({
-        label: `${record.brand} ${record.model}`,
-        value: [
-          record.platform ? `Платформа: ${record.platform}` : '',
-          record.yearFrom ? `c ${record.yearFrom}` : '',
-          record.yearTo ? `по ${record.yearTo}` : '',
-          record.wheelInch ? `${record.wheelInch}"` : ''
-        ].filter(Boolean).join(', ')
-      }))
-    })
-
-    const renderCompatibility = () => {
-      return (
-        <div class={`${className}__specs`}>
-          {compatibilityRows.value.length === 1 && !compatibilityRows.value[0].value
-            ? renderRow(compatibilityRows.value[0].label, '')
-            : compatibilityRows.value.map(row => renderRow(row.label, row.value))}
-        </div>
-      )
-    }
-
     const renderKit = () => {
       return (
         <div class={`${className}__kit`}>
@@ -155,14 +70,6 @@ export const ProductDetails = defineComponent({
         <Fragment>
           <div class={className} >
             <div class={`${className}__holder`} >
-              <UiPanel v-model={expanded.specs} label="Характеристики" outline>
-                {renderSpecsContent()}
-              </UiPanel>
-
-              <UiPanel v-model={expanded.compatibility} label="Совместимость" outline>
-                {renderCompatibility()}
-              </UiPanel>
-
               <UiPanel v-model={expanded.kit} label="Комплектация" outline>
                 {renderKit()}
               </UiPanel>
