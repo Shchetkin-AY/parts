@@ -1,0 +1,599 @@
+@use "mixins" as mixins;
+
+$_name: "compatibility";
+$_panel-height: 600px;
+
+.#{$_name} {
+  display: grid;
+  gap: var(--space-md);
+
+  &__header {
+    display: grid;
+    gap: var(--space-sm);
+
+    &-title {
+      font-family: var(--font-family-secondary);
+      color: var(--color-text-primary);
+      text-align: left;
+      text-transform: uppercase;
+
+      @include mixins.font(20px, 600);
+    }
+  }
+
+  // ── Check panel (как home-filter) ───────────────────
+  &__check {
+    padding: var(--space-sm);
+
+    border-radius: var(--radius-sm);
+
+    background-color: var(--color-surface);
+
+    display: grid;
+    gap: var(--space-sm);
+
+    &-label {
+      color: var(--color-text-primary);
+
+      user-select: none;
+
+      @include mixins.font(14px, 500);
+    }
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 12px;
+    align-items: end;
+
+    @media (width <= 900px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (width <= 560px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__field {
+    min-width: 0;
+  }
+
+  &__submit {
+    display: flex;
+
+    min-width: 120px;
+
+    @media (width <= 900px) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__divider {
+    color: var(--color-text-muted);
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    user-select: none;
+
+    &::before,
+    &::after {
+      background-color: rgb(255 255 255 / 6%);
+
+      flex: 1;
+
+      content: "";
+
+      height: 1px;
+    }
+
+    @include mixins.font(12px);
+  }
+
+  &__search {
+    .isk-text-field__label {
+      display: none;
+    }
+  }
+
+  // ── Result (success) ────────────────────────────────
+  &__result {
+    padding: 14px 16px;
+
+    border: 1px solid rgb(45 184 106 / 25%);
+
+    border-radius: var(--radius-sm);
+
+    background-color: rgb(45 184 106 / 12%);
+
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  &__result-icon {
+    color: #2db86a;
+
+    border-radius: 50%;
+
+    background-color: rgb(45 184 106 / 25%);
+
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    height: 22px;
+
+    width: 22px;
+
+    @include mixins.font(12px, 700);
+  }
+
+  &__result-body {
+    display: grid;
+    gap: 4px;
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  &__result-title {
+    color: var(--color-text-primary);
+
+    @include mixins.font(14px, 600);
+  }
+
+  &__result-lead {
+    color: var(--color-text-secondary);
+
+    @include mixins.font(13px);
+  }
+
+  &__result-list {
+    margin: 4px 0 0;
+
+    padding-left: 18px;
+
+    color: var(--color-text-secondary);
+
+    li + li {
+      margin-top: 2px;
+    }
+
+    @include mixins.font(13px);
+  }
+
+  &__result-reset {
+    padding: 0;
+
+    font-family: inherit;
+
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+
+    border: none;
+
+    background: none;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    @include mixins.font(12.5px, 500);
+  }
+
+  // ── Toggle list ─────────────────────────────────────
+  &__toggle {
+    padding: 0;
+
+    font-family: inherit;
+
+    color: var(--color-text-secondary);
+    text-align: left;
+
+    border: none;
+
+    background: none;
+
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    &--open &__toggle-arrow {
+      transform: rotate(90deg);
+    }
+
+    @include mixins.font(13.5px);
+  }
+
+  &__toggle-arrow {
+    display: inline-block;
+
+    transition: transform 0.18s ease;
+
+    @include mixins.font(11px);
+  }
+
+  // ── Browse split (palette style) ────────────────────
+  &__browse {
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  &__aside {
+    padding: 12px;
+
+    border: 1px solid rgb(255 255 255 / 6%);
+
+    border-radius: var(--radius-lg);
+
+    background-color: var(--color-surface-1, var(--color-surface));
+
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 8px;
+
+    max-height: $_panel-height;
+
+    height: $_panel-height;
+  }
+
+  &__aside-label {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mixins.font(11px);
+  }
+
+  &__scroll {
+    position: relative;
+
+    min-height: 0;
+  }
+
+  &__scroll-viewport {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    height: 100%;
+    overscroll-behavior: contain;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+
+      height: 0;
+      width: 0;
+    }
+  }
+
+  &__scroll-fade {
+    background: linear-gradient(to bottom, transparent, var(--color-surface-1, var(--color-surface)));
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    opacity: 0;
+
+    transition: opacity 0.18s ease;
+
+    pointer-events: none;
+
+    height: 36px;
+  }
+
+  &__scroll--more &__scroll-fade {
+    opacity: 1;
+  }
+
+  &__brands {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__brand {
+    padding: 8px 12px;
+
+    font-family: inherit;
+    color: var(--color-text-primary);
+
+    text-align: left;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    background-color: var(--color-surface-2);
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    transition:
+      background-color 0.12s,
+      border-color 0.12s,
+      box-shadow 0.12s;
+
+    cursor: pointer;
+
+    min-height: 40px;
+
+    width: 100%;
+
+    &:hover {
+      background-color: var(--color-surface-3);
+    }
+
+    &--active {
+      border-color: rgb(64 125 255 / 35%);
+
+      background-color: rgb(64 125 255 / 14%);
+
+      box-shadow: inset 0 0 0 1px rgb(64 125 255 / 15%);
+
+      .#{$_name}__brand-count {
+        color: var(--color-secondary, #407dff);
+      }
+    }
+
+    @include mixins.font(13.5px);
+  }
+
+  &__brand-name {
+    font-weight: 500;
+
+    flex: 1;
+
+    min-width: 0;
+
+    @include mixins.truncate-text;
+  }
+
+  &__brand-count {
+    font-weight: 500;
+
+    color: var(--color-text-muted);
+
+    flex-shrink: 0;
+
+    @include mixins.font(12px);
+  }
+
+  // ── Main table card ─────────────────────────────────
+  &__main {
+    border: 1px solid rgb(255 255 255 / 6%);
+    border-radius: var(--radius-lg);
+
+    background-color: var(--color-surface-1, var(--color-surface));
+
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+
+    overflow: hidden;
+
+    max-height: $_panel-height;
+    height: $_panel-height;
+
+    min-width: 0;
+  }
+
+  &__main-head {
+    padding: 14px 16px;
+
+    border-bottom: 1px solid rgb(255 255 255 / 6%);
+
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__main-title {
+    @include mixins.font(15px, 600);
+  }
+
+  &__main-count {
+    color: var(--color-text-muted);
+    white-space: nowrap;
+
+    @include mixins.font(12px);
+  }
+
+  &__main-empty {
+    padding: 28px 20px;
+
+    color: var(--color-text-muted);
+    text-align: center;
+
+    @include mixins.font(13.5px);
+  }
+
+  &__table {
+    display: grid;
+  }
+
+  &__cols {
+    padding: 10px 16px;
+
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    border-bottom: 1px solid rgb(255 255 255 / 5%);
+
+    background-color: var(--color-surface-1, var(--color-surface));
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 8px 14px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1;
+
+    @include mixins.font(11px, 600);
+  }
+
+  &__row {
+    padding: 11px 16px;
+
+    border-bottom: 1px solid rgb(255 255 255 / 4%);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 8px 14px;
+    align-items: center;
+
+    transition: background-color 0.12s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: rgb(255 255 255 / 3%);
+    }
+  }
+
+  &__row-model {
+    color: var(--color-text-primary);
+
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    min-width: 0;
+
+    @include mixins.font(13.5px, 500);
+  }
+
+  &__row-gen {
+    padding: 2px 7px;
+
+    color: var(--color-text-secondary);
+
+    border-radius: 6px;
+
+    background-color: var(--color-surface-3);
+
+    flex-shrink: 0;
+
+    @include mixins.font(11px, 600);
+  }
+
+  &__row-years {
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+
+    @include mixins.font(12.5px);
+  }
+
+  &__row-wheel {
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+
+    @include mixins.font(12.5px);
+  }
+
+  // ── Empty ───────────────────────────────────────────
+  &__empty {
+    padding: 36px 20px;
+
+    text-align: center;
+
+    border-radius: var(--radius-sm);
+
+    background-color: var(--color-surface);
+
+    display: grid;
+    gap: 6px;
+  }
+
+  &__empty-title {
+    color: var(--color-text-secondary);
+
+    @include mixins.font(14px, 500);
+  }
+
+  &__empty-text {
+    margin: 0 auto;
+
+    color: var(--color-text-muted);
+
+    max-width: 360px;
+
+    @include mixins.font(13px);
+  }
+
+  // ── Responsive ──────────────────────────────────────
+  @media (width <= 720px) {
+    &__browse {
+      grid-template-columns: 1fr;
+    }
+
+    &__aside,
+    &__main {
+      max-height: none;
+      height: auto;
+    }
+
+    &__scroll,
+    &__scroll-viewport {
+      max-height: 260px;
+    }
+
+    &__cols {
+      display: none;
+    }
+
+    &__row {
+      grid-template-columns: 1fr auto;
+      gap: 4px 12px;
+    }
+
+    &__row-years {
+      text-align: right;
+
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    &__row-wheel {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (width <= 600px) {
+    &__title {
+      @include mixins.font(18px, 600);
+    }
+
+    &__check {
+      padding: 16px;
+    }
+  }
+}
