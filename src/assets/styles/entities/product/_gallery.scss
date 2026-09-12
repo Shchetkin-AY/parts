@@ -35,7 +35,7 @@ $_name: "product-gallery";
     height: 458px;
 
     &-image {
-      height: clamp(320px, 15vw, 180px);
+      height: clamp(180px, 15vw, 320px);
       width: auto;
       object-fit: contain;
     }
