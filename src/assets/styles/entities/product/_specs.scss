@@ -96,6 +96,11 @@ $_name: "product-specs";
     }
 
     &__list {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      padding-left: 16px;
+      padding-right: 16px;
+
       grid-template-columns: 1fr;
     }
 
