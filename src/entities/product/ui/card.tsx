@@ -30,8 +30,6 @@ export const ProductCard = defineComponent({
 
     const className = 'product-card'
 
-    const hover = ref<boolean>(false)
-
     const title = computed(() => props.value.model)
 
     const pistonCount = computed<string>(() => {
@@ -274,8 +272,6 @@ export const ProductCard = defineComponent({
       return (
         <div
           class={className}
-          onMouseenter={() => hover.value = true}
-          onMouseleave={() => hover.value = false}
           onClick={clickHandler}
         >
           {renderImage()}
