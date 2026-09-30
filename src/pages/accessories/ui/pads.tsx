@@ -67,6 +67,7 @@ export default defineComponent({
             [`${className}__panel-scale--active`]: activePad.value === pad.id
           }}
           onMouseenter={() => activePad.value = pad.id}
+          onClick={() => activePad.value = pad.id}
           key={pad.id}
         >
           {renderScaleTitle(pad.title)}
