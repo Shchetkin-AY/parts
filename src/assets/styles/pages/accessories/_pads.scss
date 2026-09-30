@@ -204,6 +204,15 @@ $_name: "pads";
 
         @include mixins.font(11px);
       }
+
+      @media screen and (width <= 760px) {
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+
+        & > .#{$_name}__panel-info-value {
+          grid-column: unset;
+        }
+      }
     }
 
     @include mixins.font(22px, 500);

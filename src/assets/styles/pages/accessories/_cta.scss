@@ -6,12 +6,9 @@ $_name: "cta";
 .#{$_name} {
   padding: var(--space-md);
 
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--color-border);
   border-radius: var(--radius-sm);
 
-  background-color: var(--color-surface-2);
+  background-color: var(--color-surface);
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
