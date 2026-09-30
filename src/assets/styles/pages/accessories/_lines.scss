@@ -4,8 +4,8 @@
 $_name: "lines";
 
 .#{$_name} {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
 
   display: grid;
   gap: var(--space-lg);
@@ -45,5 +45,10 @@ $_name: "lines";
     @media screen and (width <= 760px) {
       order: -1;
     }
+  }
+
+  @media (width <= 760px) {
+    padding-top: unset;
+    padding-bottom: unset;
   }
 }

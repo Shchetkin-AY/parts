@@ -4,12 +4,6 @@
 $_name: "navigation";
 
 .#{$_name} {
-  // было: border-bottom: 1px solid var(--color-border);
-  // фон страницы (#050505) и surface-container-lowest (#000000) почти
-  // не отличаются — на глаз нав сливался бы со страницей. Берём surface-2,
-  // он заметно светлее, плюс лёгкая тень видна с самого начала, а не
-  // только при скролле — иначе плавающий элемент не читается как отдельный слой
-
   border-radius: var(--radius-lg);
 
   background-color: colors.color(color-surface-2, 0.85);
@@ -17,6 +11,7 @@ $_name: "navigation";
   box-shadow: 0 4px 16px rgb(0 0 0 / 25%);
 
   display: grid;
+  align-content: center;
   align-items: center;
   justify-items: center;
 
@@ -41,12 +36,24 @@ $_name: "navigation";
   backdrop-filter: blur(12px);
   padding-inline: var(--space-md);
 
+  padding-block: var(--space-xs);
+
+  &:has(.#{$_name}__subnav) {
+    min-height: 76px;
+    height: auto;
+  }
+
   &--scrolled {
     border-color: var(--color-border-strong);
 
     box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
 
     height: 64px;
+
+    &:has(.#{$_name}__subnav) {
+      min-height: 64px;
+      height: auto;
+    }
   }
 
   &--hidden {
@@ -158,34 +165,6 @@ $_name: "navigation";
     }
   }
 
-  &__phone {
-    border: unset;
-    border-radius: var(--radius-sm);
-
-    background-color: colors.color(color-surface-3, 0.5);
-
-    display: grid;
-    align-items: center;
-    justify-content: center;
-
-    transition: background-color var(--transition-fast);
-
-    cursor: pointer;
-
-    &:hover {
-      background-color: colors.color(color-surface-3, 0.95);
-
-      transform: translateY(-1px);
-
-      & > svg {
-        stroke: var(--color-primary);
-      }
-    }
-
-    @include mixins.absolute-height(40px);
-    @include mixins.absolute-width(40px);
-  }
-
   &__menu {
     color: var(--color-text-primary);
 
@@ -207,6 +186,70 @@ $_name: "navigation";
     }
 
     @media (width >= 768px) {
+      display: none;
+    }
+  }
+
+  &__subnav {
+    margin-top: var(--space-xs);
+    padding-top: var(--space-xs);
+
+    border-top: 1px solid var(--color-border);
+
+    display: grid;
+
+    min-width: 0;
+
+    width: 100%;
+
+    &-inner {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+
+      overflow-x: auto;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &-link {
+      color: var(--color-text-secondary);
+
+      display: grid;
+
+      position: relative;
+
+      transition: color var(--transition-fast);
+
+      &--active {
+        font-weight: 600;
+        color: var(--color-primary);
+
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+
+      &:hover {
+        color: var(--color-primary-hover);
+
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+
+      &:active {
+        color: var(--color-primary-active);
+      }
+
+      @include mixins.font(14px, 500, 28px); // ← line-height 32px → 20px
+    }
+
+    @media (width < 768px) {
       display: none;
     }
   }
@@ -241,7 +284,7 @@ $_name: "navigation";
     background: var(--color-surface);
 
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: repeat(2, auto) 1fr;
     align-items: start;
 
     position: fixed;
@@ -280,6 +323,20 @@ $_name: "navigation";
       }
     }
 
+    &-subnav {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+
+      border-top: 1px solid var(--color-border);
+
+      display: grid;
+      gap: var(--space-md);
+
+      @media (width >= 768px) {
+        display: none;
+      }
+    }
+
     &.open {
       transform: translateX(0);
 
@@ -292,4 +349,36 @@ $_name: "navigation";
   @media (width >= 768px) {
     padding-inline: 36px;
   }
+}
+
+/* Vue Transition для subnav */
+.navigation-subnav-enter-active,
+.navigation-subnav-leave-active {
+  overflow: hidden;
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.3s ease,
+    margin-top 0.35s ease,
+    padding-top 0.35s ease;
+}
+
+.navigation-subnav-enter-from,
+.navigation-subnav-leave-to {
+  margin-top: 0;
+  padding-top: 0;
+
+  opacity: 0;
+
+  max-height: 0;
+}
+
+.navigation-subnav-enter-to,
+.navigation-subnav-leave-from {
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+
+  opacity: 1;
+
+  max-height: 200px;
 }

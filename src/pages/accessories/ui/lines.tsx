@@ -70,11 +70,11 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={className}>
+        <section class={className}>
           {renderHeading()}
           {renderGrid()}
           {renderCta()}
-        </div>
+        </section>
       )
     }
   }

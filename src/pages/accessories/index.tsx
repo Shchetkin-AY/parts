@@ -1,16 +1,28 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 
+import { usePageSubnav } from '@/hooks'
 import { Page } from '@/ui'
 import { Feedback } from '@/features'
-import { AccessoriesCcb, AccessoriesDiscs, AccessoriesHero, AccessoriesLines, AccessoriesPads, AccessoriesSubnav } from '@/pages/accessories/ui'
+import { AccessoriesCcb, AccessoriesDiscs, AccessoriesHero, AccessoriesLines, AccessoriesPads } from '@/pages/accessories/ui'
 import { CatalogCategories } from '@/utils'
+import { subnavItems } from '@/data'
 
 export default defineComponent({
   name: 'AccessoriesPage',
 
   setup() {
+    const subnav = usePageSubnav()
+
     const showFeedback = ref(false)
     const feedbackCategory = ref<CatalogCategories>()
+
+    onMounted(() => {
+      subnav.register(subnavItems)
+    })
+
+    onBeforeUnmount(() => {
+      subnav.unregister()
+    })
 
     const orderHandler = (category: CatalogCategories) => {
       feedbackCategory.value = category
@@ -23,10 +35,6 @@ export default defineComponent({
           <AccessoriesHero />
         </section>
       )
-    }
-
-    const renderSubnav = () => {
-      return <AccessoriesSubnav />
     }
 
     const renderDiscs = () => {
@@ -73,7 +81,6 @@ export default defineComponent({
     return () =>
       <Page class="accessories-page">
         {renderHero()}
-        {renderSubnav()}
         {renderDiscs()}
         {renderCcb()}
         {renderPads()}

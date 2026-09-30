@@ -17,11 +17,6 @@ export type DiscSizeRow = [
   ventilation: string
 ]
 
-export type SubnavItem = [
-  id: string,
-  label: string
-]
-
 export type GalleryItem = [
   image: string,
   caption: string

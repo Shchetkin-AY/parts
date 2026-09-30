@@ -1,7 +1,8 @@
-import { Teleport, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { Teleport, Transition, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { UiButton } from '@/ui'
-import { Color, Icons } from '@/utils'
+import { usePageSubnav } from '@/hooks'
+import { Color, Icons, PageSubnavItem } from '@/utils'
 import Feedback from '@/features/feedback'
 
 interface NavigationLink {
@@ -37,6 +38,8 @@ export default defineComponent({
 
   setup() {
     const route = useRoute()
+
+    const subnav = usePageSubnav()
 
     const showFeedback = ref(false)
     const menuMounted = ref(false)
@@ -141,11 +144,9 @@ export default defineComponent({
 
     const renderBrand = () => {
       return (
-        <RouterLink
-          class="navigation__brand"
-          innerHTML={'ISKOR'}
-          to={'/'}
-        ><span innerHTML="//"/></RouterLink>
+        <RouterLink class="navigation__brand" to={'/'}>
+          ISKOR
+        </RouterLink>
       )
     }
 
@@ -182,7 +183,7 @@ export default defineComponent({
         {links.map(link => renderLink(link))}
       </div>
 
-    const renderPhoneIcon = () => {
+    const renderPhoneButton = () => {
       return (
         <UiButton
           aria-label="Открыть форму обратной связи"
@@ -197,7 +198,7 @@ export default defineComponent({
     const renderActions = () => {
       return (
         <div class="navigation__actions">
-          {renderPhoneIcon()}
+          {renderPhoneButton()}
           <div class="navigation__menu" >
             <UiButton
               icon={Icons.menu}
@@ -214,8 +215,8 @@ export default defineComponent({
       return (
         <div
           class={{
-            ['navigation__overlay']: true,
-            ['open']: isMenuOpen.value
+            navigation__overlay: true,
+            open: isMenuOpen.value
           }}
           onClick={closeMenu}
         />
@@ -229,6 +230,35 @@ export default defineComponent({
             iconColor={Color['text-primary']}
             onClick={closeMenu}
           />
+        </div>
+      )
+    }
+
+    const renderDrawerSubnavItem = (item: PageSubnavItem) => {
+      return (
+        <div class="navigation__drawer-item" key={item.id}>
+          <a
+            class="navigation__link"
+            href={`#${item.id}`}
+            onClick={(event: MouseEvent) => {
+              event.preventDefault()
+              closeMenu()
+              subnav.scrollTo(item.id)
+            }}
+          >
+            {item.label}
+          </a>
+        </div>
+      )
+    }
+    const renderDrawerSubnav = () => {
+      if (subnav.items.value.length === 0) {
+        return null
+      }
+
+      return (
+        <div class="navigation__drawer-subnav">
+          {subnav.items.value.map(renderDrawerSubnavItem)}
         </div>
       )
     }
@@ -256,6 +286,7 @@ export default defineComponent({
           <div class="navigation__drawer-content">
             {renderMenuLinks()}
           </div>
+          {renderDrawerSubnav()}
         </aside>
       )
     }
@@ -282,6 +313,41 @@ export default defineComponent({
       )
     }
 
+    const renderSubnavLink = (item: PageSubnavItem) => {
+      return (
+        <a
+          class={{
+            'navigation__subnav-link': true,
+            'navigation__subnav-link--active': subnav.activeId.value === item.id
+          }}
+          href={`#${item.id}`}
+          key={item.id}
+          onClick={(event: MouseEvent) => {
+            event.preventDefault()
+            subnav.scrollTo(item.id)
+          }}
+        >
+          {item.label}
+        </a>
+      )
+    }
+
+    const renderSubnav = () => {
+      return (
+        <Transition name="navigation-subnav">
+          {subnav.items.value.length > 0
+            ?
+            <div class="navigation__subnav">
+              <div class="navigation__subnav-inner">
+                {subnav.items.value.map(renderSubnavLink)}
+              </div>
+            </div>
+
+            : null}
+        </Transition>
+      )
+    }
+
     return () => {
       return (
         <nav
@@ -297,6 +363,7 @@ export default defineComponent({
             {renderLinks()}
             {renderActions()}
           </div>
+          {renderSubnav()}
           {renderMenuDrawer()}
           {renderFeedback()}
         </nav>

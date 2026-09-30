@@ -5,7 +5,6 @@ import SectionHeading from '@/pages/accessories/ui/section-heading'
 import Feature from '@/pages/accessories/ui/feature'
 import SectionCta from '@/pages/accessories/ui/cta'
 import { CatalogCategories, CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
-import { useViewportStore } from '@/stores'
 
 export default defineComponent({
   name: 'Ccb',
@@ -13,8 +12,6 @@ export default defineComponent({
   emits: [ 'order' ],
 
   setup(_, { emit }) {
-    const viewportStore = useViewportStore()
-
     const className = 'ccb'
 
     const renderMetric = (metric: CcbMetric) => {
@@ -73,14 +70,12 @@ export default defineComponent({
       )
     }
     const renderWide = () => {
-      if (viewportStore.size.width > 760) {
-        return (
-          <div class={`${className}__wide`}>
-            {renderImage()}
-            {renderWideNote()}
-          </div>
-        )
-      }
+      return (
+        <div class={`${className}__wide`}>
+          {renderImage()}
+          {renderWideNote()}
+        </div>
+      )
     }
 
     const renderRingsImage = () => {
@@ -108,6 +103,7 @@ export default defineComponent({
     const renderFeature = (feature: FeatureItem) => {
       return (
         <Feature
+          class={`${className}__feature`}
           value={feature}
           key={feature.title}
         />
@@ -135,7 +131,7 @@ export default defineComponent({
     }
 
     return () =>
-      <section class={className} id="ccb">
+      <section class={className}>
         <SectionHeading
           eyebrow="Опция дисков"
           title="Карбон-керамика CCB"

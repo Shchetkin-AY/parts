@@ -4,6 +4,8 @@ import { FeatureItem } from '@/utils'
 export default defineComponent({
   name: 'AccessoriesFeature',
 
+  inheritAttrs: false,
+
   props: {
     value: {
       type: Object as PropType<FeatureItem>,
@@ -11,7 +13,7 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  setup(props, { attrs }) {
     const renderTitle = () => {
       return <div class="accessories-page__feature-title">{props.value.title}</div>
     }
@@ -21,7 +23,12 @@ export default defineComponent({
     }
 
     return () =>
-      <div class="accessories-page__feature">
+      <div
+        class={[
+          'accessories-page__feature',
+          attrs.class
+        ]}
+      >
         {renderTitle()}
         {renderText()}
       </div>

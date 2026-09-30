@@ -13,7 +13,7 @@ $_name: "accessories-hero";
 
   position: relative;
 
-  min-height: 560px;
+  min-height: min(560px, 80vh);
 
   width: min(100%, var(--layout-width));
 
