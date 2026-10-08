@@ -1,4 +1,5 @@
-import { CatalogFilterField, FilterFieldProps } from '../filter'
+import { FilterFieldProps } from '../interfaces'
+import { CatalogFilterField } from '../enums'
 
 export const FilterFields: FilterFieldProps[] = [
   {

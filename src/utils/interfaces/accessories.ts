@@ -1,4 +1,12 @@
-export type PadId = 'f600' | 's750' | 's800' | 'r900'
+import { PadId, WeightCompareModifier } from '../types'
+
+export interface AccessoryItem {
+  id: number
+  title: string
+  description: string
+  priceUsd?: number
+  image: string
+}
 
 export interface PadComposition {
   id: PadId
@@ -11,23 +19,10 @@ export interface PadComposition {
   image: string
 }
 
-export type DiscSizeRow = [
-  diameter: string,
-  weight: string,
-  ventilation: string
-]
-
-export type GalleryItem = [
-  image: string,
-  caption: string
-]
-
 export interface FeatureItem {
   title: string
   description: string
 }
-
-export type WeightCompareModifier = 'ccb' | 'iron'
 
 export interface WeightCompareItem {
   label: string
@@ -39,4 +34,3 @@ export interface CcbMetric {
   label: string
   value: string
 }
-

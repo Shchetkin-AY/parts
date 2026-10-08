@@ -1,4 +1,4 @@
-import { CatalogItem } from '../catalog'
+import { CatalogItem } from '../interfaces'
 
 export const numberToPxOrString = (value: string | number): string => {
   if (typeof value === 'string') {

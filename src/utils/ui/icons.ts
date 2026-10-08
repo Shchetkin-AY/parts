@@ -1,4 +1,4 @@
-import { IconObject } from './icon-types'
+import { IconObject } from '../interfaces'
 
 export const iconPaths: Record<string, IconObject[]> = {
   warranty: [

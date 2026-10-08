@@ -1,9 +1,6 @@
-export enum FeedbackChannels {
-  phone = 'phone',
-  sms = 'sms',
-  max = 'max',
-  telegram = 'telegram'
-}
+import { FeedbackChannels } from '../enums'
+
+export { FeedbackChannels }
 
 export const ChannelsLabels = {
   [FeedbackChannels.phone]: 'Телефон',

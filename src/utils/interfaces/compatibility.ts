@@ -1,5 +1,5 @@
-import type { SelectOption } from '@/utils'
 import { ComputedRef, Ref } from 'vue'
+import { SelectOption } from './ui'
 
 export interface CompatibilityEntry {
   brand: string

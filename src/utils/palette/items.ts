@@ -1,5 +1,5 @@
-import { PaletteGroupTypes } from './group-type'
-import { PaletteItem } from './palette'
+import { PaletteGroupTypes } from '../enums'
+import { PaletteItem } from '../interfaces'
 
 export const paletteGroups: Record<PaletteGroupTypes, string> = {
   base: 'Стандартные',

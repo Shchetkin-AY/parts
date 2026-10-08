@@ -1,6 +1,6 @@
 import { type ComputedRef, computed, ref } from 'vue'
 
-import type { BrandStat, CompatibilityEntry, UseCompatibilityBrowseReturn } from '../types'
+import { BrandStat, CompatibilityEntry, UseCompatibilityBrowseReturn } from '../../interfaces'
 
 export const useCompatibilityBrowse = (
   entries: ComputedRef<CompatibilityEntry[]>

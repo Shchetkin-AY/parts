@@ -1,4 +1,4 @@
-export * from './convertors'
+export * from './conversions'
 export * from './pluralize'
 export * from './overflow'
 export * from './strings'

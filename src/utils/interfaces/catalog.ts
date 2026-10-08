@@ -1,4 +1,4 @@
-import { CatalogCategory } from './categories'
+import { CatalogCategory } from '../types'
 
 export interface CatalogItem {
   id: number

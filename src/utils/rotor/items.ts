@@ -1,5 +1,5 @@
-import { RotorCenterTypes } from './center-type'
-import { RotorCenterItem } from './rotor'
+import { RotorCenterTypes } from '../enums'
+import { RotorCenterItem } from '../interfaces'
 
 export const rotorCenterPrices: Record<RotorCenterTypes, number> = {
   [RotorCenterTypes.champagne]: 0,

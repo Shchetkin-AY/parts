@@ -1,7 +1,7 @@
 import { type ComputedRef, type Ref, computed, ref } from 'vue'
 
-import type { CompatibilityEntry, YearOption } from '../types'
-import type { SelectOption } from '@/utils'
+import { CompatibilityEntry, YearOption } from '../../interfaces'
+import { SelectOption } from '@/utils'
 
 interface UseCompatibilityCheckReturn {
   selectedBrand: Ref<string>

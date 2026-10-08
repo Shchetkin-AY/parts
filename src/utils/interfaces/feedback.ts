@@ -1,4 +1,4 @@
-import { FeedbackChannels } from './channels'
+import { FeedbackChannels } from '../enums'
 
 export interface FeedbackPayload {
   channel: FeedbackChannels

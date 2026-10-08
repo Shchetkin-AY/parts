@@ -1,4 +1,4 @@
-import type { CompatibilityEntry } from './types'
+import { CompatibilityEntry } from '../interfaces'
 
 const emptyPlatform = new Set([ '-', '—' ])
 

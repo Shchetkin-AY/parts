@@ -1,2 +1,1 @@
-export * from './payload'
-export * from './type'
+export { ChannelsLabels } from './channels'
