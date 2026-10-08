@@ -52,14 +52,47 @@ $_name: "popular";
 
   &__cards {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-auto-columns: calc((100% - var(--space-md) * 4) / 5);
+    grid-auto-flow: column;
     gap: var(--space-md);
+
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &--fade-left {
+      mask-image: linear-gradient(to right, transparent 0, black 64px, black 100%);
+    }
+
+    &--fade-right {
+      mask-image: linear-gradient(to right, black 0, black calc(100% - 64px), transparent 100%);
+    }
+
+    &--fade-left#{&}--fade-right {
+      mask-image: linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%);
+    }
 
     @include mixins.absolute-width(100%);
 
     @media (width <= 900px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-auto-columns: calc((100% - var(--space-sm)) / 2);
       gap: var(--space-sm);
+    }
+
+    @media (width <= 600px) {
+      grid-auto-columns: calc((100% - var(--space-xs)) / 2);
+      gap: var(--space-xs);
+    }
+
+    @media (pointer: coarse) {
+      scroll-behavior: auto;
+      scroll-snap-type: none;
     }
   }
 
@@ -74,20 +107,6 @@ $_name: "popular";
     min-width: 0;
 
     scroll-snap-align: start;
-  }
-
-  &__cards {
-    &--fade-left {
-      mask-image: linear-gradient(to right, transparent 0, black 64px, black 100%);
-    }
-
-    &--fade-right {
-      mask-image: linear-gradient(to right, black 0, black calc(100% - 64px), transparent 100%);
-    }
-
-    &--fade-left#{&}--fade-right {
-      mask-image: linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%);
-    }
   }
 
   &__arrow {
@@ -138,27 +157,4 @@ $_name: "popular";
     width: 24px;
   }
 
-  @media (width <= 600px) {
-    &__cards {
-      grid-auto-columns: calc((100% - var(--space-xs)) / 2);
-      grid-auto-flow: column;
-      grid-template-columns: none;
-      gap: var(--space-xs);
-
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      @media (pointer: coarse) {
-        scroll-behavior: auto;
-        scroll-snap-type: none;
-      }
-    }
-  }
 }
