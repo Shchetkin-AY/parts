@@ -1,9 +1,9 @@
 import { PropType, defineComponent } from 'vue'
-import { UiButton } from '@/ui'
+import { UiButton } from '@/components'
 import { CatalogCategories, Color } from '@/utils'
 
 export default defineComponent({
-  name: 'Cta',
+  name: 'AccessoriesCta',
 
   props: {
     title: {

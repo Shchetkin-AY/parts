@@ -1,8 +1,8 @@
-import { type CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
+import { CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
-import { UiButton } from '@/ui/button'
-import { UiIcon } from '@/ui/icon'
-import { UiChip, UiDivider } from '@/ui'
+import { UiButton } from '@/components'
+import { UiIcon } from '@/components'
+import { UiChip, UiDivider } from '@/components'
 
 export interface PurchaseOption {
   id: string
@@ -19,7 +19,7 @@ const purchaseKitItems = [
 ]
 
 export const Purchase = defineComponent({
-  name: 'Purchase',
+  name: 'ProductPurchase',
 
   props: {
     item: {

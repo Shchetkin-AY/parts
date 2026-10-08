@@ -11,7 +11,7 @@ import {
   paletteGroups,
   paletteItemsByGroup
 } from '@/utils'
-import { UiChip } from '@/ui'
+import { UiChip } from '@/components'
 
 const singlePreviewItems = new Set([ 'tiffany', 'pink', 'green', 'gold', 'purple' ])
 
@@ -22,7 +22,7 @@ const groupDescriptions: Record<PaletteGroupTypes, string> = {
 }
 
 export default defineComponent({
-  name: 'Palette',
+  name: 'ProductPalette',
 
   emits: [ 'select' ],
 

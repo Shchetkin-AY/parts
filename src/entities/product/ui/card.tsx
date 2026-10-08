@@ -8,7 +8,7 @@ import {
   pluralize
 } from '@/utils'
 
-import { UiChip } from '@/ui'
+import { UiChip } from '@/components'
 
 const SWIPE_THRESHOLD = 40
 

@@ -1,4 +1,4 @@
-import type { PadComposition } from '@/utils'
+import { PadComposition } from '@/utils'
 
 export const pads: PadComposition[] = [
   {

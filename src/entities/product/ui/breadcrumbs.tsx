@@ -4,7 +4,7 @@ import { PropType, defineComponent } from 'vue'
 import { CatalogFilterField, CatalogFilterParams, CatalogItem, buildCatalogFilterQuery } from '@/utils'
 
 export const Breadcrumbs = defineComponent({
-  name: 'Breadcrumbs',
+  name: 'ProductBreadcrumbs',
 
   props: {
     item: {

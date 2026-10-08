@@ -1,6 +1,6 @@
 import { type Ref, nextTick, ref } from 'vue'
 
-import type { PageSubnavItem } from '@/utils'
+import { PageSubnavItem } from '@/utils'
 
 interface UsePageSubnavReturn {
   items: Ref<PageSubnavItem[]>

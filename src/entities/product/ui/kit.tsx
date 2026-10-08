@@ -4,13 +4,11 @@ import {
   computed,
   defineComponent,
   nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
   watch
 } from 'vue'
 
-import { type CatalogItem } from '@/utils'
+import { useHorizontalCarousel } from '@/composables'
+import { CatalogItem } from '@/utils'
 
 interface KitItem {
   id: string
@@ -96,64 +94,14 @@ export default defineComponent({
 
     // ── Carousel ────────────────────────────────────────
 
-    const viewportRef = ref<HTMLElement | null>(null)
-    const canScrollPrev = ref(false)
-    const canScrollNext = ref(false)
-
-    const updateScrollState = () => {
-      const el = viewportRef.value
-
-      if (!el) {
-        canScrollPrev.value = false
-        canScrollNext.value = false
-
-        return
-      }
-
-      canScrollPrev.value = el.scrollLeft > 0
-      canScrollNext.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 1
-    }
-
-    const getScrollStep = (): number => {
-      const el = viewportRef.value
-
-      if (!el) {
-        return 0
-      }
-
-      const card = el.firstElementChild as HTMLElement | null
-
-      if (!card) {
-        return el.clientWidth
-      }
-
-      const gap = parseFloat(getComputedStyle(el).columnGap) || 0
-
-      return card.getBoundingClientRect().width + gap
-    }
-
-    const scrollPrev = () => {
-      viewportRef.value?.scrollBy({
-        left: -getScrollStep(),
-        behavior: 'smooth'
-      })
-    }
-
-    const scrollNext = () => {
-      viewportRef.value?.scrollBy({
-        left: getScrollStep(),
-        behavior: 'smooth'
-      })
-    }
-
-    onMounted(() => {
-      updateScrollState()
-      window.addEventListener('resize', updateScrollState)
-    })
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('resize', updateScrollState)
-    })
+    const {
+      viewportRef,
+      canScrollPrev,
+      canScrollNext,
+      updateScrollState,
+      scrollPrev,
+      scrollNext
+    } = useHorizontalCarousel()
 
     watch(items, () => {
       void nextTick(updateScrollState)

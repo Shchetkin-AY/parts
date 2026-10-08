@@ -1,7 +1,7 @@
 import { CSSProperties, PropType, Teleport, Transition, computed, defineComponent, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
 import { Color, Icons, UiComponentName, lockPageScroll, numberToPxOrString, unlockPageScroll } from '@/utils'
-import { UiOverlay } from '@/ui/overlay'
-import { UiButton } from '@/ui/button'
+import { UiOverlay } from '@/components'
+import { UiButton } from '@/components'
 
 export const DialogProps = {
   modelValue: {

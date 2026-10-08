@@ -2,7 +2,7 @@ import { RouterLink } from 'vue-router'
 import { computed, defineComponent, onBeforeMount } from 'vue'
 
 import { useCatalogStore } from '@/stores/catalog'
-import type { CatalogItem } from '@/utils'
+import { CatalogItem } from '@/utils'
 import { ProductCard } from '@/entities/product'
 
 export default defineComponent({

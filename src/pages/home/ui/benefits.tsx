@@ -1,6 +1,7 @@
 import { computed, defineComponent } from 'vue'
-import { UiIcon } from '@/ui'
-import { BenefitItem, Color, Icons, benefitItems } from '@/utils'
+import { UiIcon } from '@/components'
+import { BenefitItem, Color, Icons } from '@/utils'
+import { benefitItems } from '@/data'
 import { useViewportStore } from '@/stores'
 
 export default defineComponent({

@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, PropType, computed, defineComponent } from 'vue'
 
 import { ButtonMode, Color, Icons, Size, UiComponentName, numberToPxOrString } from '@/utils'
 
-import { UiIcon } from '@/ui/icon'
+import { UiIcon } from '@/components'
 
 export const buttonProps = {
   label: {

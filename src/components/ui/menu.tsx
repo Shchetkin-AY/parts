@@ -1,7 +1,7 @@
 import { type CSSProperties, PropType, Teleport, computed, defineComponent, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
 
+import { getPrimitiveProp } from './shared-props'
 import { MenuItem, MenuItemRole, MenuPosition, Size } from '@/utils'
-import { getPrimitiveProp } from '@/ui/shared-props'
 
 export interface MenuProps {
   anchorElement?: HTMLElement | null

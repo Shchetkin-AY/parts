@@ -1,10 +1,12 @@
 import { defineComponent } from 'vue'
 
 import { linesFeatures } from '@/data'
-import SectionHeading from '@/pages/accessories/ui/section-heading'
-import Feature from '@/pages/accessories/ui/feature'
-import SectionCta from '@/pages/accessories/ui/cta'
 import { CatalogCategories } from '@/utils'
+import {
+  AccessoriesCta,
+  AccessoriesFeature,
+  AccessoriesSectionHeading
+} from './common'
 
 export default defineComponent({
   name: 'AccessoriesLines',
@@ -16,7 +18,7 @@ export default defineComponent({
 
     const renderHeading = () => {
       return (
-        <SectionHeading
+        <AccessoriesSectionHeading
           eyebrow="В каждом комплекте"
           title="Армированные магистрали"
           description="Три слоя: тефлоновая трубка внутри, оплётка из нержавеющей стали, защитная оболочка PVC снаружи. Фитинги кованые, из нержавеющей стали SUS304."
@@ -26,7 +28,7 @@ export default defineComponent({
 
     const renderFeature = (feature: { title: string;
       description: string }) => {
-      return <Feature value={feature} key={feature.title} />
+      return <AccessoriesFeature value={feature} key={feature.title} />
     }
 
     const renderFeatures = () => {
@@ -58,7 +60,7 @@ export default defineComponent({
     }
     const renderCta = () => {
       return (
-        <SectionCta
+        <AccessoriesCta
           title="Магистрали под вашу конфигурацию"
           description="Подскажем совместимый комплект и варианты фитингов"
           category={CatalogCategories.lines}

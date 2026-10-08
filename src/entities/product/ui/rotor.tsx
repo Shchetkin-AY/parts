@@ -6,7 +6,7 @@ import {
   RotorCenterSelection, Size, formatPrice,
   rotorCenterItems
 } from '@/utils'
-import { UiChip } from '@/ui'
+import { UiChip } from '@/components'
 
 export default defineComponent({
   name: 'RotorCenter',

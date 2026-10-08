@@ -1,8 +1,8 @@
 import { PropType, computed, defineComponent, ref, watch } from 'vue'
 
-import { type MenuItem, type MenuPosition, type SelectOption, Size, UiComponentName } from '@/utils'
-import { UiMenu } from '@/ui'
-import { getPrimitiveProp } from '@/ui/shared-props'
+import { MenuItem, MenuPosition, SelectOption, Size, UiComponentName } from '@/utils'
+import { UiMenu } from './menu'
+import { getPrimitiveProp } from './shared-props'
 
 export interface SelectProps {
   modelValue: string

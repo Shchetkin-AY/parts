@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent } from 'vue'
 
-import { UiButton } from '@/ui'
+import { UiButton } from '@/components'
 import { Color, Size } from '@/utils'
 import { useViewportStore } from '@/stores'
 

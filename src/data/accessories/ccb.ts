@@ -1,4 +1,4 @@
-import type { CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
+import { CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
 
 export const ccbMetrics: CcbMetric[] = [
   {

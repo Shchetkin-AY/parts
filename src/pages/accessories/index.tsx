@@ -1,7 +1,7 @@
 import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 
-import { usePageSubnav } from '@/hooks'
-import { Page } from '@/ui'
+import { usePageSubnav } from '@/composables'
+import { Page } from '@/components'
 import { Feedback } from '@/features'
 import { AccessoriesCcb, AccessoriesDiscs, AccessoriesHero, AccessoriesLines, AccessoriesPads } from '@/pages/accessories/ui'
 import { CatalogCategories } from '@/utils'

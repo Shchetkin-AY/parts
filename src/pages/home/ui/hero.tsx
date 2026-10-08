@@ -3,10 +3,10 @@ import { defineComponent } from 'vue'
 
 import { useViewportStore } from '@/stores'
 import { Color } from '@/utils'
-import { UiButton } from '@/ui'
+import { UiButton } from '@/components'
 
 export default defineComponent({
-  name: 'Hero',
+  name: 'HomeHero',
 
   setup() {
     const router = useRouter()

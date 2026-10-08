@@ -1,9 +1,8 @@
 import { computed, defineComponent, ref } from 'vue'
 
 import { axisLabels, pads } from '@/data'
-import SectionHeading from '@/pages/accessories/ui/section-heading'
-import SectionCta from '@/pages/accessories/ui/cta'
 import { CatalogCategories, PadComposition, PadId } from '@/utils'
+import { AccessoriesCta, AccessoriesSectionHeading } from './common'
 
 export default defineComponent({
   name: 'AccessoriesPads',
@@ -21,7 +20,7 @@ export default defineComponent({
 
     const renderHeading = () => {
       return (
-        <SectionHeading
+        <AccessoriesSectionHeading
           eyebrow="Четыре состава"
           title="Колодки"
           description="В каждом комплекте штатно стоит F600, остальные составы подбираются под режим эксплуатации и меняются при переходе на трек."
@@ -190,7 +189,7 @@ export default defineComponent({
           {renderHeading()}
           {renderPanel()}
           {renderCards()}
-          <SectionCta
+          <AccessoriesCta
             title="Подберём состав под ваш режим езды"
             description="Уточним автомобиль, задачи и подходящую колодку"
             category={CatalogCategories.pads}

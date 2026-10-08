@@ -1,10 +1,9 @@
-import { ButtonMode, Color, FeedbackPayload, FeedbackTypes, Size, isEmpty } from '@/utils'
+import { ButtonMode, ChannelsLabels, Color, FeedbackChannels, FeedbackPayload, FeedbackTypes, Size, isEmpty } from '@/utils'
 import { PropType, computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
-import { UiButton, UiTextArea, UiTextField } from '@/ui'
-import { ChannelsLabels, FeedbackChannels } from '@/utils/feedback/channels'
+import { UiButton, UiTextArea, UiTextField } from '@/components'
 
-export default defineComponent({
-  name: 'Form',
+export const FeedbackForm = defineComponent({
+  name: 'FeedbackForm',
 
   props: {
     modelValue: {

@@ -1,4 +1,4 @@
-import type { FeatureItem } from '@/utils'
+import { FeatureItem } from '@/utils'
 
 export const linesFeatures: FeatureItem[] = [
   {

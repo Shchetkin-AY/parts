@@ -1,13 +1,13 @@
 import { PropType, computed, defineComponent } from 'vue'
 
 import {
-  type CatalogItem,
+  CatalogItem,
   SpecItem,
   getWheelDiameterRange
 } from '@/utils'
 
 export default defineComponent({
-  name: 'Specs',
+  name: 'ProductSpecs',
 
   props: {
     value: {

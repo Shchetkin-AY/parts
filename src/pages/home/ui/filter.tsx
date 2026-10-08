@@ -1,10 +1,10 @@
 import { defineComponent, onBeforeMount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCatalogStore } from '@/stores'
-import { UiButton, UiDivider, UiSelect } from '@/ui'
-import Feedback from '@/features/feedback'
+import { UiButton, UiDivider, UiSelect } from '@/components'
+import { Feedback, useCatalogFilterFields } from '@/features'
 
-import { CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery, useCatalogFilterFields } from '@/utils'
+import { CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery } from '@/utils'
 
 const fieldsConfig: FilterFieldProps[] = [
   {

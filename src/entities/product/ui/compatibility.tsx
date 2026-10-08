@@ -3,8 +3,8 @@ import { PropType, computed, defineComponent, onMounted } from 'vue'
 import { useCatalogStore } from '@/stores'
 import { Color, pluralize } from '@/utils'
 import {
-  type CompatibilityEntry,
-  type SelectOption,
+  CompatibilityEntry,
+  SelectOption,
   formatPlatform,
   formatWheel,
   formatYears,
@@ -13,7 +13,7 @@ import {
   useCompatibilityCheck,
   useScrollFade
 } from '@/utils'
-import { UiButton, UiSelect } from '@/ui'
+import { UiButton, UiSelect } from '@/components'
 
 interface SelectFieldConfig {
   label: string
@@ -26,7 +26,7 @@ interface SelectFieldConfig {
 }
 
 export default defineComponent({
-  name: 'Compatibility',
+  name: 'ProductCompatibility',
 
   props: {
     value: {

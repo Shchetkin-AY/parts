@@ -1,6 +1,6 @@
 import { PropType, computed, defineComponent } from 'vue'
 
-import { getPrimitiveProp } from '@/ui/shared-props'
+import { getPrimitiveProp } from './shared-props'
 import { InputType, UiComponentName, isEmpty } from '@/utils'
 
 export interface TextFieldProps {

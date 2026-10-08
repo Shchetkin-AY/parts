@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type {
+import {
   CatalogFilterField,
   CatalogFilterParams,
   CatalogItem,
@@ -264,8 +264,7 @@ export const useCatalogStore = defineStore('catalog', () => {
 
     pendingCompatibilityLoad = import('@/data/compatibility')
       .then(mod => {
-        compatibilityByGoodsId.value =
-          mod.default as unknown as CompatibilityByGoodsId
+        compatibilityByGoodsId.value = mod.compatibility
       })
       .catch((error: unknown) => {
         loadError.value = error

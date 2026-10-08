@@ -1,13 +1,15 @@
 import { defineComponent } from 'vue'
 
 import { ccbFeatures, ccbMetrics, weightCompare, weightCompareNote } from '@/data'
-import SectionHeading from '@/pages/accessories/ui/section-heading'
-import Feature from '@/pages/accessories/ui/feature'
-import SectionCta from '@/pages/accessories/ui/cta'
 import { CatalogCategories, CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
+import {
+  AccessoriesCta,
+  AccessoriesFeature,
+  AccessoriesSectionHeading
+} from './common'
 
 export default defineComponent({
-  name: 'Ccb',
+  name: 'AccessoriesCcb',
 
   emits: [ 'order' ],
 
@@ -102,7 +104,7 @@ export default defineComponent({
 
     const renderFeature = (feature: FeatureItem) => {
       return (
-        <Feature
+        <AccessoriesFeature
           class={`${className}__feature`}
           value={feature}
           key={feature.title}
@@ -120,7 +122,7 @@ export default defineComponent({
 
     const renderCta = () => {
       return (
-        <SectionCta
+        <AccessoriesCta
           title="Карбон-керамика для вашего автомобиля"
           description="Подготовим предложение с учётом конфигурации и задач"
           category={CatalogCategories.ccb}
@@ -132,7 +134,7 @@ export default defineComponent({
 
     return () =>
       <section class={className}>
-        <SectionHeading
+        <AccessoriesSectionHeading
           eyebrow="Опция дисков"
           title="Карбон-керамика CCB"
           description="Кольцо формуется из углеволокна со связующей смолой, рабочая поверхность покрыта карбидом кремния твёрдостью 800 HB."

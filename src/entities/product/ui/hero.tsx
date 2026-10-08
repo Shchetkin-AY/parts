@@ -1,14 +1,8 @@
 import { PropType, computed, defineComponent } from 'vue'
 
-import { type CatalogItem, Color, Icons, getWheelDiameterRange } from '@/utils'
-import { UiIcon } from '@/ui/icon'
+import { CatalogItem, Color, Icons, Stat, getWheelDiameterRange } from '@/utils'
+import { UiIcon } from '@/components'
 import { useViewportStore } from '@/stores'
-
-interface Stat {
-  label: string
-  value: string
-  icon: Icons
-}
 
 export const ProductHero = defineComponent({
   name: 'ProductHero',

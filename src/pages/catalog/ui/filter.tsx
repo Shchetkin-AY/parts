@@ -1,8 +1,8 @@
 import { Fragment, PropType, computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
-import { ButtonMode, CatalogFilterParams, CatalogItem, Color, FilterFieldProps, FilterFields, Size, pluralize, useCatalogFilterFields } from '@/utils'
-import { UiButton, UiDialog, UiDivider, UiSelect } from '@/ui'
+import { ButtonMode, CatalogFilterParams, CatalogItem, Color, FilterFieldProps, FilterFields, Size, pluralize } from '@/utils'
+import { Feedback, useCatalogFilterFields } from '@/features'
+import { UiButton, UiDialog, UiDivider, UiSelect } from '@/components'
 import { useCatalogStore, useViewportStore } from '@/stores'
-import Feedback from '@/features/feedback'
 
 export default defineComponent({
   name: 'CatalogFilter',

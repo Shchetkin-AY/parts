@@ -1,4 +1,4 @@
-import type { DiscSizeRow, FeatureItem, GalleryItem } from '@/utils'
+import { DiscSizeRow, FeatureItem, GalleryItem } from '@/utils'
 
 export const discFeatures: FeatureItem[] = [
   {

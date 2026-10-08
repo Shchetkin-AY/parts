@@ -1,6 +1,6 @@
 import { Color, Icons, UiComponentName, getString } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
-import { UiIcon } from '@/ui'
+import { UiIcon } from '@/components'
 
 export const panelProps = {
   modelValue: {

@@ -7,7 +7,7 @@ import { useViewportStore } from './stores'
 
 import '@/assets/styles/main.scss'
 
-import App from '@/app'
+import { App } from '@/app'
 
 const app = createApp(App)
 

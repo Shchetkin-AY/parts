@@ -1,10 +1,12 @@
 import { defineComponent } from 'vue'
 
 import { discFeatures, discGallery, discSizes, discSizesNote } from '@/data'
-import SectionHeading from '@/pages/accessories/ui/section-heading'
-import Feature from '@/pages/accessories/ui/feature'
-import SectionCta from '@/pages/accessories/ui/cta'
 import { CatalogCategories, FeatureItem } from '@/utils'
+import {
+  AccessoriesCta,
+  AccessoriesFeature,
+  AccessoriesSectionHeading
+} from './common'
 
 export default defineComponent({
   name: 'AccessoriesDiscs',
@@ -16,7 +18,7 @@ export default defineComponent({
 
     const renderHeading = () => {
       return (
-        <SectionHeading
+        <AccessoriesSectionHeading
           eyebrow="282–400 мм"
           title="Тормозные диски"
           description="Составные: рабочее кольцо на алюминиевом центре. Кольца выпускаются в двух чугунных исполнениях и в карбон-керамике. Каждый диск проходит динамическую балансировку."
@@ -26,7 +28,7 @@ export default defineComponent({
 
     const renderFeature = (feature: FeatureItem) => {
       return (
-        <Feature
+        <AccessoriesFeature
           value={feature}
           key={feature.title}
         />
@@ -117,7 +119,7 @@ export default defineComponent({
 
     const renderCta = () => {
       return (
-        <SectionCta
+        <AccessoriesCta
           title="Не уверены, какое исполнение нужно?"
           description="Подскажем по вашей машине и стилю езды"
           category={CatalogCategories.discs}

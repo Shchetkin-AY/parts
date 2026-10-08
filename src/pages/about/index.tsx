@@ -1,4 +1,4 @@
-import { Page } from '@/ui'
+import { Page } from '@/components'
 import { defineComponent } from 'vue'
 
 interface AboutHistoryItem {

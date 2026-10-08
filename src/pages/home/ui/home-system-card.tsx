@@ -1,8 +1,8 @@
-import { Color, SystemCardItem, SystemsSeriesTypes } from '@/utils'
 import { PropType, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import { UiIcon } from '@/ui'
-import { Icons } from '@/utils'
+
+import { UiIcon } from '@/components'
+import { Color, Icons, SystemCardItem, SystemsSeriesTypes } from '@/utils'
 
 const catalogSeriesByType: Record<SystemsSeriesTypes, string> = {
   [SystemsSeriesTypes.s]: 'S-Series',
@@ -11,64 +11,56 @@ const catalogSeriesByType: Record<SystemsSeriesTypes, string> = {
   [SystemsSeriesTypes.sr]: 'SR-Series'
 }
 
-export default defineComponent({
-  name: 'SystemsCard',
+export const HomeSystemCard = defineComponent({
+  name: 'HomeSystemCard',
 
   props: {
-    value: {
+    item: {
       type: Object as PropType<SystemCardItem>,
       required: true
     }
   },
 
   setup(props) {
-    const className = 'systems-card'
+    const className = 'home-system-card'
 
     const renderImage = () => {
       return (
         <div class={`${className}__media`}>
           <img
             class={`${className}__image`}
-            src={props.value.image}
-            alt={props.value.title}
+            src={props.item.image}
+            alt={props.item.title}
             loading="lazy"
             decoding="async"
           />
         </div>
       )
     }
+
     const renderOverlay = () => {
       return <div class={`${className}__overlay`} />
     }
 
-    const renderFeature = (feature: string) => {
+    const renderFeatures = () => {
       return (
-        <div class={`${className}__feature`}>
-          <UiIcon icon={Icons.check} color={Color.primary} />
-          <span>{feature}</span>
+        <div class={`${className}__features`}>
+          {props.item.features.map(feature =>
+            <div class={`${className}__feature`} key={feature}>
+              <UiIcon icon={Icons.check} color={Color.primary} />
+              <span>{feature}</span>
+            </div>)}
         </div>
       )
     }
 
-    const renderHeader = () => {
-      return (
-        <div class={`${className}__header`}>
-          <div class={`${className}__title`}>{props.value.title}</div>
-          <div class={`${className}__subtitle`}>{props.value.subtitle}</div>
-        </div>
-      )
-    }
-    const renderFeatures = () => {
-      return (
-        <div class={`${className}__features`}>
-          {props.value.features.map(feature => renderFeature(feature))}
-        </div>
-      )
-    }
     const renderContent = () => {
       return (
         <div class={`${className}__content`}>
-          {renderHeader()}
+          <header class={`${className}__header`}>
+            <div class={`${className}__title`}>{props.item.title}</div>
+            <div class={`${className}__subtitle`}>{props.item.subtitle}</div>
+          </header>
           {renderFeatures()}
         </div>
       )
@@ -81,7 +73,7 @@ export default defineComponent({
           to={{
             name: 'catalog',
             query: {
-              series: catalogSeriesByType[props.value.type]
+              series: catalogSeriesByType[props.item.type]
             }
           }}
         >

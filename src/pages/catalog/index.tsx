@@ -2,9 +2,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
 import { CatalogFilterField, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, Size, pluralize } from '@/utils'
 import { CatalogSortField, useCatalogStore, useViewportStore } from '@/stores'
-import { Page, UiChip, UiDivider, UiSelect } from '@/ui'
-import { Pagination } from '@/pages/catalog/ui/pagination'
-import Filter from '@/pages/catalog/ui/filter'
+import { Page, UiChip, UiDivider, UiSelect } from '@/components'
+import { CatalogFilter, Pagination } from '@/pages/catalog/ui'
 import { ProductCard } from '@/entities/product'
 
 const catalogItemsPerPage = 12
@@ -206,7 +205,7 @@ export default defineComponent({
     // --- сайдбар (десктоп) / фильтр переиспользуется и в mobile toolbar ---
     const renderFilter = () => {
       return (
-        <Filter
+        <CatalogFilter
           initialParams={routeFilterParams.value}
           items={sourceItems.value}
           onSubmit={handleFilterPayload}

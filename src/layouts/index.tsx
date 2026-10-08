@@ -1,9 +1,8 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
-import Navigation from '@/widgets/navigation'
-import Footer from '@/widgets/footer'
+import { Footer, Navigation } from '@/widgets'
 
-export default defineComponent({
+export const Layout = defineComponent({
   name: 'Layout',
 
   setup() {
@@ -19,3 +18,5 @@ export default defineComponent({
       </div>
   }
 })
+
+export default Layout

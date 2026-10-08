@@ -1,6 +1,6 @@
 import { computed, defineComponent } from 'vue'
 
-import { getPrimitiveProp } from '@/ui/shared-props'
+import { getPrimitiveProp } from './shared-props'
 import { UiComponentName, numberToPxOrString } from '@/utils'
 
 export interface TextAreaProps {

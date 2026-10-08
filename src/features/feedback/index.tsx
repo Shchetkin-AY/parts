@@ -1,8 +1,7 @@
 import { PropType, computed, defineComponent, reactive, ref, watch } from 'vue'
-import { UiButton, UiDialog, UiIcon } from '@/ui'
-import Form from '@/features/feedback/form'
-import { CatalogCategories, CatalogFilterField, CatalogItem, Color, FeedbackPayload, FeedbackTypes, Icons } from '@/utils'
-import { ChannelsLabels, FeedbackChannels } from '@/utils/feedback/channels'
+import { UiButton, UiDialog, UiIcon } from '@/components'
+import { FeedbackForm } from './form'
+import { CatalogCategories, CatalogFilterField, CatalogItem, ChannelsLabels, Color, FeedbackChannels, FeedbackPayload, FeedbackTypes, Icons } from '@/utils'
 
 const className = 'feedback'
 
@@ -103,11 +102,17 @@ export default defineComponent({
     })
 
     watch(
-      () => [ props.modelValue, props.topic, props.category, props.type ],
+      () => [ props.modelValue, props.topic, props.category, props.type, props.filter, props.id ],
       ([ isOpen ]) => {
         if (isOpen) {
           requestState.value = 'idle'
           payload.category = category.value
+          payload.mark = props.filter.mark
+          payload.model = props.filter.model
+          payload.wheelDiameter = props.filter.wheelDiameter
+            ? `R${props.filter.wheelDiameter}`
+            : ''
+          payload.goods_id = props.id
           payload.comment = comment.value
         }
       }
@@ -183,7 +188,7 @@ export default defineComponent({
       return (
         <div class={`${className}__body`}>
           {renderError()}
-          <Form
+          <FeedbackForm
             modelValue={payload}
             onUpdate:modelValue={value => Object.assign(payload, value)}
             type={props.type}

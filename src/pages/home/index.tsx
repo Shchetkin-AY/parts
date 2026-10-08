@@ -1,14 +1,16 @@
 import { defineComponent } from 'vue'
 
-import { useScrollReveal } from '@/hooks'
+import { useScrollReveal } from '@/composables'
 
-import { Page } from '@/ui'
-import Filter from '@/pages/home/ui/filter'
-import Systems from '@/widgets/systems'
-import Benefits from '@/pages/home/ui/benefits'
-import Hero from '@/pages/home/ui/hero'
-import Popular from '@/pages/home/ui/popular'
-import Brands from '@/pages/home/ui/brands'
+import { Page } from '@/components'
+import {
+  HomeBenefits,
+  HomeBrands,
+  HomeFilter,
+  HomeHero,
+  HomePopular,
+  HomeSystems
+} from '@/pages/home/ui'
 
 export default defineComponent({
   name: 'HomePage',
@@ -19,8 +21,8 @@ export default defineComponent({
     const renderLead = () => {
       return (
         <section class="isk-page__section isk-page__section--contained home__group home__group--lead" data-reveal>
-          <Hero />
-          <Filter />
+          <HomeHero />
+          <HomeFilter />
         </section>
       )
     }
@@ -28,7 +30,7 @@ export default defineComponent({
     const renderBenefits = () => {
       return (
         <section class="isk-page__section isk-page__section--contained">
-          <Benefits />
+          <HomeBenefits />
         </section>
       )
     }
@@ -36,7 +38,7 @@ export default defineComponent({
     const renderSystems = () => {
       return (
         <section class="isk-page__section isk-page__section--contained" data-reveal>
-          <Systems />
+          <HomeSystems />
         </section>
       )
     }
@@ -44,7 +46,7 @@ export default defineComponent({
     const renderPopular = () => {
       return (
         <section class="isk-page__section isk-page__section--contained" data-reveal>
-          <Popular />
+          <HomePopular />
         </section>
       )
     }
@@ -52,7 +54,7 @@ export default defineComponent({
     const renderBrands = () => {
       return (
         <section class="isk-page__section isk-page__section--contained" data-reveal>
-          <Brands />
+          <HomeBrands />
         </section>
       )
     }

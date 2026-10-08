@@ -1,9 +1,9 @@
 import { RouterLink, useRoute } from 'vue-router'
 import { Teleport, Transition, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { UiButton } from '@/ui'
-import { usePageSubnav } from '@/hooks'
+import { UiButton } from '@/components'
+import { usePageSubnav } from '@/composables'
 import { Color, Icons, PageSubnavItem } from '@/utils'
-import Feedback from '@/features/feedback'
+import { Feedback } from '@/features'
 
 interface NavigationLink {
   href: string
@@ -26,11 +26,7 @@ const links: NavigationLink[] = [
   }
 ]
 
-// ниже какого порога считаем нав "не поднятым" — не даём тени/бордеру
-// мигать из-за пары пикселей overscroll на мобилках
 const SCROLL_THRESHOLD = 8
-// пока не проскроллили дальше этого значения, не прячем нав вообще —
-// иначе он будет уезжать сразу после хедера на длинных страницах
 const HIDE_THRESHOLD = 120
 
 export default defineComponent({
