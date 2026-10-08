@@ -40,7 +40,7 @@ export default defineComponent({
     const systems = computed(() => {
       const items = catalogStore.items.filter(item => item.price !== 0)
 
-      return pickRandom(items, 5)
+      return pickRandom(items, 8)
     })
 
     watch(systems, () => {
