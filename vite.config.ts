@@ -32,7 +32,7 @@ export default defineConfig({
               cacheName: 'images-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 дней
+                maxAgeSeconds: 30 * 24 * 60 * 60
               }
             }
           },
@@ -130,10 +130,6 @@ export default defineConfig({
             || id.includes('/node_modules/pinia/')
           ) {
             return 'vue-vendor'
-          }
-
-          if (id.includes('/src/components/g/')) {
-            return 'g-components'
           }
 
           if (id.includes('/src/utils/')) {
