@@ -42,7 +42,8 @@ export enum Color {
   phone = 'phone',
   sms = 'sms',
   max = 'max',
-  telegram = 'telegram'
+  telegram = 'telegram',
+  drive2 = 'drive2'
 }
 
 export enum Icons {
@@ -51,6 +52,7 @@ export enum Icons {
   close = 'close',
   delivery = 'delivery',
   'disk-diameter' = 'disk-diameter',
+  drive2 = 'drive2',
   drop = 'drop',
   layers = 'layers',
   menu = 'menu',
@@ -62,6 +64,7 @@ export enum Icons {
   square = 'square',
   support = 'support',
   temperature = 'temperature',
+  telegram = 'telegram',
   tools = 'tools',
   verified = 'verified',
   'wheel-diameter' = 'wheel-diameter',

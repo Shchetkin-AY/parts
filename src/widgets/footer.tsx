@@ -1,17 +1,17 @@
 import { UiButton } from '@/components'
-import Feedback from '@/features/feedback'
-import { Color, FooterColumn, FooterLink, footerColumns } from '@/utils'
-import { defineComponent, ref } from 'vue'
+import { Color, FooterColumn, FooterLink, Icons, Size, footerColumns } from '@/utils'
+import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import { JSX } from 'vue/jsx-runtime'
 
 export default defineComponent({
   name: 'Footer',
 
-  setup() {
-    const className = 'footer'
+  emits: {
+    consult: () => true
+  },
 
-    const showFeedback = ref(false)
+  setup(_, { emit }) {
+    const className = 'footer'
 
     const renderLink = (link: FooterLink) => {
       if (link.external) {
@@ -73,44 +73,26 @@ export default defineComponent({
       )
     }
 
-    const renderTelegramIcon = () => {
-      return (
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M21.9 4.3 2.7 11.7c-1.3.5-1.3 1.3-.2 1.6l4.9 1.5 1.9 5.8c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.2c.3-1.3-.5-1.9-1.4-1.5ZM8.5 13.7l9.7-6.1c.5-.3.9-.1.5.2l-8.1 7.3-.3 3.5Z"
-          />
-        </svg>
-      )
+    const openSocial = (href: string): void => {
+      window.open(href, '_blank', 'noopener,noreferrer')
     }
 
-    const renderDrive2Icon = () => {
-      return <span class={`${className}__social-label`}>D2</span>
-    }
-
-    const renderSocial = (
-      href: string,
-      label: string,
-      icon: () => JSX.Element
-    ) => {
-      return (
-        <a
-          class={`${className}__social`}
-          href={href}
-          aria-label={label}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {icon()}
-        </a>
-      )
-    }
+    const renderSocial = (href: string, label: string, icon: Icons, color: Color) =>
+      <UiButton
+        aria-label={label}
+        size={Size.small}
+        icon={icon}
+        color={color}
+        iconSize={24}
+        width={34}
+        onClick={() => openSocial(href)}
+      />
 
     const renderSocials = () => {
       return (
         <div class={`${className}__socials`}>
-          {renderSocial('https://t.me/iskor', 'Telegram', renderTelegramIcon)}
-          {renderSocial('https://drive2.ru/iskor', 'DRIVE2', renderDrive2Icon)}
+          {renderSocial('https://t.me/iskor', 'Telegram', Icons.telegram, Color.telegram)}
+          {renderSocial('https://drive2.ru/iskor', 'DRIVE2', Icons.drive2, Color.drive2)}
         </div>
       )
     }
@@ -121,7 +103,7 @@ export default defineComponent({
           <UiButton
             label="Получить консультацию"
             color={Color.primary}
-            onClick={() => showFeedback.value = true}
+            onClick={() => emit('consult')}
           />
         </div>
       )
@@ -146,15 +128,6 @@ export default defineComponent({
       )
     }
 
-    const renderFeedback = () => {
-      return (
-        <Feedback
-          v-model={showFeedback.value}
-          topic="Запрос консультации"
-        />
-      )
-    }
-
     return () => {
       return (
         <footer class={className}>
@@ -163,7 +136,6 @@ export default defineComponent({
             {renderColumns()}
           </div>
           {renderBottom()}
-          {renderFeedback()}
         </footer>
       )
     }

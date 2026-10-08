@@ -56,6 +56,9 @@ $_name: "isk-button";
     max-height: 34px;
 
     height: 34px;
+    min-width: 34px;
+    width: unset;
+
     & > .#{$_name}__content {
       & > .#{$_name}__label {
         @include mixins.font(10px, 600);

@@ -85,35 +85,7 @@ $_name: "footer";
   }
 
   &__social {
-    color: var(--color-text-secondary);
-
     border-radius: 50%;
-
-    background-color: var(--color-surface-3);
-
-    display: grid;
-    place-items: center;
-
-    transition:
-      color var(--transition-fast),
-      background-color var(--transition-fast);
-
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-primary);
-
-      background-color: var(--color-surface);
-    }
-
-    @include mixins.absolute-height(36px);
-    @include mixins.absolute-width(36px);
-  }
-
-  &__social-label {
-    font-weight: 700;
-
-    @include mixins.font(11px, 700);
   }
 
   &__columns {
