@@ -35,6 +35,91 @@ $_card-name: "home-system-card";
       grid-template-columns: 1fr;
     }
   }
+
+  &__carousel {
+    position: relative;
+
+    min-width: 0;
+    width: min(100%, var(--layout-width));
+  }
+
+  &__arrow {
+    color: var(--color-text-primary);
+
+    border: 0;
+
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    transition: opacity var(--transition-base);
+
+    cursor: pointer;
+
+    width: 60px;
+
+    z-index: 2;
+
+    &--prev {
+      justify-content: start;
+
+      left: 0;
+    }
+
+    &--next {
+      justify-content: end;
+
+      right: 0;
+    }
+
+    &--hidden {
+      opacity: 0;
+
+      pointer-events: none;
+    }
+  }
+
+  &__arrow-icon {
+    pointer-events: none;
+
+    height: 24px;
+    width: 24px;
+  }
+
+  @media (width <= 600px) {
+    &__cards {
+      grid-auto-columns: 100%;
+      grid-auto-flow: column;
+      grid-template-columns: none;
+      gap: var(--space-md);
+
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      & > * {
+        min-width: 0;
+
+        scroll-snap-align: start;
+      }
+
+      @media (pointer: coarse) {
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+      }
+    }
+  }
 }
 
 .#{$_card-name} {
