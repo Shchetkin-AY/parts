@@ -51,7 +51,7 @@ export const HomeSystems = defineComponent({
           }}
           type="button"
           aria-label={direction === 'prev' ? 'Прокрутить назад' : 'Прокрутить вперёд'}
-          aria-hidden={hidden}
+          disabled={hidden}
           onClick={handler}
         >
           <svg
