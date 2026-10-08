@@ -12,3 +12,10 @@ export enum CatalogFilterField {
   series = 'series',
   wheelDiameter = 'wheelDiameter'
 }
+
+export enum CatalogSortField {
+  popularity = 'popularity',
+  priceAsc = 'priceAsc',
+  priceDesc = 'priceDesc',
+  discDiameter = 'discDiameter'
+}

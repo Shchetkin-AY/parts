@@ -1,4 +1,4 @@
-import { CatalogItem, Color, Icons, Size, formatPrice } from '@/utils'
+import { CatalogItem, Color, Icons, Size, formatPrice, purchaseKitItems } from '@/utils'
 import { PropType, computed, defineComponent } from 'vue'
 import { UiButton } from '@/components'
 import { UiIcon } from '@/components'
@@ -9,14 +9,6 @@ export interface PurchaseOption {
   label: string
   price: number
 }
-
-const purchaseKitItems = [
-  'Суппорты: 2 шт',
-  'Тормозные диски: 2 шт',
-  'Колодки: комплект на ось',
-  'Крепежный комплект: комплект на ось',
-  'Тормозные магистрали: комплект на ось'
-]
 
 export const Purchase = defineComponent({
   name: 'ProductPurchase',

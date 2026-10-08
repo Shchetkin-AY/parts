@@ -2,14 +2,12 @@ import { PropType, defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import { UiIcon } from '@/components'
-import { Color, Icons, SystemCardItem, SystemsSeriesTypes } from '@/utils'
-
-const catalogSeriesByType: Record<SystemsSeriesTypes, string> = {
-  [SystemsSeriesTypes.s]: 'S-Series',
-  [SystemsSeriesTypes.r]: 'R-Series',
-  [SystemsSeriesTypes.n]: 'N-Series',
-  [SystemsSeriesTypes.sr]: 'SR-Series'
-}
+import {
+  Color,
+  Icons,
+  SystemCardItem,
+  catalogSeriesByType
+} from '@/utils'
 
 export const HomeSystemCard = defineComponent({
   name: 'HomeSystemCard',

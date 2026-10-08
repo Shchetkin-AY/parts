@@ -1,4 +1,5 @@
-import { SystemCardItem, SystemsSeriesTypes } from '@/utils'
+import { SystemsSeriesTypes } from '../enums'
+import { SystemCardItem } from '../interfaces'
 
 export const systemCardItems: SystemCardItem[] = [
   {
@@ -35,3 +36,10 @@ export const systemCardItems: SystemCardItem[] = [
     ]
   }
 ]
+
+export const catalogSeriesByType: Record<SystemsSeriesTypes, string> = {
+  [SystemsSeriesTypes.s]: 'S-Series',
+  [SystemsSeriesTypes.r]: 'R-Series',
+  [SystemsSeriesTypes.n]: 'N-Series',
+  [SystemsSeriesTypes.sr]: 'SR-Series'
+}

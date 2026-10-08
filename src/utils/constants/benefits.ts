@@ -1,4 +1,5 @@
-import { BenefitItem, Icons } from '@/utils'
+import { Icons } from '../enums'
+import { BenefitItem } from '../interfaces'
 
 export const benefitItems: BenefitItem[] = [
   {

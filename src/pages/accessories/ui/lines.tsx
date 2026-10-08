@@ -1,7 +1,6 @@
 import { defineComponent } from 'vue'
 
-import { linesFeatures } from '@/data'
-import { CatalogCategories } from '@/utils'
+import { CatalogCategories, linesFeatures } from '@/utils'
 import {
   AccessoriesCta,
   AccessoriesFeature,

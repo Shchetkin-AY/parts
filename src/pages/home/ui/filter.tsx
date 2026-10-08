@@ -4,28 +4,13 @@ import { useCatalogStore } from '@/stores'
 import { UiButton, UiDivider, UiSelect } from '@/components'
 import { Feedback, useCatalogFilterFields } from '@/features'
 
-import { CatalogFilterField, Color, FilterFieldProps, Size, buildCatalogFilterQuery } from '@/utils'
-
-const fieldsConfig: FilterFieldProps[] = [
-  {
-    field: CatalogFilterField.mark,
-    label: 'Марка',
-    ariaLabel: 'Марка автомобиля',
-    placeholder: 'Выберите марку'
-  },
-  {
-    field: CatalogFilterField.model,
-    label: 'Модель',
-    ariaLabel: 'Модель автомобиля',
-    placeholder: 'Выберите модель'
-  },
-  {
-    field: CatalogFilterField.wheelDiameter,
-    label: 'Диаметр колёс',
-    ariaLabel: 'Диаметр колёс',
-    placeholder: 'Выберите диаметр колёс'
-  }
-]
+import {
+  Color,
+  FilterFieldProps,
+  Size,
+  buildCatalogFilterQuery,
+  homeFilterFieldsConfig
+} from '@/utils'
 
 export default defineComponent({
   name: 'VehicleFinder',
@@ -35,7 +20,7 @@ export default defineComponent({
     const catalogStore = useCatalogStore()
 
     const { params, optionsByField, filteredItems } = useCatalogFilterFields(
-      fieldsConfig,
+      homeFilterFieldsConfig,
       () => catalogStore.compatibleItems
     )
 
@@ -90,7 +75,7 @@ export default defineComponent({
       </div>
 
     const renderFields = () => {
-      return fieldsConfig.map(field => {
+      return homeFilterFieldsConfig.map(field => {
         return renderField(field)
       })
     }

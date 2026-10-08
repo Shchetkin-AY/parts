@@ -1,7 +1,13 @@
 import { defineComponent } from 'vue'
 
-import { discFeatures, discGallery, discSizes, discSizesNote } from '@/data'
-import { CatalogCategories, FeatureItem } from '@/utils'
+import {
+  CatalogCategories,
+  FeatureItem,
+  discFeatures,
+  discGallery,
+  discSizes,
+  discSizesNote
+} from '@/utils'
 import {
   AccessoriesCta,
   AccessoriesFeature,

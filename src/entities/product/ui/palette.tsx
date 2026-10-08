@@ -7,19 +7,13 @@ import {
   PaletteSelection,
   Size,
   formatPrice,
+  paletteGroupDescriptions,
   paletteGroupPrices,
   paletteGroups,
-  paletteItemsByGroup
+  paletteItemsByGroup,
+  paletteSinglePreviewItems
 } from '@/utils'
 import { UiChip } from '@/components'
-
-const singlePreviewItems = new Set([ 'tiffany', 'pink', 'green', 'gold', 'purple' ])
-
-const groupDescriptions: Record<PaletteGroupTypes, string> = {
-  [PaletteGroupTypes.base]: 'Вакуумное покрытие + анодирование, цвет в самом металле. Не выцветает и не отслаивается: цвет живёт в металле, а не на нём.',
-  [PaletteGroupTypes.custom]: 'Вакуумное напыление металлов — фирменный переливающийся цвет. Не окисляется, честно передаёт цвет металла, решает проблему облезающей краски.',
-  [PaletteGroupTypes.cerakote]: 'Cerackote — керамика (США). Матовая керамика с металлическими частицами — премиум-отделка. Устойчивость к химии и коррозии.'
-}
 
 export default defineComponent({
   name: 'ProductPalette',
@@ -51,7 +45,7 @@ export default defineComponent({
         `${basePath}/2.webp`
       ]
 
-      if (singlePreviewItems.has(item.id)) {
+      if (paletteSinglePreviewItems.has(item.id)) {
         images.splice(2)
       }
 
@@ -155,7 +149,7 @@ export default defineComponent({
     const renderGroupDescription = (group: PaletteGroupTypes) => {
       return (
         <span class={`${className}__group-description`}>
-          {groupDescriptions[group]}
+          {paletteGroupDescriptions[group]}
         </span>
       )
     }

@@ -1,14 +1,14 @@
 import { computed, reactive, watch } from 'vue'
 
 import { useCatalogStore } from '@/stores'
-import { CatalogFilterField, CatalogFilterParams, CatalogItem, FilterFieldProps, SelectOption } from '@/utils'
-
-const emptyFilterParams: CatalogFilterParams = {
-  [CatalogFilterField.mark]: '',
-  [CatalogFilterField.model]: '',
-  [CatalogFilterField.series]: '',
-  [CatalogFilterField.wheelDiameter]: ''
-}
+import {
+  CatalogFilterField,
+  CatalogFilterParams,
+  CatalogItem,
+  FilterFieldProps,
+  SelectOption,
+  catalogEmptyFilterParams
+} from '@/utils'
 
 export const useCatalogFilterFields = (
   fieldsConfig: FilterFieldProps[],
@@ -16,7 +16,7 @@ export const useCatalogFilterFields = (
   initial?: () => Partial<CatalogFilterParams>
 ) => {
   const catalogStore = useCatalogStore()
-  const params = reactive<CatalogFilterParams>({ ...emptyFilterParams })
+  const params = reactive<CatalogFilterParams>({ ...catalogEmptyFilterParams })
 
   if (initial) {
     watch(initial, value => {

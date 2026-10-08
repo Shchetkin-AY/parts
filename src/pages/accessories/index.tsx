@@ -5,7 +5,7 @@ import { Page } from '@/components'
 import { Feedback } from '@/features'
 import { AccessoriesCcb, AccessoriesDiscs, AccessoriesHero, AccessoriesLines, AccessoriesPads } from '@/pages/accessories/ui'
 import { CatalogCategories } from '@/utils'
-import { subnavItems } from '@/data'
+import { subnavItems } from '@/utils'
 
 export default defineComponent({
   name: 'AccessoriesPage',

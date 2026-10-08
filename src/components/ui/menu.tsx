@@ -1,7 +1,13 @@
 import { type CSSProperties, PropType, Teleport, computed, defineComponent, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
 
 import { getPrimitiveProp } from './shared-props'
-import { MenuItem, MenuItemRole, MenuPosition, Size } from '@/utils'
+import {
+  MenuItem,
+  MenuItemRole,
+  MenuPosition,
+  Size,
+  menuViewportMargin
+} from '@/utils'
 
 export interface MenuProps {
   anchorElement?: HTMLElement | null
@@ -37,8 +43,6 @@ export const menuProps = {
     default: null
   }
 }
-
-const viewportMargin = 8
 
 export const UiMenu = defineComponent({
   name: 'UiMenu',
@@ -105,8 +109,8 @@ export const UiMenu = defineComponent({
         const menuBounds = menuReference.value.getBoundingClientRect()
         let resolvedX = props.menuPosition.x
         let resolvedY = props.menuPosition.y
-        const fitsRight = resolvedX + menuBounds.width + viewportMargin <= window.innerWidth
-        const fitsBottom = resolvedY + menuBounds.height + viewportMargin <= window.innerHeight
+        const fitsRight = resolvedX + menuBounds.width + menuViewportMargin <= window.innerWidth
+        const fitsBottom = resolvedY + menuBounds.height + menuViewportMargin <= window.innerHeight
 
         if (!fitsRight) {
           resolvedX = props.menuPosition.x - menuBounds.width
@@ -116,12 +120,12 @@ export const UiMenu = defineComponent({
           resolvedY = props.menuPosition.y - menuBounds.height
         }
 
-        if (resolvedX < viewportMargin) {
-          resolvedX = viewportMargin
+        if (resolvedX < menuViewportMargin) {
+          resolvedX = menuViewportMargin
         }
 
-        if (resolvedY < viewportMargin) {
-          resolvedY = viewportMargin
+        if (resolvedY < menuViewportMargin) {
+          resolvedY = menuViewportMargin
         }
 
         resolvedMenuPosition.value = {

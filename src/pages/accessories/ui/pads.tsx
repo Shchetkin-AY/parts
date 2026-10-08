@@ -1,7 +1,6 @@
 import { computed, defineComponent, ref } from 'vue'
 
-import { axisLabels, pads } from '@/data'
-import { CatalogCategories, PadComposition, PadId } from '@/utils'
+import { CatalogCategories, PadComposition, PadId, axisLabels, pads } from '@/utils'
 import { AccessoriesCta, AccessoriesSectionHeading } from './common'
 
 export default defineComponent({

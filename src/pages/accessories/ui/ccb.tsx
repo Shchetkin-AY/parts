@@ -1,7 +1,15 @@
 import { defineComponent } from 'vue'
 
-import { ccbFeatures, ccbMetrics, weightCompare, weightCompareNote } from '@/data'
-import { CatalogCategories, CcbMetric, FeatureItem, WeightCompareItem } from '@/utils'
+import {
+  CatalogCategories,
+  CcbMetric,
+  FeatureItem,
+  WeightCompareItem,
+  ccbFeatures,
+  ccbMetrics,
+  weightCompare,
+  weightCompareNote
+} from '@/utils'
 import {
   AccessoriesCta,
   AccessoriesFeature,

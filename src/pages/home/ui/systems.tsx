@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 
-import { systemCardItems } from '@/data'
+import { systemCardItems } from '@/utils'
 import { HomeSystemCard } from './home-system-card'
 
 export const HomeSystems = defineComponent({

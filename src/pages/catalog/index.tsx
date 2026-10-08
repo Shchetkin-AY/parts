@@ -1,46 +1,24 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue'
-import { CatalogFilterField, CatalogFilterParams, CatalogFilterSubmitPayload, CatalogItem, Color, Size, pluralize } from '@/utils'
-import { CatalogSortField, useCatalogStore, useViewportStore } from '@/stores'
+import {
+  CatalogFilterField,
+  CatalogFilterParams,
+  CatalogFilterSubmitPayload,
+  CatalogItem,
+  CatalogSortField,
+  Color,
+  Size,
+  catalogEmptyFilterParams,
+  catalogFilterFieldLabels,
+  catalogItemsPerPage,
+  catalogMobileBreakpoint,
+  catalogSortOptions,
+  pluralize
+} from '@/utils'
+import { useCatalogStore, useViewportStore } from '@/stores'
 import { Page, UiChip, UiDivider, UiSelect } from '@/components'
 import { CatalogFilter, Pagination } from '@/pages/catalog/ui'
 import { ProductCard } from '@/entities/product'
-
-const catalogItemsPerPage = 12
-const mobileBreakpoint = 1024
-
-const sortOptions = [
-  {
-    label: 'По популярности',
-    value: CatalogSortField.popularity
-  },
-  {
-    label: 'Сначала дешевле',
-    value: CatalogSortField.priceAsc
-  },
-  {
-    label: 'Сначала дороже',
-    value: CatalogSortField.priceDesc
-  },
-  {
-    label: 'По диаметру диска',
-    value: CatalogSortField.discDiameter
-  }
-]
-
-const filterFieldLabels: Record<CatalogFilterField, string> = {
-  [CatalogFilterField.mark]: 'Марка',
-  [CatalogFilterField.model]: 'Модель',
-  [CatalogFilterField.series]: 'Серия',
-  [CatalogFilterField.wheelDiameter]: 'Диаметр колёс'
-}
-
-const emptyFilterParams: CatalogFilterParams = {
-  [CatalogFilterField.mark]: '',
-  [CatalogFilterField.model]: '',
-  [CatalogFilterField.series]: '',
-  [CatalogFilterField.wheelDiameter]: ''
-}
 
 const getRouteQueryValue = (routeQuery: Record<string, unknown>, field: CatalogFilterField): string => {
   const value = routeQuery[field]
@@ -68,10 +46,10 @@ export default defineComponent({
     const filteredItems = ref<CatalogItem[]>([])
     const currentPage = ref(1)
     const sortField = ref<CatalogSortField>(CatalogSortField.popularity)
-    const filterParams = ref<CatalogFilterParams>({ ...emptyFilterParams })
+    const filterParams = ref<CatalogFilterParams>({ ...catalogEmptyFilterParams })
 
     // --- вьюпорт ---
-    const isMobile = computed(() => viewportStore.size.width < mobileBreakpoint)
+    const isMobile = computed(() => viewportStore.size.width < catalogMobileBreakpoint)
 
     // --- источник данных ---
     const sourceItems = computed<CatalogItem[]>(() => catalogStore.items)
@@ -91,7 +69,7 @@ export default defineComponent({
         .filter(([ , value ]) => Boolean(value))
         .map(([ field, value ]) => ({
           field: field as CatalogFilterField,
-          label: filterFieldLabels[field as CatalogFilterField],
+          label: catalogFilterFieldLabels[field as CatalogFilterField],
           value
         }))
     })
@@ -243,7 +221,7 @@ export default defineComponent({
           v-model={sortField.value}
           ariaLabel="Сортировка"
           size={Size.small}
-          options={sortOptions}
+          options={catalogSortOptions}
         />
       )
     }

@@ -4,6 +4,7 @@ import {
   CatalogFilterField,
   CatalogFilterParams,
   CatalogItem,
+  CatalogSortField,
   SelectOption
 } from '@/utils'
 import { CatalogFilterField as FilterField } from '@/utils'
@@ -103,13 +104,6 @@ export const withZeroPriceLast = (items: readonly CatalogItem[]): CatalogItem[] 
   }
 
   return [ ...regular, ...zeroPrice ]
-}
-
-export enum CatalogSortField {
-  popularity = 'popularity',
-  priceAsc = 'priceAsc',
-  priceDesc = 'priceDesc',
-  discDiameter = 'discDiameter'
 }
 
 interface CompatibilityEntry {

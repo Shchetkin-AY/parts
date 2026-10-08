@@ -5,12 +5,11 @@ import {
   CatalogItem, Color,
   formatPrice,
   getWheelDiameterRange,
-  pluralize
+  pluralize,
+  productCardSwipeThreshold
 } from '@/utils'
 
 import { UiChip } from '@/components'
-
-const SWIPE_THRESHOLD = 40
 
 export const ProductCard = defineComponent({
 
@@ -121,7 +120,7 @@ export const ProductCard = defineComponent({
       const touch = e.changedTouches[0]
       const deltaX = touch.clientX - touchStartX.value
 
-      if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+      if (Math.abs(deltaX) >= productCardSwipeThreshold) {
         e.stopPropagation()
         if (deltaX < 0) {
           setActiveImage(activeImage.value + 1)

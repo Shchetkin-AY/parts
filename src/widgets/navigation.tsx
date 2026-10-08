@@ -2,32 +2,16 @@ import { RouterLink, useRoute } from 'vue-router'
 import { Teleport, Transition, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { UiButton } from '@/components'
 import { usePageSubnav } from '@/composables'
-import { Color, Icons, PageSubnavItem } from '@/utils'
+import {
+  Color,
+  Icons,
+  NavigationLink,
+  PageSubnavItem,
+  navigationHideThreshold,
+  navigationLinks,
+  navigationScrollThreshold
+} from '@/utils'
 import { Feedback } from '@/features'
-
-interface NavigationLink {
-  href: string
-  isActive?: boolean
-  label: string
-}
-
-const links: NavigationLink[] = [
-  {
-    label: 'Главная',
-    href: '/'
-  },
-  {
-    label: 'Комплекты',
-    href: '/catalog'
-  },
-  {
-    label: 'Комплектующие',
-    href: '/accessories'
-  }
-]
-
-const SCROLL_THRESHOLD = 8
-const HIDE_THRESHOLD = 120
 
 export default defineComponent({
   name: 'Navigation',
@@ -54,9 +38,9 @@ export default defineComponent({
     const updateScrollState = (): void => {
       const currentY = window.scrollY
 
-      isScrolled.value = currentY > SCROLL_THRESHOLD
+      isScrolled.value = currentY > navigationScrollThreshold
 
-      if (currentY <= HIDE_THRESHOLD) {
+      if (currentY <= navigationHideThreshold) {
         isHidden.value = false
       } else if (currentY > lastScrollY) {
         isHidden.value = true
@@ -176,7 +160,7 @@ export default defineComponent({
 
     const renderLinks = () =>
       <div class="navigation__links">
-        {links.map(link => renderLink(link))}
+        {navigationLinks.map(link => renderLink(link))}
       </div>
 
     const renderPhoneButton = () => {
@@ -259,7 +243,7 @@ export default defineComponent({
       )
     }
     const renderMenuLinks = () => {
-      return links.map(link => {
+      return navigationLinks.map(link => {
         return (
           <div class="navigation__drawer-item" onClick={closeMenu}>
             {renderLink(link)}
