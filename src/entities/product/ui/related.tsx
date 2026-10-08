@@ -7,7 +7,7 @@ import {
 
 import { useHorizontalCarousel } from '@/composables'
 import { CatalogItem } from '@/utils'
-import { ProductCard } from './card'
+import { ProductCard } from '@/entities/product'
 
 export const ProductRelated = defineComponent({
   name: 'ProductRelated',
