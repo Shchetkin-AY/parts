@@ -1,13 +1,12 @@
 @use "root";
 @use "layouts";
-@use "ui";
+@use "components/ui";
 @use "entities/product";
 @use "features/feedback";
-@use "features/groupButton";
 @use "widgets";
 @use "pages";
 @use "mixins";
-@use "rivals";
+@use "scroll-reveal";
 
 html {
   scroll-behavior: smooth;

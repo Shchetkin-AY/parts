@@ -1,0 +1,149 @@
+@use "mixins" as mixins;
+
+$_name: "home-systems";
+$_card-name: "home-system-card";
+
+.#{$_name} {
+  display: grid;
+  justify-items: center;
+
+  &__content {
+    display: grid;
+    gap: var(--space-sm);
+    align-items: center;
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__title {
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+
+    text-align: left;
+
+    @include mixins.font(20px, 600);
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+
+    width: min(100%, var(--layout-width));
+
+    @media (width <= 1100px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.#{$_card-name} {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  background-color: var(--colors-surface);
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-border-strong);
+
+    box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+
+    transform: translateY(-4px);
+  }
+
+  &__media {
+    display: grid;
+    place-items: center;
+
+    position: absolute;
+
+    z-index: 0;
+    inset: 0;
+  }
+
+  &__image {
+    opacity: 0.72;
+
+    transition:
+      transform var(--transition-slow),
+      opacity var(--transition-slow);
+    object-fit: cover;
+
+    mask-image: radial-gradient(ellipse at center, black 48%, transparent 82%);
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__overlay {
+    background:
+      linear-gradient(180deg, rgb(0 0 0 / 18%) 0%, rgb(0 0 0 / 50%) 58%, rgb(0 0 0 / 82%) 100%),
+      radial-gradient(circle at top, rgb(255 255 255 / 3%), transparent 45%);
+
+    position: absolute;
+
+    z-index: 1;
+    inset: 0;
+  }
+
+  &__content {
+    padding: var(--space-sm);
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--space-sm);
+
+    position: relative;
+
+    z-index: 2;
+
+    @include mixins.absolute-height(100%);
+  }
+
+  &__header {
+    display: grid;
+    gap: 2px;
+    align-self: start;
+  }
+
+  &__title {
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+
+    @include mixins.font(16px, 500);
+  }
+
+  &__subtitle {
+    color: var(--color-text-secondary);
+
+    @include mixins.font(12px);
+  }
+
+  &__features {
+    display: grid;
+    gap: 4px;
+    align-items: center;
+    align-self: end;
+  }
+
+  &__feature {
+    color: var(--color-text-secondary);
+
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: center;
+
+    @include mixins.font(12px);
+  }
+
+  @include mixins.absolute-height(400px);
+}
