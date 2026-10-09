@@ -30,6 +30,11 @@ const routes: RouteRecordRaw[] = [
         path: 'about',
         name: 'about',
         component: () => import('@/pages/about')
+      },
+      {
+        path: 'personal-data',
+        name: 'personal-data',
+        component: () => import('@/pages/personal-data')
       }
     ]
   }

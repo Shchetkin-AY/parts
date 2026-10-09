@@ -1,0 +1,23 @@
+$_name: "personal-data";
+
+.#{$_name} {
+  &__content {
+    display: grid;
+    grid-column: content;
+    gap: var(--space-md);
+
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  &__text {
+    color: var(--color-text-muted);
+  }
+}
