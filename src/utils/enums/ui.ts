@@ -92,5 +92,6 @@ export enum UiComponentName {
   select = 'isk-select',
   'text-area' = 'isk-text-area',
   'text-field' = 'isk-text-field',
-  panel = 'isk-panel'
+  panel = 'isk-panel',
+  checkbox = 'isk-checkbox'
 }
