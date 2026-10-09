@@ -66,18 +66,7 @@ export const footerColumns: FooterColumn[] = [
   },
   {
     title: 'Контакты',
-    links: [
-      {
-        label: 'sales@iskor.ru',
-        href: 'mailto:sales@iskor.ru',
-        external: true
-      },
-      {
-        label: '+7 (800) 123-45-67',
-        href: 'tel:+78001234567',
-        external: true
-      }
-    ]
+    links: []
   }
 ]
 

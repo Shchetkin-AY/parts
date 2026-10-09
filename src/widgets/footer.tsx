@@ -91,8 +91,8 @@ export default defineComponent({
     const renderSocials = () => {
       return (
         <div class={`${className}__socials`}>
-          {renderSocial('https://t.me/iskor', 'Telegram', Icons.telegram, Color.telegram)}
-          {renderSocial('https://drive2.ru/iskor', 'DRIVE2', Icons.drive2, Color.drive2)}
+          {renderSocial('https://t.me/iskor_v', 'Telegram', Icons.telegram, Color.telegram)}
+          {renderSocial('https://drive2.ru/users/juezeppe', 'DRIVE2', Icons.drive2, Color.drive2)}
         </div>
       )
     }
