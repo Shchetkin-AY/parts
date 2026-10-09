@@ -139,6 +139,28 @@ $_name: "feedback";
       gap: var(--space-xs);
     }
 
+    &-consent {
+      color: var(--color-text-muted);
+
+      display: flex;
+      gap: var(--space-xs);
+      align-items: center;
+
+      &-link {
+        color: var(--color-primary);
+
+        display: flex;
+
+        &:hover {
+          color: var(--color-primary-hover);
+        }
+
+        @include mixins.font(11px);
+      }
+
+      @include mixins.font(12px, 400, 16px);
+    }
+
     @media screen and (width <= 768px) {
       gap: var(--space-sm);
     }

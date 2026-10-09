@@ -1,6 +1,6 @@
 import { ButtonMode, ChannelsLabels, Color, FeedbackChannels, FeedbackPayload, FeedbackTypes, Size, isEmpty } from '@/utils'
 import { PropType, computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
-import { UiButton, UiTextArea, UiTextField } from '@/components'
+import { UiButton, UiCheckbox, UiTextArea, UiTextField } from '@/components'
 
 export const FeedbackForm = defineComponent({
   name: 'FeedbackForm',
@@ -33,6 +33,7 @@ export const FeedbackForm = defineComponent({
     })
     const isNameTouched = ref(false)
     const isPhoneTouched = ref(false)
+    const hasPersonalDataConsent = ref(false)
 
     const proxy = computed({
       get: () => props.modelValue,
@@ -82,7 +83,7 @@ export const FeedbackForm = defineComponent({
       return !isEmpty(proxy.value.name)
     })
     const validation = computed<boolean>(() => {
-      return isValidName.value && isValidPhone.value
+      return isValidName.value && isValidPhone.value && hasPersonalDataConsent.value
     })
     const nameHint = computed(() => {
       return isNameTouched.value ? errors.name : ''
@@ -198,6 +199,33 @@ export const FeedbackForm = defineComponent({
       )
     }
 
+    const renderPersonalDataCheck = () => {
+      return (
+        <UiCheckbox
+          v-model={hasPersonalDataConsent.value}
+          label={'Даю согласие на обработку персональных данных'}
+          ariaLabel="Согласие на обработку персональных данных"
+          disabled={props.loading}
+        />
+      )
+    }
+    // TODO разблокировать после добавления текста на страницу /personal-data
+    // const renderPersonalDataLink = () => {
+    //   return (
+    //     <RouterLink class={`${className}-consent-link`} to="/personal-data" target="_blank" rel="noopener noreferrer">
+    //       согласие на обработку персональных данных
+    //     </RouterLink>
+    //   )
+    // }
+    const renderPersonalDataConsent = () => {
+      return (
+        <div class={`${className}-consent`}>
+          {renderPersonalDataCheck()}
+          {/* {renderPersonalDataLink()} */}
+        </div>
+      )
+    }
+
     return () => {
       return (
         <div class={className} >
@@ -206,6 +234,7 @@ export const FeedbackForm = defineComponent({
           {renderNameField()}
           {renderPhoneField()}
           {renderCommentField()}
+          {renderPersonalDataConsent()}
         </div>
       )
     }
