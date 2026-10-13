@@ -340,7 +340,7 @@ export const useCatalogStore = defineStore('catalog', () => {
       const isWheelDiameterMatched =
         excludedField === FilterField.wheelDiameter ||
         !wheelDiameterParam ||
-        getWheelDiameterValues(item.wheelDiameter).includes(wheelDiameterValue)
+        getWheelDiameterValues(item.wheelDiameter).some(diameter => diameter <= wheelDiameterValue)
 
       return isSeriesMatched && isWheelDiameterMatched
     })
