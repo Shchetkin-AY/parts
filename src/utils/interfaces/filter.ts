@@ -1,20 +1,21 @@
 import { CatalogFilterField } from '../enums'
-
-export interface CatalogFilterItem {
-  discDiameterMm: number | string
-  vehicleBrand: number | string
-  vehicleModel: number | string,
-  wheelDiameterInch: number | string
-}
+import { CatalogFilterItem } from '../types'
 
 export interface CatalogFilterParams {
-  [CatalogFilterField.diameter]?: string
   [CatalogFilterField.mark]?: string
-  [CatalogFilterField.model]?: string,
+  [CatalogFilterField.model]?: string
+  [CatalogFilterField.series]?: string
   [CatalogFilterField.wheelDiameter]?: string
 }
 
 export interface CatalogFilterSubmitPayload<Item = CatalogFilterItem> {
   items: Item[]
   params: CatalogFilterParams
+}
+
+export interface FilterFieldProps {
+  field: CatalogFilterField
+  label: string
+  ariaLabel: string
+  placeholder: string
 }

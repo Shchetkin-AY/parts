@@ -1,0 +1,73 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "accessories-page";
+
+.#{$_name} {
+  &__eyebrow {
+    color: var(--color-primary);
+    text-transform: uppercase;
+
+    max-width: 100%;
+    overflow-wrap: break-word;
+
+    @include mixins.font(10px, 500);
+  }
+
+  &__heading {
+    padding-bottom: var(--space-md);
+
+    border-bottom: 1px solid var(--color-border);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+    gap: var(--space-xxl);
+    align-items: start;
+
+    &-copy {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    & h2 {
+      color: var(--color-text-primary);
+
+      @include mixins.font(clamp(30px, 4vw, 48px), 500, 1);
+    }
+
+    & > p {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(15px, 400, 1.7);
+    }
+
+    @media screen and (width <= 760px) {
+      gap: var(--space-md);
+    }
+  }
+
+  &__feature {
+    display: grid;
+    gap: var(--space-sm);
+
+    height: 100%;
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(22px, 500);
+    }
+
+    &-description {
+      color: var(--color-text-muted);
+
+      @include mixins.font(15px);
+    }
+  }
+
+  @media (width <= 760px) {
+    &__heading {
+      grid-template-columns: 1fr;
+    }
+  }
+}

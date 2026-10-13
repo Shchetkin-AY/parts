@@ -1,0 +1,64 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "product-panels";
+
+.#{$_name} {
+  display: grid;
+
+  &__specs {
+    display: grid;
+    gap: 0;
+
+    &-row {
+      padding-top: 12px;
+      padding-bottom: 12px;
+
+      border-bottom: 1px solid var(--color-border-soft);
+
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: var(--space-md);
+
+      &:first-of-type {
+        padding-top: 0;
+      }
+
+      &:last-of-type {
+        padding-bottom: 0;
+
+        border-bottom: none;
+      }
+
+      @media (width <= 980px) {
+        grid-template-columns: minmax(0, 1fr) 1fr;
+      }
+    }
+
+    &-label {
+      color: var(--color-text-muted);
+
+      @include mixins.font(14px);
+    }
+
+    &-value {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(14px, 600);
+    }
+  }
+
+  &__kit {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (width <= 1280px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width <= 980px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "cta";
+
+.#{$_name} {
+  padding: var(--space-md);
+
+  border-radius: var(--radius-sm);
+
+  background-color: var(--color-surface);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-md);
+
+  &__text {
+    display: grid;
+    gap: var(--space-xs);
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(16px, 500);
+    }
+
+    &-description {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px, 500);
+    }
+  }
+
+  @include mixins.absolute-width(100%);
+
+  @media screen and (width <= 720px) {
+    padding: var(--space-sm);
+  }
+
+  @media screen and (width < 500px) {
+    grid-template-columns: 1fr;
+  }
+}

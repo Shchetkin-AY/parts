@@ -1,0 +1,49 @@
+$_name: "pagination";
+
+.#{$_name} {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 100%;
+
+  width: 100%;
+
+  &__nav {
+    flex: 0 0 auto;
+  }
+
+  &__pages {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+    max-width: fit-content;
+  }
+
+  &__item {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto; // фиксированный размер, ничего не сжимаем — лишнее прячется через ellipsis
+
+    cursor: pointer;
+
+    height: 40px;
+    width: 40px;
+
+    &--ellipsis {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "home-filter";
+
+.#{$_name} {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  border-radius: var(--radius-sm);
+
+  background-color: var(--color-surface);
+
+  display: grid;
+  grid-template-areas: "hero";
+  gap: 24px;
+  align-items: center;
+  justify-items: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  width: min(100%, var(--layout-width));
+
+  &__header {
+    display: grid;
+    gap: var(--space-xs);
+
+    user-select: none;
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(16px, 500);
+    }
+
+    &-description {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px, 500);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__footer {
+    display: grid;
+
+    &-content {
+      text-align: center;
+
+      display: grid;
+      gap: var(--space-xs);
+      justify-content: end;
+
+      @include mixins.absolute-width(100%);
+
+      @media (width <= 500px) {
+        justify-content: center;
+      }
+    }
+
+    &-title {
+      color: var(--color-muted);
+
+      user-select: none;
+
+      @include mixins.font(12px, 500);
+      @include mixins.absolute-width(100%);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: end;
+
+    @include mixins.absolute-width(100%);
+
+    @media (width <= 1200px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width <= 720px) {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  &__submit {
+    display: flex;
+
+    @include mixins.absolute-width(100%);
+  }
+
+  @media (width <= 720px) {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    &__submit {
+      padding-top: 10px;
+    }
+  }
+}

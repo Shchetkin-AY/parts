@@ -1,0 +1,54 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "lines";
+
+.#{$_name} {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
+
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-items: center;
+
+  position: relative;
+
+  width: min(100%, var(--layout-width));
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: var(--space-xxl);
+    align-items: center;
+
+    @media screen and (width <= 760px) {
+      grid-template-columns: 1fr;
+
+      gap: var(--space-lg);
+    }
+  }
+
+  &__features {
+    display: grid;
+    gap: var(--space-xxl);
+    align-items: start;
+  }
+
+  &__image {
+    border-radius: var(--radius-xs);
+
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+
+    @media screen and (width <= 760px) {
+      order: -1;
+    }
+  }
+
+  @media (width <= 760px) {
+    padding-top: unset;
+    padding-bottom: unset;
+  }
+}

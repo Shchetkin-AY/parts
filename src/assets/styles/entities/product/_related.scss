@@ -1,0 +1,133 @@
+@use "mixins" as mixins;
+
+$_name: "related";
+
+.#{$_name} {
+  display: grid;
+  gap: var(--space-md);
+
+  &-header {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-title {
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+
+    text-align: left;
+    text-transform: uppercase;
+
+    @include mixins.font(20px, 600);
+  }
+
+  &-carousel {
+    position: relative;
+
+    min-width: 0;
+  }
+
+  &-cards {
+    display: grid;
+    grid-auto-columns: calc((100% - var(--space-md) * 5) / 6);
+    grid-auto-flow: column;
+    gap: var(--space-sm);
+
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &--fade-left {
+      mask-image: linear-gradient(to right, transparent 0, black 64px, black 100%);
+    }
+
+    &--fade-right {
+      mask-image: linear-gradient(to right, black 0, black calc(100% - 64px), transparent 100%);
+    }
+
+    &--fade-left#{&}--fade-right {
+      mask-image: linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%);
+    }
+
+    @media (pointer: coarse) {
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+    }
+
+    @media screen and (width <= 1280px) {
+      grid-auto-columns: calc((100% - var(--space-sm) * 2) / 3);
+    }
+
+    @media screen and (width <= 1024px) {
+      grid-auto-columns: calc((100% - var(--space-sm)) / 2);
+      gap: var(--space-sm);
+    }
+
+    @media screen and (width <= 600px) {
+      grid-auto-columns: calc((100% - var(--space-xs)) / 2);
+      gap: var(--space-xs);
+    }
+  }
+
+  &-item {
+    min-width: 0;
+
+    scroll-snap-align: start;
+  }
+
+  &-arrow {
+    color: var(--color-text-primary);
+
+    border: 0;
+
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    transition: opacity var(--transition-base);
+
+    cursor: pointer;
+
+    width: 60px;
+
+    z-index: 2;
+
+    &-icon {
+      pointer-events: none;
+
+      @include mixins.absolute-width(24px);
+      @include mixins.absolute-height(24px);
+    }
+
+    &--prev {
+      justify-content: start;
+
+      left: 0;
+    }
+
+    &--next {
+      justify-content: end;
+
+      right: 0;
+    }
+
+    &--hidden {
+      opacity: 0;
+
+      pointer-events: none;
+    }
+  }
+}

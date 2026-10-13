@@ -1,0 +1,35 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "breadcrumbs";
+
+.#{$_name} {
+  color: var(--color-text-muted-light);
+
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  flex-wrap: wrap;
+
+  &-link {
+    color: colors.$text-muted-light;
+    text-decoration: none;
+
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+  }
+
+  &-current {
+    color: var(--color-text-primary);
+  }
+
+  &-separator {
+    color: colors.color(color-text, 0.2);
+  }
+
+  @include mixins.absolute-height(16px);
+  @include mixins.font(14px);
+}

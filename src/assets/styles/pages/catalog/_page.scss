@@ -1,0 +1,161 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "catalog";
+
+.#{$_name} {
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  &__sidebar {
+    display: grid;
+    gap: 16px;
+    align-self: start;
+
+    position: static;
+
+    height: fit-content;
+  }
+
+  &__content {
+    display: grid;
+    gap: 24px;
+
+    min-width: 0;
+  }
+
+  &__header {
+    display: grid;
+    gap: 12px;
+
+    &-title {
+      color: var(--color-text-primary);
+      text-align: left;
+
+      display: flex;
+      gap: var(--space-xs);
+
+      @include mixins.font(20px, 600);
+    }
+
+    &-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-sm);
+      align-items: start;
+      justify-content: space-between;
+    }
+  }
+
+  &__mobile-toolbar {
+    display: grid;
+    gap: 8px;
+  }
+
+  &__toolbar {
+    display: grid;
+    grid-template-columns: auto 160px;
+
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    &-count {
+      color: var(--color-muted);
+
+      user-select: none;
+
+      @include mixins.font(12px);
+    }
+
+    @include mixins.absolute-width(100%);
+    @include mixins.absolute-height(100%);
+
+    @media (width < 425px) {
+      grid-template-columns: 1fr;
+      justify-items: end;
+    }
+  }
+
+  &__chips {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &-row {
+      display: flex;
+      align-items: center;
+
+      @include mixins.absolute-height(100%);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-sm);
+
+    @media screen and (width <= 1280px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media screen and (width <= 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media screen and (width <= 600px) {
+      gap: var(--space-xs);
+    }
+  }
+
+  &__empty {
+    padding: 32px;
+
+    font-size: 14px;
+    color: colors.$text-secondary;
+    text-align: center;
+
+    border: 1px solid colors.$border;
+    border-radius: 8px;
+
+    background: colors.$surface-3;
+
+    display: grid;
+    place-items: center;
+
+    min-height: 160px;
+  }
+
+  @media (width >= 1024px) {
+    &__layout {
+      grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+    }
+
+    &__sidebar {
+      position: sticky;
+      top: 40px;
+    }
+  }
+
+  @media (width <= 600px) {
+    &__grid {
+      gap: 8px;
+    }
+
+    &__layout {
+      gap: 24px;
+    }
+
+    &__content {
+      gap: 16px;
+    }
+  }
+}

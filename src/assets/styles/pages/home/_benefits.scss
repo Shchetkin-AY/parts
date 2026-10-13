@@ -1,0 +1,66 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "benefits";
+
+.#{$_name} {
+  padding: 24px;
+
+  border-radius: var(--radius-sm);
+
+  background-color: var(--color-surface);
+
+  display: flex;
+  justify-content: space-between;
+
+  position: relative;
+
+  &__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-sm);
+    align-content: start;
+    align-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    &-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-content {
+      display: grid;
+      gap: 5px;
+      align-content: center;
+    }
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(14px, 500);
+    }
+
+    &-text {
+      color: var(--color-text-muted);
+
+      @include mixins.font(12px);
+    }
+  }
+
+  @media (width <= 1200px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+
+  @media (width <= 720px) {
+    padding: 16px;
+
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+}

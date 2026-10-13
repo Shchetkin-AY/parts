@@ -1,0 +1,104 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "catalog-filter";
+
+.#{$_name} {
+  padding: 16px;
+
+  border-radius: var(--space-sm);
+
+  background: colors.$surface;
+
+  display: grid;
+  gap: 24px;
+
+  &__header {
+    display: grid;
+    gap: var(--space-xs);
+
+    user-select: none;
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(16px, 500);
+    }
+
+    &-description {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px, 500);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__fields {
+    display: grid;
+
+    gap: var(--space-md);
+    align-items: end;
+
+    @media (width <= 1024px) {
+      padding: 16px;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    @media (width <= 600px) {
+      padding: 16px;
+
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__actions {
+    padding-top: 10px;
+
+    display: grid;
+    gap: var(--space-md);
+
+    @include mixins.absolute-width(100%);
+
+    @media (width <= 1024px) {
+      padding: 16px;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    @media (width <= 600px) {
+      padding-top: 0;
+
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__footer {
+    display: grid;
+
+    &-content {
+      text-align: center;
+
+      display: grid;
+      gap: var(--space-xs);
+      justify-content: center;
+
+      @include mixins.absolute-width(100%);
+    }
+
+    &-title {
+      color: var(--color-muted);
+
+      user-select: none;
+
+      @include mixins.font(12px, 500);
+      @include mixins.absolute-width(100%);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+}

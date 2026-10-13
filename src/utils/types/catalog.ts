@@ -1,3 +1,3 @@
-import catalog from '@/data/catalog'
+import { CatalogCategories } from '../enums'
 
-export type CatalogItem = (typeof catalog)[number]
+export type CatalogCategory = `${CatalogCategories}`

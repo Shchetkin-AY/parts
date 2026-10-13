@@ -1,0 +1,95 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-checkbox";
+
+.#{$_name} {
+  color: var(--color-text-muted);
+
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: var(--space-sm);
+  align-items: center;
+
+  cursor: pointer;
+
+  &__control {
+    padding: 0;
+
+    border: 1px solid var(--color-border-strong);
+    border-radius: 3px;
+
+    background: var(--color-surface-2);
+
+    display: grid;
+    place-items: center;
+
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast);
+
+    cursor: pointer;
+
+    height: 20px;
+    width: 20px;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  &__check-mark {
+    opacity: 0;
+
+    height: 9px;
+
+    width: 13px;
+
+    path {
+      fill: none;
+      stroke: var(--color-text-on-primary);
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  }
+
+  &__label {
+    color: var(--color-text-primary);
+
+    user-select: none;
+
+    min-width: 0;
+  }
+
+  &--checked {
+    & > .#{$_name}__control {
+      border-color: var(--color-primary);
+
+      background: var(--color-primary);
+
+      & > .#{$_name}__check-mark {
+        opacity: 1;
+      }
+    }
+  }
+
+  &--disabled {
+    color: var(--color-text-dim);
+
+    & > .#{$_name}__control {
+      border-color: var(--color-border);
+
+      background: var(--color-surface-3);
+
+      cursor: default;
+    }
+
+    & > .#{$_name}__label a {
+      color: var(--color-text-dim);
+    }
+  }
+
+  @include mixins.font(12px, 400, 18px);
+}

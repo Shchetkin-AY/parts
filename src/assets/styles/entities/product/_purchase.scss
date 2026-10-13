@@ -1,0 +1,83 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "purchase";
+
+.#{$_name} {
+  padding: 20px;
+
+  border-radius: var(--radius-md);
+
+  background-color: var(--color-surface);
+
+  display: grid;
+  gap: var(--space-md);
+  align-self: start;
+
+  &__price {
+    color: var(--color-text-primary);
+
+    @include mixins.font(40px, 500);
+  }
+
+  &__note {
+    color: var(--color-text-muted);
+
+    display: flex;
+    align-items: center;
+
+    @include mixins.font(11px);
+  }
+
+  &__options {
+    display: grid;
+    gap: var(--space-xs);
+
+    &-title {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(12px);
+    }
+
+    &-empty {
+      color: var(--color-text-muted);
+
+      @include mixins.font(11px);
+    }
+  }
+
+  &__kit {
+    display: grid;
+    gap: var(--space-sm);
+
+    &-list {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    &-title {
+      color: var(--color-text-primary);
+
+      @include mixins.font(14px, 500);
+    }
+
+    &-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: var(--space-xs);
+      align-items: center;
+
+      &-label {
+        color: var(--color-text-secondary);
+
+        @include mixins.font(14px);
+      }
+
+      @include mixins.absolute-height(20px);
+    }
+  }
+
+  @media (width <= 1024px) {
+    min-width: 0;
+  }
+}

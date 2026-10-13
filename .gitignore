@@ -12,6 +12,7 @@ node_modules
 .vscode
 .github
 .DS_Store
+.clinerules
+.clineignore
 .codex
-.copilot-commit-message-instructions.md
 src/templates/*

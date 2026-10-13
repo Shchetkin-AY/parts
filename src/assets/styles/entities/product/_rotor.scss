@@ -1,0 +1,228 @@
+@use "mixins" as mixins;
+
+$_name: "rotor-center";
+
+.#{$_name} {
+  display: grid;
+  gap: var(--space-md);
+
+  &__header {
+    display: grid;
+    gap: var(--space-sm);
+
+    &-title {
+      font-family: var(--font-family-secondary);
+      color: var(--color-text-primary);
+      text-align: left;
+      text-transform: uppercase;
+
+      @include mixins.font(20px, 600);
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(180px, 30%) minmax(0, 1fr);
+    gap: var(--space-sm);
+
+    user-select: none;
+  }
+
+  &__items {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  &__item {
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    padding-left: 12px;
+    padding-right: 10px;
+
+    color: var(--color-text-primary);
+    text-align: left;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background-color: var(--color-surface);
+
+    display: grid;
+    gap: var(--space-xs);
+
+    opacity: 0.85;
+
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+
+    cursor: pointer;
+
+    min-height: 0;
+
+    &:hover {
+      background-color: var(--color-surface-3);
+    }
+
+    &--active {
+      background-color: var(--color-surface-3);
+
+      opacity: 1;
+    }
+
+    &-content {
+      display: grid;
+      gap: var(--space-xs);
+
+      min-width: 0;
+    }
+
+    &-title {
+      display: flex;
+      gap: var(--space-xs);
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      @include mixins.font(14px, 500);
+    }
+
+    &-description {
+      color: var(--color-text-muted);
+
+      @include mixins.font(12px);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+
+  &__preview {
+    padding: var(--space-sm);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-sm);
+
+    min-width: 0;
+
+    &-main {
+      padding: 15px;
+
+      border-radius: var(--radius-sm);
+
+      background-color: var(--color-surface-2);
+
+      display: grid;
+      place-items: center;
+
+      position: relative;
+
+      overflow: hidden;
+
+      @include mixins.absolute-height(270px);
+    }
+
+    &-image {
+      display: block;
+
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    &-thumbs {
+      display: flex;
+      gap: var(--space-xs);
+      flex-direction: column;
+
+      @include mixins.absolute-height(100%);
+    }
+
+    &-thumb {
+      padding: 3px;
+
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+
+      background: var(--color-surface-3);
+
+      opacity: 0.8;
+
+      transition:
+        opacity var(--transition-fast),
+        border-color var(--transition-fast);
+
+      cursor: pointer;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      &--active {
+        border-color: var(--color-border-strong);
+
+        opacity: 1;
+      }
+
+      @include mixins.absolute-height(60px);
+      @include mixins.absolute-width(60px);
+    }
+  }
+
+  @media (width <= 900px) {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width <= 600px) {
+    gap: var(--space-sm);
+
+    &__header-title {
+      @include mixins.font(18px, 600);
+    }
+
+    &__item-description {
+      @include mixins.font(11px);
+    }
+
+    &__preview {
+      padding: var(--space-xs);
+
+      grid-template-columns: 1fr;
+
+      &-main {
+        padding: var(--space-sm);
+
+        min-height: 0;
+        max-height: none;
+        height: clamp(180px, 60vw, 220px);
+      }
+
+      &-thumbs {
+        flex-direction: row;
+
+        overflow-x: auto;
+
+        min-width: 0;
+        width: 100%;
+      }
+
+      &-thumb {
+        flex: 0 0 auto;
+      }
+    }
+  }
+}

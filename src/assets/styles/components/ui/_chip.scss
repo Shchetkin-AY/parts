@@ -1,0 +1,140 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "isk-chip";
+
+@mixin _colors {
+  @each $name, $value in colors.$colors {
+    &--#{$name} {
+      background-color: colors.color(color-#{$name}, 0.2);
+
+      & > .#{$_name}__content {
+        & > .#{$_name}__label {
+          color: colors.color(color-#{$name});
+        }
+      }
+    }
+  }
+}
+
+@mixin _sizes {
+  &--small {
+    padding-left: 5px;
+    padding-right: 5px;
+    & > .#{$_name}__content {
+      & > .#{$_name}__remove {
+        @include mixins.absolute-height(10px);
+      }
+
+      @include mixins.font(8px, 500);
+    }
+
+    @include mixins.absolute-height(14px);
+  }
+
+  &--medium {
+    padding-left: 10px;
+
+    &:not(.#{$_name}--remove) {
+      padding-right: 10px;
+    }
+
+    & > .#{$_name}__content {
+      @include mixins.font(10px, 500);
+    }
+
+    @include mixins.absolute-height(18px);
+  }
+
+  &--large {
+    padding-left: 14px;
+
+    &:not(.#{$_name}--remove) {
+      padding-right: 14px;
+    }
+
+    & > .#{$_name}__content {
+      & > .#{$_name}__remove {
+        @include mixins.absolute-height(24px);
+        @include mixins.absolute-width(24px);
+      }
+
+      @include mixins.font(12px, 500);
+    }
+
+    @include mixins.absolute-height(24px);
+  }
+}
+
+.#{$_name} {
+  color: var(--color-text);
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(--radius-xs);
+
+  background-color: var(--color-border);
+
+  display: grid;
+  place-content: center;
+  place-items: center;
+
+  position: relative;
+
+  width: fit-content;
+
+  z-index: 1;
+
+  &__content {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 6px;
+    align-items: center;
+
+    user-select: none;
+  }
+
+  &__label {
+    font-variant-numeric: tabular-nums;
+
+    color: currentcolor;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    display: inline-block;
+
+    @include mixins.truncate-text;
+  }
+
+  &__remove {
+    color: var(--color-text-secondary);
+
+    display: grid;
+    place-items: center;
+
+    height: 22px;
+    width: 22px;
+
+    &:hover {
+      color: var(--color-primary);
+
+      cursor: pointer;
+    }
+
+    @include mixins.absolute-height(18px);
+    @include mixins.absolute-width(18px);
+  }
+
+  &--outline {
+    border-color: var(--color-border);
+  }
+
+  &--absolute {
+    position: absolute;
+  }
+
+  @include _colors;
+  @include _sizes;
+}

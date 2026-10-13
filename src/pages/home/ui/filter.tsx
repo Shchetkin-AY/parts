@@ -1,0 +1,135 @@
+import { defineComponent, onBeforeMount, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCatalogStore } from '@/stores'
+import { UiButton, UiDivider, UiSelect } from '@/components'
+import { Feedback, useCatalogFilterFields } from '@/features'
+
+import {
+  Color,
+  FilterFieldProps,
+  Size,
+  buildCatalogFilterQuery,
+  homeFilterFieldsConfig
+} from '@/utils'
+
+export default defineComponent({
+  name: 'VehicleFinder',
+
+  setup() {
+    const router = useRouter()
+    const catalogStore = useCatalogStore()
+
+    const { params, optionsByField, filteredItems } = useCatalogFilterFields(
+      homeFilterFieldsConfig,
+      () => catalogStore.compatibleItems
+    )
+
+    const className = 'home-filter'
+
+    onBeforeMount(async () => {
+      await catalogStore.loadCatalog()
+      await catalogStore.loadCompatibility()
+    })
+
+    const showFeedback = ref(false)
+
+    const submitHandler = (): void => {
+      const query = buildCatalogFilterQuery(params)
+
+      router.push(
+        Object.keys(query).length === 0
+          ? { name: 'catalog' }
+          : {
+            name: 'catalog',
+            query
+          }
+      )
+    }
+
+    const renderHeaderTitle = () => {
+      return <span class={`${className}__header-title`}>Подбор по автомобилю</span>
+    }
+    const renderHeaderDescription = () => {
+      return <span class={`${className}__header-description`}>Найдите совместимую тормозную систему для вашего автомобиля</span>
+    }
+    const renderHeader = () => {
+      return (
+        <div class={`${className}__header`}>
+          {renderHeaderTitle()}
+          {renderHeaderDescription()}
+        </div>
+      )
+    }
+
+    const renderField = (config: FilterFieldProps) =>
+      <div class={`${className}__field`} key={config.field}>
+        <UiSelect
+          v-model={params[config.field]}
+          ariaLabel={config.ariaLabel}
+          clearable
+          label={config.label}
+          modelValue={params[config.field]}
+          placeholder={config.placeholder}
+          options={optionsByField.value[config.field]}
+        />
+      </div>
+
+    const renderFields = () => {
+      return homeFilterFieldsConfig.map(field => {
+        return renderField(field)
+      })
+    }
+
+    const renderSubmitButton = () => {
+      return (
+        <div class={`${className}__submit`}>
+          <UiButton
+            color={Color.primary}
+            label="Найти комплекты"
+            minWidth={'100%'}
+            disabled={filteredItems.value.length === 0}
+            onClick={submitHandler}
+          />
+        </div>
+      )
+    }
+
+    const renderFooter = () => {
+      return (
+        <div class={`${className}__footer`} >
+          <div class={`${className}__footer-content`} >
+            <span class={`${className}__footer-title`}>Не нашли свой автомобиль?</span>
+            <UiButton
+              label="Получить консультацию"
+              size={Size.small}
+              color={Color['surface-3']}
+              onClick={() => showFeedback.value = true}
+            />
+          </div>
+        </div>
+      )
+    }
+
+    const renderFeedback = () => {
+      return (
+        <Feedback
+          v-model={showFeedback.value}
+          topic={'Нужна консультация по подбору'}
+        />
+      )
+    }
+
+    return () =>
+      <div class={className}>
+        {renderHeader()}
+        <div class={`${className}__fields`}>
+          {renderFields()}
+          {renderSubmitButton()}
+
+        </div>
+        <UiDivider />
+        {renderFooter()}
+        {renderFeedback()}
+      </div>
+  }
+})

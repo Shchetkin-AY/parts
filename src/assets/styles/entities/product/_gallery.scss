@@ -1,0 +1,128 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "product-gallery";
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+
+  min-height: 458px;
+  max-height: 458px;
+  height: 458px;
+
+  &__main {
+    padding: 16px;
+
+    border-radius: 18px;
+
+    background:
+      radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), var(--color-surface);
+
+    display: grid;
+    align-content: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 458px;
+    max-height: 458px;
+    height: 458px;
+
+    &-image {
+      height: clamp(180px, 15vw, 320px);
+      width: auto;
+      object-fit: contain;
+
+      @media (width <= 600px) {
+        // на мобильном ограничиваем по высоте контейнера
+
+        height: clamp(160px, 40vw, 280px);
+      }
+    }
+
+    // main идёт первым на мобильном (в DOM он второй)
+    @media (width <= 600px) {
+      order: 1;
+
+      min-height: 340px;
+      max-height: 340px;
+      height: 340px;
+    }
+  }
+
+  &__thumbs {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: start;
+    flex-direction: column;
+
+    @media (width <= 600px) {
+      justify-content: start;
+
+      flex-direction: row;
+      order: 2;
+
+      overflow-x: auto;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &__thumb {
+    padding: 6px;
+
+    border-width: 1px;
+    border-style: solid;
+
+    border-color: transparent;
+
+    border-radius: 12px;
+
+    background:
+      radial-gradient(circle at top, rgb(196 196 196 / 10%), transparent 55%),
+      radial-gradient(circle at center, rgb(255 255 255 / 3%), transparent 55%), var(--color-surface);
+
+    flex-shrink: 0;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-surface-2);
+    }
+
+    &--active {
+      border-color: var(--color-border-strong);
+    }
+
+    @include mixins.absolute-height(60px);
+    @include mixins.absolute-width(60px);
+  }
+
+  &__thumb-image {
+    display: block;
+
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  @media (width <= 600px) {
+    grid-template-columns: 1fr;
+
+    min-height: 0;
+    max-height: none;
+    height: auto;
+  }
+}

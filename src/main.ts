@@ -1,13 +1,23 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from '@/app'
 import router from '@/router'
+
+import { pinia } from '@/plugins'
+
+import { useViewportStore } from './stores'
 
 import '@/assets/styles/main.scss'
 
-const app = createApp(App)
-const pinia = createPinia()
+import { App } from '@/app'
 
-app.use(pinia)
+const app = createApp(App)
+
 app.use(router)
+app.use(pinia)
+
+const viewportStore = useViewportStore()
+
+window.addEventListener('resize', () => {
+  return viewportStore.update()
+})
+
 app.mount('#app')

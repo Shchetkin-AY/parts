@@ -1,42 +1,52 @@
 @use "sass:map";
 @use "sass:color";
 
+$white: #ffffff;
+$black: #000000;
+$grey: #9e9e9e;
 $primary: #d91f26;
 $primary-hover: #ef2e35;
 $primary-active: #b8181f;
-$primary-shadow: rgba(127, 29, 29, 0.2);
-
+$primary-shadow: rgb(127 29 29 / 20%);
+$primary-soft: #e2483f;
 $text: #e7e5e5;
 $text-primary: #f4f4f5;
 $text-secondary: #a1a1aa;
 $text-muted: #6d6d6d;
-$text-soft: rgba(255, 255, 255, 0.62);
-$text-inverse: #000;
-$text-on-primary: #fff;
-
+$text-soft: rgb(255 255 255 / 62%);
+$text-inverse: #000000;
+$text-on-primary: #ffffff;
 $bg: #050505;
 $surface: #0c0c0c;
 $surface-2: #111111;
-$surface-3: #131313;
-$surface-container-low: #131313;
-$surface-container-lowest: #000;
-
-$border: rgba(255, 255, 255, 0.05);
-$border-soft: rgba(255, 255, 255, 0.03);
-$border-strong: rgba(255, 255, 255, 0.08);
-
+$surface-3: #1c1c1c;
+$surface-container-lowest: #000000;
+$border: rgb(255 255 255 / 5%);
+$border-soft: rgb(255 255 255 / 3%);
+$border-strong: rgb(255 255 255 / 8%);
 $muted: #a69b9a;
-
 $text-dim: #71717a;
 $text-subtle: #52525b;
 $text-meta: #3f3f46;
 $text-muted-light: #8b8b8b;
 $success: #53ff7d;
+$warning: #f5b942;
+$info: #2f5bc2;
+$phone: #34c759;
+$sms: #0d47a1;
+$telegram: #0088cc;
+$drive2: #ff0000;
+$max: #9500ff;
 $colors: (
+  "white": $white,
+  "black": $black,
+  "grey": $grey,
+
   "primary": $primary,
   "primary-hover": $primary-hover,
   "primary-active": $primary-active,
   "primary-shadow": $primary-shadow,
+  "primary-soft": $primary-soft,
 
   "text": $text,
   "text-primary": $text-primary,
@@ -50,7 +60,6 @@ $colors: (
   "surface": $surface,
   "surface-2": $surface-2,
   "surface-3": $surface-3,
-  "surface-container-low": $surface-container-low,
   "surface-container-lowest": $surface-container-lowest,
 
   "border": $border,
@@ -62,9 +71,16 @@ $colors: (
   "text-subtle": $text-subtle,
   "text-meta": $text-meta,
   "text-muted-light": $text-muted-light,
-  "success": $success
-);
+  "success": $success,
+  "warning": $warning,
+  "info": $info,
 
+  "phone": $phone,
+  "sms": $sms,
+  "telegram": $telegram,
+  "drive2": $drive2,
+  "max": $max
+);
 $color-names: map.keys($colors);
 
 :root {

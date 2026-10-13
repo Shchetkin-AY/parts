@@ -1,5 +1,5 @@
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
-import Layout from '@/layouts'
+import { Layout } from '@/layouts'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -17,14 +17,24 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/catalog')
       },
       {
-        path: 'catalog/:id',
+        path: 'accessories',
+        name: 'accessories',
+        component: () => import('@/pages/accessories')
+      },
+      {
+        path: 'catalog/:category/:id',
         name: 'catalog.single',
-        component: () => import('@/pages/single')
+        component: () => import('@/pages/product')
       },
       {
         path: 'about',
         name: 'about',
         component: () => import('@/pages/about')
+      },
+      {
+        path: 'personal-data',
+        name: 'personal-data',
+        component: () => import('@/pages/personal-data')
       }
     ]
   }
@@ -33,7 +43,14 @@ const routes: RouteRecordRaw[] = [
 export default createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
+  scrollBehavior(to) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'auto'
+      }
+    }
+
     return { top: 0 }
   }
 })

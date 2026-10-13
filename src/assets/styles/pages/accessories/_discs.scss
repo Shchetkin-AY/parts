@@ -1,0 +1,135 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "discs";
+
+.#{$_name} {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-md);
+
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-items: center;
+
+  position: relative;
+
+  width: min(100%, var(--layout-width));
+
+  &__split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-xxl);
+    align-items: center;
+
+    &-image {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      mask-image: radial-gradient(ellipse at center, black 45%, transparent 66%);
+    }
+  }
+
+  &__features {
+    display: grid;
+    gap: var(--space-xxl);
+  }
+
+  &__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+
+    &-item {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    &-image {
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-xs);
+
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    &-caption {
+      color: var(--color-text-muted-light);
+      text-transform: uppercase;
+
+      @include mixins.font(10px, 400, null, 0.7px);
+    }
+  }
+
+  &__table {
+    border-collapse: collapse;
+
+    overflow-x: auto;
+
+    &-title {
+      color: var(--color-text-primary);
+
+      text-align: left;
+
+      @include mixins.font(20px, 600);
+    }
+
+    & table {
+      @include mixins.absolute-width(100%);
+    }
+
+    & th,
+    & td {
+      padding: 14px 16px 14px 0;
+
+      text-align: left;
+
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    & th {
+      color: var(--color-text-muted-light);
+      text-transform: uppercase;
+
+      border-bottom: 1px solid var(--color-border-strong);
+
+      @include mixins.font(10px, 400);
+    }
+
+    & td {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(14px, 400);
+    }
+
+    & td.is-code {
+      color: var(--color-text-primary);
+
+      @include mixins.font(14px, 600);
+    }
+
+    &-note {
+      color: var(--color-text-secondary);
+
+      @include mixins.font(14px, 400, 28px);
+    }
+
+    @include mixins.absolute-width(100%);
+  }
+
+  @media (width <= 760px) {
+    padding-top: unset;
+    padding-bottom: unset;
+
+    &__split {
+      grid-template-columns: 1fr;
+
+      gap: var(--space-lg);
+    }
+
+    &__gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+}

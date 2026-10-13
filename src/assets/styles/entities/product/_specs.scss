@@ -1,0 +1,120 @@
+@use "colors";
+@use "mixins" as mixins;
+
+$_name: "product-specs";
+
+.#{$_name} {
+  display: grid;
+  gap: var(--space-md);
+
+  &__header {
+    display: grid;
+    gap: var(--space-sm);
+
+    &-title {
+      font-family: var(--font-family-secondary);
+      color: var(--color-text-primary);
+      text-align: left;
+      text-transform: uppercase;
+
+      @include mixins.font(20px, 600);
+    }
+  }
+
+  &__list {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    border-radius: var(--radius-sm);
+
+    background-color: var(--color-surface);
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  &__row {
+    padding-top: 11px;
+    padding-bottom: 11px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-sm);
+    align-items: baseline;
+
+    &:nth-child(odd) {
+      padding-right: var(--space-md);
+    }
+
+    &:nth-child(even) {
+      padding-left: var(--space-md);
+    }
+
+    &:nth-last-child(-n + 2) {
+      border-bottom: none;
+    }
+  }
+
+  &__label {
+    color: var(--color-text-secondary);
+
+    min-width: 0;
+
+    @include mixins.font(13px);
+    @include mixins.truncate-text;
+  }
+
+  &__value {
+    color: var(--color-text-primary);
+
+    text-align: right;
+    white-space: nowrap;
+
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    &-unit {
+      color: var(--color-text-muted);
+
+      @include mixins.font(12px);
+    }
+
+    @include mixins.font(13px, 500);
+  }
+
+  @media (width <= 600px) {
+    gap: var(--space-sm);
+
+    &__header-title {
+      @include mixins.font(18px, 600);
+    }
+
+    &__list {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      padding-left: 16px;
+      padding-right: 16px;
+
+      grid-template-columns: 1fr;
+    }
+
+    &__row {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+
+      &:nth-last-child(-n + 2) {
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
